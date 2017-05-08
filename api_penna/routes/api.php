@@ -13,9 +13,14 @@ use Illuminate\Http\Request;
 |
 */
 
+// CORS
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Credentials: true');
+
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
 
-Route::get('/servicios', 'Servicio_Controller@get_servicios');
+Route::middleware('cors')->get('/servicios', 'Servicio_Controller@get_servicios');
