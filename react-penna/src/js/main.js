@@ -154,6 +154,10 @@ document.addEventListener('DOMContentLoaded', function() {
     React.createElement(tabla),
     document.getElementById('tabla')
   );
+  ReactDOM.render(
+    React.createElement(tabla),
+    document.getElementById('tabla1')
+  );
 });
 
 // fetch('http://localhost:8000/api/servicios',{method: 'GET',

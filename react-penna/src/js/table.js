@@ -10,7 +10,7 @@ class Table extends React.Component {
      }
    render() {
      return (
-       <BootstrapTable data={this.props.data_info} striped hover>
+       <BootstrapTable height='auto' data={this.props.data_info}  hover>
           <TableHeaderColumn isKey dataField='id'>ID</TableHeaderColumn>
 	      <TableHeaderColumn dataField='nombre'>Nombre</TableHeaderColumn>
 	      <TableHeaderColumn dataField='edit'> </TableHeaderColumn>
