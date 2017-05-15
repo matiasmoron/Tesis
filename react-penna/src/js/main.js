@@ -6,6 +6,8 @@ import axios from 'axios';
 import Counter from './Counter';
 //import Aprendiendo from './Aprendiendo';
 import Bs from 'react-bootstrap/lib';
+import tabla from './table.js';
+
 
 /*axios.get('http://localhost:8000/api/servicios').then(function(response){
     console.log(response.data);
@@ -149,8 +151,8 @@ class CommentBox extends React.Component {
 
 document.addEventListener('DOMContentLoaded', function() {
   ReactDOM.render(
-    React.createElement(CommentBox),
-    document.getElementById('mount')
+    React.createElement(tabla),
+    document.getElementById('tabla')
   );
 });
 
