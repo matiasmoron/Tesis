@@ -24,3 +24,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::middleware('cors')->get('/servicios', 'Servicio_Controller@get_servicios');
+Route::middleware('cors')->post('/servicios', 'Servicio_Controller@add_servicios');

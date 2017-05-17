@@ -6,7 +6,7 @@ import axios from 'axios';
 import Counter from './Counter';
 //import Aprendiendo from './Aprendiendo';
 import Bs from 'react-bootstrap/lib';
-import tabla from './table.js';
+import container from './table.js';
 
 
 /*axios.get('http://localhost:8000/api/servicios').then(function(response){
@@ -151,12 +151,8 @@ class CommentBox extends React.Component {
 
 document.addEventListener('DOMContentLoaded', function() {
   ReactDOM.render(
-    React.createElement(tabla),
-    document.getElementById('tabla')
-  );
-  ReactDOM.render(
-    React.createElement(tabla),
-    document.getElementById('tabla1')
+    React.createElement(container),
+    document.getElementById('container')
   );
 });
 
