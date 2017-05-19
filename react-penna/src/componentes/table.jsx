@@ -8,6 +8,7 @@
         -Table
  */
 import axios from 'axios';
+// import styles from '../css/pruebas.css';
 
 var React = require('react');
 var ReactDOM = require('react-dom');
@@ -49,7 +50,7 @@ class Form_Creacion extends React.Component{
             <div className="panel-body">
                 <form className="form-inline" onSubmit={this._handleSubmit.bind(this)}>
                    <div className="form-group">
-                     <label for="servicio">Nombre</label>
+                     <label htmlFor="servicio">Nombre</label>
                      <input type="text" className="form-control"  placeholder="Nombre servicio" ref={(input)=> this._nombre=input}/>
                      <button type="submit" className=" btn btn-success">Agregar servicio </button>
                    </div>
@@ -72,15 +73,16 @@ class Panel extends React.Component {
     }
 
 	_addElemento(nombre){
-		axios.post('http://localhost:8000/api/servicios', { nombre: nombre})
-		  .then(function(response){
-		    console.log(response);
-		 });
-		const elemento={
-			nombre
-		}
-		this.setState({servicios : this.state.servicios.concat([elemento])});
-	}
+        axios.post('http://localhost:8000/api/servicios',"nombre=franco",{headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
+          .then(function(response){
+            console.log(response);
+         });
+        const elemento={
+            nombre
+        }
+        this.setState({servicios : this.state.servicios.concat([elemento])});
+    }
+
 	render() {
       return (
 		<div className="col-md-6">
