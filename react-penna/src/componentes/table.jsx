@@ -25,7 +25,7 @@ class Table extends React.Component {
    render() {
 		 return (
 			 <BootstrapTable height='auto' data={this.props.datos_elemento}  hover>
-				 <TableHeaderColumn isKey dataField='id'>ID</TableHeaderColumn>
+				 <TableHeaderColumn isKey dataField='id_servicio'>ID</TableHeaderColumn>
 				 <TableHeaderColumn dataField='nombre'>Nombre</TableHeaderColumn>
 				 {/* <TableHeaderColumn dataField='edit'> </TableHeaderColumn>
 				 <TableHeaderColumn dataField='algo'> </TableHeaderColumn> */}
@@ -64,23 +64,35 @@ class Form_Creacion extends React.Component{
 class Panel extends React.Component {
 	constructor() {
       super();
-	  this.state={
-		servicios: [
-			{id:1, nombre:"Morgan", edit:"Great",algo:""},
-			{id:1, nombre:"Morgan", edit:"Great",algo:""}
-		]
-	  };
+	//   this.state={
+	// 	servicios: [
+	// 		{id:1, nombre:"Morgan", edit:"Great",algo:""},
+	// 		{id:1, nombre:"Morgan", edit:"Great",algo:""}
+	// 	]
+	//   };
+		this.state={
+			servicios: [
+			]
+		};
     }
 
+	componentDidMount(){
+		axios.get('http://localhost:8000/api/servicios').then(data => {
+		  console.log(data);
+		  this.setState( { servicios: data.data } );
+	    });
+	}
+
+
 	_addElemento(nombre){
-        axios.post('http://localhost:8000/api/servicios',"nombre=franco",{headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
-          .then(function(response){
-            console.log(response);
+        axios.post('http://localhost:8000/api/servicios',"nombre="+nombre+"",{headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
+        .then(data => {
+			this.componentDidMount();
+			// const elemento={
+			//     nombre
+			// }
+			// this.setState({servicios : this.state.servicios.concat([elemento])});
          });
-        const elemento={
-            nombre
-        }
-        this.setState({servicios : this.state.servicios.concat([elemento])});
     }
 
 	render() {

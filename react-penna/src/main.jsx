@@ -10,7 +10,7 @@ require ("./styles/prueba.scss");
 
 document.addEventListener('DOMContentLoaded', function() {
   ReactDOM.render(
-     <Router>
+     <Router history={Router.hashHistory}>
         <div>
           <ul>
             <li><Link to="/">Home</Link></li>
