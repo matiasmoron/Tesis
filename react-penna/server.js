@@ -18,6 +18,9 @@ app.use(webpackDevMiddleware(compiler, {
   historyApiFallback: true,
 }));
 
+app.use(require('webpack-hot-middleware')(compiler));
+
+
 const server = app.listen(3000, function() {
   const host = server.address().address;
   const port = server.address().port;

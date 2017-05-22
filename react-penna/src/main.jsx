@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Fetch from 'react-fetch';
+// import Fetch from 'react-fetch';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import Bs from 'react-bootstrap/lib';
 import container from './componentes/table';

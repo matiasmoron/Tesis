@@ -48,7 +48,8 @@ var config = {
 		extensions:['.jsx','.js']
 	},
 	plugins:[
-		new webpack.HotModuleReplacementPlugin()
+		new webpack.HotModuleReplacementPlugin(),
+		new webpack.NoEmitOnErrorsPlugin()
 	]
 };
 
