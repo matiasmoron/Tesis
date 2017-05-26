@@ -24,7 +24,6 @@ class Table extends React.Component {
      }
 
    render() {
-	    // console.log(store.getState());
 		 return (
 			 <BootstrapTable height='auto' data={this.props.datos_elemento}  hover>
 				 <TableHeaderColumn isKey dataField='id_servicio'>ID</TableHeaderColumn>
@@ -74,18 +73,11 @@ class Panel extends React.Component {
 
 
 	_addElemento(nombre){
-        axios.post('http://localhost:8000/api/servicios',"nombre="+nombre+"",{headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
-        .then(data => {
-			servicioApi.getServicios();
-			// const elemento={
-			//     nombre
-			// }
-			// this.setState({servicios : this.state.servicios.concat([elemento])});
-         });
+        servicioApi.addServicios(nombre);
+		servicioApi.getServicios();
     }
 
 	render() {
-	console.log("panel:");console.log(store.getState());
 	  return (
 		<div className="col-md-6">
 			<Form_Creacion titulo={this.props.titulo} addElemento={this._addElemento.bind(this)} />
@@ -95,26 +87,23 @@ class Panel extends React.Component {
     }
 }
 
-class Container extends React.Component {
-		render() {
-	      return (
-			<div className="gral-container container">
-				<Panel titulo="Creación Servicio" url="servicio" />
-	        	<Panel titulo="Creación Puesto" url="puesto" />
-			</div>
-	      );
-	    }
-}
-node_modules/react-native/local-cli/bundle.js
-//export default Container
+// class Container extends React.Component {
+// 		render() {
+// 	      return (
+// 			<div className="gral-container container">
+// 				<Panel titulo="Creación Servicio" url="servicio" />
+// 	        	<Panel titulo="Creación Puesto" url="puesto" />
+// 			</div>
+// 	      );
+// 	    }
+// }
+
 
 const mapStateToProps = function(store) {
-	console.log("store connect");
-    console.log(store);
+
   return {
     servicios: store.servicioState.servicios
   };
 };
 
-
-export default connect(mapStateToProps)(Container);
+export default connect(mapStateToProps)(Panel);

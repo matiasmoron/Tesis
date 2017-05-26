@@ -7,6 +7,12 @@ export function getServiciosSuccess(servicios) {
   };
 }
 
+export function addServiciosSuccess() {
+  return {
+    type: types.ADD_SERVICIOS_SUCCESS
+  };
+}
+
 export function deleteServicioSuccess(id_servicio) {
   return {
     type: types.DELETE_SERVICIOS_SUCCESS,

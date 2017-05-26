@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
-import container from './componentes/table';
+import container from './componentes/container';
 import counter from './componentes/Counter';
 
 export default (
