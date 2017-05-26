@@ -2,14 +2,14 @@ var path = require('path');
 var webpack = require('webpack');
 
 var config = {
-	devtool:'source-map',
+    devtool: 'inline-source-map',
 	entry:[
 		'webpack-hot-middleware/client',
 		'./src/main.jsx'
 	],
 	output:{
 		path    :path.join(__dirname,'vistas'),
-		filename:'bundle.js'
+		filename:'bundle.js',
 	},
 	module:{
 		rules:[
@@ -49,7 +49,14 @@ var config = {
 	},
 	plugins:[
 		new webpack.HotModuleReplacementPlugin(),
-		new webpack.NoEmitOnErrorsPlugin()
+		new webpack.NoEmitOnErrorsPlugin(),
+		new webpack.LoaderOptionsPlugin({
+		  minimize: true,
+		  debug: true,
+		  options: {
+		    context: __dirname
+		  }
+		})
 	]
 };
 
