@@ -7,15 +7,15 @@ export function getServiciosSuccess(servicios) {
   };
 }
 
-export function addServiciosSuccess() {
+export function addServicioSuccess() {
   return {
-    type: types.ADD_SERVICIOS_SUCCESS
+    type: types.ADD_SERVICIO_SUCCESS
   };
 }
 
 export function deleteServicioSuccess(id_servicio) {
   return {
-    type: types.DELETE_SERVICIOS_SUCCESS,
+    type: types.DELETE_SERVICIO_SUCCESS,
     id_servicio
   };
 }

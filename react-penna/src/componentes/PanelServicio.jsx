@@ -17,8 +17,9 @@ class PanelServicio extends React.Component {
 	}
 
 
-	_addElemento(){
-        servicioApi.addServicios(this._nombre.value);
+	_addElemento(event){
+		event.preventDefault();
+		servicioApi.addServicio(this._nombre.value);
 		servicioApi.getServicios();
     }
 

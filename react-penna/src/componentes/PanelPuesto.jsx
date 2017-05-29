@@ -1,6 +1,6 @@
 var React = require('react');
 
-import * as servicioApi from '../api/servicio_api';
+import * as puestoApi from '../api/puesto_api';
 import { connect } from 'react-redux';
 import store from '../store';
 import Formulario from './genericos/Formulario';
@@ -13,13 +13,14 @@ class PanelPuesto extends React.Component {
     }
 
 	componentDidMount(){
-		servicioApi.getServicios();
+		puestoApi.getPuestos();
 	}
 
 
-	_addElemento(){
-        servicioApi.addServicios(this._nombre.value);
-		servicioApi.getServicios();
+	_addElemento(event){
+		event.preventDefault();
+		puestoApi.addPuesto(this._nombre.value);
+		puestoApi.getPuestos();
     }
 
 	render() {
@@ -29,7 +30,7 @@ class PanelPuesto extends React.Component {
 				<Input label="Nombre" valor={input => this._nombre = input} />
 				<button type="submit" className="btn btn-success">Agregar Puesto</button>
 			</Formulario>
-        	<TablePuesto datos_elemento={this.props.servicios}/>
+        	<TablePuesto datos_elemento={this.props.puestos}/>
 		</div>
       );
     }
@@ -39,7 +40,7 @@ class PanelPuesto extends React.Component {
 const mapStateToProps = function(store) {
 
   return {
-    servicios: store.servicioState.servicios
+    puestos: store.puestoState.puestos
   };
 };
 
