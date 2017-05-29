@@ -1,13 +1,15 @@
 var React = require('react');
-import Panel from "./Panel";
+import PanelServicio from "./PanelServicio";
+import PanelPuesto from "./PanelPuesto";
+
 
 require("../styles/backoffice.scss");
 
 const Container = () => {
   return (
 	<div className="gral-container">
-		<Panel titulo="Creación Servicio" url="servicio" />
-    	<Panel titulo="Creación Puesto" url="puesto" />
+		<PanelServicio/>
+    	<PanelPuesto />
 	</div>
   );
 };

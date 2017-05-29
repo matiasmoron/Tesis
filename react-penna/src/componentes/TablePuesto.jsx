@@ -4,7 +4,7 @@ var ReactBsTable  = require('react-bootstrap-table');
 var BootstrapTable = ReactBsTable.BootstrapTable;
 var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
 
-class Table extends React.Component {
+class TablePuesto extends React.Component {
 	 constructor() {
        super();
      }
@@ -21,4 +21,4 @@ class Table extends React.Component {
    }
 }
 
-export default Table;
+export default TablePuesto;
