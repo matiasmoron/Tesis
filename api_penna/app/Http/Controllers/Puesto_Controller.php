@@ -18,12 +18,12 @@ class Puesto_Controller extends Controller
     }
 
     public function remove_servicio(Request $request){
-    	$puesto= Puesto::find($request->id_servicio);
+    	$puesto= Puesto::find($request->id_puesto);
     	echo $puesto->delete();
     }
 
     public function update_servicio(Request $request){
-    	$puesto= Puesto::find($request->id_servicio);
+    	$puesto= Puesto::find($request->id_puesto);
     	$puesto->nombre = $request->nombre;
     	echo $puesto->save();
     }
