@@ -6,5 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Puesto extends Model
 {
-    //
+    protected $table = 'puesto';//Para definir al nombre de la tabla que hace referencia
+    protected $primaryKey = 'id_puesto'; //Seteo la clave primaria
+    // public $incrementing=false;//laravel asume que es autoincrement por eso lo deshabilito
+    public $timestamps = false; //Asume que tiene las created_at y updated_at por eso lo deshabilito
 }
