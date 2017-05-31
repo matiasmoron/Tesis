@@ -6,8 +6,6 @@ import { getServiciosSuccess,addServicioSuccess, deleteServicioSuccess } from '.
 /**
  * Obtiene todos los servicios
  *
- * @author Sebastián Biscussi
- *
  * @return [type]
  */
 

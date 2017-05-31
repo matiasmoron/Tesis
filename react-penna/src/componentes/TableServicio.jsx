@@ -3,44 +3,66 @@ var React = require('react');
 var ReactBsTable  = require('react-bootstrap-table');
 var BootstrapTable = ReactBsTable.BootstrapTable;
 var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
+// import * as BsTable from './commons/BsTable';
 
 class TableServicio extends React.Component {
 	 constructor() {
        super();
      }
 
-	onAfterSaveCell(row, cellName, cellValue) {
+	updateFila(row, cellName, cellValue) {
 		  	console.log(row);
 	}
-
-	onAfterDeleteRow(rowKeys){
-
+	customConfirm(next, dropRowKeys) {
+	  const dropRowKeysStr = dropRowKeys.join(',');
+	  if (confirm(`Está seguro que desea eliminar las fila seleccionada ${dropRowKeysStr}?`)) {
+	    // If the confirmation is true, call the function that
+	    // continues the deletion of the record.
+	    next();
+	  }
 	}
-
 
 
    render() {
-	   const cellEditProp = {
-	   	  mode: 'click',
-	   	  blurToSave: true,
-	   	  afterSaveCell: this.onAfterSaveCell  // a hook for after saving cell
+	   const btnEliminar = (onClick) => {
+		   return (
+			   <DeleteButton
+				   btnText='Eliminar'
+				   btnContextual='btn-danger'
+				   className='my-custom-class'
+				   btnGlyphicon='glyphicon-trash'
+				   onClick={ onClick }/>
+			   );
+		   }
+	    const editar = {
+			mode: 'dbclick',
+			blurToSave: true,
+			afterSaveCell: this.updateFila  // a hook for after saving cell
 	   	};
 
-		const selectRowProp={
+		const selectFila={
 			mode: 'checkbox'
 		};
 
-		const options= {
+		const opciones= {
 			afterDeleteRow: this.onAfterDeleteRow,
+			deleteBtn: btnEliminar,
+			handleConfirmDeleteRow: this.customConfirm
 		};
 
 		 return (
-			 <BootstrapTable height='auto' search={true} data={this.props.datos_elemento} deleteRow={true} selectRow={selectRowProp}  cellEdit={ cellEditProp } options={options} hover>
-				 <TableHeaderColumn isKey dataField='id_servicio'>ID</TableHeaderColumn>
-				 <TableHeaderColumn dataField='nombre'>Nombre</TableHeaderColumn>
-				 <TableHeaderColumn dataField='edit'>Editar </TableHeaderColumn>
-				 <TableHeaderColumn dataField='borrar'>Borrar </TableHeaderColumn>
-			 </BootstrapTable>
+			<BootstrapTable
+				height='auto'
+				search={true}
+				data={this.props.datos_elemento}
+				deleteRow={true}
+				selectRow={selectFila}
+				cellEdit={editar}
+				options={opciones}
+				hover>
+				<TableHeaderColumn isKey dataField='id_servicio'>ID</TableHeaderColumn>
+				<TableHeaderColumn dataField='nombre'>Nombre</TableHeaderColumn>
+			</BootstrapTable>
 		 );
    }
 }
