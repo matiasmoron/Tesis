@@ -7,12 +7,14 @@ import Formulario from './genericos/Formulario';
 import TableTecnicos from './TableTecnicos';
 import Input from './genericos/Input';
 
-class PanelTecnicos extends React.Component {
+class PanelTecnico extends React.Component {
 	constructor() {
       super();
     }
 
 	componentDidMount(){
+		console.log("adasdasd");
+		console.log(api.getElementos());
 		api.getElementos();
 	}
 
@@ -20,7 +22,7 @@ class PanelTecnicos extends React.Component {
 	_addElemento(event){
 		event.preventDefault();
 		api.addElemento(this._nombre.value);
-		Api.getElementos();
+		api.getElementos();
     }
 	_deleteElemento(id){
 		console.log("hola",id);
@@ -32,7 +34,7 @@ class PanelTecnicos extends React.Component {
 
 	render() {
 	  return (
-		<div className="col-md-5">
+		<div className="col-md-9">
 			<Formulario titulo="Creación Técnico" submit={this._addElemento.bind(this)}>
 				<Input label="DNI" valor={input => this._nombre = input} />
 				<button type="submit" className="btn btn-success">Agregar técnico</button>
@@ -50,4 +52,4 @@ const mapStateToProps = function(store) {
   };
 };
 
-export default connect(mapStateToProps)(PanelTecnicos);
+export default connect(mapStateToProps)(PanelTecnico);

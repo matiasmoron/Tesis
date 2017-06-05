@@ -1,5 +1,4 @@
 var React = require('react');
-// var ReactDOM = require('react-dom');
 var ReactBsTable  = require('react-bootstrap-table');
 var BootstrapTable = ReactBsTable.BootstrapTable;
 var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
@@ -53,7 +52,6 @@ class TableServicio extends React.Component {
 			handleConfirmDeleteRow: this.customConfirm,
 			clearSearch: true
 		};
-
 		 return (
 			<BootstrapTable
 				height='auto'
@@ -65,7 +63,7 @@ class TableServicio extends React.Component {
 				options={opciones}
 				hover>
 				<TableHeaderColumn isKey dataField='legajo'>ID</TableHeaderColumn>
-				<TableHeaderColumn dataField='nombre'>Nombre</TableHeaderColumn>
+				<TableHeaderColumn dataField='id_entidad'>Nombre</TableHeaderColumn>
 			</BootstrapTable>
 		 );
    }

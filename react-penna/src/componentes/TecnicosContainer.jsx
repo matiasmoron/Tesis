@@ -1,12 +1,12 @@
 var React = require('react');
-import PanelTecnicos from "./PanelTecnico";
+import PanelTecnico from "./PanelTecnico";
 
 require("../styles/backoffice.scss");
 
 const Container = () => {
   return (
 	<div className="gral-container">
-		<PanelTecnicos/>
+		<PanelTecnico/>
 	</div>
   );
 };

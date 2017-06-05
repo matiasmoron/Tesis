@@ -9,10 +9,11 @@ const initialState = {
 const tecnicoReducer = function(state = initialState, action) {
   switch(action.type) {
 
-    case types.GET_SERVICIOS_SUCCESS:
-      return Object.assign({}, state, { tecnicos: action.tecnicos });
+    case types.GET_TECNICOS_SUCCESS:
+    console.log("reducer",action);
+      return Object.assign({}, state, { tecnicos: action.elementos });
 
-    case types.ADD_SERVICIO_SUCCESS:
+    case types.ADD_TECNICO_SUCCESS:
         return Object.assign({}, state);
 
     // case types.UPDATE_SERVICIO_SUCCESS:

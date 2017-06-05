@@ -13,15 +13,15 @@ export function addSuccess() {
   };
 }
 
-export function deleteSuccess(id) {
-  return {
-    type: types.DELETE_TECNICO_SUCCESS,
-    id
-  };
-}
-export function updateSuccess(elem) {
-  return {
-    type: types.UPDATE_TECNICO_SUCCESS,
-    elem
-  };
-}
+// export function deleteSuccess(id) {
+//   return {
+//     type: types.DELETE_TECNICO_SUCCESS,
+//     id
+//   };
+// }
+// export function updateSuccess(elem) {
+//   return {
+//     type: types.UPDATE_TECNICO_SUCCESS,
+//     elem
+//   };
+// }

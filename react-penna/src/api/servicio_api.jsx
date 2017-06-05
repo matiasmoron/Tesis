@@ -1,7 +1,7 @@
 
 import axios from 'axios';
 import store from '../store';
-import { getServiciosSuccess,addServicioSuccess, deleteServicioSuccess } from '../actions/servicio_actions';
+import { getServiciosSuccess,addServicioSuccess,updateServicioSuccess, deleteServicioSuccess } from '../actions/servicio_actions';
 
 /**
  * Obtiene todos los servicios
