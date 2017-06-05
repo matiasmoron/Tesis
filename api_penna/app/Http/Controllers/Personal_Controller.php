@@ -8,7 +8,7 @@ use App\Personal;
 class Personal_Controller extends Controller
 {
     public function get_personal(Request $request){
-        if (isset($request->)){
+        if (isset($request->legajo)){
             $personal= Personal::find($request->legajo);
             return $personal;
         }
