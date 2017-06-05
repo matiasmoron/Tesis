@@ -33,3 +33,15 @@ Route::middleware('cors')->get('/puestos', 'Puesto_Controller@get_puestos');
 Route::middleware('cors')->post('/puestos', 'Puesto_Controller@add_puesto');
 Route::middleware('cors')->put('/puestos', 'Puesto_Controller@update_puesto');
 Route::middleware('cors')->delete('/puestos', 'Puesto_Controller@remove_puesto');
+
+//Técnicos
+Route::middleware('cors')->get('/tecnicos', 'Tecnico_Controller@get_tecnicos');
+Route::middleware('cors')->post('/tecnicos', 'Tecnico_Controller@add_tecnico');
+Route::middleware('cors')->put('/tecnicos', 'Tecnico_Controller@update_tecnico');
+Route::middleware('cors')->delete('/tecnicos', 'Tecnico_Controller@remove_tecnico');
+
+//Personal
+Route::middleware('cors')->get('/personal', 'Personal_Controller@get_personal');
+Route::middleware('cors')->post('/personal', 'Personal_Controller@add_personal');
+Route::middleware('cors')->put('/personal', 'Personal_Controller@update_personal');
+Route::middleware('cors')->delete('/personal', 'Personal_Controller@remove_personal');
