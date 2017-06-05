@@ -22,6 +22,13 @@ class PanelServicio extends React.Component {
 		servicioApi.addServicio(this._nombre.value);
 		servicioApi.getServicios();
     }
+	_deleteServicio(id){
+		console.log("hola",id);
+		servicioApi.deleteServicio(id);
+    }
+	_updateServicio(servicio){
+		servicioApi.updateServicio(servicio);
+	}
 
 	render() {
 	  return (
@@ -30,7 +37,7 @@ class PanelServicio extends React.Component {
 				<Input label="Nombre" valor={input => this._nombre = input} />
 				<button type="submit" className="btn btn-success">Agregar servicio</button>
 			</Formulario>
-        	<TableServicio datos_elemento={this.props.servicios}/>
+        	<TableServicio datos_elemento={this.props.servicios} updateServicio={this._updateServicio.bind(this)} deleteServicio={this._deleteServicio.bind(this)}/>
 		</div>
       );
     }
@@ -38,7 +45,6 @@ class PanelServicio extends React.Component {
 
 
 const mapStateToProps = function(store) {
-
   return {
     servicios: store.servicioState.servicios
   };

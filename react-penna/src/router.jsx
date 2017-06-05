@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import container from './componentes/Container';
+import tecnicos from './componentes/TecnicosContainer';
 import counter from './componentes/Counter';
 
 export default (
@@ -9,14 +10,12 @@ export default (
 		   <div className="col-md-2 menu-lateral">
 			   <ul className="nav nav-pills nav-stacked">
 				   <li><Link to="/">Home</Link></li>
-				   <li><Link to="/counter">Counter</Link></li>
+				   <li><Link to="/tecnicos">Técnicos</Link></li>
         		   <li><Link to="/counter">Counter</Link></li>
-				   <li><Link to="/counter">Counter</Link></li>
-				   <li><Link to="/counter">Counter</Link></li>
-				   <li><Link to="/counter">Counter</Link></li>
 			   </ul>
 		   </div>
 		   <Route exact path="/" component={container} />
+           <Route exact path="/tecnicos" component={tecnicos} />
 		   <Route path="/counter" component={counter} />
 	   </div>
 

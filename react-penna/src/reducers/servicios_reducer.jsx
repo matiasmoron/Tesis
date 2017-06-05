@@ -19,6 +19,9 @@ const servicioReducer = function(state = initialState, action) {
         // return {servicios: nuevo_servicio[0]};
         return Object.assign({}, state);
 
+    case types.UPDATE_SERVICIO_SUCCESS:
+        return Object.assign({}, state);
+
     case types.DELETE_SERVICIO_SUCCESS:
       const newServicios = _.filter(state.servicios, servicio => servicio.id_servicio != action.id_servicio);
       return Object.assign({}, state, { servicios: newServicios });

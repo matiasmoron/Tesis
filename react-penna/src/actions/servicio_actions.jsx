@@ -19,3 +19,9 @@ export function deleteServicioSuccess(id_servicio) {
     id_servicio
   };
 }
+export function updateServicioSuccess(servicio) {
+  return {
+    type: types.UPDATE_SERVICIO_SUCCESS,
+    servicio
+  };
+}

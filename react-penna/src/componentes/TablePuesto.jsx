@@ -14,8 +14,6 @@ class TablePuesto extends React.Component {
 			 <BootstrapTable height='auto' data={this.props.datos_elemento}  hover>
 				 <TableHeaderColumn isKey dataField='id_puesto'>ID</TableHeaderColumn>
 				 <TableHeaderColumn dataField='nombre'>Nombre</TableHeaderColumn>
-				 <TableHeaderColumn dataField='edit'>Editar </TableHeaderColumn>
-				 <TableHeaderColumn dataField='borrar'>Borrar </TableHeaderColumn>
 			 </BootstrapTable>
 		 );
    }

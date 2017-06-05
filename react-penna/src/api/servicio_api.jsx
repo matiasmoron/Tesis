@@ -25,6 +25,14 @@ export function addServicio(nombre) {
    });
 }
 
+export function updateServicio(servicio) {
+  return axios.put('http://localhost:8000/api/servicios',"id_servicio="+servicio.id+"",{headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
+  .then(data => {
+     store.dispatch(updateServicioSuccess(servicio));
+     return data;
+   });
+}
+
 export function deleteServicio(id_servicio) {
   return axios.delete('http://localhost:8000/api/servicios',"id_servicio="+id_servicio+"",{headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
   .then(data => {

@@ -11,12 +11,12 @@ class TableServicio extends React.Component {
 
 	 onAfterDeleteRow(rowKeys){
 		 for (var i = 0; i < rowKeys.length; i++)
-			 this.props.deleteServicio(rowKeys[i]);
+			 this.props.deleteElemento(rowKeys[i]);
 
 	 }
-	updateServicio(row, cellName, cellValue) {
+	updateElemento(row, cellName, cellValue) {
 		  	console.log(row);
-			this.props.updateServicio(row);
+			this.props.updateElemento(row);
 	}
 	customConfirm(next, dropRowKeys) {
 	  const dropRowKeysStr = dropRowKeys.join(',');
@@ -40,7 +40,7 @@ class TableServicio extends React.Component {
 	    const editar = {
 			mode: 'dbclick',
 			blurToSave: true,
-			afterSaveCell: this.updateServicio.bind(this)
+			afterSaveCell: this.updateElemento.bind(this)
 	   	};
 
 		const selectFila={
@@ -64,7 +64,7 @@ class TableServicio extends React.Component {
 				cellEdit={editar}
 				options={opciones}
 				hover>
-				<TableHeaderColumn isKey dataField='id_servicio'>ID</TableHeaderColumn>
+				<TableHeaderColumn isKey dataField='legajo'>ID</TableHeaderColumn>
 				<TableHeaderColumn dataField='nombre'>Nombre</TableHeaderColumn>
 			</BootstrapTable>
 		 );
