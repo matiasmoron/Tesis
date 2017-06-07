@@ -62,8 +62,10 @@ class TableServicio extends React.Component {
 				cellEdit={editar}
 				options={opciones}
 				hover>
-				<TableHeaderColumn isKey dataField='legajo'>ID</TableHeaderColumn>
-				<TableHeaderColumn dataField='id_entidad'>Nombre</TableHeaderColumn>
+				<TableHeaderColumn isKey dataField='dni'>DNI</TableHeaderColumn>
+				<TableHeaderColumn dataField='nombre'>Nombre</TableHeaderColumn>
+				<TableHeaderColumn dataField='entidad'>Entidad</TableHeaderColumn>
+
 			</BootstrapTable>
 		 );
    }

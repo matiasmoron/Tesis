@@ -1,7 +1,7 @@
 
 import axios from 'axios';
 import store from '../store';
-import { getSuccess,addSuccess } from '../actions/tecnico_actions';
+import { getTecnicosSuccess,getPersonalSuccess,addSuccess } from '../actions/tecnico_actions';
 
 /**
  * Obtiene todos los servicios
@@ -9,10 +9,18 @@ import { getSuccess,addSuccess } from '../actions/tecnico_actions';
  * @return [type]
  */
 
-export function getElementos() {
+export function getTecnicos() {
   return axios.get('http://localhost:8000/api/tecnicos')
     .then(response => {
-      store.dispatch(getSuccess(response.data));
+      store.dispatch(getTecnicosSuccess(response.data));
+      return response.data;
+    });
+}
+
+export function getPersonal(dni) {
+  return axios.post('http://localhost:8000/api/tecnico_personal',"dni="+dni+"",{headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
+    .then(response => {
+      store.dispatch(getPersonalSuccess(response.data));
       return response.data;
     });
 }

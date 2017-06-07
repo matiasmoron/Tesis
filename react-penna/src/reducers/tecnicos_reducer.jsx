@@ -2,16 +2,20 @@ import * as types from '../actions/action-types';
 import _ from 'lodash';
 
 const initialState = {
- tecnicos: [
- 		]
+ tecnicos: [],
+ personal: []
 };
 
 const tecnicoReducer = function(state = initialState, action) {
   switch(action.type) {
 
     case types.GET_TECNICOS_SUCCESS:
-    console.log("reducer",action);
+        // console.log("reducer",action);
       return Object.assign({}, state, { tecnicos: action.elementos });
+
+    case types.GET_PERSONALTECNICO_SUCCESS:
+        // console.log("reducer",action);
+      return Object.assign({}, state, { personal: action.elementos });
 
     case types.ADD_TECNICO_SUCCESS:
         return Object.assign({}, state);

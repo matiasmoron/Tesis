@@ -1,8 +1,15 @@
 import * as types from '../actions/action-types';
 
-export function getSuccess(elementos) {
+export function getTecnicosSuccess(elementos) {
   return {
     type: types.GET_TECNICOS_SUCCESS,
+    elementos
+  };
+}
+
+export function getPersonalSuccess(elementos) {
+  return {
+    type: types.GET_PERSONALTECNICO_SUCCESS,
     elementos
   };
 }
