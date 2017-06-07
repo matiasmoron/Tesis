@@ -15,7 +15,7 @@ class Tecnico_Controller extends Controller
                     ->leftJoin('entidad','tecnico.id_entidad','=','entidad.id_entidad')
                     ->select('tecnico.legajo', 'personal.nombre','dni','entidad.nombre as entidad','entidad.id_entidad')
                     ->get();
-        
+
         return $tecnico;
     }
 
