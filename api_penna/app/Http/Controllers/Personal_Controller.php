@@ -8,12 +8,14 @@ use App\Personal;
 class Personal_Controller extends Controller
 {
     public function get_personal(Request $request){
-        if (isset($request->legajo)){
-            $personal= Personal::find($request->legajo);
-            return $personal;
-        }
-        else{
-            echo Personal::all();
-        }
+         $personal=DB::raw('SELECT 
+                                CONCAT(apellido,", ",nombre) as nombre,legajo
+                            FROM 
+                                personal
+                            WHERE 
+                                estado=1
+                                AND
+                                legajo='+$request->legajo+''
+                        );
     }
 }
