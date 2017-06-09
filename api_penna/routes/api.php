@@ -42,8 +42,8 @@ Route::middleware('cors')->delete('/tecnicos', 'Tecnico_Controller@remove_tecnic
 Route::middleware('cors')->post('/tecnico_entidad', 'Tecnico_Controller@get_entidades_no_asignadas');
 
 //Personal
-Route::middleware('cors')->get('/personal', 'Personal_Controller@get_personal');
-Route::middleware('cors')->post('/personal', 'Personal_Controller@add_personal');
+Route::middleware('cors')->post('/personal', 'Personal_Controller@get_personal');
+//Route::middleware('cors')->post('/personal', 'Personal_Controller@add_personal');
 Route::middleware('cors')->put('/personal', 'Personal_Controller@update_personal');
 Route::middleware('cors')->delete('/personal', 'Personal_Controller@remove_personal');
 
