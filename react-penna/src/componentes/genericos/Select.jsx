@@ -8,8 +8,7 @@ const SelectInput = (props) => {
 				<select className="form-control" ref={props.valor} >
                     {
                       props.data_opciones.map(function(opt) {
-                        return <option
-                          value={opt.id}>{opt.nombre}</option>;
+                        return <option key={opt.id} value="{opt.id}">{opt.nombre}</option>;
                       })
                     }
 				</select>

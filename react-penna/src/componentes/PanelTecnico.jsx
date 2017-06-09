@@ -17,18 +17,27 @@ class PanelTecnico extends React.Component {
 		api.getTecnicos();
 	}
 
-	componentWillUpdate (nextProps){
-		console.log(nextProps);
+	componentWillUpdate(nextProps, nextState){
+		// console.log("next",nextProps,this.props);
+		console.log("props",this.props.personal);
+			console.log("next",nextState);
 		if(nextProps.personal[0]!=undefined){
 			this._nombre.value= nextProps.personal[0].nombre;
-			// this._entidad.value= nextProps.personal[0].entidad;
-			//armar select
-
-
+			//Actualizar select
+			// console.log(nextProps.personal[0].legajo);
+			// console.log(this.props.personal[0].legajo)
+			if(this.props.personal[0] == undefined)
+				api.getTecnicoEntidad(nextProps.personal[0].legajo);
+			else
+				if(nextProps.personal[0].legajo != this.props.personal[0].legajo){
+					console.log("cambio");
+					api.getTecnicoEntidad(nextProps.personal[0].legajo);
+				}
 		}
 		else{
 			this._nombre.value= "";
-			// this._entidad.value= "";
+			//ocultar el select
+			// api.getTecnicoEntidad(nextProps.personal[0].legajo);
 		}
 	}
 
@@ -61,7 +70,7 @@ class PanelTecnico extends React.Component {
 					<button type="submit" className="btn btn-success">Buscar</button>
 				</div>
 				<div className="row">
-					<Select data_opciones={this.props.entidades} label="Entidad"   valor={input => this._entidad = input} />
+					<SelectInput data_opciones={this.props.entidades} label="Entidad"   valor={input => this._entidad = input} />
 					<button onClick={this._addElemento.bind(this)} className="btn btn-success">Agregar técnico</button>
 				</div>
 			</Formulario>

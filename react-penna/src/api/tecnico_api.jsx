@@ -1,7 +1,7 @@
 
 import axios from 'axios';
 import store from '../store';
-import { getTecnicosSuccess,getPersonalSuccess,addSuccess } from '../actions/tecnico_actions';
+import { getTecnicosSuccess,getPersonalSuccess,getTecnicoEntidadSuccess,addSuccess } from '../actions/tecnico_actions';
 
 /**
  * Obtiene todos los servicios
@@ -30,7 +30,7 @@ export function getPersonal(legajo) {
 export function getTecnicoEntidad(legajo) {
   return axios.post('http://localhost:8000/api/tecnico_entidad',"legajo="+legajo+"",{headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
     .then(response => {
-      store.dispatch(getPersonalSuccess(response.data));
+      store.dispatch(getTecnicoEntidadSuccess(response.data));
       return response.data;
     });
 }

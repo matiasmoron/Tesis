@@ -14,6 +14,13 @@ export function getPersonalSuccess(elementos) {
   };
 }
 
+export function getTecnicoEntidadSuccess(elementos) {
+  return {
+    type: types.GET_TECNICOENTIDAD_SUCCESS,
+    elementos
+  };
+}
+
 export function addSuccess() {
   return {
     type: types.ADD_TECNICO_SUCCESS
