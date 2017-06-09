@@ -24,7 +24,7 @@ class Tecnico_Controller extends Controller
                     ->join('tecnico','tecnico.legajo','=','personal.legajo')
                     ->join('entidad','tecnico.id_entidad','=','entidad.id_entidad')
                     ->select('tecnico.legajo', 'personal.nombre','dni','entidad.nombre as entidad','entidad.id_entidad')
-                    ->where('personal.dni', $request->dni)
+                    ->where('personal.legajo', $request->legajo)
                     ->get();
 
         return $tecnico;
