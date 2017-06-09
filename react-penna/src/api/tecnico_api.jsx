@@ -9,6 +9,7 @@ import { getTecnicosSuccess,getPersonalSuccess,addSuccess } from '../actions/tec
  * @return [type]
  */
 
+//Para completar la tabla
 export function getTecnicos() {
   return axios.get('http://localhost:8000/api/tecnicos')
     .then(response => {
@@ -17,16 +18,24 @@ export function getTecnicos() {
     });
 }
 
-export function getPersonal(dni) {
-  return axios.post('http://localhost:8000/api/tecnico_personal',"dni="+dni+"",{headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
+export function getPersonal(legajo) {
+  return axios.post('http://localhost:8000/api/personal',"legajo="+legajo+"",{headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
     .then(response => {
       store.dispatch(getPersonalSuccess(response.data));
       return response.data;
     });
 }
 
-export function addElemento(nombre) {
-  return axios.post('http://localhost:8000/api/tecnicos',"nombre="+nombre+"",{headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
+//Obtiene todas las entidades a las que no pertenece el empleado con el legajo ingresado
+export function getTecnicoEntidad(legajo) {
+  return axios.post('http://localhost:8000/api/tecnico_entidad',"legajo="+legajo+"",{headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
+    .then(response => {
+      store.dispatch(getPersonalSuccess(response.data));
+      return response.data;
+    });
+}
+export function addElemento(legajo,entidad) {
+  return axios.post('http://localhost:8000/api/tecnicos',"legajo="+legajo+"&entidad="+entidad+"",{headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
   .then(data => {
      store.dispatch(addSuccess());
      return data;

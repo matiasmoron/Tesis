@@ -20,17 +20,17 @@ class Tecnico_Controller extends Controller
     }
 
     public function get_entidades_no_asignadas(Request $request){
-        $entidades=DB::raw('SELECT 
-                                e.id_entidad, e.nombre 
-                            FROM 
-                                entidad e 
-                            WHERE 
+        $entidades=DB::select('SELECT
+                                e.id_entidad, e.nombre
+                            FROM
+                                entidad e
+                            WHERE
                                 e.estado=1
                                 AND
                                 e.id_entidad not in (
-                                        SELECT 
-                                            t.id_entidad 
-                                        FROM 
+                                        SELECT
+                                            t.id_entidad
+                                        FROM
                                             tecnico t
                                         WHERE
                                             t.legajo='+$request->legajo+')'

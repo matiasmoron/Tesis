@@ -6,6 +6,7 @@ import store from '../store';
 import Formulario from './genericos/Formulario';
 import TableTecnicos from './TableTecnicos';
 import Input from './genericos/Input';
+import SelectInput from './genericos/Select';
 
 class PanelTecnico extends React.Component {
 	constructor() {
@@ -17,27 +18,31 @@ class PanelTecnico extends React.Component {
 	}
 
 	componentWillUpdate (nextProps){
+		console.log(nextProps);
 		if(nextProps.personal[0]!=undefined){
 			this._nombre.value= nextProps.personal[0].nombre;
-			this._entidad.value= nextProps.personal[0].entidad;
+			// this._entidad.value= nextProps.personal[0].entidad;
+			//armar select
+
+
 		}
 		else{
 			this._nombre.value= "";
-			this._entidad.value= "";
+			// this._entidad.value= "";
 		}
 	}
 
 	_getPersonal(event){
 		event.preventDefault();
 		console.log("hago el get");
-
-		api.getPersonal(this._dni.value);
+		api.getPersonal(this._legajo.value);
 
 	}
 	_addElemento(event){
 		event.preventDefault();
-		api.addElemento(this._nombre.value);
-		api.getTecnicos();
+		console.log(this._legajo.value);
+		console.log(this._entidad.value);
+		api.addElemento(this._legajo.value,this._entidad.value);
     }
 	_deleteElemento(id){
 		api.deleteElemento(id);
@@ -50,10 +55,15 @@ class PanelTecnico extends React.Component {
 	  return (
 		<div className="col-md-9">
 			<Formulario titulo="Creación Técnico" submit={this._getPersonal.bind(this)}>
-				<Input label="DNI" placeholder="Ingrese un dni" valor={input => this._dni = input} />
-				<Input label="Nombre"  placeholder="Nombre" valor={input => this._nombre = input} />
-				<Input label="Entidad" placeholder="Entidad"  valor={input => this._entidad = input} />
-				<button type="submit" className="btn btn-success">Buscar</button>
+				<div className="row">
+					<Input label="Legajo" placeholder="Ingrese un legajo" valor={input => this._legajo = input} />
+					<Input label="Nombre"  placeholder="Nombre" valor={input => this._nombre = input} />
+					<button type="submit" className="btn btn-success">Buscar</button>
+				</div>
+				<div className="row">
+					<Select data_opciones={this.props.entidades} label="Entidad"   valor={input => this._entidad = input} />
+					<button onClick={this._addElemento.bind(this)} className="btn btn-success">Agregar técnico</button>
+				</div>
 			</Formulario>
         	<TableTecnicos datos_elemento={this.props.tecnicos} updateElemento={this._updateElemento.bind(this)} deleteElemento={this._deleteElemento.bind(this)}/>
 		</div>
@@ -66,7 +76,8 @@ const mapStateToProps = function(store) {
 console.log("maps",store.tecnicoState);
   return {
     tecnicos: store.tecnicoState.tecnicos,
-	personal: store.tecnicoState.personal
+	personal: store.tecnicoState.personal,
+	entidades: store.tecnicoState.entidades
   };
 };
 
