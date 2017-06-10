@@ -34,7 +34,7 @@ export function updateServicio(servicio) {
 }
 
 export function deleteServicio(id_servicio) {
-  return axios.delete('http://localhost:8000/api/servicios',"id_servicio="+id_servicio+"",{headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
+  return axios({method: 'delete',url:'http://localhost:8000/api/servicios',params: {id_servicio:id_servicio},headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
   .then(data => {
      store.dispatch(deleteServicioSuccess(id_servicio));
      return data;

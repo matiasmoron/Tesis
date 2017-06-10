@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\DB;
 
 class Personal_Controller extends Controller
 {
-    public function get_personal(Request $request){
-        $legajo = $request -> legajo;
+    public function get_personal($legajo){
+        //$legajo = $request -> legajo;
         $params= array();
         $query='SELECT
                     CONCAT(apellido,", ",nombre) as nombre,
@@ -26,5 +26,29 @@ class Personal_Controller extends Controller
 
 
         return $personal;
+    }
+
+    public function add_personal(Request $request){
+        /*$params= array();
+        $query='INSERT INTO personal (legajo,dni,usuario,nombre,apellido,id_puesto,id_servicio,fecha_ingreso,estado)
+                VALUES(?,?,?,?,?,?,?,?,?)';
+
+        array_push($params,$request->legajo);
+        array_push($params,$request->dni);
+        array_push($params,$request->usuario);
+        array_push($params,$request->nombre);
+        array_push($params,$request->apellido);
+        array_push($params,$request->id_puesto);
+        array_push($params,$request->id_servicio);
+        array_push($params,$request->fecha_ingreso);
+        array_push($params,0);//estado
+
+
+        $personal=DB::select($query,$params);
+
+
+        return $personal;*/
+        echo $request;
+
     }
 }
