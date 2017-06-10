@@ -19,6 +19,9 @@ const puestoReducer = function(state = initialState, action) {
         // return {puestos: nuevo_puesto[0]};
         return Object.assign({}, state);
 
+    case types.UPDATE_PUESTO_SUCCESS:
+        return Object.assign({}, state);
+
     case types.DELETE_PUESTO_SUCCESS:
       const newPuestos = _.filter(state.puestos, puesto => puesto.id_puesto != action.id_puesto);
       return Object.assign({}, state, { puestos: newPuestos });

@@ -19,3 +19,10 @@ export function deletePuestoSuccess(id_puesto) {
     id_puesto
   };
 }
+
+export function updatePuestoSuccess(puesto) {
+  return {
+    type: types.UPDATE_PUESTO_SUCCESS,
+    puesto
+  };
+}

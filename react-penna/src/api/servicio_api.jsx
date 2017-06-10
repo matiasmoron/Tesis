@@ -26,12 +26,13 @@ export function addServicio(nombre) {
 }
 
 export function updateServicio(servicio) {
-  return axios.put('http://localhost:8000/api/servicios',"id_servicio="+servicio.id+"",{headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
+  return axios({method: 'put',url:'http://localhost:8000/api/servicios',params: {id_servicio:servicio.id_servicio,nombre:servicio.nombre},headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
   .then(data => {
      store.dispatch(updateServicioSuccess(servicio));
      return data;
    });
 }
+
 
 export function deleteServicio(id_servicio) {
   return axios({method: 'delete',url:'http://localhost:8000/api/servicios',params: {id_servicio:id_servicio},headers:{'Content-Type': 'application/x-www-form-urlencoded'}})

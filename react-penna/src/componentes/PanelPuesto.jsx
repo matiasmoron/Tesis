@@ -23,6 +23,13 @@ class PanelPuesto extends React.Component {
 		puestoApi.getPuestos();
     }
 
+	_deletePuesto(id){
+		puestoApi.deletePuesto(id);
+    }
+	_updatePuesto(puesto){
+		puestoApi.updatePuesto(puesto);
+	}
+
 	render() {
 	  return (
 		<div className="col-md-5">
@@ -30,7 +37,7 @@ class PanelPuesto extends React.Component {
 				<Input label="Nombre" valor={input => this._nombre = input} />
 				<button type="submit" className="btn btn-success">Agregar Puesto</button>
 			</Formulario>
-        	<TablePuesto datos_elemento={this.props.puestos}/>
+        	<TablePuesto datos_elemento={this.props.puestos} updatePuesto={this._updatePuesto.bind(this)} deletePuesto={this._deletePuesto.bind(this)}/>
 		</div>
       );
     }

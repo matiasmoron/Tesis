@@ -23,7 +23,6 @@ class PanelServicio extends React.Component {
 		servicioApi.getServicios();
     }
 	_deleteServicio(id){
-		console.log("hola",id);
 		servicioApi.deleteServicio(id);
     }
 	_updateServicio(servicio){

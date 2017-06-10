@@ -15,7 +15,6 @@ class TableServicio extends React.Component {
 
 	 }
 	updateServicio(row, cellName, cellValue) {
-		  	console.log(row);
 			this.props.updateServicio(row);
 	}
 	customConfirm(next, dropRowKeys) {

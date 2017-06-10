@@ -1,7 +1,7 @@
 
 import axios from 'axios';
 import store from '../store';
-import { getPuestosSuccess,addPuestoSuccess, deletePuestoSuccess } from '../actions/puesto_actions';
+import { getPuestosSuccess,addPuestoSuccess,updatePuestoSuccess, deletePuestoSuccess } from '../actions/puesto_actions';
 
 export function getPuestos() {
   return axios.get('http://localhost:8000/api/puestos')
@@ -19,8 +19,18 @@ export function addPuesto(nombre) {
    });
 }
 
+
+export function updatePuesto(puesto) {
+  return axios({method: 'put',url:'http://localhost:8000/api/puestos',params: {id_puesto:puesto.id_puesto,nombre:puesto.nombre},headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
+  .then(data => {
+     store.dispatch(updatePuestoSuccess(puesto));
+     return data;
+   });
+}
+
+
 export function deletePuesto(id_puesto) {
-  return axios.delete('http://localhost:8000/api/puestos',"id_puesto="+id_puesto+"",{headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
+  return axios({method: 'delete',url:'http://localhost:8000/api/puestos',params: {id_puesto:id_puesto},headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
   .then(data => {
      store.dispatch(deletePuestoSuccess(id_puesto));
      return data;
