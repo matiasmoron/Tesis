@@ -3,6 +3,7 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpack = require('webpack');
 const webpackConfig = require('./webpack.config.js');
 const app = express();
+var path = require('path');
 
 const compiler = webpack(webpackConfig);
 
@@ -17,6 +18,10 @@ app.use(webpackDevMiddleware(compiler, {
   },
   historyApiFallback: true,
 }));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'vistas/index.html'))
+})
 
 app.use(require('webpack-hot-middleware')(compiler));
 
