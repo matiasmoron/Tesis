@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <script src="js/modernizr.custom.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/tab.css" />
+    <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="css/menu.css" rel="stylesheet" type="text/css" media="all" />
+</head>
+
+<body>
+
+    <div class="">
+        <section>
+            <div class="tabs tabs-style-bar">
+                <nav>
+                    <ul>
+                        <li><a href="#section-bar-1" class="icon icon-home"><span>Ordenes de trabajo</span></a></li>
+                        <li><a href="#section-bar-2" class="icon icon-gift"><span>Stock / Compras</span></a></li>
+                        <li><a href="#section-bar-3" class="icon icon-upload"><span>Solicitudes</span></a></li>
+                        <li><a href="#section-bar-4" class="icon icon-upload"><span>Personal</span></a></li>
+                        <li><a href="#section-bar-5" class="icon icon-tools"><span>Configuracion</span></a></li>
+                    </ul>
+                </nav>
+            <div class="content-wrap">
+                <section id="section-bar-1">
+                    <ul class="ca-menu col-md-12">
+                        <li class="col-md-3">
+                            <a href="#">
+                                <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+                                <div class="ca-content">
+                                    <h4 class="ca-main nueva">666</h4>
+                                    <h3 class="ca-sub nueva">Nueva orden</h3>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="col-md-3">
+                            <a href="#">
+                                <i class="glyphicon glyphicon-search" aria-hidden="true"></i>
+                                <div class="ca-content">
+                                    <h4 class="ca-main ver">26,808</h4>
+                                    <h3 class="ca-sub ver">Ver ordenes</h3>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="col-md-3">
+                            <a href="#">
+                                <i class="glyphicon glyphicon-font" aria-hidden="true"></i>
+                                <div class="ca-content">
+                                    <h4 class="ca-main admin">29,008</h4>
+                                    <h3 class="ca-sub admin">Administracion</h3>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </section>
+                <section id="section-bar-2">
+                     <ul class="ca-menu col-md-12">
+                        <li class="col-md-3">
+                            <a href="#">
+                                <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+                                <div class="ca-content">
+                                    <h4 class="ca-main nueva">666</h4>
+                                    <h3 class="ca-sub nueva">Cargar orden</h3>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="col-md-3">
+                            <a href="#">
+                                <i class="glyphicon glyphicon-search" aria-hidden="true"></i>
+                                <div class="ca-content">
+                                    <h4 class="ca-main ver">26,808</h4>
+                                    <h3 class="ca-sub ver">Stock</h3>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="col-md-3">
+                            <a href="#">
+                                <i class="glyphicon glyphicon-font" aria-hidden="true"></i>
+                                <div class="ca-content">
+                                    <h4 class="ca-main admin">29,008</h4>
+                                    <h3 class="ca-sub admin">Proveedores</h3>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="col-md-3">
+                            <a href="#">
+                                <i class="glyphicon glyphicon-font" aria-hidden="true"></i>
+                                <div class="ca-content">
+                                    <h4 class="ca-main dos">29,008</h4>
+                                    <h3 class="ca-sub dos">Contratos</h3>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </section>
+                <section id="section-bar-3">
+                    <p>Bostero</p>
+                </section>
+                <section id="section-bar-4">
+                    <p>Pecho</p>
+                </section>
+                <section id="section-bar-5">
+                    <p>Frio</p>
+                </section>
+            </div>
+                <!-- /content -->
+            </div>
+            <!-- /tabs -->
+        </section>
+    </div>
+    <!-- /container -->
+    <script src="js/cbpFWTabs.js"></script>
+    <script>
+        (function () {
+            [].slice.call(document.querySelectorAll('.tabs')).forEach(function (el) {
+                new CBPFWTabs(el);
+            });
+        })();
+    </script>
+</body>
+
+</html>
