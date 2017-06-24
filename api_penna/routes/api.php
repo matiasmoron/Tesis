@@ -50,7 +50,7 @@ Route::middleware('cors')->put('/personal', 'Personal_Controller@update_personal
 Route::middleware('cors')->delete('/personal', 'Personal_Controller@remove_personal');
 
 //Entidad
-Route::middleware('cors')->get('/entidades', 'Entidad_Controller@get_entidades');
+Route::middleware('cors')->get('/entidades/{id_entidad?}', 'Entidad_Controller@get_entidades');
 Route::middleware('cors')->post('/entidades', 'Entidad_Controller@add_entidad');
 Route::middleware('cors')->put('/entidades', 'Entidad_Controller@update_entidad');
 Route::middleware('cors')->delete('/entidades', 'Entidad_Controller@remove_entidad');
