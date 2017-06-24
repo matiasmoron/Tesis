@@ -8,8 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class Personal_Controller extends Controller
 {
-    public function get_personal($legajo){
-        //$legajo = $request -> legajo;
+    public function get_personal($legajo=null){
         $params= array();
         $query='SELECT
                     CONCAT(apellido,", ",nombre) as nombre,

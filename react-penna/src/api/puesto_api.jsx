@@ -4,7 +4,7 @@ import store from '../store';
 import { getPuestosSuccess,addPuestoSuccess,updatePuestoSuccess, deletePuestoSuccess } from '../actions/puesto_actions';
 
 export function getPuestos() {
-  return axios.get('http://localhost:8000/api/puestos')
+  return axios({method: 'get',url:'http://localhost:8000/api/puestos',headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
     .then(response => {
       store.dispatch(getPuestosSuccess(response.data));
       return response.data;
@@ -12,7 +12,7 @@ export function getPuestos() {
 }
 
 export function addPuesto(nombre) {
-  return axios.post('http://localhost:8000/api/puestos',"nombre="+nombre+"",{headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
+  return axios({method: 'post',url:'http://localhost:8000/api/puestos',params: {nombre:nombre},headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
   .then(data => {
      store.dispatch(addPuestoSuccess());
      return data;
