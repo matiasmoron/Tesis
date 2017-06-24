@@ -4,6 +4,7 @@ import { combineReducers } from 'redux';
 import servicioReducer from './servicios_reducer';
 import puestoReducer from './puestos_reducer';
 import tecnicoReducer from './tecnicos_reducer';
+import entidadReducer from './entidades_reducer';
 
 
 
@@ -11,7 +12,8 @@ import tecnicoReducer from './tecnicos_reducer';
 var reducers = combineReducers({
     servicioState: servicioReducer,
     puestoState: puestoReducer,
-    tecnicoState: tecnicoReducer
+    tecnicoState: tecnicoReducer,
+    entidadState: entidadReducer
 });
 
 export default reducers;

@@ -1,22 +1,22 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
-import container from './componentes/Container';
-import tecnicos from './componentes/TecnicosContainer';
-import counter from './componentes/Counter';
+import puestoServicio from './componentes/ContainerPuestoServicio';
+import tecnicos from './componentes/ContainerTecnicos';
+import entidades from './componentes/ContainerEntidades';
 
 export default (
    <Router history={Router.hashHistory}>
-	   <div>
+       <div>
 		   <div className="col-md-2 menu-lateral">
 			   <ul className="nav nav-pills nav-stacked">
 				   <li><Link to="/">Home</Link></li>
 				   <li><Link to="/tecnicos">Técnicos</Link></li>
-        		   <li><Link to="/counter">Counter</Link></li>
+        		   <li><Link to="/entidades">Entidades</Link></li>
 			   </ul>
 		   </div>
-		   <Route exact path="/" component={container} />
+		   <Route exact path="/" component={puestoServicio} />
            <Route exact path="/tecnicos" component={tecnicos} />
-		   <Route path="/counter" component={counter} />
+		   <Route path="/entidades" component={entidades} />
 	   </div>
 
    </Router>

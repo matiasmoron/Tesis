@@ -52,6 +52,7 @@ class Entidad_Controller extends Controller
         array_push($params,$request->nombre);
         array_push($params,$request->id_entidad);
 
+
         $update_entidad=DB::update($query,$params);
 
         return $update_entidad;
@@ -59,9 +60,9 @@ class Entidad_Controller extends Controller
     }
 
 
-    public function delete_entidad(Request $request){
+    public function remove_entidad(Request $request){
         $params= array();
-        $query='UPDATE 
+        $query='UPDATE entidad
         		SET    estado='.BAJA.'
                 WHERE  id_entidad=?';
 

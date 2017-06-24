@@ -6,7 +6,8 @@ ul.ca-menu{
     margin-top: 50px;
     display: flex;
     justify-content: center;
-    align-items: center;
+    flex-wrap: wrap;
+    
 }
 ul.ca-menu li i {
     font-size: 60px;

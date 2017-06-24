@@ -1,6 +1,9 @@
 .gral-container{
 	margin-top: 5%;
 	margin-bottom: 5%;
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
 }
 .menu-lateral{
 	border-right: 3px solid black;
