@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Entidad;
-use Illuminate\Support\Facades\DB;
+
 
 class Entidad_Controller extends Controller
 {
@@ -20,30 +20,41 @@ class Entidad_Controller extends Controller
             array_push($params,$id_entidad);
         }
 
-        $entidades=DB::select($query,$params);
-
-
-        return $entidades;
+        return $this->execute_simple_query("select",$query,$params);
     }
 
+
     public function add_entidad(Request $request){
-        $params= array();
-        $query='INSERT INTO entidad (nombre,tipo_entidad,estado)
+        $this->validarActualizar($request->all());
+       
+        $metodo=array();
+        $array_params= array();
+        $params=array();
+        $query=array();
+
+        //Primera consulta
+        array_push($metodo, "insert");
+        $query[0]='INSERT INTO entidad (nombre,tipo_entidad,estado)
                 VALUES(?,?,?)';
 
         array_push($params,$request->nombre);
         array_push($params,$request->tipo_entidad);
         array_push($params,ALTA);
+        array_push($array_params,$params);
 
-        $agregar_entidad=DB::insert($query,$params);
+
+        //Segunda consulta
+        array_push($metodo, "select");
+        $query[1]= "SELECT * FROM entidad where id_entidad=last_insert_id()";
+        array_push($array_params,array());
 
 
-        $entidad= "SELECT * FROM entidad where id_entidad=last_insert_id();";
-        return DB::select($entidad);
-
+        return $this->execute_multiple_query($metodo,$query,$array_params,true);
     }
 
     public function update_entidad(Request $request){
+        $this->validarIDEntidad($request->all());
+
         $params= array();
         $query='UPDATE entidad
         		SET    nombre=?
@@ -53,14 +64,14 @@ class Entidad_Controller extends Controller
         array_push($params,$request->id_entidad);
 
 
-        $update_entidad=DB::update($query,$params);
-
-        return $update_entidad;
+        return $this->execute_simple_query("update",$query,$params);
 
     }
 
 
     public function remove_entidad(Request $request){
+        $this->validarIDEntidad($request->all());
+
         $params= array();
         $query='UPDATE entidad
         		SET    estado='.BAJA.'
@@ -68,13 +79,26 @@ class Entidad_Controller extends Controller
 
         array_push($params,$request->id_entidad);
 
-        $delete_entidad=DB::update($query,$params);
-
-        return $delete_entidad;
+        return $this->execute_simple_query("update",$query,$params);
 
     }
 
+    private function validarActualizar($datos){
+        $reglas=[
+            'nombre' => 'required|max:45',
+            'tipo_entidad' => 'required|numeric',
+            ];
 
+        $this->validar($datos,$reglas);
+    }
+
+    private function validarIDEntidad($datos){
+        $reglas=[
+            'id_entidad' => 'required|numeric',
+            ];
+
+        $this->validar($datos,$reglas);
+    }
 
 
 }

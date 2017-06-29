@@ -1,6 +1,7 @@
 
 import axios from 'axios';
 import store from '../store';
+import * as DbCall from '../componentes/commons/DbCall';
 import { getServiciosSuccess,addServicioSuccess,updateServicioSuccess, deleteServicioSuccess } from '../actions/servicio_actions';
 
 /**
@@ -10,34 +11,41 @@ import { getServiciosSuccess,addServicioSuccess,updateServicioSuccess, deleteSer
  */
 
 export function getServicios() {
-  return axios.get('http://localhost:8000/api/servicios')
-    .then(response => {
-      store.dispatch(getServiciosSuccess(response.data));
-      return response.data;
-    });
+  var args={metodo:'get',
+            url:'http://localhost:8000/api/servicios',
+            params:{},
+            callback:getServiciosSuccess
+
+         };
+  DbCall.DbCall(args);
 }
 
 export function addServicio(nombre) {
-  return axios.post('http://localhost:8000/api/servicios',"nombre="+nombre+"",{headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
-  .then(data => {
-     store.dispatch(addServicioSuccess());
-     return data;
-   });
+   var args={metodo:'post',
+             url:'http://localhost:8000/api/servicios',
+             params:{nombre:nombre},
+             callback:addServicioSuccess
+          };
+   DbCall.DbCall(args);
 }
 
 export function updateServicio(servicio) {
-  return axios({method: 'put',url:'http://localhost:8000/api/servicios',params: {id_servicio:servicio.id_servicio,nombre:servicio.nombre},headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
-  .then(data => {
-     store.dispatch(updateServicioSuccess(servicio));
-     return data;
-   });
+  var args={metodo:'put',
+            url:'http://localhost:8000/api/servicios',
+            params:{id_servicio:servicio.id_servicio,nombre:servicio.nombre},
+            callback:updateServicioSuccess,
+            callbackParams: {id_servicio:servicio.id_servicio,nombre:servicio.nombre}
+         };
+  DbCall.DbCall(args);
 }
 
 
 export function deleteServicio(id_servicio) {
-  return axios({method: 'delete',url:'http://localhost:8000/api/servicios',params: {id_servicio:id_servicio},headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
-  .then(data => {
-     store.dispatch(deleteServicioSuccess(id_servicio));
-     return data;
-   });
+   var args={metodo:'delete',
+             url:'http://localhost:8000/api/servicios',
+             params:{id_servicio:id_servicio},
+             callback:deleteServicioSuccess,
+             callbackParams: id_servicio
+          };
+   DbCall.DbCall(args);
 }

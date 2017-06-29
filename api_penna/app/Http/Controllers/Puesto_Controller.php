@@ -21,25 +21,31 @@ class Puesto_Controller extends Controller
             array_push($params,$id_puesto);
         }
 
-        $puestos=DB::select($query,$params);
+        return $this->execute_simple_query("select",$query,$params);
 
-
-        return $puestos;
     }
 
 
     public function add_puesto(Request $request){
-        $params= array();
-        $query='INSERT INTO puesto (nombre)
+        $metodo=array();
+        $array_params= array();
+        $params=array();
+        $query=array();
+
+        //Primera consulta
+        array_push($metodo, "insert");
+        $query[0]='INSERT INTO puesto (nombre)
                 VALUES(?)';
 
         array_push($params,$request->nombre);
+        array_push($array_params,$params);
 
-        $agregar_puesto=DB::insert($query,$params);
-
-
-        $puesto= "SELECT * FROM puesto where id_puesto=last_insert_id();";
-        return DB::select($puesto);
+        //Segunda consulta
+        array_push($metodo, "select");
+        $query[1]= "SELECT * FROM puesto where id_puesto=last_insert_id();";
+        array_push($array_params,array());
+        
+        return $this->execute_multiple_query($metodo,$query,$array_params,true);
     }
 
     public function update_puesto(Request $request){
@@ -51,10 +57,7 @@ class Puesto_Controller extends Controller
         array_push($params,$request->nombre);
         array_push($params,$request->id_puesto);
 
-
-        $update_puesto=DB::update($query,$params);
-
-        return $update_puesto;
+        return $this->execute_simple_query("update",$query,$params);
     }
 
     public function remove_puesto(Request $request){
@@ -66,10 +69,7 @@ class Puesto_Controller extends Controller
         array_push($params,$request->id_puesto);
 
 
-        $delete_puesto=DB::delete($query,$params);
-
-        return $delete_puesto;
-
+        return $this->execute_simple_query("delete",$query,$params);
     }
 
 }

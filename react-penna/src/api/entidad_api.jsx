@@ -1,39 +1,46 @@
 
 import axios from 'axios';
 import store from '../store';
+import * as DbCall from '../componentes/commons/DbCall';
 import { getEntidadesSuccess,addEntidadSuccess,updateEntidadSuccess, deleteEntidadSuccess } from '../actions/entidad_actions';
 
 export function getEntidades() {
-  return axios({method:'get',url:'http://localhost:8000/api/entidades'})
-    .then(response => {
-      store.dispatch(getEntidadesSuccess(response.data));
-      console.log(response.data);
-      return response.data;
-    });
+    var args={metodo:'get',
+              url:'http://localhost:8000/api/entidades',
+              params:{},
+              callback:getEntidadesSuccess
+
+           };
+    DbCall.DbCall(args);
 }
 
 export function addEntidad(entidad) {
-  return axios({method: 'post',url:'http://localhost:8000/api/entidades',params: {tipo_entidad:entidad.tipo_entidad,nombre:entidad.nombre},headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
-  .then(response => {
-     store.dispatch(addEntidadSuccess());
-     return response;
-   });
+   var args={metodo:'post',
+             url:'http://localhost:8000/api/entidades',
+             params:{tipo_entidad:entidad.tipo_entidad,nombre:entidad.nombre},
+             callback:addEntidadSuccess
+          };
+   DbCall.DbCall(args);
 }
 
 
 export function updateEntidad(entidad) {
-  return axios({method: 'put',url:'http://localhost:8000/api/entidades',params: {id_entidad:entidad.id_entidad,nombre:entidad.nombre},headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
-  .then(response => {
-     store.dispatch(updateEntidadSuccess(entidad));
-     return response;
-   });
+   var args={metodo:'put',
+             url:'http://localhost:8000/api/entidades',
+             params:{id_entidad:entidad.id_entidad,nombre:entidad.nombre},
+             callback:updateEntidadSuccess,
+             callbackParams: {id_entidad:entidad.id_entidad,nombre:entidad.nombre}
+          };
+   DbCall.DbCall(args);
 }
 
 
 export function deleteEntidad(id_entidad) {
-  return axios({method: 'delete',url:'http://localhost:8000/api/entidades',params: {id_entidad:id_entidad},headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
-  .then(response => {
-     store.dispatch(deleteEntidadSuccess(id_entidad));
-     return response;
-   });
+   var args={metodo:'delete',
+             url:'http://localhost:8000/api/entidades',
+             params:{id_entidad:id_entidad},
+             callback:deleteEntidadSuccess,
+             callbackParams: id_entidad
+          };
+   DbCall.DbCall(args);
 }

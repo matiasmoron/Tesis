@@ -21,9 +21,10 @@ export function getTecnicoEntidadSuccess(elementos) {
   };
 }
 
-export function addSuccess() {
+export function addSuccess(tecnico) {
   return {
-    type: types.ADD_TECNICO_SUCCESS
+    type: types.ADD_TECNICO_SUCCESS,
+    tecnico
   };
 }
 

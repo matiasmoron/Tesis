@@ -1,38 +1,46 @@
 
 import axios from 'axios';
 import store from '../store';
+import * as DbCall from '../componentes/commons/DbCall';
 import { getPuestosSuccess,addPuestoSuccess,updatePuestoSuccess, deletePuestoSuccess } from '../actions/puesto_actions';
 
 export function getPuestos() {
-  return axios({method: 'get',url:'http://localhost:8000/api/puestos',headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
-    .then(response => {
-      store.dispatch(getPuestosSuccess(response.data));
-      return response.data;
-    });
+    var args={metodo:'get',
+              url:'http://localhost:8000/api/puestos',
+              params:{},
+              callback:getPuestosSuccess
+
+           };
+    DbCall.DbCall(args);
 }
 
 export function addPuesto(nombre) {
-  return axios({method: 'post',url:'http://localhost:8000/api/puestos',params: {nombre:nombre},headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
-  .then(data => {
-     store.dispatch(addPuestoSuccess());
-     return data;
-   });
+   var args={metodo:'post',
+             url:'http://localhost:8000/api/puestos',
+             params:{nombre:nombre},
+             callback:addPuestoSuccess
+          };
+   DbCall.DbCall(args);
 }
 
 
 export function updatePuesto(puesto) {
-  return axios({method: 'put',url:'http://localhost:8000/api/puestos',params: {id_puesto:puesto.id_puesto,nombre:puesto.nombre},headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
-  .then(data => {
-     store.dispatch(updatePuestoSuccess(puesto));
-     return data;
-   });
+   var args={metodo:'put',
+             url:'http://localhost:8000/api/puestos',
+             params:{id_puesto:puesto.id_puesto,nombre:puesto.nombre},
+             callback:updatePuestoSuccess,
+             callbackParams: {id_servicio:puesto.id_puesto,nombre:puesto.nombre}
+          };
+   DbCall.DbCall(args);
 }
 
 
 export function deletePuesto(id_puesto) {
-  return axios({method: 'delete',url:'http://localhost:8000/api/puestos',params: {id_puesto:id_puesto},headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
-  .then(data => {
-     store.dispatch(deletePuestoSuccess(id_puesto));
-     return data;
-   });
+   var args={metodo:'delete',
+             url:'http://localhost:8000/api/puestos',
+             params:{id_puesto:id_puesto},
+             callback:deletePuestoSuccess,
+             callbackParams: id_puesto
+          };
+   DbCall.DbCall(args);
 }

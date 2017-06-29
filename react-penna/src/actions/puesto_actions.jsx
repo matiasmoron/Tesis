@@ -7,9 +7,10 @@ export function getPuestosSuccess(puestos) {
   };
 }
 
-export function addPuestoSuccess() {
+export function addPuestoSuccess(puesto) {
   return {
-    type: types.ADD_PUESTO_SUCCESS
+    type: types.ADD_PUESTO_SUCCESS,
+    puesto
   };
 }
 

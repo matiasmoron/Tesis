@@ -9,11 +9,15 @@ const entidadReducer = function(state = initialState, action) {
   switch(action.type) {
 
     case types.GET_ENTIDADES_SUCCESS:
-    console.log("reducer" ,action.entidades);
       return Object.assign({}, state, { entidades: action.entidades });
 
     case types.ADD_ENTIDAD_SUCCESS:
-        return Object.assign({}, state);
+        var nuevo_entidades=[];
+        state.entidades.map((entidad) =>
+            nuevo_entidades.push(entidad)
+        );
+        nuevo_entidades.push(action.entidad[0]);
+        return Object.assign({}, {entidades:nuevo_entidades});
 
     case types.UPDATE_ENTIDAD_SUCCESS:
         return Object.assign({}, state);

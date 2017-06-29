@@ -14,17 +14,14 @@ class Personal_Controller extends Controller
                     CONCAT(apellido,", ",nombre) as nombre,
                     legajo
                 FROM personal
-                WHERE estado=1';
+                WHERE estado='.ALTA;
 
         if(isset($legajo)){
             $query.=' AND legajo=?';
             array_push($params,$legajo);
         }
 
-        $personal=DB::select($query,$params);
-
-
-        return $personal;
+        return $this->execute_simple_query("select",$query,$params);
     }
 
     public function add_personal(Request $request){

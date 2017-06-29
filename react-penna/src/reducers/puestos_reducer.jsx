@@ -13,11 +13,12 @@ const puestoReducer = function(state = initialState, action) {
       return Object.assign({}, state, { puestos: action.puestos });
 
     case types.ADD_PUESTO_SUCCESS:
-        // var nuevo_puesto=[];
-        // nuevo_puesto.push(state.puestos);
-        // nuevo_puesto[0].push(action.puesto);
-        // return {puestos: nuevo_puesto[0]};
-        return Object.assign({}, state);
+        var nuevo_puestos=[];
+        state.puestos.map((puesto) =>
+            nuevo_puestos.push(puesto)
+        );
+        nuevo_puestos.push(action.puesto[0]);
+        return Object.assign({}, {puestos:nuevo_puestos});
 
     case types.UPDATE_PUESTO_SUCCESS:
         return Object.assign({}, state);

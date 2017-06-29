@@ -7,9 +7,10 @@ export function getServiciosSuccess(servicios) {
   };
 }
 
-export function addServicioSuccess() {
+export function addServicioSuccess(servicio) {
   return {
-    type: types.ADD_SERVICIO_SUCCESS
+    type: types.ADD_SERVICIO_SUCCESS,
+    servicio
   };
 }
 

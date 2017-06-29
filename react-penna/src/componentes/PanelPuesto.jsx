@@ -20,7 +20,6 @@ class PanelPuesto extends React.Component {
 	_addElemento(event){
 		event.preventDefault();
 		puestoApi.addPuesto(this._nombre.value);
-		puestoApi.getPuestos();
     }
 
 	_deletePuesto(id){

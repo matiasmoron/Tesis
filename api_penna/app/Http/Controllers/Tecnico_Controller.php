@@ -9,14 +9,20 @@ use App\Tecnico;
 class Tecnico_Controller extends Controller
 {
     public function get_tecnicos(){
-        //echo Tecnico::all();
-        $tecnico = DB::table('personal')
-                    ->leftJoin('tecnico','tecnico.legajo','=','personal.legajo')
-                    ->leftJoin('entidad','tecnico.id_entidad','=','entidad.id_entidad')
-                    ->select('tecnico.legajo', 'personal.nombre','dni','entidad.nombre as entidad','entidad.id_entidad')
-                    ->get();
+        $query='SELECT
+                    tecnico.legajo,personal.nombre,personal.dni,entidad.nombre as entidad,entidad.id_entidad
+                FROM 
+                    personal
+                INNER JOIN
+                    tecnico USING (legajo)
+                INNER JOIN
+                    entidad USING (id_entidad)
+                WHERE
+                    personal.estado='.ALTA;
 
-        return $tecnico;
+
+
+        return $this->execute_simple_query("select",$query);
     }
 
     public function get_entidades_no_asignadas(Request $request){
@@ -33,26 +39,54 @@ class Tecnico_Controller extends Controller
                                             WHERE t.legajo=?
                                         )";
 
-        $entidades=DB::select($query,$params);
-
-        return $entidades;
+        return $this->execute_simple_query("select",$query,$params);
     }
 
     public function add_tecnico(Request $request){
-    	$tecnico = new Tecnico;
-    	$tecnico->legajo=$request->legajo;
-    	$tecnico->id_entidad=$request->id_entidad;
-    	echo $tecnico->save();
+        $metodo=array();
+        $array_params= array();
+        $params=array();
+        $query=array();
+
+        //Primera consulta
+        array_push($metodo, "insert");
+        $query[0]='INSERT INTO tecnico (legajo,id_entidad)
+                VALUES(?,?)';
+
+        array_push($params,$request->legajo);
+        array_push($params,$request->id_entidad);
+        array_push($array_params,$params);
+
+        //Segunda consulta
+        array_push($metodo, "select");
+        $query[1]= "SELECT * FROM tecnico where legajo=?";
+        array_push($array_params,$request->legajo);
+        
+        return $this->execute_multiple_query($metodo,$query,$array_params,true);
     }
 
     public function remove_tecnico(Request $request){
-    	$tecnico= Tecnico::find($request->legajo);
-    	echo $tecnico->delete();
+        $params= array();
+        $query='DELETE 
+                FROM   tecnico
+                WHERE  legajo=?';
+
+        array_push($params,$request->legajo);
+
+
+        return $this->execute_simple_query("delete",$query,$params);
     }
 
     public function update_tecnico(Request $request){
-    	$tecnico= Tecnico::find($request->legajo);
-    	$tecnico->id_entidad = $request->id_entidad;
-    	echo $tecnico->save();
+        $params= array();
+        $query='UPDATE tecnico
+                SET    id_entidad=?
+                WHERE  legajo=?';
+
+        array_push($params,$request->id_entidad);
+        array_push($params,$request->legajo);
+
+
+        return $this->execute_simple_query("update",$query,$params);
     }
 }

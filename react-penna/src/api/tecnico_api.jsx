@@ -1,6 +1,7 @@
 
 import axios from 'axios';
 import store from '../store';
+import * as DbCall from '../componentes/commons/DbCall';
 import { getTecnicosSuccess,getPersonalSuccess,getTecnicoEntidadSuccess,addSuccess } from '../actions/tecnico_actions';
 
 /**
@@ -11,35 +12,43 @@ import { getTecnicosSuccess,getPersonalSuccess,getTecnicoEntidadSuccess,addSucce
 
 //Para completar la tabla
 export function getTecnicos() {
-  return axios.get('http://localhost:8000/api/tecnicos')
-    .then(response => {
-      store.dispatch(getTecnicosSuccess(response.data));
-      return response.data;
-    });
+    var args={metodo:'get',
+              url:'http://localhost:8000/api/tecnicos',
+              params:{},
+              callback:getTecnicosSuccess
+
+           };
+    DbCall.DbCall(args);
 }
 
 export function getPersonal(legajo) {
-  return axios.post('http://localhost:8000/api/personal',"legajo="+legajo+"",{headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
-    .then(response => {
-      store.dispatch(getPersonalSuccess(response.data));
-      return response.data;
-    });
+    var args={metodo:'get',
+              url:'http://localhost:8000/api/personal',
+              params:{"legajo":legajo},
+              callback:getPersonalSuccess
+
+           };
+    DbCall.DbCall(args);
+
 }
 
 //Obtiene todas las entidades a las que no pertenece el empleado con el legajo ingresado
 export function getTecnicoEntidad(legajo) {
-  return axios.post('http://localhost:8000/api/tecnico_entidad',"legajo="+legajo+"",{headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
-    .then(response => {
-      store.dispatch(getTecnicoEntidadSuccess(response.data));
-      return response.data;
-    });
+    var args={metodo:'post',
+              url:'http://localhost:8000/api/tecnico_entidad',
+              params:{"legajo":legajo},
+              callback:getTecnicoEntidadSuccess
+
+           };
+    DbCall.DbCall(args);
 }
 export function addElemento(legajo,entidad) {
-  return axios.post('http://localhost:8000/api/tecnicos',"legajo="+legajo+"&entidad="+entidad+"",{headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
-  .then(data => {
-     store.dispatch(addSuccess());
-     return data;
-   });
+   var args={metodo:'post',
+             url:'http://localhost:8000/api/tecnicos',
+             params:{legajo:legajo,entidad:entidad},
+             callback:addSuccess
+          };
+   DbCall.DbCall(args);
 }
 
 // export function updateElemento(servicio) {

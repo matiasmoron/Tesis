@@ -19,7 +19,12 @@ const tecnicoReducer = function(state = initialState, action) {
           return Object.assign({}, state, { entidades: action.elementos });
 
     case types.ADD_TECNICO_SUCCESS:
-        return Object.assign({}, state);
+        var nuevo_tecnicos=[];
+        state.tecnicos.map((tecnico) =>
+            nuevo_tecnicos.push(tecnico)
+        );
+        nuevo_tecnicos.push(action.tecnico[0]);
+        return Object.assign({}, {tecnicos:nuevo_tecnicos});
 
     // case types.UPDATE_SERVICIO_SUCCESS:
     //     return Object.assign({}, state);
