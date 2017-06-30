@@ -53,8 +53,8 @@ class PanelTecnico extends React.Component {
 		console.log(this._entidad.value);
 		api.addElemento(this._legajo.value,this._entidad.value);
     }
-	_deleteElemento(id){
-		api.deleteElemento(id);
+	_deleteElemento(tecnico){
+		api.deleteElemento(tecnico);
     }
 	_updateElemento(elem){
 		api.updateElemento(elem);

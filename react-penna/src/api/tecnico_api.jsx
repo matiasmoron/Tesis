@@ -2,7 +2,7 @@
 import axios from 'axios';
 import store from '../store';
 import * as DbCall from '../componentes/commons/DbCall';
-import { getTecnicosSuccess,getPersonalSuccess,getTecnicoEntidadSuccess,addSuccess } from '../actions/tecnico_actions';
+import { getTecnicosSuccess,getPersonalSuccess,getTecnicoEntidadSuccess,addSuccess,deleteSuccess } from '../actions/tecnico_actions';
 
 /**
  * Obtiene todos los servicios
@@ -59,10 +59,13 @@ export function addElemento(legajo,entidad) {
 //    });
 // }
 //
-// export function deleteServicio(id_servicio) {
-//   return axios.delete('http://localhost:8000/api/tecnicos',"id_servicio="+id_servicio+"",{headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
-//   .then(data => {
-//      store.dispatch(deleteServicioSuccess(id_servicio));
-//      return data;
-//    });
-// }
+
+export function deleteElemento(tecnico) {
+   var args={metodo:'delete',
+             url:'http://localhost:8000/api/tecnicos',
+             params:{id_entidad:tecnico.id_entidad,legajo: tecnico.legajo },
+             callback:deleteSuccess,
+             callbackParams: {id_entidad:tecnico.id_entidad,legajo: tecnico.legajo }
+          };
+   DbCall.DbCall(args);
+}

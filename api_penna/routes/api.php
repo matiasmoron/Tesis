@@ -54,3 +54,9 @@ Route::middleware('cors')->get('/entidades/{id_entidad?}', 'Entidad_Controller@g
 Route::middleware('cors')->post('/entidades', 'Entidad_Controller@add_entidad');
 Route::middleware('cors')->put('/entidades', 'Entidad_Controller@update_entidad');
 Route::middleware('cors')->delete('/entidades', 'Entidad_Controller@remove_entidad');
+
+//Equipo
+Route::middleware('cors')->get('/equipos/{id_equipo?}', 'Equipo_Controller@get_equipos');
+Route::middleware('cors')->post('/equipos', 'Equipo_Controller@add_equipo');
+Route::middleware('cors')->put('/equipos', 'Equipo_Controller@update_equipo');
+Route::middleware('cors')->delete('/equipos', 'Equipo_Controller@remove_equipo');

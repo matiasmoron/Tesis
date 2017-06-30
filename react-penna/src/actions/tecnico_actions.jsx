@@ -28,12 +28,14 @@ export function addSuccess(tecnico) {
   };
 }
 
-// export function deleteSuccess(id) {
-//   return {
-//     type: types.DELETE_TECNICO_SUCCESS,
-//     id
-//   };
-// }
+export function deleteSuccess(tecnico) {
+  return {
+    type: types.DELETE_TECNICO_SUCCESS,
+    tecnico
+  };
+}
+
+
 // export function updateSuccess(elem) {
 //   return {
 //     type: types.UPDATE_TECNICO_SUCCESS,

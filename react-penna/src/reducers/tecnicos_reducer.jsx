@@ -26,12 +26,13 @@ const tecnicoReducer = function(state = initialState, action) {
         nuevo_tecnicos.push(action.tecnico[0]);
         return Object.assign({}, {tecnicos:nuevo_tecnicos});
 
+    case types.DELETE_SERVICIO_SUCCESS:
+        const newTecnicos = _.filter(state.tecnicos, tecnico => tecnico.id_entidad != action.id_entidad && tecnico.legajo != action.legajo );
+        return Object.assign({}, state, { tecnicos: newTecnicos });
+
     // case types.UPDATE_SERVICIO_SUCCESS:
     //     return Object.assign({}, state);
     //
-    // case types.DELETE_SERVICIO_SUCCESS:
-    //   const newServicios = _.filter(state.tecnicos, tecnico => tecnico.id_tecnico != action.id_tecnico);
-    //   return Object.assign({}, state, { tecnicos: newServicios });
   }
 
   return state;

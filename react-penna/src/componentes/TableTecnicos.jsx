@@ -9,10 +9,12 @@ class TableServicio extends React.Component {
      }
 
 	 onAfterDeleteRow(rowKeys){
-		 for (var i = 0; i < rowKeys.length; i++)
-			 this.props.deleteElemento(rowKeys[i]);
-
+		 for (var i = 0; i < rowKeys.length; i++){
+			var tecnico= rowKeys[i].split(",");
+			this.props.deleteElemento({legajo:tecnico[0],id_entidad:tecnico[1]});
+		 }
 	 }
+
 	updateElemento(row, cellName, cellValue) {
 		  	console.log(row);
 			this.props.updateElemento(row);
@@ -62,7 +64,8 @@ class TableServicio extends React.Component {
 				cellEdit={editar}
 				options={opciones}
 				hover>
-				<TableHeaderColumn isKey dataField='dni'>DNI</TableHeaderColumn>
+				<TableHeaderColumn isKey dataField='tecnico_key' hidden>key</TableHeaderColumn>
+				<TableHeaderColumn dataField='legajo'>Legajo</TableHeaderColumn>
 				<TableHeaderColumn dataField='nombre'>Nombre</TableHeaderColumn>
 				<TableHeaderColumn dataField='entidad'>Entidad</TableHeaderColumn>
 
