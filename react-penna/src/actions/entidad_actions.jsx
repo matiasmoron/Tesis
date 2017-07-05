@@ -18,7 +18,7 @@ export function deleteEntidadSuccess(id_entidad) {
   return {
     type: types.DELETE_ENTIDAD_SUCCESS,
     id_entidad,
-	tipo_etidad
+	tipo_entidad
   };
 }
 
