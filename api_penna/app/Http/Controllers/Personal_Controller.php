@@ -4,20 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Personal;
-use Illuminate\Support\Facades\DB;
 
 class Personal_Controller extends Controller
 {
     public function get_personal($legajo=null){
         $params= array();
         $query='SELECT
-                    CONCAT(apellido,", ",nombre) as nombre,
-                    legajo
-                FROM personal
+                    CONCAT(p.apellido,", ",p.nombre) as nombre_apellido,p.nombre,p.apellido,
+                    p.legajo,p.usuario,p.dni,p.fecha_ingreso,p.id_puesto,p.id_servicio,
+                    s.nombre as servicio_nombre, puesto.nombre as puesto_nombre
+                FROM personal p 
+                LEFT JOIN 
+                    servicio s USING(id_servicio)
+                LEFT JOIN
+                    puesto puesto USING(id_puesto)
                 WHERE estado='.ALTA;
 
         if(isset($legajo)){
-            $query.=' AND legajo=?';
+            $query.=' AND p.legajo=?';
             array_push($params,$legajo);
         }
 
@@ -25,9 +29,15 @@ class Personal_Controller extends Controller
     }
 
     public function add_personal(Request $request){
-        /*$params= array();
-        $query='INSERT INTO personal (legajo,dni,usuario,nombre,apellido,id_puesto,id_servicio,fecha_ingreso,estado)
-                VALUES(?,?,?,?,?,?,?,?,?)';
+        $metodo=array();
+        $array_params= array();
+        $params=array();
+        $query=array();
+
+        //Primera consulta
+        array_push($metodo, "insert");
+        $query[0]='INSERT INTO personal (legajo,dni,usuario,nombre,apellido,id_puesto,id_servicio,fecha_ingreso,estado)
+                VALUES(?,?,?,?,?,?,?,?,'.ALTA.')';
 
         array_push($params,$request->legajo);
         array_push($params,$request->dni);
@@ -37,14 +47,49 @@ class Personal_Controller extends Controller
         array_push($params,$request->id_puesto);
         array_push($params,$request->id_servicio);
         array_push($params,$request->fecha_ingreso);
-        array_push($params,0);//estado
+        array_push($array_params,$params);
+
+        //Segunda consulta
+        array_push($metodo, "select");
+        $query[1]= "SELECT * FROM personal where legajo=?";
+        array_push($array_params,array($request->legajo));
+        return $this->execute_multiple_query($metodo,$query,$array_params,true);
+    }
+
+    public function delete_personal(Request $request){
+        $params= array();
+        $query='UPDATE personal
+                    SET    estado='.BAJA.'
+                WHERE  legajo=?';
+
+        array_push($params,$request->legajo);
+
+        return $this->execute_simple_query("update",$query,$params);
+
+    }
+
+    public function update_personal(Request $request){
+        $params= array();
+        $query='UPDATE personal
+                SET    dni=?,
+                       usuario=?,
+                       nombre=?,
+                       apellido=?,
+                       id_puesto=?,
+                       id_servicio=?,
+                       fecha_ingreso=?
+                WHERE  legajo=?';
+
+        array_push($params,$request->dni);
+        array_push($params,$request->usuario);
+        array_push($params,$request->nombre);
+        array_push($params,$request->apellido);
+        array_push($params,$request->id_puesto);
+        array_push($params,$request->id_servicio);
+        array_push($params,$request->fecha_ingreso);
+        array_push($params,$request->legajo);
 
 
-        $personal=DB::select($query,$params);
-
-
-        return $personal;*/
-        echo $request;
-
+        return $this->execute_simple_query("update",$query,$params);
     }
 }

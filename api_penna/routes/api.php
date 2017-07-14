@@ -60,3 +60,9 @@ Route::middleware('cors')->get('/equipos/{id_equipo?}', 'Equipo_Controller@get_e
 Route::middleware('cors')->post('/equipos', 'Equipo_Controller@add_equipo');
 Route::middleware('cors')->put('/equipos', 'Equipo_Controller@update_equipo');
 Route::middleware('cors')->delete('/equipos', 'Equipo_Controller@remove_equipo');
+
+//Solicitud
+Route::middleware('cors')->get('/solicitudes/{id_solicitud?}', 'Solicitud_Controller@get_solicitudes');
+Route::middleware('cors')->post('/solicitudes', 'Solicitud_Controller@add_solicitud');
+Route::middleware('cors')->put('/solicitudes', 'Solicitud_Controller@update_solicitud');
+Route::middleware('cors')->delete('/solicitudes', 'Solicitud_Controller@remove_solicitud');

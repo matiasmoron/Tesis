@@ -22,7 +22,7 @@ class PanelTecnico extends React.Component {
 		console.log("props",this.props.personal);
 			console.log("next",nextState);
 		if(nextProps.personal[0]!=undefined){
-			this._nombre.value= nextProps.personal[0].nombre;
+			this._nombre.value= nextProps.personal[0].nombre_apellido;
 			//Actualizar select
 			// console.log(nextProps.personal[0].legajo);
 			// console.log(this.props.personal[0].legajo)
@@ -70,7 +70,7 @@ class PanelTecnico extends React.Component {
 					<button type="submit" className="btn btn-success">Buscar</button>
 				</div>
 				<div className="row">
-					<SelectInput data_opciones={this.props.entidades} label="Entidad"   valor={input => this._entidad = input} />
+					<SelectInput data_opciones={this.props.entidades} label="Entidad" llave="id_entidad" descripcion="nombre"  valor={input => this._entidad = input} />
 					<button onClick={this._addElemento.bind(this)} className="btn btn-success">Agregar técnico</button>
 				</div>
 			</Formulario>
@@ -82,7 +82,7 @@ class PanelTecnico extends React.Component {
 
 
 const mapStateToProps = function(store) {
-console.log("maps",store.tecnicoState);
+console.log("store",store);
   return {
     tecnicos: store.tecnicoState.tecnicos,
 	personal: store.tecnicoState.personal,

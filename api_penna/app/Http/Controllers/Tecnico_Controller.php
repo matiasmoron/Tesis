@@ -61,7 +61,7 @@ class Tecnico_Controller extends Controller
         //Segunda consulta
         array_push($metodo, "select");
         $query[1]= "SELECT * FROM tecnico where legajo=?";
-        array_push($array_params,$request->legajo);
+        array_push($array_params,array($request->legajo));
         
         return $this->execute_multiple_query($metodo,$query,$array_params,true);
     }
