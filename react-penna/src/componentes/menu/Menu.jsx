@@ -4,9 +4,10 @@ import {Link} from 'react-router-dom';
 var tabData = [
 	{tag: "a1",to:"", nombre:"Ordenes de Trabajo", isActive:true },
 	{tag: "a2",to:"", nombre:"Stock / Compras", isActive:false },
-	{tag: "a3",to:"", nombre:"Solicitudes", isActive:false},
+	{tag: "a3",to:"/solicitud", nombre:"Solicitudes", isActive:false},
 	{tag: "a4",to:"/personal", nombre:"Personal", isActive:false},
-	{tag: "a5",to:"", nombre:"Configuración", isActive:false}
+	{tag: "a5",to:"/equipo", nombre:"Equipo", isActive:false},
+	{tag: "a6",to:"", nombre:"Configuración", isActive:false}
 ]
 
 

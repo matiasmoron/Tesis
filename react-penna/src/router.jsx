@@ -10,7 +10,8 @@ import personal from './componentes/ContainerPersonal';
 import Layout from './componentes/genericos/Layout';
 import Menu from './componentes/menu/Menu';
 import subMenuPersonal from './componentes/menu/SubmenuPersonal';
-// import Card from './componentes/genericos/Card';
+import subMenuEquipo from './componentes/menu/SubmenuEquipo';
+import subMenuSolicitud from './componentes/menu/SubmenuSolicitud';
 
 
 export default (
@@ -34,9 +35,13 @@ export default (
                 <Route exact path="/personal/personal" component={personal} />
                 <Route exact path="/personal/puesto_servicio" component={puestoServicio} />
                 <Route exact path="/personal/tecnicos" component={tecnicos} />
-                <Route path="/entidades" component={entidades} />
-                <Route path="/equipos" component={equipos} />
-                <Route path="/solicitudes" component={solicitudes} />
+                <Route path="/personal/entidades" component={entidades} />
+
+                <Route exact path="/equipo"  component={subMenuEquipo} />
+                <Route path="/equipo/equipos" component={equipos} />
+
+                <Route exact path="/solicitud"  component={subMenuSolicitud} />
+                <Route path="/solicitud/solicitudes" component={solicitudes} />
     	   </div>
 
        </Router>
