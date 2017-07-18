@@ -21,16 +21,16 @@ var config = {
 					'babel-loader'
 				]
 			},
-			// {
-			// 	test: /\.(png|woff|woff2|eot|ttf|svg)$/,
-			// 	use:[{
-			// 		loader: 'url-loader',
-			// 		options:{
-			// 			limit: 100000,
-			// 			name: 'assets/resources/[name].[ext]'
-			// 		}
-			// 	}]
-			// },
+			{
+				test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+				use:[{
+					loader: 'url-loader',
+					options:{
+						limit: 100000,
+						name: 'assets/resources/[name].[ext]'
+					}
+				}]
+			},
 			{
 				test: /\.scss$/,
 				use:[

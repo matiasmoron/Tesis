@@ -1,0 +1,71 @@
+body {
+  background-color: whitesmoke;
+}
+
+ul.cards{
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.cards li {
+    padding: 0px;
+    height: 276px;
+    overflow: hidden;
+    position: relative;
+    margin-right: 20px;
+    margin-top: 20px;
+}
+
+div.card {
+  // background-color: #715555;
+  background: #292c2f;
+  height: 100%;
+  width: 100%;
+  border-radius: 10px;
+  display:inline-block;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, .3);
+  transform: rotate3d(1, 1, 0, 0deg);
+}
+div.card:hover {
+    background-position: bottom center;
+    margin: 0 auto;
+    box-shadow: -3px 3px 0px 3px #333, -30px 30px 15px rgba(0, 0, 0, .4);
+    transform: rotate3d(1, 1, 0, 40deg);
+    transition: all .4s;
+}
+div.card img{
+    height:90%;
+    width:100%;
+}
+div.tipo1{
+ height:90%;
+ width:100%;
+ background: url('http://www.emprender-facil.com/wp-content/uploads/2015/01/M%C3%A9dico-de-familia-%E2%80%93-Un-negocio-saludable-texto4.png') no-repeat;
+}
+div.tipo2{
+ height:90%;
+ width:100%;
+ background: url('http://simtresa.com/wp-content/uploads/2015/03/Servicio-tecnico.png') no-repeat;
+}
+
+
+.card h1 {
+  font-size: 40px;
+  padding-bottom:20px;
+  position: relative;
+  transition: all .4s;
+  font-family: 'Anton';
+  text-align:center;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 500;
+  font-size: 1.3em;
+}
+
+div.card:hover h1 {
+  transform: rotate3d(1, 1, 0, 0deg);
+  transform: rotate3d(1, 1, 0, 20deg);
+
+}

@@ -1,5 +1,7 @@
 var React = require('react');
+var FontAwesome = require('react-fontawesome');
 import {Link} from 'react-router-dom';
+require("../../styles/nuevo_menu.scss");
 
 var tabData = [
 	{tag: "a1",to:"", nombre:"Ordenes de Trabajo", isActive:true },
@@ -13,7 +15,7 @@ var tabData = [
 
 var Tabs = (props) => {
       return (
-        <ul className="nav nav-tabs">
+        <ul className="menu nav nav-tabs">
 			{tabData.map(function(tab){
 				return (
 					<Tab data={tab} key={tab.nombre} to={tab.to} isActive={props.activeTab===tab} handleClick={props.changeTab.bind(this,tab)} />
@@ -26,7 +28,7 @@ var Tabs = (props) => {
 var Tab = (props) => {
       return (
         <li onClick={props.handleClick} className={props.isActive ? "active" : null}>
-				<Link to={props.to}>{props.data.nombre} </Link>
+			<Link to={props.to}><span>{props.data.nombre}</span></Link>
 		</li>
       );
 }
@@ -46,9 +48,9 @@ class Menu extends React.Component {
 
 	render() {
 		return (
-			<div>
+			<nav>
 				<Tabs activeTab={this.state.activeTab} changeTab={this.handleClick.bind(this)}/>
-			</div>
+			</nav>
 		);
 	}
 }

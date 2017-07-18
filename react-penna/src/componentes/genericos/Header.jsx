@@ -1,6 +1,6 @@
 var React = require('react');
 require("../../styles/header.scss");
-import logo from '../../img/fotor_penna.png'
+import logo from '../../img/fotor_penna2.png';
 
 const Header = (props) => {
       return (
