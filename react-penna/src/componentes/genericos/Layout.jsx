@@ -1,4 +1,5 @@
 var React = require('react');
+require("../../styles/backoffice.scss");
 import Header from './Header';
 import Footer from './Footer';
 
@@ -7,7 +8,8 @@ const Layout = (props) => {
         <div>
             <Header/>
 					{props.children}
-			{/* <Footer/> */}
+                    <div className="clear"></div>
+			<Footer/>
         </div>
       );
 }

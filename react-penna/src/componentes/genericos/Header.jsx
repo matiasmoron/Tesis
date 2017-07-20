@@ -14,6 +14,7 @@ const Header = (props) => {
 	                <li><a href="#">Login</a></li>
 	                <li><a href="#">Sign up</a></li>
 	            </ul>
+                <div className="clear"></div>
 	        </div>
 	    </header>
       );

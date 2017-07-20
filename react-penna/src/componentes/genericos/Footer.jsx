@@ -1,11 +1,12 @@
 var React = require('react');
 require("../../styles/footer.scss");
-
+import logo from '../../img/fotor_penna2.png';
+import datafiscal from '../../img/datafiscal.jpg';
 const Footer = (props) => {
 	 return (
 	  <footer className="footer-distributed">
           <div className="footer-left text_center white"  >
-              <img src="img/fotor_penna.png"/>
+              <img src={logo}/>
 
                <p  ><span>Hospital Internacional General</span> <br/>
                   DR José Penna
@@ -27,7 +28,7 @@ const Footer = (props) => {
           </div>
 
           <div className="footer-right text_center">
-              <a href="http://www.hospitalpenna.com.ar"><img src="img/datafiscal.jpg"/></a>
+              <a href="http://www.hospitalpenna.com.ar"><img src={datafiscal}/></a>
           </div>
 
       </footer>

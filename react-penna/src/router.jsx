@@ -16,9 +16,9 @@ import subMenuSolicitud from './componentes/menu/SubmenuSolicitud';
 
 export default (
 
+   <Router history={Router.hashHistory}>
    <Layout>
-       <Router history={Router.hashHistory}>
-           <div>
+
     		   {/* <div className="col-md-2 menu-lateral">
     			   <ul className="nav nav-pills nav-stacked">
     				   <li><Link to="/">Home</Link></li>
@@ -30,20 +30,23 @@ export default (
     			   </ul>
     		   </div> */}
                 <Menu/>
+
                 {/* <Route exact path="/"  component={subMenuPersonal} /> */}
-                <Route exact path="/personal"  component={subMenuPersonal} />
-                <Route exact path="/personal/personal" component={personal} />
-                <Route exact path="/personal/puesto_servicio" component={puestoServicio} />
-                <Route exact path="/personal/tecnicos" component={tecnicos} />
-                <Route path="/personal/entidades" component={entidades} />
+                    <Route exact path="/personal"  component={subMenuPersonal} />
+                    <Route exact path="/personal/personal" component={personal} />
+                    <Route exact path="/personal/puesto_servicio" component={puestoServicio} />
+                    <Route exact path="/personal/tecnicos" component={tecnicos} />
+                    <Route path="/personal/entidades" component={entidades} />
 
-                <Route exact path="/equipo"  component={subMenuEquipo} />
-                <Route path="/equipo/equipos" component={equipos} />
+                    <Route exact path="/equipo"  component={subMenuEquipo} />
+                    <Route path="/equipo/equipos" component={equipos} />
 
-                <Route exact path="/solicitud"  component={subMenuSolicitud} />
-                <Route path="/solicitud/solicitudes" component={solicitudes} />
-    	   </div>
+                    <Route exact path="/solicitud"  component={subMenuSolicitud} />
+                    <Route path="/solicitud/solicitudes" component={solicitudes} />
 
-       </Router>
+
+
    </Layout>
+   </Router>
+
   );
