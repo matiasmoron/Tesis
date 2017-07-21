@@ -1,7 +1,8 @@
 var React = require('react');
 // var FontAwesome = require('react-fontawesome');
+var FA = require('react-fontawesome');
 import {Link} from 'react-router-dom';
-// import Fa500px from 'react-icons/lib/fa/500px';
+import Fa500px from 'react-icons/lib/fa/500px';
 require("../../styles/nuevo_menu.scss");
 
 var tabData = [
@@ -29,7 +30,6 @@ var Tabs = (props) => {
 var Tab = (props) => {
       return (
         <li onClick={props.handleClick} className={props.isActive ? "active" : null}>
-
 			<Link to={props.to}>{props.icon}<span className="izquierda">{props.data.nombre}</span></Link>
 		</li>
       );
