@@ -44,7 +44,12 @@ class Equipo_Controller extends Controller
 
         //Segunda consulta
         array_push($metodo, "select");
-        $query[1]= "SELECT * FROM equipo where id_equipo=last_insert_id()";
+        $query[1]= "SELECT 
+                        e.id_equipo,e.id_tipo_equipo,e.id_equipo_padre,e.cod_patrimonial,e.descripcion,
+                        s.nombre as servicio_nombre 
+                    FROM equipo e 
+                    INNER JOIN servicio s USING(id_servicio) 
+                    WHERE id_equipo=last_insert_id()";
         array_push($array_params,array());
 
         return $this->execute_multiple_query($metodo,$query,$array_params,true);
