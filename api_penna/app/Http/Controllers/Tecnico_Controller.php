@@ -10,7 +10,8 @@ class Tecnico_Controller extends Controller
 {
     public function get_tecnicos(){
         $query='SELECT
-                    tecnico.legajo,personal.nombre,personal.dni,entidad.nombre as entidad,entidad.id_entidad,
+                    tecnico.legajo,CONCAT (personal.apellido," ",personal.nombre) as nombre,personal.dni,
+                    entidad.nombre as entidad,entidad.id_entidad,
                     CONCAT(tecnico.legajo,",",entidad.id_entidad) as tecnico_key
                 FROM 
                     personal
@@ -47,6 +48,7 @@ class Tecnico_Controller extends Controller
         $metodo=array();
         $array_params= array();
         $params=array();
+        $params2=array();
         $query=array();
 
         //Primera consulta
@@ -60,8 +62,19 @@ class Tecnico_Controller extends Controller
 
         //Segunda consulta
         array_push($metodo, "select");
-        $query[1]= "SELECT * FROM tecnico where legajo=?";
-        array_push($array_params,array($request->legajo));
+        $query[1]= "SELECT 
+                        t.legajo, CONCAT (p.apellido,' ',p.nombre) as nombre, e.nombre as entidad, e.id_entidad
+                    FROM 
+                        tecnico t 
+                    INNER JOIN 
+                        entidad e  USING(id_entidad)
+                    INNER JOIN 
+                        personal p USING(legajo)
+                    where t.legajo=? AND t.id_entidad=?";
+        
+        array_push($params2,$request->legajo);
+        array_push($params2,$request->id_entidad);
+        array_push($array_params,$params2);
         
         return $this->execute_multiple_query($metodo,$query,$array_params,true);
     }
@@ -80,16 +93,4 @@ class Tecnico_Controller extends Controller
         return $this->execute_simple_query("delete",$query,$params);
     }
 
-    public function update_tecnico(Request $request){
-        $params= array();
-        $query='UPDATE tecnico
-                SET    id_entidad=?
-                WHERE  legajo=?';
-
-        array_push($params,$request->id_entidad);
-        array_push($params,$request->legajo);
-
-
-        return $this->execute_simple_query("update",$query,$params);
-    }
 }

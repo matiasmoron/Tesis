@@ -7,16 +7,16 @@ use App\Solicitud;
 
 class Solicitud_Controller extends Controller
 {
-    public function get_solicitudes($id_solicitud=null){
+    public function get_solicitudes(Request $request){
         $params= array();
         $query='SELECT
                     *
                 FROM  solicitud
                 WHERE estado='.ALTA;
 
-        if(isset($id_equipo)){
+        if(isset($request->id_equipo)){
             $query.=' AND id_solicitud=?';
-            array_push($params,$id_solicitud);
+            array_push($params,$request->id_solicitud);
         }
 
         return $this->execute_simple_query("select",$query,$params);

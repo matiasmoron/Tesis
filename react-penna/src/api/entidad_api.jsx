@@ -28,8 +28,7 @@ export function updateEntidad(entidad) {
    var args={metodo:'put',
              url:'http://localhost:8000/api/entidades',
              params:{id_entidad:entidad.id_entidad,nombre:entidad.nombre},
-             callback:updateEntidadSuccess,
-             callbackParams: {id_entidad:entidad.id_entidad,nombre:entidad.nombre}
+             callback:updateEntidadSuccess
           };
    DbCall.DbCall(args);
 }

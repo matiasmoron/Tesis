@@ -52,7 +52,7 @@ class PanelPersonal extends React.Component {
 				<Input label="Fecha Ingreso" valor={input => this._fecha_ingreso = input} />
 				<button type="submit" className="btn btn-success">Agregar Personal</button>
 			</Formulario>
-        	<TablePersonal datos_elemento={this.props.personal}  servicios={this.props.servicios} getPersonal={ApiPersonal.getPersonal} updateElemento={this._updateElemento.bind(this)} deleteElemento={this._deleteElemento.bind(this)}/>
+        	<TablePersonal datos_elemento={this.props.personal}  getPersonal={ApiPersonal.getPersonal} updateElemento={this._updateElemento.bind(this)} deleteElemento={this._deleteElemento.bind(this)}/>
 		</div>
       );
     }

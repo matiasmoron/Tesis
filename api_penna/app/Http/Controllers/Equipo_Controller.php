@@ -7,16 +7,18 @@ use App\Equipo;
 
 class Equipo_Controller extends Controller
 {
-    public function get_equipos($id_equipo=null){
+    public function get_equipos(Request $request){
         $params= array();
         $query='SELECT
-                    *
-                FROM  equipo
+                    e.id_equipo,e.id_tipo_equipo,e.id_equipo_padre,e.cod_patrimonial,e.descripcion,
+                    s.nombre as servicio_nombre
+                FROM  equipo e 
+                INNER JOIN servicio s USING(id_servicio)
                 WHERE estado='.ALTA;
 
-        if(isset($id_equipo)){
+        if(isset($request->id_equipo)){
             $query.=' AND id_equipo=?';
-            array_push($params,$id_equipo);
+            array_push($params,$request->id_equipo);
         }
 
         return $this->execute_simple_query("select",$query,$params);

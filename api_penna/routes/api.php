@@ -39,7 +39,6 @@ Route::middleware('cors')->delete('/puestos', 'Puesto_Controller@remove_puesto')
 //Técnicos
 Route::middleware('cors')->get('/tecnicos', 'Tecnico_Controller@get_tecnicos');
 Route::middleware('cors')->post('/tecnicos', 'Tecnico_Controller@add_tecnico');
-Route::middleware('cors')->put('/tecnicos', 'Tecnico_Controller@update_tecnico');
 Route::middleware('cors')->delete('/tecnicos', 'Tecnico_Controller@remove_tecnico');
 Route::middleware('cors')->post('/tecnico_entidad', 'Tecnico_Controller@get_entidades_no_asignadas');
 

@@ -9,16 +9,16 @@ use Illuminate\Support\Facades\DB;
 class Puesto_Controller extends Controller
 {
     
-    public function get_puestos($id_puesto=null){
+    public function get_puestos(Request $request){
         $params= array();
         $query='SELECT
                     id_puesto,nombre
                 FROM puesto';
 
 
-        if(isset($id_puesto)){
+        if(isset($request->id_puesto)){
             $query.=' AND id_puesto=?';
-            array_push($params,$id_puesto);
+            array_push($params,$request->id_puesto);
         }
 
         return $this->execute_simple_query("select",$query,$params);

@@ -33,13 +33,8 @@ export function updatePersonal(personal) {
              url:'http://localhost:8000/api/personal',
              params:{usuario:personal.usuario,legajo:personal.legajo,
 				 	nombre:personal.nombre,apellido:personal.apellido,
-			 		dni:personal.dni,id_servicio:personal.id_servicio,
-					id_puesto:personal.id_puesto,fecha_ingreso:personal.fecha_ingreso},
-             callback:updateSuccess,
-             callbackParams : {usuario:personal.usuario,legajo:personal.legajo,
-				 	nombre:personal.nombre,apellido:personal.apellido,
-			 		dni:personal.dni,id_servicio:personal.id_servicio,
-					id_puesto:personal.id_puesto,fecha_ingreso:personal.fecha_ingreso}
+			 		dni:personal.dni,fecha_ingreso:personal.fecha_ingreso},
+             callback:updateSuccess
           };
    DbCall.DbCall(args);
 }

@@ -8,16 +8,16 @@ use App\Entidad;
 
 class Entidad_Controller extends Controller
 {
-    public function get_entidades($id_entidad=null){
+    public function get_entidades(Request $request){
         $params= array();
         $query='SELECT
                     id_entidad,nombre,tipo_entidad
                 FROM entidad
                 WHERE estado='.ALTA;
 
-        if(isset($id_entidad)){
+        if(isset($request->id_entidad)){
             $query.=' AND id_entidad=?';
-            array_push($params,$id_entidad);
+            array_push($params,$request->id_entidad);
         }
 
         return $this->execute_simple_query("select",$query,$params);

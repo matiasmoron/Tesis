@@ -6,6 +6,8 @@ import store from '../store';
 import Formulario from './genericos/Formulario';
 import Input from './genericos/Input';
 import TableEntidad from './TableEntidad';
+import SelectInput from './genericos/Select';
+import {tipoEntidad} from './commons/Utils';
 
 class PanelEntidad extends React.Component {
 	constructor() {
@@ -29,12 +31,28 @@ class PanelEntidad extends React.Component {
 		entidadApi.updateEntidad(entidad);
 	}
 
+	armarSelect(){
+		var resultado={};
+		var resultado= Object.keys(tipoEntidad).map((valor) =>{
+			var elem = [];
+			elem = {
+				tipo_entidad:valor,
+				descripcion:tipoEntidad[valor]
+			}
+			return elem;
+			}
+        );
+		return resultado;
+	}
+
 	render() {
+	  var datos_select = this.armarSelect();
+	  console.log("render",datos_select);
 	  return (
 		<div className="col-md-5">
 			<Formulario titulo="Creación entidad" submit={this._addElemento.bind(this)}>
 				<Input label="Nombre" valor={input => this._nombre = input} />
-				<Input label="Tipo" valor={input => this._tipo_entidad = input} />
+				<SelectInput data_opciones={datos_select} llave="tipo_entidad" descripcion="descripcion" label="Tipo"   valor={input => this._tipo_entidad = input} />
 				<button type="submit" className="btn btn-success">Agregar Entidad</button>
 			</Formulario>
         	<TableEntidad datos_elemento={this.props.entidades} updateEntidad={this._updateEntidad.bind(this)} deleteEntidad={this._deleteEntidad.bind(this)}/>

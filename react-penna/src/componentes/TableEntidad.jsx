@@ -2,6 +2,7 @@ var React             = require('react');
 var ReactBsTable      = require('react-bootstrap-table');
 var BootstrapTable    = ReactBsTable.BootstrapTable;
 var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
+import {tipoEntidad} from './commons/Utils';
 
 class TableEntidad extends React.Component {
 	 constructor() {
@@ -23,6 +24,9 @@ class TableEntidad extends React.Component {
 	 }
    }
 
+	tipoEntidadFormatter(cell, row) {
+      return tipoEntidad[cell];
+	}
 
    render() {
 	   	const btnEliminar = (onClick) => {
@@ -61,9 +65,14 @@ class TableEntidad extends React.Component {
 				cellEdit  = {editar}
 				options   = {opciones}
 				hover>
-				<TableHeaderColumn isKey dataField='id_entidad'>ID</TableHeaderColumn>
-				<TableHeaderColumn dataField='tipo_entidad'>Tipo entidad</TableHeaderColumn>
-				<TableHeaderColumn dataField='nombre'>Nombre</TableHeaderColumn>
+				<TableHeaderColumn editable={false} isKey dataField='id_entidad' hidden>ID</TableHeaderColumn>
+				<TableHeaderColumn
+					 dataFormat={ this.tipoEntidadFormatter}
+					 editable={false}
+					 dataField='tipo_entidad'>
+					 Tipo entidad
+				</TableHeaderColumn>
+				<TableHeaderColumn editable={true} dataField='nombre'>Nombre</TableHeaderColumn>
 			</BootstrapTable>
 		 );
    }

@@ -7,7 +7,7 @@ use App\Personal;
 
 class Personal_Controller extends Controller
 {
-    public function get_personal($legajo=null){
+    public function get_personal(Request $request){
         $params= array();
         $query='SELECT
                     CONCAT(p.apellido,", ",p.nombre) as nombre_apellido,p.nombre,p.apellido,
@@ -20,10 +20,11 @@ class Personal_Controller extends Controller
                     puesto puesto USING(id_puesto)
                 WHERE estado='.ALTA;
 
-        if(isset($legajo)){
+        if(isset($request->legajo)){
             $query.=' AND p.legajo=?';
-            array_push($params,$legajo);
+            array_push($params,$request->legajo);
         }
+
 
         return $this->execute_simple_query("select",$query,$params);
     }
@@ -51,12 +52,16 @@ class Personal_Controller extends Controller
 
         //Segunda consulta
         array_push($metodo, "select");
-        $query[1]= "SELECT * FROM personal where legajo=?";
+        $query[1]= "SELECT p.*, s.nombre as servicio_nombre, puesto.nombre as puesto_nombre
+                    FROM personal  p 
+                    INNER JOIN servicio s USING(id_servicio)
+                    INNER JOIN puesto puesto USING (id_puesto)
+                    WHERE legajo=?";
         array_push($array_params,array($request->legajo));
         return $this->execute_multiple_query($metodo,$query,$array_params,true);
     }
 
-    public function delete_personal(Request $request){
+    public function remove_personal(Request $request){
         $params= array();
         $query='UPDATE personal
                     SET    estado='.BAJA.'
@@ -75,8 +80,6 @@ class Personal_Controller extends Controller
                        usuario=?,
                        nombre=?,
                        apellido=?,
-                       id_puesto=?,
-                       id_servicio=?,
                        fecha_ingreso=?
                 WHERE  legajo=?';
 
@@ -84,8 +87,6 @@ class Personal_Controller extends Controller
         array_push($params,$request->usuario);
         array_push($params,$request->nombre);
         array_push($params,$request->apellido);
-        array_push($params,$request->id_puesto);
-        array_push($params,$request->id_servicio);
         array_push($params,$request->fecha_ingreso);
         array_push($params,$request->legajo);
 

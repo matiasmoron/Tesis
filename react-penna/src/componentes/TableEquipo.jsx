@@ -65,7 +65,7 @@ class TableEquipo extends React.Component {
 				<TableHeaderColumn dataField='id_tipo_equipo'>Tipo equipo</TableHeaderColumn>
 				<TableHeaderColumn dataField='descripcion'>Descripcion</TableHeaderColumn>
 				<TableHeaderColumn dataField='cod_patrimonial'>Código Patrimonial</TableHeaderColumn>
-				<TableHeaderColumn dataField='id_servicio'>Servicio</TableHeaderColumn>
+				<TableHeaderColumn editable={false} dataField='servicio_nombre'>Servicio</TableHeaderColumn>
 				<TableHeaderColumn dataField='id_equipo_padre'>Equipo Contenedor</TableHeaderColumn>
 			</BootstrapTable>
 		 );

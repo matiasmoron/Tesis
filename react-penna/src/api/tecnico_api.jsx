@@ -42,23 +42,15 @@ export function getTecnicoEntidad(legajo) {
            };
     DbCall.DbCall(args);
 }
-export function addElemento(legajo,entidad) {
+export function addElemento(legajo,id_entidad) {
    var args={metodo:'post',
              url:'http://localhost:8000/api/tecnicos',
-             params:{legajo:legajo,entidad:entidad},
+             params:{legajo:legajo,id_entidad:id_entidad},
              callback:addSuccess
           };
    DbCall.DbCall(args);
 }
 
-// export function updateElemento(servicio) {
-//   return axios.put('http://localhost:8000/api/tecnicos',"legajo="+servicio.id+"",{headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
-//   .then(data => {
-//      store.dispatch(updateServicioSuccess(servicio));
-//      return data;
-//    });
-// }
-//
 
 export function deleteElemento(tecnico) {
    var args={metodo:'delete',

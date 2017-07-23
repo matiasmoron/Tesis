@@ -41,7 +41,6 @@ class PanelEquipo extends React.Component {
 				<Input label="Tipo Equipo" valor={input => this._id_tipo_equipo = input} />
 				<Input label="Descripcion" valor={input => this._descripcion = input} />
 				<Input label="Código Patrimonial" valor={input => this._cod_patrimonial = input} />
-				{/* <Input label="Servicio" valor={input => this._id_servicio = input} /> */}
 				<Input label="Equipo Contenedor" valor={input => this._id_equipo_padre = input} />
 				<SelectInput data_opciones={this.props.servicios} llave="id_servicio" descripcion="nombre" label="Servicios"   valor={input => this._id_servicio = input} />
 				<button type="submit" className="btn btn-success">Agregar Equipo</button>
