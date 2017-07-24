@@ -51,11 +51,10 @@ class PanelEntidad extends React.Component {
 	  return (
 		<div className="col-md-6">
 			<Formulario titulo="Creación entidad" submit={this._addElemento.bind(this)}>
-				<Input label="Nombre" valor={input => this._nombre = input} />
-				<SelectInput data_opciones={datos_select} llave="tipo_entidad" descripcion="descripcion" label="Tipo"   valor={input => this._tipo_entidad = input} />
-				<button type="submit" className="btn btn-success">Agregar Entidad</button>
-				<Input clases="form-group col-md-6" label="Nombre" valor={input => this._nombre = input} />
-				<Input clases="form-group col-md-6" label="Tipo" valor={input => this._tipo_entidad = input} />
+				<div className="row">
+					<Input clases="form-group col-md-6" label="Nombre" valor={input => this._nombre = input} />
+					<SelectInput clases="form-group col-md-6" data_opciones={datos_select} llave="tipo_entidad" descripcion="descripcion" label="Tipo"   valor={input => this._tipo_entidad = input} />
+				</div>
 				<div className="btn-form">
 					<button type="submit" className="btn btn-success">Agregar Entidad</button>
 				</div>
