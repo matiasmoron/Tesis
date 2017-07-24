@@ -7,6 +7,7 @@ import Formulario from './genericos/Formulario';
 import TableTecnicos from './TableTecnicos';
 import Input from './genericos/Input';
 import SelectInput from './genericos/Select';
+import Label from './genericos/Label';
 
 class PanelTecnico extends React.Component {
 	constructor() {
@@ -64,12 +65,13 @@ class PanelTecnico extends React.Component {
 			<Formulario titulo="Creación Técnico" submit={this._getPersonal.bind(this)}>
 				<div className="row">
 					<Input clases="form-group col-md-4" label="Legajo" placeholder="Ingrese un legajo" valor={input => this._legajo = input} />
-					<Input clases="form-group col-md-4" label="Nombre" value={this.props.tecnico_personal.nombre}  placeholder="Nombre" valor={input => this._nombre = input} />
+					<Label  clases="form-group col-md-4" value={this.props.tecnico_personal.nombre} label="Nombre" />
+					{/* <Input clases="form-group col-md-4" label="Nombre" value={this.props.tecnico_personal.nombre}  placeholder="Nombre" valor={input => this._nombre = input} /> */}
 					<div className="btn-form">
 						<button type="submit" className="btn btn-success">Buscar</button>
 					</div>
 				</div>
-				<SelectInput data_opciones={this.props.entidades} label="Entidad" llave="id_entidad" descripcion="nombre"  valor={input => this._entidad = input} />
+				<SelectInput data_opciones={this.props.tecnicos_entidades} label="Entidad" llave="id_entidad" descripcion="nombre"  valor={input => this._entidad = input} />
 				<div className="btn-form">
 					<button onClick={this._addElemento.bind(this)} className="btn btn-success">Agregar técnico</button>
 				</div>
