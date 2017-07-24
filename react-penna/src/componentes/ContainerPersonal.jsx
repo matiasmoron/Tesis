@@ -5,7 +5,7 @@ require("../styles/backoffice.scss");
 
 const Container = () => {
   return (
-	<div className="gral-container col-md-10 col-offset-1">
+	<div className="gral-container">
 		<PanelPersonal/>
 	</div>
   );

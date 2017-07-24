@@ -60,15 +60,17 @@ class PanelTecnico extends React.Component {
 
 	render() {
 	  return (
-		<div className="col-md-9">
+		<div className="col-md-6">
 			<Formulario titulo="Creación Técnico" submit={this._getPersonal.bind(this)}>
 				<div className="row">
-					<Input label="Legajo" placeholder="Ingrese un legajo" valor={input => this._legajo = input} />
-					<Input label="Nombre" value={this.props.tecnico_personal.nombre}  placeholder="Nombre" valor={input => this._nombre = input} />
-					<button type="submit" className="btn btn-success">Buscar</button>
+					<Input clases="form-group col-md-4" label="Legajo" placeholder="Ingrese un legajo" valor={input => this._legajo = input} />
+					<Input clases="form-group col-md-4" label="Nombre" value={this.props.tecnico_personal.nombre}  placeholder="Nombre" valor={input => this._nombre = input} />
+					<div className="btn-form">
+						<button type="submit" className="btn btn-success">Buscar</button>
+					</div>
 				</div>
-				<div className="row">
-					<SelectInput data_opciones={this.props.tecnicos_entidades} label="Entidad" llave="id_entidad" descripcion="nombre"  valor={input => this._entidad = input} />
+				<SelectInput data_opciones={this.props.entidades} label="Entidad" llave="id_entidad" descripcion="nombre"  valor={input => this._entidad = input} />
+				<div className="btn-form">
 					<button onClick={this._addElemento.bind(this)} className="btn btn-success">Agregar técnico</button>
 				</div>
 			</Formulario>

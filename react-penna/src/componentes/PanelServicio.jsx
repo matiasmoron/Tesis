@@ -32,8 +32,12 @@ class PanelServicio extends React.Component {
 	  return (
 		<div className="col-md-5">
 			<Formulario titulo="Creación servicio" submit={this._addElemento.bind(this)}>
-				<Input label="Nombre" valor={input => this._nombre = input} />
-				<button type="submit" className="btn btn-success">Agregar servicio</button>
+				<div className="row">
+					<Input clases="form-group col-md-6" label="Nombre" valor={input => this._nombre = input} />
+					<div className="btn-form">
+						<button type="submit" className="btn btn-success">Agregar servicio</button>
+					</div>
+				</div>
 			</Formulario>
         	<TableServicio datos_elemento={this.props.servicios} updateServicio={this._updateServicio.bind(this)} deleteServicio={this._deleteServicio.bind(this)}/>
 		</div>

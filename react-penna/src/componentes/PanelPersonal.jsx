@@ -40,17 +40,19 @@ class PanelPersonal extends React.Component {
 
 	render() {
 	  return (
-		<div className="col-md-12">
+		<div className="col-md-6">
 			<Formulario titulo="Creación Personal" submit={this._addElemento.bind(this)}>
-				<Input label="legajo" valor={input => this._legajo = input} />
-				<Input label="Usuario" valor={input => this._usuario = input} />
-				<Input label="DNI" valor={input => this._dni = input} />
-				<Input label="Nombre" valor={input => this._nombre = input} />
-				<Input label="Apellido" valor={input => this._apellido = input} />
-				<SelectInput data_opciones={this.props.puestos} llave="id_puesto" descripcion="nombre" label="Puestos"   valor={input => this._id_puesto = input} />
-				<SelectInput data_opciones={this.props.servicios} llave="id_servicio" descripcion="nombre" label="Servicio"   valor={input => this._id_servicio = input} />
-				<Input label="Fecha Ingreso" valor={input => this._fecha_ingreso = input} />
-				<button type="submit" className="btn btn-success">Agregar Personal</button>
+				<Input clases="form-group col-md-4" label="Legajo" valor={input => this._legajo = input} />
+				<Input clases="form-group col-md-4" label="Usuario" valor={input => this._usuario = input} />
+				<Input clases="form-group col-md-4" label="DNI" valor={input => this._dni = input} />
+				<Input clases="form-group col-md-4" label="Nombre" valor={input => this._nombre = input} />
+				<Input clases="form-group col-md-4" label="Apellido" valor={input => this._apellido = input} />
+				<Input clases="form-group col-md-4" label="Fecha Ingreso" valor={input => this._fecha_ingreso = input} />
+				<SelectInput clases="form-group col-md-6" data_opciones={this.props.puestos} llave="id_puesto" descripcion="nombre" label="Puestos"   valor={input => this._id_puesto = input} />
+				<SelectInput clases="form-group col-md-6" data_opciones={this.props.servicios} llave="id_servicio" descripcion="nombre" label="Servicio"   valor={input => this._id_servicio = input} />
+				<div className="btn-form">
+					<button type="submit" className="btn btn-success">Agregar Personal</button>
+				</div>
 			</Formulario>
         	<TablePersonal datos_elemento={this.props.personal}  getPersonal={ApiPersonal.getPersonal} updateElemento={this._updateElemento.bind(this)} deleteElemento={this._deleteElemento.bind(this)}/>
 		</div>

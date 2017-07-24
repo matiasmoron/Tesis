@@ -11,7 +11,6 @@ const Card = (props) => {
 			<Link to={props.url}  >
                 <div className="card">
                   <h1>{props.nombre}</h1>
-                  {/* <div className="tipo1"></div> */}
                   <div><img src={props.logo}/></div>
                 </div>
 			</Link>

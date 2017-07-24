@@ -3,7 +3,7 @@ var React = require('react');
 
 const SelectInput = (props) => {
       return (
-			<div className="form-group">
+			<div className={props.clases}>
 				<label>{props.label}</label>
 				<select className="form-control" ref={props.valor} >
                     {

@@ -33,8 +33,12 @@ class PanelPuesto extends React.Component {
 	  return (
 		<div className="col-md-5">
 			<Formulario titulo="Creación puesto" submit={this._addElemento.bind(this)}>
-				<Input label="Nombre" valor={input => this._nombre = input} />
-				<button type="submit" className="btn btn-success">Agregar Puesto</button>
+				<div className="row">
+					<Input clases="form-group col-md-6" label="Nombre" valor={input => this._nombre = input} />
+					<div className="btn-form">
+						<button type="submit" className="btn btn-success">Agregar Puesto</button>
+					</div>
+				</div>
 			</Formulario>
         	<TablePuesto datos_elemento={this.props.puestos} updatePuesto={this._updatePuesto.bind(this)} deletePuesto={this._deletePuesto.bind(this)}/>
 		</div>

@@ -49,11 +49,16 @@ class PanelEntidad extends React.Component {
 	  var datos_select = this.armarSelect();
 	  console.log("render",datos_select);
 	  return (
-		<div className="col-md-5">
+		<div className="col-md-6">
 			<Formulario titulo="Creación entidad" submit={this._addElemento.bind(this)}>
 				<Input label="Nombre" valor={input => this._nombre = input} />
 				<SelectInput data_opciones={datos_select} llave="tipo_entidad" descripcion="descripcion" label="Tipo"   valor={input => this._tipo_entidad = input} />
 				<button type="submit" className="btn btn-success">Agregar Entidad</button>
+				<Input clases="form-group col-md-6" label="Nombre" valor={input => this._nombre = input} />
+				<Input clases="form-group col-md-6" label="Tipo" valor={input => this._tipo_entidad = input} />
+				<div className="btn-form">
+					<button type="submit" className="btn btn-success">Agregar Entidad</button>
+				</div>
 			</Formulario>
         	<TableEntidad datos_elemento={this.props.entidades} updateEntidad={this._updateEntidad.bind(this)} deleteEntidad={this._deleteEntidad.bind(this)}/>
 		</div>

@@ -43,7 +43,9 @@ class PanelSolicitud extends React.Component {
 				<Input label="Código Patrimonial" valor={input => this._cod_patrimonial = input} />
 				<Input label="Servicio" valor={input => this._id_servicio = input} />
 				<Input label="Solicitud Contenedor" valor={input => this._id_solicitud_padre = input} />
-				<button type="submit" className="btn btn-success">Agregar Solicitud</button>
+				<div className="btn-form">
+					<button type="submit" className="btn btn-success">Agregar Solicitud</button>
+				</div>
 			</Formulario>
         	<TableSolicitud datos_elemento={this.props.solicitudes} updateElemento={this._updateElemento.bind(this)} deleteElemento={this._deleteElemento.bind(this)}/>
 		</div>
