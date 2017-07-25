@@ -17,8 +17,16 @@ class Equipo_Controller extends Controller
                 WHERE estado='.ALTA;
 
         if(isset($request->id_equipo)){
-            $query.=' AND id_equipo=?';
+            $query.=' AND e.id_equipo=?';
             array_push($params,$request->id_equipo);
+        }
+        if(isset($request->cod_patrimonial)){
+            $query.=' AND e.cod_patrimonial=?';
+            array_push($params,$request->cod_patrimonial);
+        }
+        if(isset($request->id_servicio)){
+            $query.=' AND e.id_servicio=?';
+            array_push($params,$request->id_servicio);
         }
 
         return $this->execute_simple_query("select",$query,$params);

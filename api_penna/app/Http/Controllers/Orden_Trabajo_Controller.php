@@ -3,15 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Solicitud;
+use App\Orden_trabajo;
 
-class Solicitud_Controller extends Controller
+class Orden_Trabajo_Controller extends Controller
 {
-    public function get_solicitudes(Request $request){
+    public function get_ordenes(Request $request){
         $params= array();
         $query='SELECT
-                    *
-                FROM  solicitud
+                    ot.id_orden_trabajo,ot.id_tipo_bien,ot.id_bien,ot.legajo_creacion,ot.legajo_recepcion,
+                    ot.fecha_creacion,ot.tipo_entidad,ot.entidad_destino,ot.obs_creacion,ot.obs_devolucion,
+                FROM  orden_trabajo ot
                 WHERE estado='.ALTA;
 
         if(isset($request->id_equipo)){
@@ -22,7 +23,7 @@ class Solicitud_Controller extends Controller
         return $this->execute_simple_query("select",$query,$params);
     }
 
-    public function add_solicitud(Request $request){
+    public function add_orden(Request $request){
         $metodo=array();
         $array_params= array();
         $params=array();

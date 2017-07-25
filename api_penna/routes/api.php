@@ -60,8 +60,11 @@ Route::middleware('cors')->post('/equipos', 'Equipo_Controller@add_equipo');
 Route::middleware('cors')->put('/equipos', 'Equipo_Controller@update_equipo');
 Route::middleware('cors')->delete('/equipos', 'Equipo_Controller@remove_equipo');
 
-//Solicitud
-Route::middleware('cors')->get('/solicitudes/{id_solicitud?}', 'Solicitud_Controller@get_solicitudes');
-Route::middleware('cors')->post('/solicitudes', 'Solicitud_Controller@add_solicitud');
-Route::middleware('cors')->put('/solicitudes', 'Solicitud_Controller@update_solicitud');
-Route::middleware('cors')->delete('/solicitudes', 'Solicitud_Controller@remove_solicitud');
+//Orden Trabajo
+Route::middleware('cors')->get('/ordenes/{id_orden_trabajo?}', 'Orden_Trabajo_Controller@get_ordenes');
+Route::middleware('cors')->post('/ordenes', 'Orden_Trabajo_Controller@add_orden');
+Route::middleware('cors')->put('/ordenes', 'Orden_Trabajo_Controller@update_orden');
+Route::middleware('cors')->delete('/ordenes', 'Orden_Trabajo_Controller@remove_orden');
+
+//Bien
+Route::middleware('cors')->post('/bienes', 'Bien_Controller@get_bienes');
