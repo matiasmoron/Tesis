@@ -8,7 +8,7 @@ require("../../styles/nuevo_menu.scss");
 var tabData = [
 	{icon: Fa500px, tag: "a1",to:"/ordenes", nombre:"Ordenes de Trabajo", isActive:true },
 	// {icon: Fa500px, tag: "a2",to:"", nombre:"Stock / Compras", isActive:false },
-	{icon: Fa500px, tag: "a3",to:"/solicitud", nombre:"Solicitudes", isActive:false},
+	// {icon: Fa500px, tag: "a3",to:"/solicitud", nombre:"Solicitudes", isActive:false},
 	{icon: Fa500px, tag: "a4",to:"/personal", nombre:"Personal", isActive:false},
 	{icon: Fa500px, tag: "a5",to:"/bienes", nombre:"Bienes", isActive:false},
 	{icon: Fa500px, tag: "a6",to:"/configuracion", nombre:"Configuración", isActive:false}

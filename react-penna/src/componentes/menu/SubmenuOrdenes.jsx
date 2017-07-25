@@ -5,9 +5,9 @@ import Cards from './Cards';
 const SubmenuOrdenes = (props) => {
       return (
             <Cards>
-                <Card url="/solicitud/ver" nombre="Ver Órdenes" />
-                <Card url="/solicitud/abm" nombre="ABM Órdenes" />
-                <Card url="/solicitud/administrar" nombre="Administración" />
+                <Card url="/ordenes/ver" nombre="Ver órdenes"/>
+                <Card url="/ordenes/crear" nombre="Crear nueva Orden"/>
+                <Card url="/ordenes/administrar" nombre="Administración"/>
             </Cards>
       );
 }
