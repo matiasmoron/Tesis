@@ -2,7 +2,6 @@ var React = require('react');
 
 
 const SelectInput = (props) => {
-    console.log(props);
       return (
 			<div className={props.clases}>
 				<label>{props.label}</label>

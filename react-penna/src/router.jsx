@@ -6,6 +6,7 @@ import tecnicos from './componentes/ContainerTecnicos';
 import entidades from './componentes/ContainerEntidades';
 import equipos from './componentes/ContainerEquipos';
 import personal from './componentes/ContainerPersonal';
+import ordenes_abm from './componentes/ContainerOrdenes';
 import Layout from './componentes/genericos/Layout';
 import Menu from './componentes/menu/Menu';
 import submenuOrdenes from './componentes/menu/SubmenuOrdenes';
@@ -19,8 +20,8 @@ export default (
    <Layout>
         <Menu/>
         <Route exact path="/ordenes"  component={submenuOrdenes} />
-        <Route exact path="/ordenes/ver"  component={submenuOrdenes} />
-        <Route exact path="/ordenes/crear"  component={submenuOrdenes} />
+        <Route exact path="/ordenes/ver"  component={ordenes_abm} />
+        <Route exact path="/ordenes/abm"  component={ordenes_abm} />
         <Route exact path="/ordenes/administrar"  component={submenuOrdenes} />
 
         <Route exact path="/personal"  component={submenuPersonal} />

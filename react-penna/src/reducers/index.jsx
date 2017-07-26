@@ -8,6 +8,8 @@ import entidadReducer from './entidades_reducer';
 import equipoReducer from './equipos_reducer';
 import solicitudReducer from './solicitudes_reducer';
 import personalReducer from './personal_reducer';
+import ordenesReducer from './ordenes_reducer';
+
 
 
 
@@ -21,6 +23,8 @@ var reducers = combineReducers({
     equipoState: equipoReducer,
     solicitudState: solicitudReducer,
     personalState: personalReducer,
+    ordenesState: ordenesReducer,
+
 });
 
 export default reducers;
