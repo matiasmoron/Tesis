@@ -1,12 +1,13 @@
 // require("./styles/menu.scss");
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
-import puestoServicio from './componentes/ContainerPuestoServicio';
-import tecnicos from './componentes/ContainerTecnicos';
-import entidades from './componentes/ContainerEntidades';
-import equipos from './componentes/ContainerEquipos';
-import personal from './componentes/ContainerPersonal';
-import ordenes_abm from './componentes/ContainerOrdenes';
+import Container from './componentes/Container';
+import puestoServicio from './componentes/PanelServicio';
+import tecnicos from './componentes/PanelTecnico';
+import entidades from './componentes/PanelEntidad';
+import equipos from './componentes/PanelEquipo';
+import personal from './componentes/PanelPersonal';
+import ordenes_abm from './componentes/PanelOrdenes';
 import Layout from './componentes/genericos/Layout';
 import Menu from './componentes/menu/Menu';
 import submenuOrdenes from './componentes/menu/SubmenuOrdenes';
@@ -19,23 +20,25 @@ export default (
    <Router history={Router.hashHistory}>
    <Layout>
         <Menu/>
-        <Route exact path="/ordenes"  component={submenuOrdenes} />
-        <Route exact path="/ordenes/ver"  component={ordenes_abm} />
-        <Route exact path="/ordenes/abm"  component={ordenes_abm} />
-        <Route exact path="/ordenes/administrar"  component={submenuOrdenes} />
+        <Container>
+            <Route exact path="/ordenes"  component={submenuOrdenes} />
+            <Route exact path="/ordenes/ver"  component={ordenes_abm} />
+            <Route exact path="/ordenes/abm"  component={ordenes_abm} />
+            <Route exact path="/ordenes/administrar"  component={submenuOrdenes} />
 
-        <Route exact path="/personal"  component={submenuPersonal} />
-        <Route exact path="/personal/personal" component={personal} />
-        <Route exact path="/personal/puesto_servicio" component={puestoServicio} />
-        <Route exact path="/personal/tecnicos" component={tecnicos} />
-        <Route path="/personal/entidades" component={entidades} />
+            <Route exact path="/personal"  component={submenuPersonal} />
+            <Route exact path="/personal/personal" component={personal} />
+            <Route exact path="/personal/puesto_servicio" component={puestoServicio} />
+            <Route exact path="/personal/tecnicos" component={tecnicos} />
+            <Route path="/personal/entidades" component={entidades} />
 
-        <Route exact path="/bienes"  component={submenuBienes} />
-        <Route path="/bienes/equipos" component={equipos} />
-        <Route path="/bienes/prestaciones" component={equipos} />
+            <Route exact path="/bienes"  component={submenuBienes} />
+            <Route path="/bienes/equipos" component={equipos} />
+            <Route path="/bienes/prestaciones" component={equipos} />
 
-        <Route exact path="/configuracion"  component={submenuConfiguracion} />
-        <Route path="/configuracion/mi_cuenta" component={equipos} />
+            <Route exact path="/configuracion"  component={submenuConfiguracion} />
+            <Route path="/configuracion/mi_cuenta" component={equipos} />
+        </Container>
    </Layout>
    </Router>
 

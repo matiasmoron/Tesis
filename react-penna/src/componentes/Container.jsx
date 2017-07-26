@@ -3,10 +3,10 @@ import PanelEntidad from "./PanelEntidad";
 
 require("../styles/backoffice.scss");
 
-const Container = () => {
+const Container = (props) => {
   return (
-	<div className="gral-container">
-		<PanelEntidad/>
+	<div className="col-md-10 col-md-offset-1 gral-container">
+		{props.children}
 	</div>
   );
 };
