@@ -46,22 +46,25 @@ class PanelEntidad extends React.Component {
 	}
 
 	render() {
-	  var datos_select = this.armarSelect();
-	  console.log("render",datos_select);
-	  return (
-		<div className="col-md-6">
-			<Formulario titulo="Creación entidad" submit={this._addElemento.bind(this)}>
-				<div className="row">
-					<Input clases="form-group col-md-6" label="Nombre" valor={input => this._nombre = input} />
-					<SelectInput clases="form-group col-md-6" data_opciones={datos_select} llave="tipo_entidad" descripcion="descripcion" label="Tipo"   valor={input => this._tipo_entidad = input} />
+		var datos_select = this.armarSelect();
+		return (
+			<div className="col-md-10">
+				<div className="col-md-6 col-md-offset-3">
+					<Formulario titulo="Creación entidad" submit={this._addElemento.bind(this)}>
+						<div className="row">
+							<Input clases="form-group col-md-6" label="Nombre" valor={input => this._nombre = input} />
+							<SelectInput clases="form-group col-md-6" data_opciones={datos_select} llave="tipo_entidad" descripcion="descripcion" label="Tipo"   valor={input => this._tipo_entidad = input} />
+						</div>
+						<div className="btn-form">
+							<button type="submit" className="btn btn-success">Agregar Entidad</button>
+						</div>
+					</Formulario>
 				</div>
-				<div className="btn-form">
-					<button type="submit" className="btn btn-success">Agregar Entidad</button>
+				<div className="col-md-8 col-md-offset-2">
+	        		<TableEntidad datos_elemento={this.props.entidades} updateEntidad={this._updateEntidad.bind(this)} deleteEntidad={this._deleteEntidad.bind(this)}/>
 				</div>
-			</Formulario>
-        	<TableEntidad datos_elemento={this.props.entidades} updateEntidad={this._updateEntidad.bind(this)} deleteEntidad={this._deleteEntidad.bind(this)}/>
-		</div>
-      );
+			</div>
+      	);
     }
 }
 

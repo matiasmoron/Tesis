@@ -5,7 +5,7 @@ require("../styles/backoffice.scss");
 
 const Container = (props) => {
   return (
-	<div className="col-md-10 col-md-offset-1 gral-container">
+	<div className="gral-container">
 		{props.children}
 	</div>
   );

@@ -47,18 +47,20 @@ class TablePuesto extends React.Component {
  		};
 
  		const opciones= {
- 			afterDeleteRow: this.onAfterDeleteRow.bind(this),
- 			deleteBtn: btnEliminar,
- 			handleConfirmDeleteRow: this.customConfirm,
- 			clearSearch: true
- 		}
+   			afterDeleteRow        : this.onAfterDeleteRow.bind(this),
+   			deleteBtn             : BsTable.btnEliminar,
+   			searchField           : BsTable.searchField,
+   			handleConfirmDeleteRow: this.customConfirm,
+   			clearSearch           : true,
+   			clearSearchBtn        : BsTable.btnClear
+   		}
 		 return (
 			<BootstrapTable
 				height='auto'
 				search={true}
 				data={this.props.datos_elemento}
 				deleteRow={true}
-				selectRow={selectFila}
+				selectRow={BsTable.selectFila}
 				cellEdit={editar}
 				options={opciones}
 				hover>

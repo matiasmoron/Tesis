@@ -3,7 +3,7 @@ var React = require('react');
 
 const Cards = (props) => {
       return (
-        <section className="panel panel-success">
+        <section className="col-md-12">
 			<ul className="cards col-md-12">
 				{props.children}
 			</ul>

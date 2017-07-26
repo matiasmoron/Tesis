@@ -46,7 +46,7 @@ class PanelOrdenes extends React.Component {
 	render() {
 		var data_tipo_entidades = this._armarSelect();
 	  	return (
-			<div className="">
+			<div className="col-md-10">
 				<Formulario titulo="Nueva orden de trabajo" submit={this._addElemento.bind(this)}>
 					<div className="row">
 						<SelectInput clases="form-group col-md-6" data_opciones={this.props.servicios} llave="id_servicio" descripcion="nombre" label="Servicios" valor={input => this._id_servicio = input} />

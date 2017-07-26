@@ -2,6 +2,7 @@ var React             = require('react');
 var ReactBsTable      = require('react-bootstrap-table');
 var BootstrapTable    = ReactBsTable.BootstrapTable;
 var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
+import * as BsTable from './commons/BsTable';
 
 class TableEquipo extends React.Component {
 	 constructor() {
@@ -25,39 +26,28 @@ class TableEquipo extends React.Component {
 
 
    render() {
-	   	const btnEliminar = (onClick) => {
- 		   return (
- 			   <DeleteButton
- 				   btnText       = 'Eliminar'
- 				   btnContextual = 'btn-danger'
- 				   className     = 'my-custom-class'
- 				   btnGlyphicon  = 'glyphicon-trash'
- 				   onClick       = { onClick }/>
- 			   );
- 		   }
  	    const editar = {
  			mode         : 'dbclick',
  			blurToSave   : true,
  			afterSaveCell: this.updateElemento.bind(this)
  	   	};
 
- 		const selectFila={
- 			mode: 'checkbox'
- 		};
-
  		const opciones= {
  			afterDeleteRow        : this.onAfterDeleteRow.bind(this),
- 			deleteBtn             : btnEliminar,
+ 			deleteBtn             : BsTable.btnEliminar,
+			searchField           : BsTable.searchField,
  			handleConfirmDeleteRow: this.customConfirm,
- 			clearSearch           : true
- 		}
+ 			clearSearch           : true,
+			clearSearchBtn        : BsTable.btnClear
+ 		};
+
 		 return (
 			<BootstrapTable
 				height    = 'auto'
 				search    = {true}
 				data      = {this.props.datos_elemento}
 				deleteRow = {true}
-				selectRow = {selectFila}
+				selectRow = {BsTable.selectFila}
 				cellEdit  = {editar}
 				options   = {opciones}
 				hover>

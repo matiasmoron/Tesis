@@ -2,6 +2,7 @@ var React = require('react');
 var ReactBsTable  = require('react-bootstrap-table');
 var BootstrapTable = ReactBsTable.BootstrapTable;
 var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
+import * as BsTable from './commons/BsTable';
 
 class TableTecnicos extends React.Component {
 	 constructor() {
@@ -24,35 +25,22 @@ class TableTecnicos extends React.Component {
 
 
    render() {
-	   const btnEliminar = (onClick) => {
-		   return (
-			   <DeleteButton
-				   btnText='Eliminar'
-				   btnContextual='btn-danger'
-				   className='my-custom-class'
-				   btnGlyphicon='glyphicon-trash'
-				   onClick={ onClick }/>
-			   );
-		   }
-
-
-		const selectFila={
-			mode: 'checkbox'
-		};
-
 		const opciones= {
-			afterDeleteRow: this.onAfterDeleteRow.bind(this),
-			deleteBtn: btnEliminar,
-			handleConfirmDeleteRow: this.customConfirm,
-			clearSearch: true
-		};
+ 			afterDeleteRow        : this.onAfterDeleteRow.bind(this),
+ 			deleteBtn             : BsTable.btnEliminar,
+			searchField           : BsTable.searchField,
+ 			handleConfirmDeleteRow: this.customConfirm,
+ 			clearSearch           : true,
+			clearSearchBtn        : BsTable.btnClear
+ 		};
+
 		 return (
 			<BootstrapTable
 				height='auto'
 				search={true}
 				data={this.props.datos_elemento}
 				deleteRow={true}
-				selectRow={selectFila}
+				selectRow={BsTable.selectFila}
 				options={opciones}
 				hover>
 				<TableHeaderColumn isKey dataField='tecnico_key' hidden>key</TableHeaderColumn>
