@@ -33,6 +33,7 @@ export const DELETE_EQUIPO_SUCCESS      = 'DELETE_EQUIPO_SUCCESS';
 
 //Ordenes
 export const GET_BIENES_SUCCESS         = 'GET_BIENES_SUCCESS';
+export const GET_BIENES_TABLAS_SUCCESS  = 'GET_BIENES_TABLAS_SUCCESS';
 
 //Personal
 export const GET_PERSONAL_SUCCESS         = 'GET_PERSONAL_SUCCESS';

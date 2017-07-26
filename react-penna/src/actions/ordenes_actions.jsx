@@ -6,3 +6,10 @@ export function getSuccess(bienes) {
     bienes
   };
 }
+
+export function getBienesTablasSuccess(bienes_solicitud) {
+  return {
+    type: types.GET_BIENES_TABLAS_SUCCESS,
+    bienes_solicitud
+  };
+}

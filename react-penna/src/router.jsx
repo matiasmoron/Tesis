@@ -2,7 +2,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import Container from './componentes/Container';
-import puestoServicio from './componentes/PanelServicio';
+import servicio from './componentes/PanelServicio';
+//import puesto from './componentes/PanelPuesto';
 import tecnicos from './componentes/PanelTecnico';
 import entidades from './componentes/PanelEntidad';
 import equipos from './componentes/PanelEquipo';
@@ -28,7 +29,7 @@ export default (
 
             <Route exact path="/personal"  component={submenuPersonal} />
             <Route exact path="/personal/personal" component={personal} />
-            <Route exact path="/personal/puesto_servicio" component={puestoServicio} />
+            <Route exact path="/personal/puesto_servicio" component={servicio} />
             <Route exact path="/personal/tecnicos" component={tecnicos} />
             <Route path="/personal/entidades" component={entidades} />
 

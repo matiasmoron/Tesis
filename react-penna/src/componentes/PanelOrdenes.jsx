@@ -22,11 +22,11 @@ class PanelOrdenes extends React.Component {
 		Api.getBienes({id_tipo_bien:1});
 	}
 
-	_addElemento(event){
+	_getBienesTablas(event){
+		console.log("ENTRO BIENES TABLAS");
 		event.preventDefault();
-		// Api.addEquipo({id_tipo_equipo:this._id_tipo_equipo.value,descripcion:this._descripcion.value,
-		// 			cod_patrimonial:this._cod_patrimonial.value,id_servicio:this._id_servicio.value,
-		// 			id_equipo_padre:this._id_equipo_padre.value});
+		Api.getBienesTablas({id_tipo_bien:this._id_tipo_bien.value,id_servicio:this._id_servicio.value,id_bien:this._id_bien.value,
+							cod_patrimonial:this._cod_patrimonial.value});
     }
 
 	_armarSelect(){
@@ -47,12 +47,12 @@ class PanelOrdenes extends React.Component {
 		var data_tipo_entidades = this._armarSelect();
 	  	return (
 			<div className="col-md-10">
-				<Formulario titulo="Nueva orden de trabajo" submit={this._addElemento.bind(this)}>
+				<Formulario titulo="Nueva orden de trabajo" submit={this._getBienesTablas.bind(this)}>
 					<div className="row">
 						<SelectInput clases="form-group col-md-6" data_opciones={this.props.servicios} llave="id_servicio" descripcion="nombre" label="Servicios" valor={input => this._id_servicio = input} />
 					</div>
 					<div className="row">
-						<SelectInput clases="form-group col-md-5" data_opciones={data_tipo_entidades} llave="tipo_bien" descripcion="descripcion" label="Tipo Bien"   valor={input => this._tipo_bien = input} />
+						<SelectInput clases="form-group col-md-5" data_opciones={data_tipo_entidades} llave="tipo_bien" descripcion="descripcion" label="Tipo Bien"   valor={input => this._id_tipo_bien = input} />
 						<SelectInput clases="form-group col-md-7" data_opciones={this.props.bienes} llave="id_equipo" descripcion="descripcion" label="Bien" valor={input => this._id_bien = input} />
 					</div>
 					<div className="row">
@@ -72,8 +72,9 @@ class PanelOrdenes extends React.Component {
 const mapStateToProps = function(store) {
 console.log("store ordenes", store);
   return {
-	  bienes   : store.ordenesState.bienes,
-	  servicios: store.servicioState.servicios
+	  bienes   	   : store.ordenesState.bienes,
+	  bienes_tabla : store.ordenesState.bienes_tabla,
+	  servicios    : store.servicioState.servicios
   };
 };
 

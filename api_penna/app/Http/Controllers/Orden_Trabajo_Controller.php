@@ -4,85 +4,50 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Orden_trabajo;
-
+const EQUIPO=1;
+const PRESTACION=2;
 class Orden_Trabajo_Controller extends Controller
 {
-    public function get_ordenes(Request $request){
+    public function get_bienes_solicitud(Request $request){
+        switch ($request->id_tipo_bien) {
+            case EQUIPO:
+                return $this->get_equipos_solicitud($request);
+                break;
+            
+            /*case PRESTACION:
+                return Equipo_Controller::get_equipos($request);
+                break;*/
+        }
+    }
+
+    private function get_equipos_solicitud(Request $request){
         $params= array();
         $query='SELECT
-                    ot.id_orden_trabajo,ot.id_tipo_bien,ot.id_bien,ot.legajo_creacion,ot.legajo_recepcion,
-                    ot.fecha_creacion,ot.tipo_entidad,ot.entidad_destino,ot.obs_creacion,ot.obs_devolucion,
-                FROM  orden_trabajo ot
-                WHERE estado='.ALTA;
+                    ot.id_orden_trabajo,ot.id_tipo_bien,ot.id_bien,ot.obs_creacion,ot.estado,
+                    e.descripcion,s.nombre as servicio_nombre
+                FROM  equipo e
+                LEFT JOIN
+                    orden_trabajo ot
+                    ON e.id_equipo=ot.id_bien AND ot.id_tipo_bien=".EQUIPO."
+                LEFT JOIN
+                    servicio s
+                    ON e.id_servicio=s.id_servicio
+                WHERE e.estado='.ALTA;
 
-        if(isset($request->id_equipo)){
-            $query.=' AND id_solicitud=?';
-            array_push($params,$request->id_solicitud);
+        if(isset($request->id_bien)){
+            $query.=' AND e.id_equipo=?';
+            array_push($params,$request->id_bien);
         }
-
+        if(isset($request->cod_patrimonial)){
+            $query.=' AND e.cod_patrimonial=?';
+            array_push($params,$request->cod_patrimonial);
+        }
+        if(isset($request->id_servicio)){
+            $query.=' AND e.id_servicio=?';
+            array_push($params,$request->id_servicio);
+        }
+        // var_dump($query);
         return $this->execute_simple_query("select",$query,$params);
-    }
-
-    public function add_orden(Request $request){
-        $metodo=array();
-        $array_params= array();
-        $params=array();
-        $query=array();
-
-        //Primera consulta
-        array_push($metodo, "insert");
-        $query[0]='INSERT INTO solicitud (id_bien,id_tipo_bien,id_servicio_creacion,legajo_creacion,legajo_recepcion,
-                                          id_entidad,fecha_creacion,estado)
-                VALUES(?,?,?,?,?,?,NOW(),'.ALTA.')';
-
-        array_push($params,$request->id_bien);
-        array_push($params,$request->id_tipo_bien);
-        array_push($params,$request->id_servicio_creacion);
-        array_push($params,$request->legajo_creacion);
-        array_push($params,$request->legajo_recepcion);
-        array_push($params,$request->id_entidad);
-        array_push($array_params,$params);
-
-        //Segunda consulta
-        array_push($metodo, "select");
-        $query[1]= "SELECT * FROM solicitud where id_solicitud=last_insert_id()";
-        array_push($array_params,array());
-
-        return $this->execute_multiple_query($metodo,$query,$array_params,true);
-    }
-
-    public function update_solicitud(Request $request){
-        $params= array();
-        $query='UPDATE solicitud
-                SET    id_bien=?,
-                       id_tipo_bien=?,
-                       id_servicio_creacion=?,
-                       legajo_creacion=?,
-                       legajo_recepcion=?,
-                       id_entidad=?
-                WHERE  id_solicitud=?';
-
-        array_push($params,$request->id_bien);
-        array_push($params,$request->id_tipo_bien);
-        array_push($params,$request->id_servicio_creacion);
-        array_push($params,$request->legajo_creacion);
-        array_push($params,$request->id_entidad);
-        array_push($params,$request->id_solicitud);
-
-
-        return $this->execute_simple_query("update",$query,$params);
-    }
-
-    public function delete_solicitud(Request $request){
-        $params= array();
-        $query='UPDATE solicitud
-        		    SET    estado='.BAJA.'
-                WHERE  id_solicitudo=?';
-
-        array_push($params,$request->id_solicitud);
-
-        return $this->execute_simple_query("update",$query,$params);
-
     }
 
 }
