@@ -13,7 +13,7 @@ class Orden_Trabajo_Controller extends Controller
             case EQUIPO:
                 return $this->get_equipos_solicitud($request);
                 break;
-            
+
             /*case PRESTACION:
                 return Equipo_Controller::get_equipos($request);
                 break;*/
@@ -23,16 +23,22 @@ class Orden_Trabajo_Controller extends Controller
     private function get_equipos_solicitud(Request $request){
         $params= array();
         $query='SELECT
-                    ot.id_orden_trabajo,ot.id_tipo_bien,ot.id_bien,ot.obs_creacion,ot.estado,
+                    e.id_equipo,
+                    ot.id_orden_trabajo,
+                    ot.id_tipo_bien,
+                    IFNULL(ot.obs_creacion,"-") as obs_creacion,
+                    IFNULL(ot.estado,"Disponible") as estado,
                     e.descripcion,s.nombre as servicio_nombre
                 FROM  equipo e
                 LEFT JOIN
                     orden_trabajo ot
-                    ON e.id_equipo=ot.id_bien AND ot.id_tipo_bien=".EQUIPO."
+                    ON e.id_equipo=ot.id_bien AND ot.id_tipo_bien=1 and ot.estado IN (1,2) 
                 LEFT JOIN
                     servicio s
                     ON e.id_servicio=s.id_servicio
-                WHERE e.estado='.ALTA;
+                WHERE e.estado=1
+                GROUP BY e.id_equipo
+                HAVING MAX(ot.fecha_creacion)';
 
         if(isset($request->id_bien)){
             $query.=' AND e.id_equipo=?';
