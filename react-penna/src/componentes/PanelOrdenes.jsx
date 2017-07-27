@@ -14,6 +14,7 @@ import {tipoBien} from './commons/Utils';
 class PanelOrdenes extends React.Component {
 	constructor() {
       super();
+	  this.state = {disabled_cod_patrimonial :false};
     }
 
 	componentDidMount(){
@@ -43,6 +44,12 @@ class PanelOrdenes extends React.Component {
 		return resultado;
 	}
 
+	changeSelect(event){
+		// Habilita/Desabilita el input de cod_patrimonial
+		this.setState({ disabled_cod_patrimonial: this._id_tipo_bien.value == 2 ? true : false});
+		Api.getBienes({id_tipo_bien:this._id_tipo_bien.value,id_servicio:this._id_servicio.value});
+	}
+
 	render() {
 		var data_tipo_entidades = this._armarSelect();
 	  	return (
@@ -50,14 +57,14 @@ class PanelOrdenes extends React.Component {
 				<div className="col-md-6 col-md-offset-3">
 					<Formulario titulo="Nueva orden de trabajo" submit={this._getBienesTablas.bind(this)}>
 						<div className="row">
-							<SelectInput clases="form-group col-md-6" data_opciones={this.props.servicios} llave="id_servicio" descripcion="nombre" label="Servicios" valor={input => this._id_servicio = input} />
+							<SelectInput clases="form-group col-md-6" onChange={this.changeSelect.bind(this)} data_opciones={this.props.servicios} llave="id_servicio" descripcion="nombre" label="Servicios" valor={input => this._id_servicio = input} />
 						</div>
 						<div className="row">
-							<SelectInput clases="form-group col-md-5" data_opciones={data_tipo_entidades} llave="tipo_bien" descripcion="descripcion" label="Tipo Bien"   valor={input => this._id_tipo_bien = input} />
+							<SelectInput clases="form-group col-md-5"  onChange={this.changeSelect.bind(this)} data_opciones={data_tipo_entidades} llave="tipo_bien" descripcion="descripcion" label="Tipo Bien"   valor={input => this._id_tipo_bien = input} />
 							<SelectInput clases="form-group col-md-7" data_opciones={this.props.bienes} llave="id_equipo" descripcion="descripcion" label="Bien" valor={input => this._id_bien = input} />
 						</div>
 						<div className="row">
-							<Input clases="form-group col-md-5" label="Cód. Patrimonial" valor={input => this._cod_patrimonial = input} />
+							<Input clases="form-group col-md-5" disabled = {this.state.disabled_cod_patrimonial} label="Cód. Patrimonial" valor={input => this._cod_patrimonial = input} />
 						</div>
 						<div className="btn-form">
 							<button type="submit" className="btn btn-success">Buscar</button>
@@ -74,7 +81,6 @@ class PanelOrdenes extends React.Component {
 
 
 const mapStateToProps = function(store) {
-console.log("store ordenes", store);
   return {
 	  bienes   	   : store.ordenesState.bienes,
 	  bienes_tabla : store.ordenesState.bienes_tabla,

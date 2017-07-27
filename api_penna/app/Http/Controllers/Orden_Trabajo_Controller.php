@@ -32,13 +32,12 @@ class Orden_Trabajo_Controller extends Controller
                 FROM  equipo e
                 LEFT JOIN
                     orden_trabajo ot
-                    ON e.id_equipo=ot.id_bien AND ot.id_tipo_bien=1 and ot.estado IN (1,2) 
+                    ON e.id_equipo=ot.id_bien AND ot.id_tipo_bien=1 and ot.estado IN (1,2)
                 LEFT JOIN
                     servicio s
                     ON e.id_servicio=s.id_servicio
                 WHERE e.estado=1
-                GROUP BY e.id_equipo
-                HAVING MAX(ot.fecha_creacion)';
+                GROUP BY e.id_equipo';
 
         if(isset($request->id_bien)){
             $query.=' AND e.id_equipo=?';
