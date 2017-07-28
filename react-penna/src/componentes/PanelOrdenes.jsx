@@ -5,8 +5,7 @@ import * as ApiServicio from '../api/servicio_api';
 import { connect } from 'react-redux';
 import store from '../store';
 import Formulario from './genericos/Formulario';
-import Input from './genericos/Input';
-import SelectInput from './genericos/Select';
+import {SelectInput,Input} from './genericos/FormElements';
 import TableOrdenes from './TableOrdenes';
 import {tipoBien} from './commons/Utils';
 

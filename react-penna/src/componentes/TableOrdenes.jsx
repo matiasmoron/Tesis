@@ -1,6 +1,5 @@
 var React             = require('react');
 var ReactBsTable      = require('react-bootstrap-table');
-var Modal             = require('react-bootstrap/lib/Modal');
 var BootstrapTable    = ReactBsTable.BootstrapTable;
 var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
 import * as BsTable from './commons/BsTable';
@@ -40,6 +39,7 @@ class TableOrdenes extends React.Component {
 
 	   verMas(){
 		   console.log("muestro modal");
+
 	   }
 	   crearOrden(){
 		   console.log("muestro modal");

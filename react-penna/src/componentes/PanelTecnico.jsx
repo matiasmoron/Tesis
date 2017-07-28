@@ -5,9 +5,7 @@ import { connect } from 'react-redux';
 import store from '../store';
 import Formulario from './genericos/Formulario';
 import TableTecnicos from './TableTecnicos';
-import Input from './genericos/Input';
-import SelectInput from './genericos/Select';
-import Label from './genericos/Label';
+import {SelectInput,Input,Label} from './genericos/FormElements';
 
 class PanelTecnico extends React.Component {
 	constructor() {

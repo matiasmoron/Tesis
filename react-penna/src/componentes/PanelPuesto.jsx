@@ -4,7 +4,7 @@ import * as puestoApi from '../api/puesto_api';
 import { connect } from 'react-redux';
 import store from '../store';
 import Formulario from './genericos/Formulario';
-import Input from './genericos/Input';
+import {Input} from './genericos/FormElements';
 import TablePuesto from './TablePuesto';
 
 class PanelPuesto extends React.Component {

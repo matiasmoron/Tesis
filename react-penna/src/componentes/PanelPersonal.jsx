@@ -6,8 +6,7 @@ import * as ApiPuesto from '../api/puesto_api';
 import { connect } from 'react-redux';
 import store from '../store';
 import Formulario from './genericos/Formulario';
-import Input from './genericos/Input';
-import SelectInput from './genericos/Select';
+import {SelectInput,Input} from './genericos/FormElements';
 import TablePersonal from './TablePersonal';
 
 class PanelPersonal extends React.Component {

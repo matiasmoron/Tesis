@@ -4,9 +4,8 @@ import * as entidadApi from '../api/entidad_api';
 import { connect } from 'react-redux';
 import store from '../store';
 import Formulario from './genericos/Formulario';
-import Input from './genericos/Input';
 import TableEntidad from './TableEntidad';
-import SelectInput from './genericos/Select';
+import {SelectInput,Input} from './genericos/FormElements';
 import {tipoEntidad} from './commons/Utils';
 
 class PanelEntidad extends React.Component {
