@@ -11,6 +11,7 @@ export var tipoBien = {
 
 
 export var estadoOrden = {
+	0 : "Disponible",
 	1 : "Pendiente",
 	2 : "En curso",
 	3 : "Resuelta",

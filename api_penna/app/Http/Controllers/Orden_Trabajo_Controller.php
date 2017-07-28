@@ -25,9 +25,9 @@ class Orden_Trabajo_Controller extends Controller
         $query='SELECT
                     e.id_equipo,
                     ot.id_orden_trabajo,
-                    ot.id_tipo_bien,
+                    "1" as id_tipo_bien,
                     IFNULL(ot.obs_creacion,"-") as obs_creacion,
-                    IFNULL(ot.estado,"Disponible") as estado,
+                    IFNULL(ot.estado,0) as estado,
                     e.descripcion,s.nombre as servicio_nombre
                 FROM  equipo e
                 LEFT JOIN
@@ -36,8 +36,7 @@ class Orden_Trabajo_Controller extends Controller
                 LEFT JOIN
                     servicio s
                     ON e.id_servicio=s.id_servicio
-                WHERE e.estado=1
-                GROUP BY e.id_equipo';
+                WHERE e.estado=1';
 
         if(isset($request->id_bien)){
             $query.=' AND e.id_equipo=?';
