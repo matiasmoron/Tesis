@@ -17,6 +17,7 @@ class PanelOrdenes extends React.Component {
 	  this.state = {disabled_cod_patrimonial :false};
     }
 
+	//@todo cargar por defecto el servicio de login y todos los bienes que corresponden a servicio
 	componentDidMount(){
 		//id_servicio seria el del login
 		ApiServicio.getServicios();

@@ -14,9 +14,17 @@ export function getBienesTablasSuccess(bienes_solicitud) {
   };
 }
 
-export function addOrdenSucess(orden) {
+
+export function addOrdenSucess(bienes_solicitud) {
   return {
     type: types.ADD_ORDEN_TRABAJO_SUCCESS,
+    bienes_solicitud
+  };
+}
+
+export function getOrdenesSucess(orden) {
+  return {
+    type: types.GET_ORDEN_TRABAJO_SUCCESS,
     orden
   };
 }

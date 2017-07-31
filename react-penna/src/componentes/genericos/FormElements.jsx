@@ -16,7 +16,7 @@ export const Formulario = (props) => {
 export const Input = (props) => {
       return (
 			<div className={props.clases}>
-				<label htmlFor="servicio">{props.label}</label>
+				<label >{props.label}</label>
 				<input type="text" disabled={props.disabled} className="form-control" value={props.value}  placeholder={props.placeholder} ref={props.valor}/>
 			</div>
       );
@@ -46,8 +46,8 @@ export const SelectInput = (props) => {
 export const Label = (props) => {
       return (
 			<div className={props.clases}>
-				<label htmlFor="servicio">{props.label}</label>
-				<span className="form-control" disabled>{props.value}</span>
+				<label>{props.label}</label>
+				<span className="form-control" >{props.value}</span>
 			</div>
       );
 }

@@ -28,7 +28,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::middleware('cors')->get('/servicios', 'Servicio_Controller@get_servicios');
 Route::middleware('cors')->post('/servicios', 'Servicio_Controller@add_servicio');
 Route::middleware('cors')->put('/servicios', 'Servicio_Controller@update_servicio');
-Route::middleware('cors')->delete('/servicios', 'Servicio_Controller@remove_servicio');	
+Route::middleware('cors')->delete('/servicios', 'Servicio_Controller@remove_servicio');
 
 //Puestos
 Route::middleware('cors')->get('/puestos/{id_puesto?}', 'Puesto_Controller@get_puestos');
@@ -63,9 +63,11 @@ Route::middleware('cors')->delete('/equipos', 'Equipo_Controller@remove_equipo')
 //Orden Trabajo
 Route::middleware('cors')->post('/bienes_solicitud', 'Orden_Trabajo_Controller@get_bienes_solicitud');
 Route::middleware('cors')->post('/ordenes', 'Orden_Trabajo_Controller@add_orden');
-Route::middleware('cors')->put('/ordenes', 'Orden_Trabajo_Controller@update_orden');
-Route::middleware('cors')->get('/ordenes/{id_orden_trabajo?}', 'Orden_Trabajo_Controller@get_ordenes');
-Route::middleware('cors')->delete('/ordenes', 'Orden_Trabajo_Controller@remove_orden');
+Route::middleware('cors')->get('/ordenes', 'Orden_Trabajo_Controller@get_orden_trabajo');
+
+// Route::middleware('cors')->put('/ordenes', 'Orden_Trabajo_Controller@update_orden');
+// Route::middleware('cors')->get('/ordenes/{id_orden_trabajo?}', 'Orden_Trabajo_Controller@get_ordenes');
+// Route::middleware('cors')->delete('/ordenes', 'Orden_Trabajo_Controller@remove_orden');
 
 //Bien
 Route::middleware('cors')->post('/bienes', 'Bien_Controller@get_bienes');

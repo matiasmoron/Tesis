@@ -70,4 +70,25 @@ class Orden_Trabajo_Controller extends Controller
         return $this->execute_simple_query("insert",$query,$params);
     }
 
+
+    /**
+     * Obtiene los datos de la orden de trabajo
+     * @param  $request => id_orden_trabajo
+     */
+    public function get_orden_trabajo(Request $request){
+        $params= array();
+        $query='SELECT
+                    ot.id_orden_trabajo,
+                    ot.obs_creacion,
+                    date_format(ot.fecha_creacion,"%d/%m/%Y") as fecha_creacion,
+                    ot.leg_creacion,
+                    ot.leg_recepcion
+                FROM orden_trabajo ot
+                WHERE
+                    id_orden_trabajo=?';
+
+        array_push($params,$request->id_orden_trabajo);
+        return $this->execute_simple_query("select",$query,$params);
+    }
+
 }
