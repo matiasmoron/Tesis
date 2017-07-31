@@ -3,7 +3,8 @@ import _ from 'lodash';
 
 const initialState = {
  bienes: [],
- bienes_tabla:[]
+ bienes_tabla:[],
+ orden:{result:false}
 };
 
 const ordenesReducer = function(state = initialState, action) {
@@ -14,6 +15,9 @@ const ordenesReducer = function(state = initialState, action) {
 
     case types.GET_BIENES_TABLAS_SUCCESS:
       return Object.assign({}, state, { bienes_tabla: action.bienes_solicitud });
+
+    case types.ADD_ORDEN_TRABAJO_SUCCESS:
+      return Object.assign({}, state, { orden:{result:true} });
 
   }
 

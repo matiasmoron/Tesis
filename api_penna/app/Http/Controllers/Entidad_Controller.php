@@ -8,12 +8,13 @@ use App\Entidad;
 
 class Entidad_Controller extends Controller
 {
+    //Obtiene todas las entidades internas
     public function get_entidades(Request $request){
         $params= array();
         $query='SELECT
                     id_entidad,nombre,tipo_entidad
                 FROM entidad
-                WHERE estado='.ALTA;
+                WHERE estado='.ALTA.' AND tipo_entidad=1';
 
         if(isset($request->id_entidad)){
             $query.=' AND id_entidad=?';

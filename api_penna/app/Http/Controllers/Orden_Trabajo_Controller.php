@@ -23,7 +23,7 @@ class Orden_Trabajo_Controller extends Controller
     private function get_equipos_solicitud(Request $request){
         $params= array();
         $query='SELECT
-                    e.id_equipo,
+                    e.id_equipo as id_bien,
                     ot.id_orden_trabajo,
                     "1" as id_tipo_bien,
                     IFNULL(ot.obs_creacion,"-") as obs_creacion,
@@ -52,6 +52,22 @@ class Orden_Trabajo_Controller extends Controller
         }
         // var_dump($query);
         return $this->execute_simple_query("select",$query,$params);
+    }
+
+    public function add_orden(Request $request){
+        $params=array();
+
+        $query='INSERT INTO orden_trabajo(id_tipo_bien,id_bien,fecha_creacion,tipo_entidad,entidad_destino,
+                                    obs_creacion,estado)
+                VALUES(?,?,NOW(),?,?,?,1)';
+
+        array_push($params,$request->id_tipo_bien);
+        array_push($params,$request->id_bien);
+        array_push($params,$request->tipo_entidad);
+        array_push($params,$request->entidad_destino);
+        array_push($params,$request->obs_creacion);
+
+        return $this->execute_simple_query("insert",$query,$params);
     }
 
 }

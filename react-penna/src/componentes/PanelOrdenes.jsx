@@ -2,6 +2,7 @@ var React = require('react');
 
 import * as Api from '../api/ordenes_api';
 import * as ApiServicio from '../api/servicio_api';
+import * as entidadApi from '../api/entidad_api';
 import { connect } from 'react-redux';
 import store from '../store';
 import Formulario from './genericos/Formulario';
@@ -20,6 +21,7 @@ class PanelOrdenes extends React.Component {
 		//id_servicio seria el del login
 		ApiServicio.getServicios();
 		Api.getBienes({id_tipo_bien:1});
+		entidadApi.getEntidades();
 	}
 
 	_getBienesTablas(event){
@@ -71,7 +73,7 @@ class PanelOrdenes extends React.Component {
 					</Formulario>
 				</div>
 				<div className="col-md-12">
-        			<TableOrdenes datos_elemento={this.props.bienes_tabla} />
+        			<TableOrdenes datos_elemento={this.props.bienes_tabla} entidades={this.props.entidades} />
 				</div>
 			</div>
       	);
@@ -80,10 +82,12 @@ class PanelOrdenes extends React.Component {
 
 
 const mapStateToProps = function(store) {
+	console.log("store",store);
   return {
 	  bienes   	   : store.ordenesState.bienes,
 	  bienes_tabla : store.ordenesState.bienes_tabla,
-	  servicios    : store.servicioState.servicios
+	  servicios    : store.servicioState.servicios,
+	  entidades    : store.entidadState.entidades
   };
 };
 
