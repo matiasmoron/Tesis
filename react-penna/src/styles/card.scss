@@ -10,7 +10,7 @@ ul.cards{
 }
 .cards li {
     padding: 0px;
-    height: 276px;
+    height: 200px;
     overflow: hidden;
     position: relative;
     margin-right: 20px;
@@ -26,6 +26,7 @@ div.card {
   display:inline-block;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, .3);
   transform: rotate3d(1, 1, 0, 0deg);
+  text-align: center;
 }
 div.card:hover {
     background-position: bottom center;
@@ -34,19 +35,26 @@ div.card:hover {
     transform: rotate3d(1, 1, 0, 40deg);
     transition: all .4s;
 }
-div.card img{
-    height:95%;
-    width:100%;
+
+// div.card h1{
+//     margin-top: 10px;
+//     margin-bottom: 0px;
+// }
+div.card .helper{
+    display: inline-block;
+    // height: 100%;
+    vertical-align: middle;
 }
-div.tipo1{
- height:90%;
- width:100%;
- background: url('http://www.emprender-facil.com/wp-content/uploads/2015/01/M%C3%A9dico-de-familia-%E2%80%93-Un-negocio-saludable-texto4.png') no-repeat;
+
+div.card {
+    text-align: center;
 }
-div.tipo2{
- height:90%;
- width:100%;
- background: url('http://simtresa.com/wp-content/uploads/2015/03/Servicio-tecnico.png') no-repeat;
+// div.card h1,div.card div{
+//     display: inline-block;
+// }
+div.card h1{
+    // position: absolute;
+    height: 10%
 }
 
 

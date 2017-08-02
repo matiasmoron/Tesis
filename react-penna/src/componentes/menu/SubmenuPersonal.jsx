@@ -1,18 +1,20 @@
 var React = require('react');
 import Card from './Card';
 import Cards from './Cards';
-import imgMedico from '../../img/medicos.png';
-import imgPersonal from '../../img/compras.png';
+import imgPersonal from '../../img/menu/personal.png';
+import imgTecnico from '../../img/menu/tecnico.png';
+import imgPuestoServicio from '../../img/menu/puesto-servicio.png';
+import imgEntidad from '../../img/menu/entidad.png';
 
 
 
 const SubmenuPersonal = (props) => {
       return (
             <Cards>
-                <Card url="/personal/personal" nombre="Personal" logo={imgMedico}/>
-                <Card url="/personal/tecnicos"  nombre="Tecnico" logo={imgMedico}/>
-                <Card url="/personal/puesto_servicio" nombre="Puesto - Servicio" logo={imgMedico} />
-                <Card url="/personal/entidades" nombre="Entidad" logo={imgPersonal}/>
+                <Card url="/personal/personal" nombre="Personal" logo={imgPersonal}/>
+                <Card url="/personal/tecnicos"  nombre="Tecnico" logo={imgTecnico}/>
+                <Card url="/personal/puesto_servicio" nombre="Puesto - Servicio" logo={imgPuestoServicio} />
+                <Card url="/personal/entidades" nombre="Entidad" logo={imgEntidad}/>
             </Cards>
       );
 }

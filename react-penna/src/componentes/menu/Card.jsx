@@ -7,11 +7,13 @@ require("../../styles/card.scss");
 
 const Card = (props) => {
       return (
-        <li className="col-md-3 col-xs-12" >
+        <li className="col-md-2 col-xs-8" >
 			<Link to={props.url}  >
                 <div className="card">
                   <h1>{props.nombre}</h1>
-                  <div><img src={props.logo}/></div>
+                  <div>
+                      <span className="helper"></span>
+                      <img src={props.logo}/></div>
                 </div>
 			</Link>
 		</li>
