@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import store from '../store';
 import Formulario from './genericos/Formulario';
 import {SelectInput,Input} from './genericos/FormElements';
-import TableOrdenes from './TableOrdenes';
+import TableOrdenesABM from './TableOrdenesABM';
 import {tipoBien} from './commons/Utils';
 
 
@@ -32,7 +32,7 @@ class PanelOrdenes extends React.Component {
 							cod_patrimonial:this._cod_patrimonial.value});
     }
 
-	_armarSelect(){
+	_dataTipoBienes(){
 		var resultado = {};
 		var resultado = Object.keys(tipoBien).map((valor) =>{
 			var elem  = [];
@@ -53,7 +53,7 @@ class PanelOrdenes extends React.Component {
 	}
 
 	render() {
-		var data_tipo_entidades = this._armarSelect();
+		var data_tipo_bienes = this._dataTipoBienes();
 	  	return (
 			<div className="col-md-10">
 				<div className="col-md-6 col-md-offset-3">
@@ -62,7 +62,7 @@ class PanelOrdenes extends React.Component {
 							<SelectInput todos="true" clases="form-group col-md-6" onChange={this.changeSelect.bind(this)} data_opciones={this.props.servicios} llave="id_servicio" descripcion="nombre" label="Servicios" valor={input => this._id_servicio = input} />
 						</div>
 						<div className="row">
-							<SelectInput clases="form-group col-md-5"  onChange={this.changeSelect.bind(this)} data_opciones={data_tipo_entidades} llave="tipo_bien" descripcion="descripcion" label="Tipo Bien"   valor={input => this._id_tipo_bien = input} />
+							<SelectInput clases="form-group col-md-5"  onChange={this.changeSelect.bind(this)} data_opciones={data_tipo_bienes} llave="tipo_bien" descripcion="descripcion" label="Tipo Bien"   valor={input => this._id_tipo_bien = input} />
 							<SelectInput todos="true" clases="form-group col-md-7"  data_opciones={this.props.bienes} llave="id_equipo" descripcion="descripcion" label="Bien" valor={input => this._id_bien = input} />
 						</div>
 						<div className="row">
@@ -74,7 +74,7 @@ class PanelOrdenes extends React.Component {
 					</Formulario>
 				</div>
 				<div className="col-md-12">
-        			<TableOrdenes datos_elemento={this.props.bienes_tabla} entidades={this.props.entidades} />
+        			<TableOrdenesABM datos_elemento={this.props.bienes_tabla} entidades={this.props.entidades} />
 				</div>
 			</div>
       	);

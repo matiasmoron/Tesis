@@ -79,31 +79,8 @@ class Orden_Trabajo_Controller extends Controller
      * @return {[type]
      */
     private function get_ordenes_equipo($request){
-        $query="SELECT
-                    ot.id_orden_trabajo,ot.id_tipo_bien,ot.id_bien,e.descripcion as bien_descripcion,
-                    CONCAT(p.apellido,' ',p.nombre) as p_creacion,CONCAT(p1.apellido,' ',p1.nombre) as p_recepcion,
-                    date_format(ot.fecha_creacion,'%d/%m/%Y') as fecha_creacion,ot.obs_creacion,ot.obs_devolucion,ot.estado,
-                    date_format(otd.fecha_ini,'%d/%m/%Y') as fecha_inicio,date_format(otd.fecha_fin,'%d/%m/%Y') as fecha_fin,
-                    otd.hs_insumidas,otds.conformidad
-                FROM
-                    orden_trabajo ot
-                LEFT JOIN
-                    orden_trabajo_detalle otd
-                    USING (id_orden_trabajo)
-                LEFT JOIN
-                    personal p1
-                    ON ot.leg_creacion=p1.legajo
-                LEFT JOIN
-                    personal p2
-                    ON ot.leg_recepcion=p2.legajo
-                LEFT JOIN
-                    equipo e
-                    ON e.id_equipo=ot.id_bien
-                WHERE 1=1 ".$whr."
-                ORDER BY
-                    ot.fecha_creacion desc
-        ";
-
+        $whr ="";
+        $params = array();
         if(isset($request->id_bien)){
             $whr.=' AND e.id_equipo=?';
             array_push($params,$request->id_bien);
@@ -133,8 +110,44 @@ class Orden_Trabajo_Controller extends Controller
             array_push($params,$request->fecha_fin);
         }
 
-        return $this->execute_simple_query("select",$query,$params);
+        $query="SELECT
+                    ot.id_orden_trabajo                       as id_orden_trabajo,
+                    ot.id_tipo_bien                           as id_tipo_bien,
+                    ot.id_bien                                as id_bien,
+                    e.descripcion                             as descripcion,
+                    s.nombre                                  as servicio_nombre,
+                    CONCAT(p1.apellido,' ',p1.nombre)         as p_creacion,
+                    CONCAT(p2.apellido,' ',p2.nombre)         as p_recepcion,
+                    date_format(ot.fecha_creacion,'%d/%m/%Y') as fecha_creacion,
+                    ot.obs_creacion                           as obs_creacion,
+                    ot.obs_devolucion                         as obs_devolucion,
+                    ot.estado                                 as estado,
+                    date_format(otd.fecha_ini,'%d/%m/%Y')     as fecha_inicio,
+                    date_format(otd.fecha_fin,'%d/%m/%Y')     as fecha_fin,
+                    otd.hs_insumidas                          as hs_insumidas,
+                    otd.conformidad                           as conformidad
+                FROM
+                    orden_trabajo ot
+                LEFT JOIN
+                    orden_trabajo_detalle otd
+                    USING (id_orden_trabajo)
+                LEFT JOIN
+                    equipo e
+                    ON e.id_equipo=ot.id_bien
+                LEFT JOIN
+                    servicio s
+                    USING (id_servicio)
+                LEFT JOIN
+                    personal p1
+                    ON ot.leg_creacion=p1.legajo
+                LEFT JOIN
+                    personal p2
+                    ON ot.leg_recepcion=p2.legajo
+                WHERE 1=1 {$whr}
+                ORDER BY
+                    ot.fecha_creacion desc";
 
+        return $this->execute_simple_query("select",$query,$params);
     }
 
     public function add_orden(Request $request){

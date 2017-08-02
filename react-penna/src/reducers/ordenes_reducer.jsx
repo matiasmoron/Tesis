@@ -4,11 +4,16 @@ import _ from 'lodash';
 const initialState = {
  bienes: [],
  bienes_tabla:[],
- orden:[]
+ orden:[],
+ ordenes_tabla:[]
 };
 
 const ordenesReducer = function(state = initialState, action) {
   switch(action.type) {
+
+    ////////////////
+    //ABM ORDENES //
+    ////////////////
 
     case types.GET_BIENES_SUCCESS:
       return Object.assign({}, state, { bienes: action.bienes });
@@ -22,7 +27,12 @@ const ordenesReducer = function(state = initialState, action) {
     case types.GET_ORDEN_TRABAJO_SUCCESS:
       return Object.assign({}, state, {orden: action.orden[0]});
 
+    ////////////////
+    //VER ORDENES //
+    ////////////////
 
+    case types.GET_ORDENES_SUCCESS:
+      return Object.assign({}, state, {ordenes_tabla: action.ordenes});
   }
 
   return state;

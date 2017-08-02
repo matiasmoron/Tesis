@@ -14,7 +14,7 @@ import {ModalBs} from './genericos/ModalBs';
 class TableOrdenes extends React.Component {
 	 constructor() {
        super();
-	   this.state = {showModalVer:false,showModalCrear:false};
+	   this.state = {showModalVer:false,showModalFinalizar:false};
      }
 
 	   customConfirm(next, dropRowKeys) {
@@ -34,10 +34,19 @@ class TableOrdenes extends React.Component {
 	   }
 
 	   colAccion(estado,row){
-			if(row.estado == 1 || row.estado==2)
-				return <Boton onClick={this.verMas.bind(this,row)} clases="btn-primary" label="Ver más"/>;
+			if(row.estado == 3)
+				return (
+					<div className="botonera">
+						<Boton onClick={this.verMas.bind(this,row)} clases="btn-primary" label="Ver más"/>
+						<Boton onClick={this.modalfinalizarOrden.bind(this,row)} clases="btn-success" label="Cerrar" titulo="Dar conformidad y cerrar orden de trabajo"/>
+					</div>
+				);
 			else
-				return <Boton onClick={this.modalcrearOrden.bind(this,row)} clases="btn-success" label="Crear orden"/>;
+				return (
+					<div className="botonera">
+						<Boton onClick={this.verMas.bind(this,row)} clases="btn-primary" label="Ver más"/>
+					</div>
+				);
 
 		}
 
@@ -45,25 +54,24 @@ class TableOrdenes extends React.Component {
 		   this.setState({showModalVer : true});
 		   Api.getOrden({id_orden_trabajo:row.id_orden_trabajo});
 	   }
-	   modalcrearOrden(row){
-		    this.setState({showModalCrear : true,  row :row});
+	   modalfinalizarOrden(row){
+		    this.setState({showModalFinalizar : true,  row :row});
 	   }
 
-	   cerrarCrear(){
-		   	this.setState({showModalCrear : false});
+	   cerrarFinalizar(){
+		   	this.setState({showModalFinalizar : false});
 	   }
 
 	   cerrarVer(){
 		   	this.setState({showModalVer : false});
 	   }
 
-		crearOrden(){
-			var promesa = Api.addOrden({id_tipo_bien:this.state.row.id_tipo_bien,id_bien:this.state.row.id_bien,obs_creacion:this._observacion_creacion.value,
-						'entidad_destino':this._id_entidad.value});
+		finalizarOrden(){
+			var promesa = Api.finalizarOrden({id_orden_trabajo:this.state.row.id_orden_trabajo,conformidad:this._conformidad.value});
 
 			promesa.then(valor => {
 				Api.getBienesTablas({id_tipo_bien:this.state.row.id_tipo_bien,id_bien:this.state.row.id_bien});
-				this.cerrarCrear();
+				this.cerrarFinalizar();
 			});
 		}
 
@@ -80,11 +88,10 @@ class TableOrdenes extends React.Component {
 
 		 return (
 				<div>
-					<ModalBs show={this.state.showModalCrear} onHide={this.cerrarCrear.bind(this)} titulo="Solicitar">
+					<ModalBs show={this.state.showModalFinalizar} onHide={this.cerrarFinalizar.bind(this)} titulo="Solicitar">
 						<div>
 							<TextArea cols="50" rows="10" valor={input => this._observacion_creacion = input}/>
-							<SelectInput  data_opciones={this.props.entidades} llave="id_entidad" descripcion="nombre" label="Entidad Destino" valor={input => this._id_entidad = input} />
-							<Boton onClick={this.crearOrden.bind(this)} clases="btn-success" label="Crear orden"/>
+							<Boton onClick={this.finalizarOrden.bind(this)} clases="btn-success" label="Crear orden"/>
 						</div>
 					</ModalBs>
 					<ModalBs show={this.state.showModalVer} onHide={this.cerrarVer.bind(this)} titulo="Detalles">
@@ -109,7 +116,6 @@ class TableOrdenes extends React.Component {
 						<TableHeaderColumn dataField='servicio_nombre'>Servicio</TableHeaderColumn>
 						<TableHeaderColumn dataField='estado' dataFormat={this.colEstado} >Estado</TableHeaderColumn>
 						<TableHeaderColumn dataField='id_orden_trabajo' dataFormat={this.colAccion.bind(this)} dataAlign="center">Acción</TableHeaderColumn>
-
 					</BootstrapTable>
 				</div>
 		 );

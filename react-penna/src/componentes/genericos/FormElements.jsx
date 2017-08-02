@@ -24,22 +24,24 @@ export const Input = (props) => {
 
 export const Boton = (props) => {
 	return (
-			<button onClick={props.onClick} className={"btn " +props.clases}>{props.label}</button>
+			<button onClick={props.onClick} title={props.titulo} className={"btn " +props.clases}>{props.label}</button>
 	);
 }
 
 export const SelectInput = (props) => {
-      var todos= props.todos ? <option value="">Seleccionar Todos </option> : "";
+      var todos= props.todos ? <optgroup label="Todas las opciones"><option value=""> Todos </option> </optgroup>: "";
       return (
 			<div className={props.clases}>
 				<label>{props.label}</label>
 				<select onChange={props.onChange} className="form-control" ref={props.valor} >
                     {todos}
-                    {
-                      props.data_opciones.map(function(opt) {
-                        return <option key={opt[`${props.llave}`]}  value={opt[`${props.llave}`]}>{opt[`${props.descripcion}`]}</option>;
-                      })
-                    }
+                    <optgroup label="Opciones">
+                        {
+                          props.data_opciones.map(function(opt) {
+                            return <option key={opt[`${props.llave}`]}  value={opt[`${props.llave}`]}>{opt[`${props.descripcion}`]}</option>;
+                          })
+                        }
+                    </optgroup>
 				</select>
 			</div>
       );

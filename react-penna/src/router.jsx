@@ -8,7 +8,9 @@ import tecnicos from './componentes/PanelTecnico';
 import entidades from './componentes/PanelEntidad';
 import equipos from './componentes/PanelEquipo';
 import personal from './componentes/PanelPersonal';
-import ordenes_abm from './componentes/PanelOrdenes';
+import ordenes_ver from './componentes/PanelOrdenesVer';
+import ordenes_abm from './componentes/PanelOrdenesABM';
+import ordenes_admin from './componentes/PanelOrdenesAdmin';
 import Layout from './componentes/genericos/Layout';
 import Menu from './componentes/menu/Menu';
 import submenuOrdenes from './componentes/menu/SubmenuOrdenes';
@@ -23,7 +25,7 @@ export default (
         <Menu/>
         <Container>
             <Route exact path="/ordenes"  component={submenuOrdenes} />
-            <Route exact path="/ordenes/ver"  component={ordenes_abm} />
+            <Route exact path="/ordenes/ver"  component={ordenes_ver} />
             <Route exact path="/ordenes/abm"  component={ordenes_abm} />
             <Route exact path="/ordenes/administrar"  component={submenuOrdenes} />
 
