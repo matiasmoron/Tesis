@@ -120,6 +120,10 @@ class Orden_Trabajo_Controller extends Controller
             $whr.=' AND ot.estado=?';
             array_push($params,$request->estado);
         }
+        if(isset($request->id_entidad)){
+            $whr.=' AND ot.entidad_destino=?';
+            array_push($params,$request->id_entidad);
+        }
         if(isset($request->fecha_ini)){
             $whr.=' AND ot.fecha_creacion => str_to_date("?","%d %m %Y")';
             array_push($params,$request->fecha_ini);
