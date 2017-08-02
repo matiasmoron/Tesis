@@ -29,10 +29,12 @@ export const Boton = (props) => {
 }
 
 export const SelectInput = (props) => {
+      var todos= props.todos ? <option value="">Seleccionar Todos </option> : "";
       return (
 			<div className={props.clases}>
 				<label>{props.label}</label>
 				<select onChange={props.onChange} className="form-control" ref={props.valor} >
+                    {todos}
                     {
                       props.data_opciones.map(function(opt) {
                         return <option key={opt[`${props.llave}`]}  value={opt[`${props.llave}`]}>{opt[`${props.descripcion}`]}</option>;
