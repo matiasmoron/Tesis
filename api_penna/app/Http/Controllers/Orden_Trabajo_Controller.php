@@ -187,4 +187,26 @@ class Orden_Trabajo_Controller extends Controller
         return $this->execute_simple_query("select",$query,$params);
     }
 
+    /**
+     * Modifica la conformidad de una orden de trabajo
+     * @param $request array(
+     *                     id_orden_trabajo: id de la orden de trabajo
+     *                     conformidad: int con la conformidad del trabajo
+     *                     )
+     */
+    public function dar_conformidad(Request $request){
+        $params=array();
+        $query='UPDATE
+                    orden_trabajo_detalle
+                SET
+                    conformidad=?
+                WHERE
+                    id_orden_trabajo=?';
+
+        array_push($params,$request->conformidad);
+        array_push($params,$request->id_orden_trabajo);
+        return $this->execute_simple_query("update",$query,$params);
+
+    }
+
 }

@@ -2,7 +2,7 @@
 import axios from 'axios';
 import store from '../store';
 import * as DbCall from '../componentes/commons/DbCall';
-import {getSuccess,getBienesTablasSuccess,addOrdenSuccess,getOrdenSuccess,getOrdenesSuccess} from '../actions/ordenes_actions';
+import {getSuccess,getBienesTablasSuccess,addOrdenSuccess,getOrdenSuccess,getOrdenesSuccess,putConformidadOrden} from '../actions/ordenes_actions';
 
 export function getBienes(bienes) {
     var args={metodo:'post',
@@ -47,6 +47,16 @@ export function getOrdenes(filtros_ordenes) {
               url:'http://localhost:8000/api/ver_ordenes',
               params:filtros_ordenes,
               callback:getOrdenesSuccess
+           };
+    DbCall.DbCall(args);
+}
+
+//Obtiene los datos de las ordenes de trabajo con el detalle correspondiente
+export function putConformidadOrden(conformidad) {
+    var args={metodo:'put',
+              url:'http://localhost:8000/api/ver_ordenes',
+              params:conformidad,
+              callback:putConformidadOrden
            };
     DbCall.DbCall(args);
 }

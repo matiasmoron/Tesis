@@ -46,9 +46,16 @@ export function getOrdenSuccess(orden) {
  * Obtiene los datos de las ordenes de trabajo con el detalle correspondiente
  */
 export function getOrdenesSuccess(ordenes) {
-console.log("ACTIOn",ordenes);
   return {
     type: types.GET_ORDENES_SUCCESS,
     ordenes
+  };
+}
+
+//Dar la conformidad de la orden de trabajo
+export function putConformidadOrden(conformidad) {
+  return {
+    type: types.PUT_CONFORMIDAD_ORDEN,
+    conformidad
   };
 }

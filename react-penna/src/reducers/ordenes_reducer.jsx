@@ -33,6 +33,9 @@ const ordenesReducer = function(state = initialState, action) {
 
     case types.GET_ORDENES_SUCCESS:
       return Object.assign({}, state, {ordenes_tabla: action.ordenes});
+
+    case types.PUT_CONFORMIDAD_ORDEN:
+      return Object.assign({}, state);
   }
 
   return state;

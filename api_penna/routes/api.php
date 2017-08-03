@@ -67,6 +67,7 @@ Route::middleware('cors')->get('/ordenes', 'Orden_Trabajo_Controller@get_orden_t
 
 //Ver Ordenes
 Route::middleware('cors')->post('/ver_ordenes', 'Orden_Trabajo_Controller@get_ordenes');
+Route::middleware('cors')->put('/ver_ordenes', 'Orden_Trabajo_Controller@dar_conformidad');
 
 
 // Route::middleware('cors')->put('/ordenes', 'Orden_Trabajo_Controller@update_orden');
