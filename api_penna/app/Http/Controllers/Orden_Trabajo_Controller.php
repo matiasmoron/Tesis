@@ -50,6 +50,8 @@ class Orden_Trabajo_Controller extends Controller
             $query.=' AND e.id_servicio=?';
             array_push($params,$request->id_servicio);
         }
+        $query.=" ORDER BY s.id_servicio DESC;";
+        
         return $this->execute_simple_query("select",$query,$params);
     }
 
