@@ -6,9 +6,10 @@ import * as ApiEntidad from '../api/entidad_api';
 import { connect } from 'react-redux';
 import store from '../store';
 import Formulario from './genericos/Formulario';
-import {SelectInput,Input} from './genericos/FormElements';
+import {SelectInput,Input,Boton} from './genericos/FormElements';
 import TableOrdenesVer from './TableOrdenesVer';
 import {tipoBien,estadoOrden} from './commons/Utils';
+// import DatePicker from './genericos/DatePicker';
 
 
 class PanelOrdenes extends React.Component {
@@ -73,9 +74,15 @@ class PanelOrdenes extends React.Component {
 		Api.getBienes({id_tipo_bien:this._id_tipo_bien.value,id_servicio:this._id_servicio.value});
 	}
 
+	// changeDatepicker(valor,formattedValue){
+	// 	console.log("date",valor);
+	// 	console.log(formattedValue);
+	// }
+
 	render() {
 		var data_tipo_bienes = this._dataTipoBienes();
 		var data_estados = this._dataEstados();
+		var fecha ='2016-05-01';
 	  	return (
 			<div className="col-md-10">
 				<div className="col-md-6 col-md-offset-3">
@@ -99,12 +106,12 @@ class PanelOrdenes extends React.Component {
 							<SelectInput todos="true" clases="form-group col-md-5" data_opciones={data_estados} llave="estado" descripcion="descripcion" label="Estado" valor={input => this._estado = input} />
 						</div>
 						<div className="btn-form">
-							<button type="submit" className="btn btn-success">Buscar</button>
+							<Boton clases="btn-primary" label="Buscar"/>
 						</div>
 					</Formulario>
 				</div>
 				<div className="col-md-12">
-        			<TableOrdenesVer datos_elemento={this.props.ordenes_tabla}/>
+        			<TableOrdenesVer datos_elemento={this.props.ordenes_tabla} getOrdenes = {this._getOrdenesTabla.bind(this)}/>
 				</div>
 			</div>
       	);

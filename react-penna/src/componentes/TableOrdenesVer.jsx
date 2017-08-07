@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 // var Modal=require("react-bootstrap/lib/Modal");
 import * as Api from '../api/ordenes_api';
 import * as BsTable from './commons/BsTable';
-import {estadoOrden,tipoBien} from './commons/Utils';
+import {estadoOrden,tipoBien,conformidad} from './commons/Utils';
 import {Boton,TextArea,SelectInput,Label} from './genericos/FormElements';
 import {ModalBs} from './genericos/ModalBs';
 
@@ -14,7 +14,7 @@ import {ModalBs} from './genericos/ModalBs';
 class TableOrdenes extends React.Component {
 	 constructor() {
        super();
-	   this.state = {showModalVer:false,showModalFinalizar:false};
+	   this.state = {showModalVer:false,showModalFinalizar:false,datosOrden:[]};
      }
 
 	   customConfirm(next, dropRowKeys) {
@@ -49,10 +49,22 @@ class TableOrdenes extends React.Component {
 				);
 
 		}
+		_dataConformidad(){
+			var resultado = {};
+			var resultado = Object.keys(conformidad).map((valor) =>{
+				var elem  = [];
+					elem      = {
+						conformidad     :valor,
+						descripcion:conformidad[valor]
+					}
+					return elem;
+			});
+			return resultado;
+		}
 
 	   verMas(row){
-		   this.setState({showModalVer : true});
-		   Api.getOrden({id_orden_trabajo:row.id_orden_trabajo});
+		   console.log(row);
+		   this.setState({showModalVer : true,datosOrden:row});
 	   }
 	   modalfinalizarOrden(row){
 		    this.setState({showModalFinalizar : true,  row :row});
@@ -67,10 +79,10 @@ class TableOrdenes extends React.Component {
 	   }
 
 		finalizarOrden(){
-			var promesa = Api.finalizarOrden({id_orden_trabajo:this.state.row.id_orden_trabajo,conformidad:this._conformidad.value});
+			var promesa = Api.putConformidadOrden({id_orden_trabajo:this.state.row.id_orden_trabajo,conformidad:this._conformidad.value});
 
 			promesa.then(valor => {
-				Api.getBienesTablas({id_tipo_bien:this.state.row.id_tipo_bien,id_bien:this.state.row.id_bien});
+				Api.getOrdenes();
 				this.cerrarFinalizar();
 			});
 		}
@@ -85,22 +97,37 @@ class TableOrdenes extends React.Component {
 			clearSearchBtn        : BsTable.btnClear
  		};
 
-
+		var dataConformidad = this._dataConformidad();
 		 return (
 				<div>
 					<ModalBs show={this.state.showModalFinalizar} onHide={this.cerrarFinalizar.bind(this)} titulo="Solicitar">
-						<div>
-							<TextArea cols="50" rows="10" valor={input => this._observacion_creacion = input}/>
-							<Boton onClick={this.finalizarOrden.bind(this)} clases="btn-success" label="Crear orden"/>
+						<div className="modal-body">
+							<div className="form-group row">
+								<SelectInput clases="d-inline"  data_opciones={dataConformidad} llave="conformidad" descripcion="descripcion" label="Conformidad" valor={input => this._conformidad = input} />
+								<Boton onClick={this.finalizarOrden.bind(this)} clases="btn-success" label="Cerrar orden"/>
+							</div>
 						</div>
 					</ModalBs>
-					<ModalBs show={this.state.showModalVer} onHide={this.cerrarVer.bind(this)} titulo="Detalles">
-						<div>
-							<Label label="Fecha Creación" value={this.props.orden.fecha_creacion}/>
-							<Label label="Legajo Creación" value={this.props.orden.leg_creacion}/>
-							<Label label="Legajo Recepción" value={this.props.orden.leg_recepcion}/>
-							<Label label="Observación Creación" value={this.props.orden.obs_creacion}/>
-							<Boton onClick={this.cerrarVer.bind(this)} clases="btn-success" label="Cerrar"/>
+					<ModalBs show={this.state.showModalVer} onHide={this.cerrarVer.bind(this)} titulo="Detalles orden de trabajo">
+						<div className="modal-body">
+							<div className="row">
+								<Label clases="col-md-6" label="Autor-orden" value={this.state.datosOrden.p_creacion}/>
+								<Label clases="col-md-6" label="Fecha Creación" value={this.state.datosOrden.fecha_creacion}/>
+							</div>
+							<div className="row">
+								<Label clases="col-md-6" label="Entidad destino" value={this.state.datosOrden.entidad_destino}/>
+								<Label clases="col-md-6" label="Tomado por" value={this.state.datosOrden.p_recepcion}/>
+							</div>
+							<div className="row">
+								<Label label="Observación creación" value={this.state.datosOrden.obs_creacion}/>
+								<Label label="Observación devolución" value={this.state.datosOrden.obs_devolucion}/>
+							</div>
+							<div className="row">
+								<Label label="Conformidad" value={this.state.datosOrden.conformidad}/>
+							</div>
+							<div className="btn-form">
+								<Boton onClick={this.cerrarVer.bind(this)} clases="btn-primary" label="Cerrar"/>
+							</div>
 						</div>
 					</ModalBs>
 					<BootstrapTable

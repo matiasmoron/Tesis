@@ -49,7 +49,7 @@ export const SelectInput = (props) => {
 
 export const Label = (props) => {
       return (
-			<div className={props.clases}>
+			<div className={"form-group " + props.clases} >
 				<label>{props.label}</label>
 				<span className="form-control" >{props.value}</span>
 			</div>

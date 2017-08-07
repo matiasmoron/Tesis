@@ -111,21 +111,22 @@ class Orden_Trabajo_Controller extends Controller
         }
 
         $query="SELECT
-                    ot.id_orden_trabajo                       as id_orden_trabajo,
-                    ot.id_tipo_bien                           as id_tipo_bien,
-                    ot.id_bien                                as id_bien,
-                    e.descripcion                             as descripcion,
-                    s.nombre                                  as servicio_nombre,
-                    CONCAT(p1.apellido,' ',p1.nombre)         as p_creacion,
-                    CONCAT(p2.apellido,' ',p2.nombre)         as p_recepcion,
-                    date_format(ot.fecha_creacion,'%d/%m/%Y') as fecha_creacion,
-                    ot.obs_creacion                           as obs_creacion,
-                    ot.obs_devolucion                         as obs_devolucion,
-                    ot.estado                                 as estado,
-                    date_format(otd.fecha_ini,'%d/%m/%Y')     as fecha_inicio,
-                    date_format(otd.fecha_fin,'%d/%m/%Y')     as fecha_fin,
-                    otd.hs_insumidas                          as hs_insumidas,
-                    otd.conformidad                           as conformidad
+                    ot.id_orden_trabajo                           as id_orden_trabajo,
+                    ot.id_tipo_bien                               as id_tipo_bien,
+                    ot.id_bien                                    as id_bien,
+                    e.descripcion                                 as descripcion,
+                    s.nombre                                      as servicio_nombre,
+                    CONCAT(p1.apellido,' ',p1.nombre)             as p_creacion,
+                    IFNULL(CONCAT(p2.apellido,' ',p2.nombre),'-') as p_recepcion,
+                    date_format(ot.fecha_creacion,'%d/%m/%Y')     as fecha_creacion,
+                    ot.obs_creacion                               as obs_creacion,
+                    IFNULL(ot.obs_devolucion,'-')                 as obs_devolucion,
+                    ot.estado                                     as estado,
+                    date_format(otd.fecha_ini,'%d/%m/%Y')         as fecha_inicio,
+                    date_format(otd.fecha_fin,'%d/%m/%Y')         as fecha_fin,
+                    ent.nombre                                    as entidad_destino,
+                    otd.hs_insumidas                              as hs_insumidas,
+                    IFNULL(otd.conformidad,'-')                   as conformidad
                 FROM
                     orden_trabajo ot
                 LEFT JOIN
@@ -137,6 +138,9 @@ class Orden_Trabajo_Controller extends Controller
                 LEFT JOIN
                     servicio s
                     USING (id_servicio)
+                LEFT JOIN
+                    entidad ent
+                    ON ent.id_entidad=ot.entidad_destino
                 LEFT JOIN
                     personal p1
                     ON ot.leg_creacion=p1.legajo
@@ -198,8 +202,10 @@ class Orden_Trabajo_Controller extends Controller
         $params=array();
         $query='UPDATE
                     orden_trabajo_detalle
+                JOIN
+                    orden_trabajo USING(id_orden_trabajo)
                 SET
-                    conformidad=?
+                    conformidad=?, estado=4
                 WHERE
                     id_orden_trabajo=?';
 

@@ -19,3 +19,8 @@ export var estadoOrden = {
 	5 : "Cancelada por usuario",
 	6 : "Rechazada por técnico"
 }
+
+export var conformidad = {
+	1: "Conforme",
+	2: "Poco conforme"
+}

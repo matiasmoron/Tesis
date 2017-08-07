@@ -53,7 +53,7 @@ export function getOrdenesSuccess(ordenes) {
 }
 
 //Dar la conformidad de la orden de trabajo
-export function putConformidadOrden(conformidad) {
+export function putConformidadSuccess(conformidad) {
   return {
     type: types.PUT_CONFORMIDAD_ORDEN,
     conformidad
