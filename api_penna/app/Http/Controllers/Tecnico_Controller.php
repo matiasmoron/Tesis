@@ -8,7 +8,8 @@ use App\Tecnico;
 
 class Tecnico_Controller extends Controller
 {
-    public function get_tecnicos(){
+    public function get_tecnicos(Request $request){
+        $params = array();
         $query='SELECT
                     tecnico.legajo,CONCAT (personal.apellido," ",personal.nombre) as nombre,personal.dni,
                     entidad.nombre as entidad,entidad.id_entidad,
@@ -23,8 +24,18 @@ class Tecnico_Controller extends Controller
                     personal.estado='.ALTA;
 
 
+        if(isset($request->id_entidad)){
+            $query.=' AND tecnico.id_entidad=?';
+            array_push($params,$request->id_entidad);
+        }
 
-        return $this->execute_simple_query("select",$query);
+        if(isset($request->legajo)){
+            $query.=' AND tecnico.legajo=?';
+            array_push($params,$request->legajo);
+        }
+
+
+        return $this->execute_simple_query("select",$query,$params);
     }
 
     public function get_entidades_no_asignadas(Request $request){

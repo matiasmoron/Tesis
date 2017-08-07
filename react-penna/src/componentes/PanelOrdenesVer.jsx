@@ -24,6 +24,7 @@ class PanelOrdenes extends React.Component {
 		ApiServicio.getServicios();
 		Api.getBienes({id_tipo_bien:1});
 		ApiEntidad.getEntidades();
+		Api.getOrdenes({id_tipo_bien :1});
 	}
 
 	_getOrdenesTabla(event){
@@ -82,7 +83,6 @@ class PanelOrdenes extends React.Component {
 	render() {
 		var data_tipo_bienes = this._dataTipoBienes();
 		var data_estados = this._dataEstados();
-		var fecha ='2016-05-01';
 	  	return (
 			<div className="col-md-10">
 				<div className="col-md-6 col-md-offset-3">

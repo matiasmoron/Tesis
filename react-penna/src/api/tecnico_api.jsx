@@ -11,10 +11,10 @@ import { getTecnicosSuccess,getPersonalSuccess,getTecnicoEntidadSuccess,addSucce
  */
 
 //Para completar la tabla
-export function getTecnicos() {
+export function getTecnicos(filtro_tecnico) {
     var args={metodo:'get',
               url:'http://localhost:8000/api/tecnicos',
-              params:{},
+              params:filtro_tecnico,
               callback:getTecnicosSuccess
 
            };

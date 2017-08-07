@@ -3,7 +3,6 @@ var ReactBsTable      = require('react-bootstrap-table');
 var BootstrapTable    = ReactBsTable.BootstrapTable;
 var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
 import { connect } from 'react-redux';
-// var Modal=require("react-bootstrap/lib/Modal");
 import * as Api from '../api/ordenes_api';
 import * as BsTable from './commons/BsTable';
 import {estadoOrden,tipoBien,conformidad} from './commons/Utils';
@@ -11,7 +10,7 @@ import {Boton,TextArea,SelectInput,Label} from './genericos/FormElements';
 import {ModalBs} from './genericos/ModalBs';
 
 
-class TableOrdenes extends React.Component {
+class TableOrdenesVer extends React.Component {
 	 constructor() {
        super();
 	   this.state = {showModalVer:false,showModalFinalizar:false,datosOrden:[]};
@@ -149,13 +148,4 @@ class TableOrdenes extends React.Component {
    }
 }
 
-const mapStateToProps = function(store) {
-	console.log("store",store);
-  return {
-	  orden : store.ordenesState.orden
-  };
-};
-
-export default connect(mapStateToProps)(TableOrdenes);
-
-{/* export default TableOrdenes; */}
+export default TableOrdenesVer;

@@ -72,6 +72,7 @@ class Orden_Trabajo_Controller extends Controller
      *                                     id_bien = id del equipo
      *                                     cod_patrimonial= cod del equipo
      *                                     id_servicio = id del Servicio
+     *                                     leg_recepcion= legajo del tecnico que toma la orden de trabajo
      *                                     estado= el id_estado de la orden del trabajo
      *                                     fecha_ini = fecha de creacion desde donde se solicitan las ordenes de trabajo
      *                                     fecha_fin= fecha de creación hasta donde se solicitan las ordenes de trabajo
@@ -100,6 +101,10 @@ class Orden_Trabajo_Controller extends Controller
         if(isset($request->id_entidad)){
             $whr.=' AND ot.entidad_destino=?';
             array_push($params,$request->id_entidad);
+        }
+        if(isset($request->leg_recepcion)){
+            $whr.=' AND ot.leg_recepcion=?';
+            array_push($params,$request->leg_recepcion);
         }
         if(isset($request->fecha_ini)){
             $whr.=' AND ot.fecha_creacion => str_to_date("?","%d %m %Y")';

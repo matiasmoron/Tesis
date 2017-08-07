@@ -2,10 +2,10 @@ import * as types from '../actions/action-types';
 import _ from 'lodash';
 
 const initialState = {
- bienes: [],
- bienes_tabla:[],
+ bienes: [], //Son todos los bienes que se usan en  los filtros
+ bienes_tabla:[],//Una vez aplicados los filtros son los bienes que te muestran en la tabla
  orden:[],
- ordenes_tabla:[]
+ ordenes_tabla:[]//Las ordenes que se muestran en la tabla de ver y administrar luego de aplicar los filtros
 };
 
 const ordenesReducer = function(state = initialState, action) {

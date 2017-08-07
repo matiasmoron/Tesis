@@ -27,7 +27,7 @@ export default (
             <Route exact path="/ordenes"  component={submenuOrdenes} />
             <Route exact path="/ordenes/ver"  component={ordenes_ver} />
             <Route exact path="/ordenes/abm"  component={ordenes_abm} />
-            <Route exact path="/ordenes/administrar"  component={submenuOrdenes} />
+            <Route exact path="/ordenes/administrar"  component={ordenes_admin} />
 
             <Route exact path="/personal"  component={submenuPersonal} />
             <Route exact path="/personal/personal" component={personal} />
