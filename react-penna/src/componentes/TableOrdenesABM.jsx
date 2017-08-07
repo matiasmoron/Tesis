@@ -97,10 +97,10 @@ class TableOrdenes extends React.Component {
 						options={opciones}
 						hover>
 						<TableHeaderColumn isKey dataField='id_bien' hidden>ID</TableHeaderColumn>
-						<TableHeaderColumn dataField='id_tipo_bien' dataFormat={this.colTipoBien}>Tipo Bien</TableHeaderColumn>
-						<TableHeaderColumn dataField='descripcion'>Descripción</TableHeaderColumn>
-						<TableHeaderColumn dataField='servicio_nombre'>Servicio</TableHeaderColumn>
-						<TableHeaderColumn dataField='estado' dataFormat={this.colEstado} >Estado</TableHeaderColumn>
+						<TableHeaderColumn dataField='id_tipo_bien' dataFormat={this.colTipoBien} dataSort>Tipo Bien</TableHeaderColumn>
+						<TableHeaderColumn dataField='descripcion' dataSort>Descripción</TableHeaderColumn>
+						<TableHeaderColumn dataField='servicio_nombre' dataSort>Servicio</TableHeaderColumn>
+						<TableHeaderColumn dataField='estado' dataFormat={this.colEstado} dataSort>Estado</TableHeaderColumn>
 						<TableHeaderColumn dataField='id_orden_trabajo' dataFormat={this.colAccion.bind(this)} dataAlign="center">Acción</TableHeaderColumn>
 
 					</BootstrapTable>
