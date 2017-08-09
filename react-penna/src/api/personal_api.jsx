@@ -6,7 +6,7 @@ import { getSuccess,addSuccess,updateSuccess, deleteSuccess } from '../actions/p
 
 export function getPersonal() {
     var args={metodo:'get',
-              url:'http://localhost:8000/api/personal',
+              url:'personal',
               params:{},
               callback:getSuccess
 
@@ -17,7 +17,7 @@ export function getPersonal() {
 export function addPersonal(personal) {
     console.log("entro a personal_api",personal);
    var args={metodo:'post',
-             url:'http://localhost:8000/api/personal',
+             url:'personal',
              params:{legajo:personal.legajo,usuario:personal.usuario,
 				 	nombre:personal.nombre,apellido:personal.apellido,
 			 		dni:personal.dni,id_servicio:personal.id_servicio,
@@ -30,7 +30,7 @@ export function addPersonal(personal) {
 
 export function updatePersonal(personal) {
    var args={metodo:'put',
-             url:'http://localhost:8000/api/personal',
+             url:'personal',
              params:{usuario:personal.usuario,legajo:personal.legajo,
 				 	nombre:personal.nombre,apellido:personal.apellido,
 			 		dni:personal.dni,fecha_ingreso:personal.fecha_ingreso},
@@ -42,7 +42,7 @@ export function updatePersonal(personal) {
 
 export function deletePersonal(legajo) {
    var args={metodo:'delete',
-             url:'http://localhost:8000/api/personal',
+             url:'personal',
              params:{legajo:legajo},
              callback:deleteSuccess,
              callbackParams: legajo

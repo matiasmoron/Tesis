@@ -5,8 +5,9 @@ import axios from 'axios';
 import store from '../../store';
 
 export function DbCall(args) {
+    const base_url='http://localhost:8000/api/';
     var promise = new Promise(function(resolve, reject) {
-        axios({method: args.metodo,url:args.url,params: args.params,headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
+        axios({method: args.metodo,url:base_url+args.url,params: args.params,headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
         .then(response => {
                 if (response.data.success){
                     if (typeof args.callbackParams == "undefined"){

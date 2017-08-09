@@ -6,7 +6,7 @@ import { getSuccess,addSuccess,updateSuccess, deleteSuccess } from '../actions/e
 
 export function getEquipos() {
     var args={metodo:'get',
-              url:'http://localhost:8000/api/equipos',
+              url:'equipos',
               params:{},
               callback:getSuccess
 
@@ -16,7 +16,7 @@ export function getEquipos() {
 
 export function addEquipo(equipo) {
    var args={metodo:'post',
-             url:'http://localhost:8000/api/equipos',
+             url:'equipos',
              params:{id_tipo_equipo:equipo.id_tipo_equipo,id_equipo_padre:equipo.id_equipo_padre,
 			 		cod_patrimonial:equipo.cod_patrimonial,id_servicio:equipo.id_servicio,
 					descripcion:equipo.descripcion},
@@ -28,7 +28,7 @@ export function addEquipo(equipo) {
 
 export function updateEquipo(equipo) {
    var args={metodo:'put',
-             url:'http://localhost:8000/api/equipos',
+             url:'equipos',
              params:{id_tipo_equipo:equipo.id_tipo_equipo,id_equipo_padre:equipo.id_equipo_padre,
 			 		cod_patrimonial:equipo.cod_patrimonial,id_servicio:equipo.id_servicio,
 					descripcion:equipo.descripcion,id_equipo:equipo.id_equipo},

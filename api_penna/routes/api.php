@@ -69,6 +69,10 @@ Route::middleware('cors')->get('/ordenes', 'Orden_Trabajo_Controller@get_orden_t
 Route::middleware('cors')->post('/ver_ordenes', 'Orden_Trabajo_Controller@get_ordenes');
 Route::middleware('cors')->put('/ver_ordenes', 'Orden_Trabajo_Controller@dar_conformidad');
 
+//Admin Orden Trabajo
+Route::middleware('cors')->put('/ordenes/derivar', 'Orden_Trabajo_Controller@derivar_orden');
+Route::middleware('cors')->put('/ordenes/asignar', 'Orden_Trabajo_Controller@asignar_orden');
+Route::middleware('cors')->put('/ordenes/actualizar', 'Orden_Trabajo_Controller@actualizar_orden');
 
 // Route::middleware('cors')->put('/ordenes', 'Orden_Trabajo_Controller@update_orden');
 // Route::middleware('cors')->get('/ordenes/{id_orden_trabajo?}', 'Orden_Trabajo_Controller@get_ordenes');

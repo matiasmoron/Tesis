@@ -12,7 +12,7 @@ import { getServiciosSuccess,addServicioSuccess,updateServicioSuccess, deleteSer
 
 export function getServicios() {
   var args={metodo:'get',
-            url:'http://localhost:8000/api/servicios',
+            url:'servicios',
             params:{},
             callback:getServiciosSuccess
 
@@ -22,7 +22,7 @@ export function getServicios() {
 
 export function addServicio(nombre) {
    var args={metodo:'post',
-             url:'http://localhost:8000/api/servicios',
+             url:'servicios',
              params:{nombre:nombre},
              callback:addServicioSuccess
           };
@@ -31,7 +31,7 @@ export function addServicio(nombre) {
 
 export function updateServicio(servicio) {
   var args={metodo:'put',
-            url:'http://localhost:8000/api/servicios',
+            url:'servicios',
             params:{id_servicio:servicio.id_servicio,nombre:servicio.nombre},
             callback:updateServicioSuccess,
             callbackParams: {id_servicio:servicio.id_servicio,nombre:servicio.nombre}
@@ -42,7 +42,7 @@ export function updateServicio(servicio) {
 
 export function deleteServicio(id_servicio) {
    var args={metodo:'delete',
-             url:'http://localhost:8000/api/servicios',
+             url:'servicios',
              params:{id_servicio:id_servicio},
              callback:deleteServicioSuccess,
              callbackParams: id_servicio

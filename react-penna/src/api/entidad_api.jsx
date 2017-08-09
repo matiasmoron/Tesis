@@ -6,7 +6,7 @@ import { getEntidadesSuccess,addEntidadSuccess,updateEntidadSuccess, deleteEntid
 
 export function getEntidades() {
     var args={metodo:'get',
-              url:'http://localhost:8000/api/entidades',
+              url:'entidades',
               params:{},
               callback:getEntidadesSuccess
 
@@ -16,7 +16,7 @@ export function getEntidades() {
 
 export function addEntidad(entidad) {
    var args={metodo:'post',
-             url:'http://localhost:8000/api/entidades',
+             url:'entidades',
              params:{tipo_entidad:entidad.tipo_entidad,nombre:entidad.nombre},
              callback:addEntidadSuccess
           };
@@ -26,7 +26,7 @@ export function addEntidad(entidad) {
 
 export function updateEntidad(entidad) {
    var args={metodo:'put',
-             url:'http://localhost:8000/api/entidades',
+             url:'entidades',
              params:{id_entidad:entidad.id_entidad,nombre:entidad.nombre},
              callback:updateEntidadSuccess
           };
@@ -36,7 +36,7 @@ export function updateEntidad(entidad) {
 
 export function deleteEntidad(id_entidad) {
    var args={metodo:'delete',
-             url:'http://localhost:8000/api/entidades',
+             url:'entidades',
              params:{id_entidad:id_entidad},
              callback:deleteEntidadSuccess,
              callbackParams: id_entidad

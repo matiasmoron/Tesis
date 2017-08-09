@@ -59,3 +59,33 @@ export function putConformidadSuccess(conformidad) {
     conformidad
   };
 }
+
+/////////////////
+//ADMIN ORDENES//
+/////////////////
+
+/**
+ * Obtiene los datos de las ordenes de trabajo con el detalle correspondiente
+ */
+export function asignarOrdenSuccess(orden) {
+  return {
+    type: types.ASIGNAR_ORDEN,
+    orden
+  };
+}
+
+//Dar la conformidad de la orden de trabajo
+export function derivarOrdenSuccess(orden) {
+  return {
+    type: types.DERIVAR_ORDEN,
+    orden
+  };
+}
+
+//Actualiza la orden de trabajo
+export function actualizarOrdenSuccess(orden) {
+  return {
+    type: types.ACTUALIZAR_ORDEN,
+    orden
+  };
+}

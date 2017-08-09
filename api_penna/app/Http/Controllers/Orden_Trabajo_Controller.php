@@ -222,4 +222,55 @@ class Orden_Trabajo_Controller extends Controller
 
     }
 
+    /**
+     * Asigna a la orden de trabajo a una nueva entidad
+     * @param $request array(
+     *                     id_orden_trabajo : id de la orden de trabajo
+     *                     entidad_destino  : id de la entidad a la que se deriva la orden de trabajo
+     *                     )
+     */
+    public function derivar_orden(Request $request) {
+        $params=array();
+        $query="UPDATE
+                    orden_trabajo
+                SET
+                    entidad_destino=?
+                WHERE
+                    id_orden_trabajo=?
+                ";
+
+        array_push($params,$request->entidad_destino);
+        array_push($params,$request->id_orden_trabajo);
+
+        return $this->execute_simple_query("update",$query,$params);
+    }
+
+    /**
+     * Asigna a la orden de trabajo a una persona para que la realice
+     * @param $request array(
+     *                     id_orden_trabajo : id de la orden de trabajo
+     *                     leg_recepcion    : legajo de un técnico que va a tomar la orden de trabajo
+     *                     )
+     */
+    public function asignar_orden(Request $request) {
+        $params=array();
+        $query="UPDATE
+                    orden_trabajo
+                SET
+                    leg_recepcion=?
+                WHERE
+                    id_orden_trabajo=?
+        ";
+
+        array_push($params,$request->leg_recepcion);
+        array_push($params,$request->id_orden_trabajo);
+
+        return $this->execute_simple_query("update",$query,$params);
+
+    }
+
+    public function actualizar_orden(Request $request){
+
+    }
+
 }

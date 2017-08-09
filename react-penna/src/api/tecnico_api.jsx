@@ -13,7 +13,7 @@ import { getTecnicosSuccess,getPersonalSuccess,getTecnicoEntidadSuccess,addSucce
 //Para completar la tabla
 export function getTecnicos(filtro_tecnico) {
     var args={metodo:'get',
-              url:'http://localhost:8000/api/tecnicos',
+              url:'tecnicos',
               params:filtro_tecnico,
               callback:getTecnicosSuccess
 
@@ -23,7 +23,7 @@ export function getTecnicos(filtro_tecnico) {
 
 export function getPersonal(legajo) {
     var args={metodo:'get',
-              url:'http://localhost:8000/api/personal',
+              url:'personal',
               params:{"legajo":legajo},
               callback:getPersonalSuccess
 
@@ -35,7 +35,7 @@ export function getPersonal(legajo) {
 //Obtiene todas las entidades a las que no pertenece el empleado con el legajo ingresado
 export function getTecnicoEntidad(legajo) {
     var args={metodo:'post',
-              url:'http://localhost:8000/api/tecnico_entidad',
+              url:'tecnico_entidad',
               params:{"legajo":legajo},
               callback:getTecnicoEntidadSuccess
 
@@ -44,7 +44,7 @@ export function getTecnicoEntidad(legajo) {
 }
 export function addElemento(legajo,id_entidad) {
    var args={metodo:'post',
-             url:'http://localhost:8000/api/tecnicos',
+             url:'tecnicos',
              params:{legajo:legajo,id_entidad:id_entidad},
              callback:addSuccess
           };
@@ -54,7 +54,7 @@ export function addElemento(legajo,id_entidad) {
 
 export function deleteElemento(tecnico) {
    var args={metodo:'delete',
-             url:'http://localhost:8000/api/tecnicos',
+             url:'tecnicos',
              params:{id_entidad:tecnico.id_entidad,legajo: tecnico.legajo },
              callback:deleteSuccess,
              callbackParams: {id_entidad:tecnico.id_entidad,legajo: tecnico.legajo }

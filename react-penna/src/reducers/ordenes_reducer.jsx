@@ -36,6 +36,20 @@ const ordenesReducer = function(state = initialState, action) {
 
     case types.PUT_CONFORMIDAD_ORDEN:
       return Object.assign({}, state);
+
+    ////////////////
+    //ADMIN ORDENES//
+    ////////////////
+
+    case types.DERIVAR_ORDEN:
+      return Object.assign({}, state);
+
+    case types.ASIGNAR_ORDEN:
+      return Object.assign({}, state);
+
+    case types.ACTUALIZAR_ORDEN:
+      return Object.assign({}, state);
+
   }
 
   return state;

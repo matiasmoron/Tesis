@@ -6,7 +6,7 @@ import { getPuestosSuccess,addPuestoSuccess,updatePuestoSuccess, deletePuestoSuc
 
 export function getPuestos() {
     var args={metodo:'get',
-              url:'http://localhost:8000/api/puestos',
+              url:'puestos',
               params:{},
               callback:getPuestosSuccess
 
@@ -16,7 +16,7 @@ export function getPuestos() {
 
 export function addPuesto(nombre) {
    var args={metodo:'post',
-             url:'http://localhost:8000/api/puestos',
+             url:'puestos',
              params:{nombre:nombre},
              callback:addPuestoSuccess
           };
@@ -26,7 +26,7 @@ export function addPuesto(nombre) {
 
 export function updatePuesto(puesto) {
    var args={metodo:'put',
-             url:'http://localhost:8000/api/puestos',
+             url:'puestos',
              params:{id_puesto:puesto.id_puesto,nombre:puesto.nombre},
              callback:updatePuestoSuccess,
              callbackParams: {id_servicio:puesto.id_puesto,nombre:puesto.nombre}
@@ -37,7 +37,7 @@ export function updatePuesto(puesto) {
 
 export function deletePuesto(id_puesto) {
    var args={metodo:'delete',
-             url:'http://localhost:8000/api/puestos',
+             url:'puestos',
              params:{id_puesto:id_puesto},
              callback:deletePuestoSuccess,
              callbackParams: id_puesto

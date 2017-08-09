@@ -41,6 +41,11 @@ export const GET_ORDEN_TRABAJO_SUCCESS   = 'GET_ORDEN_TRABAJO_SUCCESS';
 export const GET_ORDENES_SUCCESS         = 'GET_ORDENES_SUCCESS';
 export const PUT_CONFORMIDAD_ORDEN       = 'PUT_CONFORMIDAD_ORDEN';
 
+//Admin Ordenes
+export const ASIGNAR_ORDEN         		 = 'ASIGNAR_ORDEN';
+export const DERIVAR_ORDEN      		 = 'DERIVAR_ORDEN';
+export const ACTUALIZAR_ORDEN      		 = 'ACTUALIZAR_ORDEN';
+
 //Personal
 export const GET_PERSONAL_SUCCESS        = 'GET_PERSONAL_SUCCESS';
 export const ADD_PERSONAL_SUCCESS        = 'ADD_PERSONAL_SUCCESS';
