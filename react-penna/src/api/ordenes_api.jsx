@@ -58,7 +58,7 @@ export function putConformidadOrden(conformidad) {
               params:conformidad,
               callback:putConformidadSuccess
            };
-    DbCall.DbCall(args);
+    return DbCall.DbCall(args);
 }
 
 /**
@@ -74,7 +74,7 @@ export function asignarOrden(orden) {
               params:orden,
               callback:asignarOrdenSuccess
            };
-    DbCall.DbCall(args);
+    return DbCall.DbCall(args);
 }
 
 /**
@@ -90,7 +90,7 @@ export function derivarOrden(orden) {
               params:orden,
               callback:derivarOrdenSuccess
            };
-    DbCall.DbCall(args);
+    return DbCall.DbCall(args);
 }
 
 /**

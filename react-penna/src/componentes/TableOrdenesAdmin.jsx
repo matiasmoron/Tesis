@@ -38,21 +38,21 @@ class TableOrdenesAdmin extends React.Component {
 			var acciones=[];
 			switch (row.estado) {
 				case 2:
-						acciones.push(<Boton onClick={this.modalActualizarOrden.bind(this,row)} clases="btn-warning" label="Actualizar" titulo="Modificar los datos de la orden de trabajo"/>);
+						acciones.push(<Boton onClick={this.modalActualizarOrden.bind(this,row)} clases="btn-warning" label="Act" titulo="Modificar los datos de la orden de trabajo"/>);
 				case 1:
-						acciones.push(<Boton onClick={this.modalDerivarOrden.bind(this,row)} clases="btn-info" label="Derivar" titulo="Derivar orden de trabajo"/>)
-						acciones.push(<Boton onClick={this.modalAsignarOrden.bind(this,row)} clases="btn-success" label="Asignar" titulo="Asignar la orden a otro técnico"/>)
+						acciones.push(<Boton onClick={this.modalDerivarOrden.bind(this,row)} clases="btn-info" label="De" titulo="Derivar orden de trabajo"/>)
+						acciones.push(<Boton onClick={this.modalAsignarOrden.bind(this,row)} clases="btn-success" label="Asig" titulo="Asignar la orden a otro técnico"/>)
 				case 3:
 				case 4:
 				case 5:
 				case 6:
-						acciones.push(<Boton onClick={this.modalVerMas.bind(this,row)} clases="btn-primary" label="Ver mas" titulo="Ver datos adicionales de la orden de trabajo"/>)
+						acciones.push(<Boton onClick={this.modalVerMas.bind(this,row)} clases="btn-primary" label="Ver" titulo="Ver datos adicionales de la orden de trabajo"/>)
 
 			}
 			return (
-				<div className="botonera">
-					{acciones}
-				</div>
+					<div >
+						{acciones}
+					</div>
 			);
 
 		}
@@ -62,9 +62,6 @@ class TableOrdenesAdmin extends React.Component {
 			this.setState({showModalVer :!this.state.showModalVer});
 			if (row!=null)
 				this.setState({datosOrden : row});
-		}
-		cerrarVer(){
-			this.setState({showModalVer : false});
 		}
 
 		//Muestra/Oculta el modal de derivar orden guardando los datos de la fila segun corresponda
@@ -76,7 +73,12 @@ class TableOrdenesAdmin extends React.Component {
 
 		//Action generada al presionar el boton "derivar" en el modal
 	   derivarOrden(){
-		   Api.derivarOrden({id_orden_trabajo:this.state.datosOrden.id_orden_trabajo,entidad_destino:this._entidad_destino.value});
+		   var promesa = Api.derivarOrden({id_orden_trabajo:this.state.datosOrden.id_orden_trabajo,entidad_destino:this._entidad_destino.value});
+
+		   promesa.then(valor => {
+				this.modalDerivarOrden();
+				this.props.getOrdenes();
+			});
 	   }
 
 	  //Muestra/Oculta el modal de tomar orden guardando los datos de la fila segun corresponda
@@ -88,7 +90,12 @@ class TableOrdenesAdmin extends React.Component {
 
 	  //Asigna la orden de trabajo a un técnico
 	   AsignarOrden(){
-		   Api.tomarOrden({id_orden_trabajo:this.state.datosOrden.id_orden_trabajo,leg_recepcion:this._leg_recepcion.value});
+		  var promesa = Api.asignarOrden({id_orden_trabajo:this.state.datosOrden.id_orden_trabajo,leg_recepcion:this._leg_recepcion.value});
+
+		  promesa.then(valor => {
+			   this.modalAsignarOrden();
+			   this.props.getOrdenes();
+		   });
 	   }
 
 		//Muestra/Oculta el modal para actualizar los datos de la orden de trabajo
@@ -120,7 +127,7 @@ class TableOrdenesAdmin extends React.Component {
 
 		 return (
 				<div>
-					<VerMasModal datosOrden={this.state.datosOrden} show={this.state.showModalVer} onHide={this.cerrarVer.bind(this)}></VerMasModal>
+					<VerMasModal datosOrden={this.state.datosOrden} show={this.state.showModalVer} onHide={this.modalVerMas.bind(this)}></VerMasModal>
 
 					<ModalBs show={this.state.showModalDerivar} onHide={this.modalDerivarOrden.bind(this)} titulo="Solicitar">
 						<div className="modal-body">

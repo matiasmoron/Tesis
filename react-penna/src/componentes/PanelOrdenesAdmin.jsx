@@ -30,6 +30,10 @@ class PanelOrdenesAdmin extends React.Component {
 
 	_getOrdenesTabla(event){
 		event.preventDefault();
+		this.getOrdenesTabla.bind(this);
+    }
+
+	getOrdenesTabla(){
 		Api.getOrdenes({
 							id_tipo_bien   :this._id_tipo_bien.value,
 							id_servicio    :this._id_servicio.value,
@@ -41,7 +45,7 @@ class PanelOrdenesAdmin extends React.Component {
 							leg_recepcion  :this._legajo.value,
 							estado         :this._estado.value
 						});
-    }
+	}
 
 	_dataTipoBienes(){
 		var resultado = {};
@@ -111,12 +115,12 @@ class PanelOrdenesAdmin extends React.Component {
 							<Input clases="form-group col-md-5" disabled = {this.state.disabled_cod_patrimonial} label="Cód. Patrimonial" valor={input => this._cod_patrimonial = input} />
 						</div>
 						<div className="btn-form">
-							<Boton clases="btn-primary" label="Buscar"/>
+							<Boton clases="btn-primary"  label="Buscar"/>
 						</div>
 					</Formulario>
 				</div>
 				<div className="col-md-12">
-        			<TableOrdenesAdmin datos_elemento={this.props.ordenes_tabla} getOrdenes = {this._getOrdenesTabla.bind(this)}/>
+        			<TableOrdenesAdmin datos_elemento={this.props.ordenes_tabla} getOrdenes = {this.getOrdenesTabla.bind(this)}/>
 				</div>
 			</div>
       	);
