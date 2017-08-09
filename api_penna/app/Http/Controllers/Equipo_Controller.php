@@ -16,10 +16,13 @@ class Equipo_Controller extends Controller
                     e.cod_patrimonial,
                     e.descripcion,
                     s.id_servicio,
-                    s.nombre as servicio_nombre
+                    s.nombre as servicio_nombre,
+                	if(e.id_equipo_padre is not null,e_padre.descripcion,"-") as padre_desc,
+                	if(e.id_equipo_padre is not null,e_padre.cod_patrimonial,"-") as padre_cod
                 FROM  equipo e
-                INNER JOIN servicio s USING(id_servicio)
-                WHERE estado='.ALTA;
+                JOIN servicio s USING(id_servicio)
+                LEFT JOIN equipo e_padre ON(e.id_equipo_padre=e_padre.id_equipo)
+                WHERE e.estado='.ALTA;
 
         if(isset($request->id_equipo)){
             $query.=' AND e.id_equipo=?';

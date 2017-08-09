@@ -51,12 +51,12 @@ class TableEquipo extends React.Component {
 				cellEdit  = {editar}
 				options   = {opciones}
 				hover>
-				<TableHeaderColumn isKey dataField='id_equipo'>ID</TableHeaderColumn>
-				<TableHeaderColumn dataField='id_tipo_equipo'>Tipo equipo</TableHeaderColumn>
-				<TableHeaderColumn dataField='descripcion'>Descripcion</TableHeaderColumn>
-				<TableHeaderColumn dataField='cod_patrimonial'>Código Patrimonial</TableHeaderColumn>
-				<TableHeaderColumn editable={false} dataField='servicio_nombre'>Servicio</TableHeaderColumn>
-				<TableHeaderColumn dataField='id_equipo_padre'>Equipo Contenedor</TableHeaderColumn>
+				<TableHeaderColumn isKey dataField='id_equipo' hidden>ID</TableHeaderColumn>
+				<TableHeaderColumn dataField='id_tipo_equipo' hidden>Tipo equipo</TableHeaderColumn>
+				<TableHeaderColumn dataField='descripcion' dataSort>Descripción</TableHeaderColumn>
+				<TableHeaderColumn dataField='cod_patrimonial' dataSort>Cód. patrimonial</TableHeaderColumn>
+				<TableHeaderColumn editable={false} dataField='servicio_nombre' dataSort>Servicio</TableHeaderColumn>
+				<TableHeaderColumn dataField='padre_desc' dataSort >Equipo contenedor</TableHeaderColumn>
 			</BootstrapTable>
 		 );
    }
