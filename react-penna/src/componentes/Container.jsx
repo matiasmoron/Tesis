@@ -1,5 +1,4 @@
 var React = require('react');
-import PanelEntidad from "./PanelEntidad";
 
 require("../styles/backoffice.scss");
 

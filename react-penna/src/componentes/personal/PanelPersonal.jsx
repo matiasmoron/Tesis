@@ -1,12 +1,12 @@
 var React = require('react');
 
-import * as ApiPersonal from '../api/personal_api';
-import * as ApiServicio from '../api/servicio_api';
-import * as ApiPuesto from '../api/puesto_api';
+import * as ApiPersonal from '../../api/personal_api';
+import * as ApiServicio from '../../api/servicio_api';
+import * as ApiPuesto from '../../api/puesto_api';
 import { connect } from 'react-redux';
-import store from '../store';
-import Formulario from './genericos/Formulario';
-import {SelectInput,Input} from './genericos/FormElements';
+import store from '../../store';
+import Formulario from '../genericos/Formulario';
+import {SelectInput,Input} from '../genericos/FormElements';
 import TablePersonal from './TablePersonal';
 
 class PanelPersonal extends React.Component {

@@ -2,12 +2,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import Container from './componentes/Container';
-import servicio from './componentes/PanelServicio';
-//import puesto from './componentes/PanelPuesto';
-import tecnicos from './componentes/PanelTecnico';
-import entidades from './componentes/PanelEntidad';
+import servicio from './componentes/personal/PanelServicio';
+//import puesto from './componentes/personal/PanelPuesto';
+import tecnicos from './componentes/personal/PanelTecnico';
+import entidades from './componentes/personal/PanelEntidad';
 import equipos from './componentes/PanelEquipo';
-import personal from './componentes/PanelPersonal';
+import personal from './componentes/personal/PanelPersonal';
 import ordenes_ver from './componentes/PanelOrdenesVer';
 import ordenes_abm from './componentes/PanelOrdenesABM';
 import ordenes_admin from './componentes/PanelOrdenesAdmin';

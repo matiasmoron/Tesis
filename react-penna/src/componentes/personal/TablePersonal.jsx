@@ -2,47 +2,7 @@ var React             = require('react');
 var ReactBsTable      = require('react-bootstrap-table');
 var BootstrapTable    = ReactBsTable.BootstrapTable;
 var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
-import * as BsTable from './commons/BsTable';
-
-// class PriceEditor extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.updateData = this.updateData.bind(this);
-//      this.state = { row: props.row,
-// 		 			valor_actual: props.row.id_servicio };
-//   }
-//
-//   updateData() {
-//     this.state.row.id_servicio= this.state.valor_actual;
-//     this.props.onUpdate(this.state.row,"id_servicio",this.state.valor_actual);
-//   }
-//
-// // onChange={ (ev) => { console.log(ev.currentTarget.value) } }
-//   render() {
-//     return (
-//       <div>
-//         <div>
-//             <select
-//     			value={ this.state.valor_actual }
-//     			onChange={ (ev) => { this.setState({ valor_actual: ev.currentTarget.value });
-//
-//     								 } } >
-//                >
-//               { this.props.datos.map(dato => (<option key={ dato.id_servicio } value={ dato.id_servicio }>{ dato.nombre }</option>)) }
-//              </select>
-//          </div>
-//         <div>
-//             <button
-//               className='btn btn-info btn-xs textarea-save-btn'
-//               onClick={ this.updateData.bind(this) }>
-//               guardar
-//             </button>
-//         </div>
-//     </div>
-//     );
-//   }
-// }
-
+import * as BsTable from '../commons/BsTable';
 
 class TablePersonal extends React.Component {
 	 constructor() {

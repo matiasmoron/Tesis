@@ -8,7 +8,7 @@ import * as BsTable from './commons/BsTable';
 import {estadoOrden,tipoBien,conformidad} from './commons/Utils';
 import {Boton,TextArea,SelectInput,Label} from './genericos/FormElements';
 import {ModalBs} from './genericos/ModalBs';
-
+import {VerMasModal} from './ordenes_trabajo/templates/VerMasModal';
 
 class TableOrdenesVer extends React.Component {
 	 constructor() {
@@ -36,14 +36,14 @@ class TableOrdenesVer extends React.Component {
 			if(row.estado == 3)
 				return (
 					<div className="botonera">
-						<Boton onClick={this.verMas.bind(this,row)} clases="btn-primary" label="Ver más"/>
-						<Boton onClick={this.modalfinalizarOrden.bind(this,row)} clases="btn-success" label="Cerrar" titulo="Dar conformidad y cerrar orden de trabajo"/>
+						<Boton onClick={this.modalVerMas.bind(this,row)} clases="btn-primary" label="Ver más"/>
+						<Boton onClick={this.modalFinalizarOrden.bind(this,row)} clases="btn-success" label="Cerrar" titulo="Dar conformidad y cerrar orden de trabajo"/>
 					</div>
 				);
 			else
 				return (
 					<div className="botonera">
-						<Boton onClick={this.verMas.bind(this,row)} clases="btn-primary" label="Ver más"/>
+						<Boton onClick={this.modalVerMas.bind(this,row)} clases="btn-primary" label="Ver más"/>
 					</div>
 				);
 
@@ -61,11 +61,14 @@ class TableOrdenesVer extends React.Component {
 			return resultado;
 		}
 
-	   verMas(row){
-		   console.log(row);
-		   this.setState({showModalVer : true,datosOrden:row});
+	//Funciones del Modal "Ver más"
+	   modalVerMas(row){
+			 this.setState({showModalVer :!this.state.showModalVer});
+			 if (row!=null)
+				 this.setState({datosOrden : row});
 	   }
-	   modalfinalizarOrden(row){
+
+	   modalFinalizarOrden(row){
 		    this.setState({showModalFinalizar : true,  row :row});
 	   }
 
@@ -73,9 +76,6 @@ class TableOrdenesVer extends React.Component {
 		   	this.setState({showModalFinalizar : false});
 	   }
 
-	   cerrarVer(){
-		   	this.setState({showModalVer : false});
-	   }
 
 		finalizarOrden(){
 			var promesa = Api.putConformidadOrden({id_orden_trabajo:this.state.row.id_orden_trabajo,conformidad:this._conformidad.value});
@@ -107,28 +107,9 @@ class TableOrdenesVer extends React.Component {
 							</div>
 						</div>
 					</ModalBs>
-					<ModalBs show={this.state.showModalVer} onHide={this.cerrarVer.bind(this)} titulo="Detalles orden de trabajo">
-						<div className="modal-body">
-							<div className="row">
-								<Label clases="col-md-6" label="Autor-orden" value={this.state.datosOrden.p_creacion}/>
-								<Label clases="col-md-6" label="Fecha Creación" value={this.state.datosOrden.fecha_creacion}/>
-							</div>
-							<div className="row">
-								<Label clases="col-md-6" label="Entidad destino" value={this.state.datosOrden.entidad_destino}/>
-								<Label clases="col-md-6" label="Tomado por" value={this.state.datosOrden.p_recepcion}/>
-							</div>
-							<div className="row">
-								<Label label="Observación creación" value={this.state.datosOrden.obs_creacion}/>
-								<Label label="Observación devolución" value={this.state.datosOrden.obs_devolucion}/>
-							</div>
-							<div className="row">
-								<Label label="Conformidad" value={this.state.datosOrden.conformidad}/>
-							</div>
-							<div className="btn-form">
-								<Boton onClick={this.cerrarVer.bind(this)} clases="btn-primary" label="Cerrar"/>
-							</div>
-						</div>
-					</ModalBs>
+
+					<VerMasModal datosOrden={this.state.datosOrden} show={this.state.showModalVer} onHide={this.modalVerMas.bind(this)}></VerMasModal>
+
 					<BootstrapTable
 						height='auto'
 						search={true}

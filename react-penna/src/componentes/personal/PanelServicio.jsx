@@ -1,11 +1,11 @@
 var React = require('react');
 
-import * as servicioApi from '../api/servicio_api';
+import * as servicioApi from '../../api/servicio_api';
 import { connect } from 'react-redux';
-import store from '../store';
-import Formulario from './genericos/Formulario';
+import store from '../../store';
+import Formulario from '../genericos/Formulario';
 import TableServicio from './TableServicio';
-import {Input} from './genericos/FormElements';
+import {Input} from '../genericos/FormElements';
 
 class PanelServicio extends React.Component {
 	constructor() {

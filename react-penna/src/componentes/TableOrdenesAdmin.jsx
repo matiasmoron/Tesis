@@ -9,6 +9,7 @@ import * as BsTable from './commons/BsTable';
 import {estadoOrden,tipoBien,conformidad} from './commons/Utils';
 import {Boton,TextArea,SelectInput,Label} from './genericos/FormElements';
 import {ModalBs} from './genericos/ModalBs';
+import {VerMasModal} from './ordenes_trabajo/templates/VerMasModal';
 
 
 class TableOrdenesAdmin extends React.Component {
@@ -45,7 +46,7 @@ class TableOrdenesAdmin extends React.Component {
 				case 4:
 				case 5:
 				case 6:
-						acciones.push(<Boton onClick={this.modalDerivarOrden.bind(this,row)} clases="btn-primary" label="Ver mas" titulo="Ver datos adicionales de la orden de trabajo"/>)
+						acciones.push(<Boton onClick={this.modalVerMas.bind(this,row)} clases="btn-primary" label="Ver mas" titulo="Ver datos adicionales de la orden de trabajo"/>)
 
 			}
 			return (
@@ -56,10 +57,16 @@ class TableOrdenesAdmin extends React.Component {
 
 		}
 
-	   verMas(row){
-		   console.log(row);
-		   this.setState({showModalVer : true,datosOrden:row});
-	   }
+		//Funciones del Modal "Ver más"
+		modalVerMas(row){
+			this.setState({showModalVer :!this.state.showModalVer});
+			if (row!=null)
+				this.setState({datosOrden : row});
+		}
+		cerrarVer(){
+			this.setState({showModalVer : false});
+		}
+
 		//Muestra/Oculta el modal de derivar orden guardando los datos de la fila segun corresponda
 	   modalDerivarOrden(row=null){
 		    this.setState({showModalDerivar : !this.state.showModalDerivar});
@@ -113,6 +120,8 @@ class TableOrdenesAdmin extends React.Component {
 
 		 return (
 				<div>
+					<VerMasModal datosOrden={this.state.datosOrden} show={this.state.showModalVer} onHide={this.cerrarVer.bind(this)}></VerMasModal>
+
 					<ModalBs show={this.state.showModalDerivar} onHide={this.modalDerivarOrden.bind(this)} titulo="Solicitar">
 						<div className="modal-body">
 							<div className="form-group row">

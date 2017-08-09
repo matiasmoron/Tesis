@@ -1,21 +1,23 @@
 var React = require('react');
+// var ReactDOM = require('react-dom');
 var ReactBsTable  = require('react-bootstrap-table');
 var BootstrapTable = ReactBsTable.BootstrapTable;
 var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
-import * as BsTable from './commons/BsTable';
+import * as BsTable from '../commons/BsTable';
 
-class TableTecnicos extends React.Component {
+class TableServicio extends React.Component {
 	 constructor() {
        super();
      }
 
 	 onAfterDeleteRow(rowKeys){
-		 for (var i = 0; i < rowKeys.length; i++){
-			var tecnico= rowKeys[i].split(",");
-			this.props.deleteElemento({legajo:tecnico[0],id_entidad:tecnico[1]});
-		 }
-	 }
+		 for (var i = 0; i < rowKeys.length; i++)
+			 this.props.deleteServicio(rowKeys[i]);
 
+	 }
+	updateServicio(row, cellName, cellValue) {
+			this.props.updateServicio(row);
+	}
 	customConfirm(next, dropRowKeys) {
 	  const dropRowKeysStr = dropRowKeys.join(',');
 	  if (confirm(`Está seguro que desea eliminar las fila seleccionada ${dropRowKeysStr}?`)) {
@@ -25,14 +27,20 @@ class TableTecnicos extends React.Component {
 
 
    render() {
+	    const editar = {
+			mode: 'dbclick',
+			blurToSave: true,
+			afterSaveCell: this.updateServicio.bind(this)
+	   	};
+
 		const opciones= {
- 			afterDeleteRow        : this.onAfterDeleteRow.bind(this),
- 			deleteBtn             : BsTable.btnEliminar,
+			afterDeleteRow        : this.onAfterDeleteRow.bind(this),
+			deleteBtn             : BsTable.btnEliminar,
 			searchField           : BsTable.searchField,
- 			handleConfirmDeleteRow: this.customConfirm,
- 			clearSearch           : true,
+			handleConfirmDeleteRow: this.customConfirm,
+			clearSearch           : true,
 			clearSearchBtn        : BsTable.btnClear
- 		};
+		};
 
 		 return (
 			<BootstrapTable
@@ -41,16 +49,14 @@ class TableTecnicos extends React.Component {
 				data={this.props.datos_elemento}
 				deleteRow={true}
 				selectRow={BsTable.selectFila}
+				cellEdit={editar}
 				options={opciones}
 				hover>
-				<TableHeaderColumn isKey dataField='tecnico_key' hidden>key</TableHeaderColumn>
-				<TableHeaderColumn dataField='legajo'>Legajo</TableHeaderColumn>
+				<TableHeaderColumn isKey dataField='id_servicio'>ID</TableHeaderColumn>
 				<TableHeaderColumn dataField='nombre'>Nombre</TableHeaderColumn>
-				<TableHeaderColumn dataField='entidad'>Entidad</TableHeaderColumn>
-
 			</BootstrapTable>
 		 );
    }
 }
 
-export default TableTecnicos;
+export default TableServicio;

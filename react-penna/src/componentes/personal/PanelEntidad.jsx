@@ -1,12 +1,12 @@
 var React = require('react');
 
-import * as entidadApi from '../api/entidad_api';
+import * as entidadApi from '../../api/entidad_api';
 import { connect } from 'react-redux';
-import store from '../store';
-import Formulario from './genericos/Formulario';
+import store from '../../store';
+import Formulario from '../genericos/Formulario';
 import TableEntidad from './TableEntidad';
-import {SelectInput,Input} from './genericos/FormElements';
-import {tipoEntidad} from './commons/Utils';
+import {SelectInput,Input} from '../genericos/FormElements';
+import {tipoEntidad} from '../commons/Utils';
 
 class PanelEntidad extends React.Component {
 	constructor() {

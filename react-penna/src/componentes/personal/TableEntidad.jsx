@@ -2,8 +2,8 @@ var React             = require('react');
 var ReactBsTable      = require('react-bootstrap-table');
 var BootstrapTable    = ReactBsTable.BootstrapTable;
 var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
-import {tipoEntidad} from './commons/Utils';
-import * as BsTable from './commons/BsTable';
+import {tipoEntidad} from '../commons/Utils';
+import * as BsTable from '../commons/BsTable';
 
 class TableEntidad extends React.Component {
 	 constructor() {
