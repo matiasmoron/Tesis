@@ -21,9 +21,14 @@ class PanelEquipo extends React.Component {
 
 	_addElemento(event){
 		event.preventDefault();
-		Api.addEquipo({id_tipo_equipo:this._id_tipo_equipo.value,descripcion:this._descripcion.value,
+		var promesa = Api.addEquipo({id_tipo_equipo:this._id_tipo_equipo.value,descripcion:this._descripcion.value,
 					cod_patrimonial:this._cod_patrimonial.value,id_servicio:this._id_servicio.value,
 					id_equipo_padre:this._id_equipo_padre.value});
+
+		promesa.then( valor => {
+			console.log("entreee");
+			Api.getEquipos({id_servicio:this._id_servicio.value});
+		});
     }
 
 	_deleteElemento(id){
@@ -33,18 +38,23 @@ class PanelEquipo extends React.Component {
 		Api.updateEquipo(equipo);
 	}
 
+	//Obtiene los equipos pertenecientes al servicio seleccionado
+	changeSelect(event){
+		Api.getEquipos({id_servicio:this._id_servicio.value});
+	}
+
 	render() {
 	  return (
 		<div className="col-md-10">
 			<div className="col-md-6 col-md-offset-3">
-				<Formulario titulo="Creación Equipo" submit={this._addElemento.bind(this)}>
-					<Input clases="form-group" label="Tipo Equipo" valor={input => this._id_tipo_equipo = input} />
-					<Input label="Descripcion" valor={input => this._descripcion = input} />
-					<Input label="Código Patrimonial" valor={input => this._cod_patrimonial = input} />
-					<Input label="Equipo Contenedor" valor={input => this._id_equipo_padre = input} />
-					<SelectInput data_opciones={this.props.servicios} llave="id_servicio" descripcion="nombre" label="Servicios"   valor={input => this._id_servicio = input} />
+				<Formulario titulo="Creación equipo" submit={this._addElemento.bind(this)}>
+					<SelectInput clases="" vacio="true" data_opciones={this.props.servicios} llave="id_servicio" descripcion="nombre" label="Servicios" onChange={this.changeSelect.bind(this)} valor={input => this._id_servicio = input} />
+					<Input clases="" label="Tipo equipo" valor={input => this._id_tipo_equipo = input} />
+					<Input clases="" label="Descripcion" valor={input => this._descripcion = input} />
+					<Input clases="" label="Código patrimonial" valor={input => this._cod_patrimonial = input} />
+					<SelectInput clases="" vacio="true" data_opciones={this.props.equipos} llave="id_equipo" descripcion="cod_desc" label="Equipo Contenedor"   valor={input => this._id_equipo_padre = input} />
 					<div className="btn-form">
-						<button type="submit" className="btn btn-success">Agregar Equipo</button>
+						<button type="submit" className="btn btn-success">Agregar equipo</button>
 					</div>
 				</Formulario>
 			</div>

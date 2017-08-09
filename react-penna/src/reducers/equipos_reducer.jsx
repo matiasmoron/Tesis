@@ -12,12 +12,7 @@ const equipoReducer = function(state = initialState, action) {
       return Object.assign({}, state, { equipos: action.equipos });
 
     case types.ADD_EQUIPO_SUCCESS:
-        var nuevo_equipos=[];
-        state.equipos.map((equipo) =>
-            nuevo_equipos.push(equipo)
-        );
-        nuevo_equipos.push(action.equipo[0]);
-        return Object.assign({}, {equipos:nuevo_equipos});
+        return Object.assign({}, state);
 
     case types.UPDATE_EQUIPO_SUCCESS:
         return Object.assign({}, state);

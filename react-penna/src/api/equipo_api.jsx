@@ -4,49 +4,41 @@ import store from '../store';
 import * as DbCall from '../componentes/commons/DbCall';
 import { getSuccess,addSuccess,updateSuccess, deleteSuccess } from '../actions/equipo_actions';
 
-export function getEquipos() {
+export function getEquipos(equipo) {
     var args={metodo:'get',
               url:'equipos',
-              params:{},
+              params:equipo,
               callback:getSuccess
-
            };
-    DbCall.DbCall(args);
+    return DbCall.DbCall(args);
 }
 
 export function addEquipo(equipo) {
    var args={metodo:'post',
              url:'equipos',
-             params:{id_tipo_equipo:equipo.id_tipo_equipo,id_equipo_padre:equipo.id_equipo_padre,
-			 		cod_patrimonial:equipo.cod_patrimonial,id_servicio:equipo.id_servicio,
-					descripcion:equipo.descripcion},
+             params:equipo,
              callback:addSuccess
           };
-   DbCall.DbCall(args);
+   return DbCall.DbCall(args);
 }
 
 
 export function updateEquipo(equipo) {
    var args={metodo:'put',
              url:'equipos',
-             params:{id_tipo_equipo:equipo.id_tipo_equipo,id_equipo_padre:equipo.id_equipo_padre,
-			 		cod_patrimonial:equipo.cod_patrimonial,id_servicio:equipo.id_servicio,
-					descripcion:equipo.descripcion,id_equipo:equipo.id_equipo},
-             callback:updateSuccess,
-             callbackParams:{id_tipo_equipo:equipo.id_tipo_equipo,id_equipo_padre:equipo.id_equipo_padre,
-					 		cod_patrimonial:equipo.cod_patrimonial,id_servicio:equipo.id_servicio,
-							descripcion:equipo.descripcion,id_equipo:equipo.id_equipo}
+             params:equipo,
+             callback:updateSuccess
           };
-   DbCall.DbCall(args);
+   return DbCall.DbCall(args);
 }
 
 
 export function deleteEquipo(id_equipo) {
    var args={metodo:'delete',
-             url:'http://localhost:8000/api/equipos',
+             url:'equipos',
              params:{id_equipo:id_equipo},
              callback:deleteSuccess,
              callbackParams: id_equipo
           };
-   DbCall.DbCall(args);
+   return DbCall.DbCall(args);
 }

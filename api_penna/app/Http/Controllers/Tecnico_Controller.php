@@ -11,10 +11,13 @@ class Tecnico_Controller extends Controller
     public function get_tecnicos(Request $request){
         $params = array();
         $query='SELECT
-                    tecnico.legajo,CONCAT (personal.apellido," ",personal.nombre) as nombre,personal.dni,
-                    entidad.nombre as entidad,entidad.id_entidad,
+                    tecnico.legajo,
+                    CONCAT (personal.apellido,", ",personal.nombre) as nombre_apellido,
+                    personal.dni,
+                    entidad.nombre as entidad,
+                    entidad.id_entidad,
                     CONCAT(tecnico.legajo,",",entidad.id_entidad) as tecnico_key
-                FROM 
+                FROM
                     personal
                 INNER JOIN
                     tecnico USING (legajo)
@@ -73,26 +76,26 @@ class Tecnico_Controller extends Controller
 
         //Segunda consulta
         array_push($metodo, "select");
-        $query[1]= "SELECT 
+        $query[1]= "SELECT
                         t.legajo, CONCAT (p.apellido,' ',p.nombre) as nombre, e.nombre as entidad, e.id_entidad
-                    FROM 
-                        tecnico t 
-                    INNER JOIN 
+                    FROM
+                        tecnico t
+                    INNER JOIN
                         entidad e  USING(id_entidad)
-                    INNER JOIN 
+                    INNER JOIN
                         personal p USING(legajo)
                     where t.legajo=? AND t.id_entidad=?";
-        
+
         array_push($params2,$request->legajo);
         array_push($params2,$request->id_entidad);
         array_push($array_params,$params2);
-        
+
         return $this->execute_multiple_query($metodo,$query,$array_params,true);
     }
 
     public function remove_tecnico(Request $request){
         $params= array();
-        $query='DELETE 
+        $query='DELETE
                 FROM   tecnico
                 WHERE  legajo=?
                        AND id_entidad=?';

@@ -59,8 +59,8 @@ class TablePersonal extends React.Component {
 				<TableHeaderColumn dataField='nombre'>Nombre</TableHeaderColumn>
 				<TableHeaderColumn dataField='apellido'>Apellido</TableHeaderColumn>
 				<TableHeaderColumn  editable={false} dataField='puesto_nombre'>Puesto</TableHeaderColumn>
-                <TableHeaderColumn  editable={false}  dataField='servicio_nombre'>Puesto</TableHeaderColumn>
-				<TableHeaderColumn dataField='fecha_ingreso'>Fecha Ingreso</TableHeaderColumn>
+                <TableHeaderColumn  editable={false}  dataField='servicio_nombre'>Servicio</TableHeaderColumn>
+				<TableHeaderColumn dataField='fecha_ingreso'>Fecha ingreso</TableHeaderColumn>
 
 			</BootstrapTable>
 		 );

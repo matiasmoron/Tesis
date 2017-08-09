@@ -45,7 +45,7 @@ class TableTecnicos extends React.Component {
 				hover>
 				<TableHeaderColumn isKey dataField='tecnico_key' hidden>key</TableHeaderColumn>
 				<TableHeaderColumn dataField='legajo'>Legajo</TableHeaderColumn>
-				<TableHeaderColumn dataField='nombre'>Nombre</TableHeaderColumn>
+				<TableHeaderColumn dataField='nombre_apellido'>Nombre</TableHeaderColumn>
 				<TableHeaderColumn dataField='entidad'>Entidad</TableHeaderColumn>
 
 			</BootstrapTable>
