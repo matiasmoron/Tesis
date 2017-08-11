@@ -8,11 +8,17 @@ import Formulario from './genericos/Formulario';
 import {SelectInput,Input} from './genericos/FormElements';
 import TableEquipo from './TableEquipo';
 
+import Select from 'react-select';
+
+// Be sure to include styles at some point, probably during your bootstrapping
+// import 'react-select/dist/react-select.css';
+require("../styles/select.scss");
+
 class PanelEquipo extends React.Component {
 	constructor() {
       super();
+	  this.state = {value:''};
     }
-
 	componentDidMount(){
 		Api.getEquipos();
 		ApiServicio.getServicios();
@@ -43,11 +49,26 @@ class PanelEquipo extends React.Component {
 		Api.getEquipos({id_servicio:this._id_servicio.value});
 	}
 
+	logChange(val) {
+		this.setState({ value:val });
+  		console.log("Selected: " + JSON.stringify(val));
+	}
+
 	render() {
+		var options = [
+		  { value: 'one', label: 'One' },
+		  { value: 'two', label: 'Two' }
+		];
 	  return (
 		<div className="col-md-10">
 			<div className="col-md-6 col-md-offset-3">
 				<Formulario titulo="Creación equipo" submit={this._addElemento.bind(this)}>
+					<Select
+					  name="form-field-name"
+					  options={options}
+					  onChange={this.logChange.bind(this)}
+					  value={this.state.value}
+					/>
 					<SelectInput clases="" vacio="true" data_opciones={this.props.servicios} llave="id_servicio" descripcion="nombre" label="Servicios" onChange={this.changeSelect.bind(this)} valor={input => this._id_servicio = input} />
 					<Input clases="" label="Tipo equipo" valor={input => this._id_tipo_equipo = input} />
 					<Input clases="" label="Descripcion" valor={input => this._descripcion = input} />
