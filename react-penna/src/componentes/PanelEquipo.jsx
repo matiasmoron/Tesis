@@ -7,8 +7,7 @@ import store from '../store';
 import Formulario from './genericos/Formulario';
 import {SelectInput,Input} from './genericos/FormElements';
 import TableEquipo from './TableEquipo';
-
-import Select from 'react-select';
+import SelectChosen from './genericos/SelectChosen';
 
 // Be sure to include styles at some point, probably during your bootstrapping
 // import 'react-select/dist/react-select.css';
@@ -32,7 +31,6 @@ class PanelEquipo extends React.Component {
 					id_equipo_padre:this._id_equipo_padre.value});
 
 		promesa.then( valor => {
-			console.log("entreee");
 			Api.getEquipos({id_servicio:this._id_servicio.value});
 		});
     }
@@ -49,31 +47,17 @@ class PanelEquipo extends React.Component {
 		Api.getEquipos({id_servicio:this._id_servicio.value});
 	}
 
-	logChange(val) {
-		this.setState({ value:val });
-  		console.log("Selected: " + JSON.stringify(val));
-	}
 
 	render() {
-		var options = [
-		  { value: 'one', label: 'One' },
-		  { value: 'two', label: 'Two' }
-		];
 	  return (
 		<div className="col-md-10">
 			<div className="col-md-6 col-md-offset-3">
 				<Formulario titulo="Creación equipo" submit={this._addElemento.bind(this)}>
-					<Select
-					  name="form-field-name"
-					  options={options}
-					  onChange={this.logChange.bind(this)}
-					  value={this.state.value}
-					/>
-					<SelectInput clases="" vacio="true" data_opciones={this.props.servicios} llave="id_servicio" descripcion="nombre" label="Servicios" onChange={this.changeSelect.bind(this)} valor={input => this._id_servicio = input} />
+					<SelectChosen  llave="id_servicio" descripcion="nombre" label="Servicios" onChange={this.changeSelect.bind(this)} data={this.props.servicios} valor={input => this._id_servicio = input}/>
 					<Input clases="" label="Tipo equipo" valor={input => this._id_tipo_equipo = input} />
 					<Input clases="" label="Descripcion" valor={input => this._descripcion = input} />
 					<Input clases="" label="Código patrimonial" valor={input => this._cod_patrimonial = input} />
-					<SelectInput clases="" vacio="true" data_opciones={this.props.equipos} llave="id_equipo" descripcion="cod_desc" label="Equipo Contenedor"   valor={input => this._id_equipo_padre = input} />
+					<SelectChosen llave="id_equipo" descripcion="cod_desc" label="Equipo Contenedor" data={this.props.equipos} multi={true} valor={input => this._id_equipo_padre = input}/>
 					<div className="btn-form">
 						<button type="submit" className="btn btn-success">Agregar equipo</button>
 					</div>
