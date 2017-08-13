@@ -17,7 +17,7 @@ export function getServicios() {
             callback:getServiciosSuccess
 
          };
-  DbCall.DbCall(args);
+  return DbCall.DbCall(args);
 }
 
 export function addServicio(nombre) {
@@ -26,7 +26,7 @@ export function addServicio(nombre) {
              params:{nombre:nombre},
              callback:addServicioSuccess
           };
-   DbCall.DbCall(args);
+   return DbCall.DbCall(args);
 }
 
 export function updateServicio(servicio) {
@@ -36,7 +36,7 @@ export function updateServicio(servicio) {
             callback:updateServicioSuccess,
             callbackParams: {id_servicio:servicio.id_servicio,nombre:servicio.nombre}
          };
-  DbCall.DbCall(args);
+  return DbCall.DbCall(args);
 }
 
 
@@ -47,5 +47,5 @@ export function deleteServicio(id_servicio) {
              callback:deleteServicioSuccess,
              callbackParams: id_servicio
           };
-   DbCall.DbCall(args);
+   return DbCall.DbCall(args);
 }

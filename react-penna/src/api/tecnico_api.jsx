@@ -4,11 +4,7 @@ import store from '../store';
 import * as DbCall from '../componentes/commons/DbCall';
 import { getTecnicosSuccess,getPersonalSuccess,getTecnicoEntidadSuccess,addSuccess,deleteSuccess } from '../actions/tecnico_actions';
 
-/**
- * Obtiene todos los servicios
- *
- * @return [type]
- */
+
 
 //Para completar la tabla
 export function getTecnicos(filtro_tecnico) {
@@ -18,7 +14,7 @@ export function getTecnicos(filtro_tecnico) {
               callback:getTecnicosSuccess
 
            };
-    DbCall.DbCall(args);
+    return DbCall.DbCall(args);
 }
 
 export function getPersonal(legajo) {
@@ -28,7 +24,7 @@ export function getPersonal(legajo) {
               callback:getPersonalSuccess
 
            };
-    DbCall.DbCall(args);
+    return DbCall.DbCall(args);
 
 }
 
@@ -40,15 +36,17 @@ export function getTecnicoEntidad(legajo) {
               callback:getTecnicoEntidadSuccess
 
            };
-    DbCall.DbCall(args);
+    return DbCall.DbCall(args);
 }
+
+//Agrega un nuevo técnico
 export function addElemento(legajo,id_entidad) {
    var args={metodo:'post',
              url:'tecnicos',
              params:{legajo:legajo,id_entidad:id_entidad},
              callback:addSuccess
           };
-   DbCall.DbCall(args);
+   return DbCall.DbCall(args);
 }
 
 
@@ -59,5 +57,5 @@ export function deleteElemento(tecnico) {
              callback:deleteSuccess,
              callbackParams: {id_entidad:tecnico.id_entidad,legajo: tecnico.legajo }
           };
-   DbCall.DbCall(args);
+   return DbCall.DbCall(args);
 }

@@ -23,11 +23,14 @@ class PanelPersonal extends React.Component {
 
 	_addElemento(event){
 		event.preventDefault();
-		console.log("entro en addElemento");
-		ApiPersonal.addPersonal({legajo:this._legajo.value,usuario:this._usuario.value,
-					id_puesto:this._id_puesto.value,id_servicio:this._id_servicio.value,
-					dni:this._dni.value, nombre: this._nombre.value,
-					apellido: this._apellido.value, fecha_ingreso: this._fecha_ingreso.value});
+		var promesa=ApiPersonal.addPersonal({legajo:this._legajo.value,usuario:this._usuario.value,
+						id_puesto:this._id_puesto.value,id_servicio:this._id_servicio.value,
+						dni:this._dni.value, nombre: this._nombre.value,
+						apellido: this._apellido.value, fecha_ingreso: this._fecha_ingreso.value});
+
+		promesa.then( valor => {
+			ApiPersonal.getPersonal();
+		});
     }
 
 	_deleteElemento(legajo){

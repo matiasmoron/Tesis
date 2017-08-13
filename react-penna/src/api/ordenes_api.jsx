@@ -10,7 +10,7 @@ export function getBienes(bienes) {
               params:bienes,
               callback:getSuccess
            };
-    DbCall.DbCall(args);
+    return DbCall.DbCall(args);
 }
 
 export function getBienesTablas(bienes) {
@@ -19,7 +19,7 @@ export function getBienesTablas(bienes) {
               params:bienes,
               callback:getBienesTablasSuccess
            };
-    DbCall.DbCall(args);
+    return DbCall.DbCall(args);
 }
 
 export function addOrden(orden) {
@@ -38,7 +38,7 @@ export function getOrden(filtro_orden) {
               params:filtro_orden,
               callback:getOrdenSuccess
            };
-    DbCall.DbCall(args);
+    return DbCall.DbCall(args);
 }
 
 //Obtiene los datos de las ordenes de trabajo con el detalle correspondiente
@@ -48,7 +48,7 @@ export function getOrdenes(filtros_ordenes) {
               params:filtros_ordenes,
               callback:getOrdenesSuccess
            };
-    DbCall.DbCall(args);
+    return DbCall.DbCall(args);
 }
 
 //Obtiene los datos de las ordenes de trabajo con el detalle correspondiente
@@ -105,5 +105,5 @@ export function actualizarOrden(orden) {
               params:orden,
               callback:actualizarOrdenSuccess
            };
-    DbCall.DbCall(args);
+    return DbCall.DbCall(args);
 }

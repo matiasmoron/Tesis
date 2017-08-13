@@ -11,7 +11,7 @@ export function getPersonal() {
               callback:getSuccess
 
            };
-    DbCall.DbCall(args);
+    return DbCall.DbCall(args);
 }
 
 export function addPersonal(personal) {
@@ -24,7 +24,7 @@ export function addPersonal(personal) {
 					id_puesto:personal.id_puesto,fecha_ingreso:personal.fecha_ingreso},
              callback:addSuccess
           };
-   DbCall.DbCall(args);
+   return DbCall.DbCall(args);
 }
 
 
@@ -36,7 +36,7 @@ export function updatePersonal(personal) {
 			 		dni:personal.dni,fecha_ingreso:personal.fecha_ingreso},
              callback:updateSuccess
           };
-   DbCall.DbCall(args);
+   return DbCall.DbCall(args);
 }
 
 
@@ -47,5 +47,5 @@ export function deletePersonal(legajo) {
              callback:deleteSuccess,
              callbackParams: legajo
           };
-   DbCall.DbCall(args);
+   return DbCall.DbCall(args);
 }

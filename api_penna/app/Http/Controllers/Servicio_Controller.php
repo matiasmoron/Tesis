@@ -16,23 +16,14 @@ class Servicio_Controller extends Controller
     }
 
     public function add_servicio(Request $request){
-        $metodo=array();
-        $array_params= array();
         $params=array();
         $query=array();
 
-        //Primera consulta
-        array_push($metodo, "insert");
-        $query[0]="INSERT INTO servicio(nombre) VALUES(?);";
+        $query="INSERT INTO servicio(nombre) VALUES(?)";
         array_push($params,$request->nombre);
-        array_push($array_params,$params);
 
-        //Segunda consulta
-        array_push($metodo, "select");
-        $query[1]= "SELECT * FROM servicio where id_servicio=last_insert_id();";
-        array_push($array_params,array());
 
-        return $this->execute_multiple_query($metodo,$query,$array_params,true);
+        return $this->execute_simple_query("insert",$query,$params);
 
     }
 

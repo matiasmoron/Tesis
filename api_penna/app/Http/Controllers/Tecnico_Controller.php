@@ -59,38 +59,17 @@ class Tecnico_Controller extends Controller
     }
 
     public function add_tecnico(Request $request){
-        $metodo=array();
-        $array_params= array();
         $params=array();
-        $params2=array();
         $query=array();
 
-        //Primera consulta
-        array_push($metodo, "insert");
-        $query[0]='INSERT INTO tecnico (legajo,id_entidad)
+        $query='INSERT INTO tecnico (legajo,id_entidad)
                 VALUES(?,?)';
 
         array_push($params,$request->legajo);
         array_push($params,$request->id_entidad);
-        array_push($array_params,$params);
 
-        //Segunda consulta
-        array_push($metodo, "select");
-        $query[1]= "SELECT
-                        t.legajo, CONCAT (p.apellido,' ',p.nombre) as nombre, e.nombre as entidad, e.id_entidad
-                    FROM
-                        tecnico t
-                    INNER JOIN
-                        entidad e  USING(id_entidad)
-                    INNER JOIN
-                        personal p USING(legajo)
-                    where t.legajo=? AND t.id_entidad=?";
-
-        array_push($params2,$request->legajo);
-        array_push($params2,$request->id_entidad);
-        array_push($array_params,$params2);
-
-        return $this->execute_multiple_query($metodo,$query,$array_params,true);
+    
+        return $this->execute_simple_query("insert",$query,$params);
     }
 
     public function remove_tecnico(Request $request){

@@ -17,30 +17,6 @@ class PanelTecnico extends React.Component {
 		api.getTecnicoEntidad();
 	}
 
-	// componentWillUpdate(nextProps, nextState){
-	// 	// console.log("next",nextProps,this.props);
-	// 	console.log("props",this.props.personal);
-	// 		console.log("next",nextState);
-	// 	if(nextProps.personal[0]!=undefined){
-	// 		this._nombre.value= nextProps.personal[0].nombre_apellido;
-	// 		//Actualizar select
-	// 		// console.log(nextProps.personal[0].legajo);
-	// 		// console.log(this.props.personal[0].legajo)
-	// 		if(this.props.personal[0] == undefined)
-	// 			api.getTecnicoEntidad(nextProps.personal[0].legajo);
-	// 		else
-	// 			if(nextProps.personal[0].legajo != this.props.personal[0].legajo){
-	// 				console.log("cambio");
-	// 				api.getTecnicoEntidad(nextProps.personal[0].legajo);
-	// 			}
-	// 	}
-	// 	else{
-	// 		this._nombre.value= "";
-	// 		//ocultar el select
-	// 		// api.getTecnicoEntidad(nextProps.personal[0].legajo);
-	// 	}
-	// }
-
 	_getPersonal(event){
 		event.preventDefault();
 		api.getPersonal(this._legajo.value);
@@ -50,7 +26,12 @@ class PanelTecnico extends React.Component {
 	}
 	_addElemento(event){
 		event.preventDefault();
-		api.addElemento(this._legajo.value,this._entidad.value);
+		var promesa=api.addElemento(this._legajo.value,this._entidad.value);
+
+		promesa.then( valor => {
+			api.getTecnicos(this._legajo.value);
+			api.getTecnicoEntidad(this._legajo.value); //Obtiene las entidades que les falta a un técnico
+		});
     }
 	_deleteElemento(tecnico){
 		api.deleteElemento(tecnico);

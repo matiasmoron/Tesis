@@ -11,7 +11,7 @@ export function getPuestos() {
               callback:getPuestosSuccess
 
            };
-    DbCall.DbCall(args);
+    return DbCall.DbCall(args);
 }
 
 export function addPuesto(nombre) {
@@ -20,7 +20,7 @@ export function addPuesto(nombre) {
              params:{nombre:nombre},
              callback:addPuestoSuccess
           };
-   DbCall.DbCall(args);
+   return DbCall.DbCall(args);
 }
 
 
@@ -31,7 +31,7 @@ export function updatePuesto(puesto) {
              callback:updatePuestoSuccess,
              callbackParams: {id_servicio:puesto.id_puesto,nombre:puesto.nombre}
           };
-   DbCall.DbCall(args);
+   return DbCall.DbCall(args);
 }
 
 
@@ -42,5 +42,5 @@ export function deletePuesto(id_puesto) {
              callback:deletePuestoSuccess,
              callbackParams: id_puesto
           };
-   DbCall.DbCall(args);
+   return DbCall.DbCall(args);
 }

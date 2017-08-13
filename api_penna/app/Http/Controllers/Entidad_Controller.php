@@ -28,29 +28,18 @@ class Entidad_Controller extends Controller
     public function add_entidad(Request $request){
         $this->validarActualizar($request->all());
        
-        $metodo=array();
-        $array_params= array();
         $params=array();
         $query=array();
 
-        //Primera consulta
-        array_push($metodo, "insert");
-        $query[0]='INSERT INTO entidad (nombre,tipo_entidad,estado)
+        $query='INSERT INTO entidad (nombre,tipo_entidad,estado)
                 VALUES(?,?,?)';
 
         array_push($params,$request->nombre);
         array_push($params,$request->tipo_entidad);
         array_push($params,ALTA);
-        array_push($array_params,$params);
 
 
-        //Segunda consulta
-        array_push($metodo, "select");
-        $query[1]= "SELECT * FROM entidad where id_entidad=last_insert_id()";
-        array_push($array_params,array());
-
-
-        return $this->execute_multiple_query($metodo,$query,$array_params,true);
+        return $this->execute_simple_query("insert",$query,$params);
     }
 
     public function update_entidad(Request $request){

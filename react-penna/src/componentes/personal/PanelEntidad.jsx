@@ -20,7 +20,11 @@ class PanelEntidad extends React.Component {
 
 	_addElemento(event){
 		event.preventDefault();
-		entidadApi.addEntidad({tipo_entidad:this._tipo_entidad.value,nombre:this._nombre.value});
+		var promesa= entidadApi.addEntidad({tipo_entidad:this._tipo_entidad.value,nombre:this._nombre.value});
+
+		promesa.then( valor => {
+			entidadApi.getEntidades();
+		});
     }
 
 	_deleteEntidad(id){

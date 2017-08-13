@@ -3,8 +3,8 @@ import _ from 'lodash';
 
 const initialState = {
  tecnicos: [],
- tecnico_personal: [],
- tecnicos_entidades: []
+ tecnico_personal: [], //Son los datos del tecnico seleccionado
+ tecnicos_entidades: [] //Son las entidades que les falta a un técnico
 };
 
 const tecnicoReducer = function(state = initialState, action) {
@@ -20,24 +20,12 @@ const tecnicoReducer = function(state = initialState, action) {
           return Object.assign({}, state, { tecnicos_entidades: action.elementos });
 
     case types.ADD_TECNICO_SUCCESS:
-        var nuevo_tecnicos=[];
-        state.tecnicos.map((tecnico) =>
-            nuevo_tecnicos.push(tecnico)
-        );
-        nuevo_tecnicos.push(action.tecnico[0]);
-
-        //sacar de la lista de entidades
-        const newEntidades = _.filter(state.tecnicos_entidades, entidad => entidad.id_entidad != action.tecnico[0].id_entidad);
-        console.log("tecnicos_entidades reducer",newEntidades);
-        return Object.assign({},state, {tecnicos:nuevo_tecnicos, tecnicos_entidades:newEntidades ,tecnico_personal:[]});
+        return Object.assign({}, state);
 
     case types.DELETE_SERVICIO_SUCCESS:
         const newTecnicos = _.filter(state.tecnicos, tecnico => tecnico.id_entidad != action.id_entidad && tecnico.legajo != action.legajo );
         return Object.assign({}, state, { tecnicos: newTecnicos });
 
-    // case types.UPDATE_SERVICIO_SUCCESS:
-    //     return Object.assign({}, state);
-    //
   }
 
   return state;
