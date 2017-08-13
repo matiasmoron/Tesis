@@ -19,8 +19,8 @@ export function DbCall(args) {
                     resolve(1);
                 }
                 else{
-                    console.log("ERRORRRRRRR ");
-                    reject("La consulta falló");
+                    console.log(response.data.msg);
+                    reject(response.data.msg);
                 }
          });
     });
