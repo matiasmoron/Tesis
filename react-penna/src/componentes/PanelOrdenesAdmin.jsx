@@ -24,7 +24,7 @@ class PanelOrdenesAdmin extends React.Component {
 		ApiServicio.getServicios();
 		Api.getBienes({id_tipo_bien:1});
 		ApiEntidad.getEntidades();
-		ApiTecnico.getTecnicos();
+		ApiTecnico.getTecnicoEntidadForm();
 		Api.getOrdenes({id_tipo_bien   :1});
 	}
 
@@ -83,7 +83,7 @@ class PanelOrdenesAdmin extends React.Component {
 
 	//Cuando cambia la entidad busca los técnicos relacionados con dicha entidad
 	changeSelectEntidad(event){
-		ApiTecnico.getTecnicos({id_entidad:this._id_entidad.value});
+		ApiTecnico.getTecnicoEntidadForm({id_entidad:this._id_entidad.value});
 	}
 
 
@@ -109,7 +109,7 @@ class PanelOrdenesAdmin extends React.Component {
 						</div>
 						<div className="row">
 							<SelectInput todos="true" clases="form-group col-md-5" data_opciones={data_estados} llave="estado" descripcion="descripcion" label="Estado" valor={input => this._estado = input} />
-							<SelectInput todos="true" clases="form-group col-md-5" data_opciones={this.props.tecnicos} llave="legajo" descripcion="nombre" label="Tomado Por" valor={input => this._legajo = input} />
+							<SelectInput todos="true" clases="form-group col-md-5" data_opciones={this.props.tecnicos_entidad_form} llave="legajo" descripcion="nombre_apellido" label="Tomado Por" valor={input => this._legajo = input} />
 						</div>
 						<div className="row">
 							<Input clases="form-group col-md-5" disabled = {this.state.disabled_cod_patrimonial} label="Cód. Patrimonial" valor={input => this._cod_patrimonial = input} />
@@ -120,7 +120,7 @@ class PanelOrdenesAdmin extends React.Component {
 					</Formulario>
 				</div>
 				<div className="col-md-12">
-        			<TableOrdenesAdmin datos_elemento={this.props.ordenes_tabla} getOrdenes = {this.getOrdenesTabla.bind(this)}/>
+        			<TableOrdenesAdmin datos_elemento={this.props.ordenes_tabla}  getOrdenes = {this.getOrdenesTabla.bind(this)}/>
 				</div>
 			</div>
       	);
@@ -130,11 +130,11 @@ class PanelOrdenesAdmin extends React.Component {
 
 const mapStateToProps = function(store) {
   return {
-	  bienes 	    : store.ordenesState.bienes,
-	  ordenes_tabla : store.ordenesState.ordenes_tabla,
-	  servicios     : store.servicioState.servicios,
-	  entidades     : store.entidadState.entidades,
-	  tecnicos      : store.tecnicoState.tecnicos
+	  bienes 	            : store.ordenesState.bienes,
+	  ordenes_tabla         : store.ordenesState.ordenes_tabla,
+	  servicios             : store.servicioState.servicios,
+	  entidades             : store.entidadState.entidades,
+	  tecnicos_entidad_form : store.tecnicoState.tecnicos_entidad_form
   };
 };
 

@@ -14,9 +14,23 @@ export function getPersonalSuccess(elementos) {
   };
 }
 
-export function getTecnicoEntidadSuccess(elementos) {
+export function getTecnicoNoEntidadSuccess(elementos) {
   return {
-    type: types.GET_TECNICOENTIDAD_SUCCESS,
+    type: types.GET_TECNICO_NO_ENTIDAD_SUCCESS,
+    elementos
+  };
+}
+
+export function getTecnicoEntidadFormSuccess(elementos) {
+  return {
+    type: types.GET_TECNICO_ENTIDAD_FORM,
+    elementos
+  };
+}
+
+export function getTecnicoEntidadTableSuccess(elementos) {
+  return {
+    type: types.GET_TECNICO_ENTIDAD_TABLE,
     elementos
   };
 }

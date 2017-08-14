@@ -14,13 +14,13 @@ class PanelTecnico extends React.Component {
 
 	componentDidMount(){
 		api.getTecnicos();
-		api.getTecnicoEntidad();
+		api.getTecnicoNoEntidad();
 	}
 
 	_getPersonal(event){
 		event.preventDefault();
 		api.getPersonal(this._legajo.value);
-		api.getTecnicoEntidad(this._legajo.value);
+		api.getTecnicoNoEntidad(this._legajo.value);
 
 
 	}
@@ -30,7 +30,7 @@ class PanelTecnico extends React.Component {
 
 		promesa.then( valor => {
 			api.getTecnicos(this._legajo.value);
-			api.getTecnicoEntidad(this._legajo.value); //Obtiene las entidades que les falta a un técnico
+			api.getTecnicoNoEntidad(this._legajo.value); //Obtiene las entidades que les falta a un técnico
 		});
     }
 	_deleteElemento(tecnico){

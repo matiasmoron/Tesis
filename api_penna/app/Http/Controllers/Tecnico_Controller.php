@@ -8,6 +8,7 @@ use App\Tecnico;
 
 class Tecnico_Controller extends Controller
 {
+    //obtiene los técnicos con su respectiva entidad (puede haber mas de una entidad asiganada a un técnico)
     public function get_tecnicos(Request $request){
         $params = array();
         $query='SELECT
@@ -54,6 +55,31 @@ class Tecnico_Controller extends Controller
                                             FROM tecnico t
                                             WHERE t.legajo=?
                                         )";
+
+        return $this->execute_simple_query("select",$query,$params);
+    }
+
+    /**
+    *Obtiene los distintos técnicos  
+    *@param id_entidad entidad a la que pertenecen los tecnicos
+    */
+    public function get_tecnicos_entidad(Request $request){
+        $params = array();
+
+        $query="SELECT 
+                    distinct t.legajo,CONCAT(p.apellido,' ',p.nombre) as nombre_apellido
+                FROM
+                    tecnico t
+                INNER JOIN
+                    personal p
+                    USING(legajo)
+                WHERE
+                    p.estado=".ALTA;
+
+        if(isset($request->id_entidad)){
+            $query.=' AND t.id_entidad=?';
+            array_push($params,$request->id_entidad);
+        }
 
         return $this->execute_simple_query("select",$query,$params);
     }

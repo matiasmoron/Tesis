@@ -2,7 +2,7 @@
 import axios from 'axios';
 import store from '../store';
 import * as DbCall from '../componentes/commons/DbCall';
-import { getTecnicosSuccess,getPersonalSuccess,getTecnicoEntidadSuccess,addSuccess,deleteSuccess } from '../actions/tecnico_actions';
+import { getTecnicosSuccess,getPersonalSuccess,getTecnicoNoEntidadSuccess,getTecnicoEntidadFormSuccess,getTecnicoEntidadTableSuccess,addSuccess,deleteSuccess } from '../actions/tecnico_actions';
 
 
 
@@ -29,15 +29,38 @@ export function getPersonal(legajo) {
 }
 
 //Obtiene todas las entidades a las que no pertenece el empleado con el legajo ingresado
-export function getTecnicoEntidad(legajo) {
+export function getTecnicoNoEntidad(legajo) {
     var args={metodo:'post',
               url:'tecnico_entidad',
               params:{"legajo":legajo},
-              callback:getTecnicoEntidadSuccess
+              callback:getTecnicoNoEntidadSuccess
 
            };
     return DbCall.DbCall(args);
 }
+
+//Obtiene los distintos técnicos filtrados según la entidad utilizado para el form del admin
+export function getTecnicoEntidadForm(filtro) {
+    var args={metodo:'get',
+              url:'tecnico_entidad',
+              params:filtro,
+              callback:getTecnicoEntidadFormSuccess
+
+           };
+    return DbCall.DbCall(args);
+}
+
+//Obtiene los distintos técnicos filtrados según la entidad utilizado para el table del admin
+export function getTecnicoEntidadTable(filtro) {
+    var args={metodo:'get',
+              url:'tecnico_entidad',
+              params:filtro,
+              callback:getTecnicoEntidadTableSuccess
+
+           };
+    return DbCall.DbCall(args);
+}
+
 
 //Agrega un nuevo técnico
 export function addElemento(legajo,id_entidad) {

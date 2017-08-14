@@ -132,6 +132,7 @@ class Orden_Trabajo_Controller extends Controller
                     date_format(otd.fecha_ini,'%d/%m/%Y')         as fecha_inicio,
                     date_format(otd.fecha_fin,'%d/%m/%Y')         as fecha_fin,
                     ent.nombre                                    as entidad_destino,
+                    ent.id_entidad                                as id_entidad_destino, 
                     otd.hs_insumidas                              as hs_insumidas,
                     IFNULL(otd.conformidad,'-')                   as conformidad
                 FROM
@@ -254,22 +255,37 @@ class Orden_Trabajo_Controller extends Controller
      */
     public function asignar_orden(Request $request) {
         $params=array();
-        $query="UPDATE
+        $queries=array();
+        $array_params= array();
+        $metodo=array();
+        
+        $queries[count($queries)]="INSERT IGNORE INTO
+                                    orden_trabajo_detalle(id_orden_trabajo,fecha_ini,hs_insumidas)
+                                VALUES (?,NOW(),0)
+                        ";
+
+        array_push($params,$request->id_orden_trabajo);
+        array_push($array_params,$params);
+        array_push($metodo, "insert");
+
+        $queries[count($queries)]="UPDATE
                     orden_trabajo
                 SET
-                    obs_devolucion=?
+                    leg_recepcion=?,
+                    estado=2
                 WHERE
                     id_orden_trabajo=?
         ";
 
-
-        array_push($params,$request->prioridad);
-        array_push($params,$request->tiempo_dedicado);
-        array_push($params,$request->obs_devolucion);
-
+        $params=array();
+        array_push($params,$request->leg_recepcion);
         array_push($params,$request->id_orden_trabajo);
 
-        return $this->execute_simple_query("update",$query,$params);
+        array_push($array_params,$params);
+        array_push($metodo, "update");
+        // var_dump($request->all());
+        // die();
+        return $this->execute_multiple_query($metodo,$queries,$array_params,true);
     }
 
     public function actualizar_orden(Request $request){
@@ -294,7 +310,7 @@ class Orden_Trabajo_Controller extends Controller
                                         orden_trabajo_detalle
                                     SET
                                         prioridad    = ?,
-                                        hs_insumidas = hs_insumidas + ?
+                                        hs_insumidas =hs_insumidas + ?
                                     WHERE
                                         id_orden_trabajo=? ";
 
@@ -305,7 +321,7 @@ class Orden_Trabajo_Controller extends Controller
         array_push($array_params,$params);
         array_push($metodo, "update");
 
-        return $this->execute_multiple_query($metodo,$query,$array_params,true);
+        return $this->execute_multiple_query($metodo,$queries,$array_params,true);
     }
 
 }

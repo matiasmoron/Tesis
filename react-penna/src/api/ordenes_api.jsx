@@ -100,6 +100,7 @@ export function derivarOrden(orden) {
  *                     )
  */
 export function actualizarOrden(orden) {
+    console.log("ENTRO API",orden);
     var args={metodo  : 'put',
               url     : 'ordenes/actualizar',
               params  : orden,

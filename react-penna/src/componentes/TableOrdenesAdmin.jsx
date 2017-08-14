@@ -5,6 +5,7 @@ var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
 import { connect } from 'react-redux';
 import store from '../store';
 import * as Api from '../api/ordenes_api';
+import * as ApiTecnico from '../api/tecnico_api';
 import * as BsTable from './commons/BsTable';
 import {estadoOrden,tipoBien,conformidad,prioridad} from './commons/Utils';
 import {Boton,TextArea,SelectInput,Label,Input} from './genericos/FormElements';
@@ -71,12 +72,6 @@ class TableOrdenesAdmin extends React.Component {
 				this.setState({datosOrden : row});
 	   }
 
-   	  	//Muestra/Oculta el modal de tomar orden guardando los datos de la fila segun corresponda
-   	   modalAsignarOrden(row=null){
-   		   this.setState({showModalAsignar : !this.state.showModalAsignar});
-   		   if (row!=null)
-   			   this.setState({datosOrden : row});
-   	   }
 
 		//Muestra/Oculta el modal de actualizar orden guardando los datos de la fila segun corresponda
 		modalActualizarOrden(row=null){
@@ -96,13 +91,26 @@ class TableOrdenesAdmin extends React.Component {
 	   }
 
 
+	  //Muestra/Oculta el modal de tomar orden guardando los datos de la fila segun corresponda
+	   modalAsignarOrden(row=null){
+		   if(!this.state.showModalAsignar) {// Si se abre el modal de asignar
+			   var promesa= ApiTecnico.getTecnicoEntidadTable({id_entidad:row.id_entidad_destino});
+			   promesa.then(valor => {
+					this.setState({showModalAsignar : !this.state.showModalAsignar});
+					this.setState({datosOrden : row});
+				});
+
+		   }
+		   else{
+			   this.setState({showModalAsignar : !this.state.showModalAsignar});
+		   }
+	   }
 
 	  //Asigna la orden de trabajo a un técnico
 	   AsignarOrden(){
 		  var promesa = Api.asignarOrden({id_orden_trabajo:this.state.datosOrden.id_orden_trabajo,leg_recepcion:this._leg_recepcion.value});
 
 		  promesa.then(valor => {
-			   this.modalAsignarOrden();
 			   this.props.getOrdenes();
 		   });
 	   }
@@ -115,16 +123,18 @@ class TableOrdenesAdmin extends React.Component {
 
 	//Actualiza la orden de trabajo con los datos ingresados
 	actualizarOrden(){
-		var promesa = Api.actualizarOrden({
-											id_orden_trabajo: this.state.datosOrden.id_orden_trabajo,
-											prioridad       : this._prioridad,
-											hs_insumidas    : this._hs_insumidas,
-											obs_devolucion  : this._obs_devolucion
-										});
+		var promesa=Api.actualizarOrden({
+								id_orden_trabajo: this.state.datosOrden.id_orden_trabajo,
+								prioridad       : this._prioridad.value,
+								hs_insumidas    : this._hs_insumidas.value,
+								obs_devolucion  : this._obs_devolucion.value
+							});
+		promesa.then(valor => {
+			 this.modalAsignarOrden();
+			 this.props.getOrdenes();
+		 });
 
-		promesa.then(valor =>{
-			this.modalActualizarOrden();
-		});
+
 	}
 
 	_dataPrioridades(){
@@ -168,11 +178,11 @@ class TableOrdenesAdmin extends React.Component {
 					</ModalBs>
 
 					{/* Modal asignar */}
-					<ModalBs show={this.state.showModalAsignar} onHide={this.modalAsignarOrden.bind(this)} titulo="Asignar" style={{height: 50}}>
+					<ModalBs show={this.state.showModalAsignar} onHide={this.modalAsignarOrden.bind(this)} titulo="Asignar" >
 						<div className="modal-body">
 							<div className="form-group row">
-								<SelectInput clases="d-inline"  data_opciones={this.props.tecnicos} llave="legajo" descripcion="nombre" label="Asignar A" valor={input => this._leg_recepcion = input} />
-								<Boton onClick={this.AsignarOrden.bind(this)} clases="btn-success" label="Asignar A" />
+								<SelectInput clases="d-inline"  data_opciones={this.props.tecnicos_entidad_table} llave="legajo" descripcion="nombre_apellido" label="Asignar A" valor={input => this._leg_recepcion = input} />
+								<Boton onClick={this.AsignarOrden.bind(this)} clases="btn-success" label="Asignar A"/>
 							</div>
 						</div>
 					</ModalBs>
@@ -188,7 +198,7 @@ class TableOrdenesAdmin extends React.Component {
 								<Label clases="col-md-4" label="Total hs" value="Total hs"/>
 							</div>
 							<div className="row">
-								<TextArea rows="3" clases="col-md-12" label="Obs devolución" valor={input => this._obs_devolucion = input} />
+								<TextArea rows="3" clases="col-md-12" label="Obs devolución"  valor={input => this._obs_devolucion = input} />
 							</div>
 							<div className="btn-form">
 								<Boton onClick={this.actualizarOrden.bind(this)} clases="btn-warning" label="Actualizar"/>
@@ -218,10 +228,9 @@ class TableOrdenesAdmin extends React.Component {
 }
 
 const mapStateToProps = function(store) {
-	console.log("entidades store",store);
   return {
-	  entidades     : store.entidadState.entidades,
-	  tecnicos      : store.tecnicoState.tecnicos
+	  entidades              : store.entidadState.entidades,
+	  tecnicos_entidad_table : store.tecnicoState.tecnicos_entidad_table
   };
 };
 
