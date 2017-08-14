@@ -61,7 +61,7 @@ export const Label = (props) => {
 
 export const TextArea = (props) => {
 	return (
-		<div className={props.clases}>
+		<div className={"form-group " +props.clases}>
 			<label>{props.label}</label>
 			<textarea rows={props.rows} cols={props.cols} className="form-control" value={props.value}  placeholder={props.placeholder} ref={props.valor}> </textarea>
 		</div>

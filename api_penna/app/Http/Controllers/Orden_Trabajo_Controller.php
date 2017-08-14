@@ -51,7 +51,7 @@ class Orden_Trabajo_Controller extends Controller
             array_push($params,$request->id_servicio);
         }
         $query.=" ORDER BY s.id_servicio DESC;";
-        
+
         return $this->execute_simple_query("select",$query,$params);
     }
 
@@ -257,20 +257,55 @@ class Orden_Trabajo_Controller extends Controller
         $query="UPDATE
                     orden_trabajo
                 SET
-                    leg_recepcion=?
+                    obs_devolucion=?
                 WHERE
                     id_orden_trabajo=?
         ";
 
-        array_push($params,$request->leg_recepcion);
+
+        array_push($params,$request->prioridad);
+        array_push($params,$request->tiempo_dedicado);
+        array_push($params,$request->obs_devolucion);
+
         array_push($params,$request->id_orden_trabajo);
 
         return $this->execute_simple_query("update",$query,$params);
-
     }
 
     public function actualizar_orden(Request $request){
+        $params=array();
+        $queries=array();
+        $array_params= array();
+        $metodo=array();
+        $queries[count($queries)]="UPDATE
+                                        orden_trabajo
+                                    SET
+                                        obs_devolucion=?
+                                    WHERE
+                                        id_orden_trabajo=? ";
 
+        array_push($params,$request->obs_devolucion);
+        array_push($params,$request->id_orden_trabajo);
+        array_push($array_params,$params);
+        array_push($metodo, "update");
+
+        //Ya está creada en está instancia
+        $queries[count($queries)]="UPDATE
+                                        orden_trabajo_detalle
+                                    SET
+                                        prioridad    = ?,
+                                        hs_insumidas = hs_insumidas + ?
+                                    WHERE
+                                        id_orden_trabajo=? ";
+
+        $params=array();
+        array_push($params,$request->prioridad);
+        array_push($params,$request->hs_insumidas);
+        array_push($params,$request->id_orden_trabajo);
+        array_push($array_params,$params);
+        array_push($metodo, "update");
+
+        return $this->execute_multiple_query($metodo,$query,$array_params,true);
     }
 
 }

@@ -24,3 +24,10 @@ export var conformidad = {
 	1: "Conforme",
 	2: "Poco conforme"
 }
+
+export var prioridad = {
+	1:"Baja",
+	2:"Media",
+	3:"Alta",
+	4:"Urgente"
+}

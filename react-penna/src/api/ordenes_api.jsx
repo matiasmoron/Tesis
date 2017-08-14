@@ -85,10 +85,10 @@ export function asignarOrden(orden) {
  *                     )
  */
 export function derivarOrden(orden) {
-    var args={metodo:'put',
-              url:'ordenes/derivar',
-              params:orden,
-              callback:derivarOrdenSuccess
+    var args={metodo  : 'put',
+              url     : 'ordenes/derivar',
+              params  : orden,
+              callback: derivarOrdenSuccess
            };
     return DbCall.DbCall(args);
 }
@@ -100,10 +100,10 @@ export function derivarOrden(orden) {
  *                     )
  */
 export function actualizarOrden(orden) {
-    var args={metodo:'put',
-              url:'ordenes/actualizar',
-              params:orden,
-              callback:actualizarOrdenSuccess
+    var args={metodo  : 'put',
+              url     : 'ordenes/actualizar',
+              params  : orden,
+              callback: actualizarOrdenSuccess
            };
     return DbCall.DbCall(args);
 }
