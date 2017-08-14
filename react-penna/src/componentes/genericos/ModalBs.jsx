@@ -1,5 +1,5 @@
 var React = require('react');
-var Modal=require("react-bootstrap/lib/Modal");
+var Modal = require("react-bootstrap/lib/Modal");
 import {Boton} from './FormElements';
 
 export const ModalBs = (props) => {

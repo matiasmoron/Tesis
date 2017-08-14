@@ -31,7 +31,7 @@ class SelectChosen extends React.Component {
 
 	// console.log(this.pro);
 	  return (
-		 <div>
+		 <div className={this.props.clases}>
 			<label>{this.props.label}</label>
 			<Select
 			  name="form-field-name"
@@ -40,8 +40,10 @@ class SelectChosen extends React.Component {
 			  options={this.armarOptions(this.props.data,this.props.llave,this.props.descripcion)}
 			  onChange={this.onChange.bind(this)}
 			  value={this.state.value}
-			  className='form-group'
+			  className='form-group '
 			  multi={this.props.multi}
+			  clearValueText='Borrar'
+			  clearAllText='Borrar todo'
 			/>
 		</div>
 	  );

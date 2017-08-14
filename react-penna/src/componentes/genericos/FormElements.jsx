@@ -1,4 +1,5 @@
 var React = require('react');
+var Popover = require("react-bootstrap/lib/Popover");
 
 export const Formulario = (props) => {
       return (

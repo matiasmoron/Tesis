@@ -100,10 +100,10 @@ class PanelOrdenes extends React.Component {
 							<Input clases="form-group col-md-5" label="Fecha fin (creación)" valor={input => this._fecha_fin = input} />
 						</div>
 						<div className="row">
+							<SelectInput todos="true" clases="form-group col-md-5" data_opciones={data_estados} llave="estado" descripcion="descripcion" label="Estado" valor={input => this._estado = input} />
 							<Input clases="form-group col-md-5" disabled = {this.state.disabled_cod_patrimonial} label="Cód. Patrimonial" valor={input => this._cod_patrimonial = input} />
 						</div>
 						<div className="row">
-							<SelectInput todos="true" clases="form-group col-md-5" data_opciones={data_estados} llave="estado" descripcion="descripcion" label="Estado" valor={input => this._estado = input} />
 						</div>
 						<div className="btn-form">
 							<Boton clases="btn-primary" label="Buscar"/>
