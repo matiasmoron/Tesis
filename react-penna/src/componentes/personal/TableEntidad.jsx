@@ -50,12 +50,15 @@ class TableEntidad extends React.Component {
 			<BootstrapTable
 				height    = 'auto'
 				search    = {true}
+				multiColumnSearch
 				data      = {this.props.datos_elemento}
 				deleteRow = {true}
 				selectRow = {BsTable.selectFila}
 				cellEdit  = {editar}
 				options   = {opciones}
-				hover>
+				hover
+				striped
+				pagination>
 				<TableHeaderColumn editable={false} isKey dataField='id_entidad' hidden>ID</TableHeaderColumn>
 				<TableHeaderColumn
 					 dataFormat={ this.tipoEntidadFormatter}

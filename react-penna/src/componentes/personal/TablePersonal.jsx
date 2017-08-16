@@ -38,7 +38,8 @@ class TablePersonal extends React.Component {
 			searchField           : BsTable.searchField,
 			handleConfirmDeleteRow: this.customConfirm,
 			clearSearch           : true,
-			clearSearchBtn        : BsTable.btnClear
+			clearSearchBtn        : BsTable.btnClear,
+			exportCSVBtn          : BsTable.btnXls
 		}
 
 		// const servicios=this.props.servicios;
@@ -47,12 +48,16 @@ class TablePersonal extends React.Component {
 			<BootstrapTable
 				height    = 'auto'
 				search    = {true}
+				multiColumnSearch
 				data      = {this.props.datos_elemento}
 				deleteRow = {true}
 				selectRow = {BsTable.selectFila}
 				cellEdit  = {editar}
 				options   = {opciones}
-				hover>
+				exportCSV
+				hover
+				striped
+				pagination>
 				<TableHeaderColumn isKey dataField='legajo'>Legajo</TableHeaderColumn>
 				<TableHeaderColumn dataField='usuario'>Usuario</TableHeaderColumn>
 				<TableHeaderColumn dataField='dni'>DNI</TableHeaderColumn>
@@ -61,7 +66,6 @@ class TablePersonal extends React.Component {
 				<TableHeaderColumn  editable={false} dataField='puesto_nombre'>Puesto</TableHeaderColumn>
                 <TableHeaderColumn  editable={false}  dataField='servicio_nombre'>Servicio</TableHeaderColumn>
 				<TableHeaderColumn dataField='fecha_ingreso'>Fecha ingreso</TableHeaderColumn>
-
 			</BootstrapTable>
 		 );
    }

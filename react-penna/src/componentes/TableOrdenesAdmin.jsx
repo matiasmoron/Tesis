@@ -213,7 +213,8 @@ class TableOrdenesAdmin extends React.Component {
 						data={this.props.datos_elemento}
 						deleteRow={false}
 						options={opciones}
-						hover>
+						hover
+						striped>
 						<TableHeaderColumn isKey dataField='id_bien' hidden>ID</TableHeaderColumn>
 						<TableHeaderColumn dataField='id_tipo_bien' dataFormat={this.colTipoBien}>Tipo Bien</TableHeaderColumn>
 						<TableHeaderColumn dataField='descripcion'>Descripción</TableHeaderColumn>

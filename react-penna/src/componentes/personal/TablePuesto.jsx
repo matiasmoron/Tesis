@@ -58,12 +58,15 @@ class TablePuesto extends React.Component {
 			<BootstrapTable
 				height='auto'
 				search={true}
+				multiColumnSearch
 				data={this.props.datos_elemento}
 				deleteRow={true}
 				selectRow={BsTable.selectFila}
 				cellEdit={editar}
 				options={opciones}
-				hover>
+				hover
+				striped
+				pagination>
 				<TableHeaderColumn isKey dataField='id_puesto'>ID</TableHeaderColumn>
 				<TableHeaderColumn dataField='nombre'>Nombre</TableHeaderColumn>
 			</BootstrapTable>

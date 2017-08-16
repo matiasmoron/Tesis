@@ -93,16 +93,19 @@ class TableOrdenes extends React.Component {
 					<BootstrapTable
 						height='auto'
 						search={true}
+						multiColumnSearch
 						data={this.props.datos_elemento}
 						deleteRow={false}
 						options={opciones}
-						hover>
+						hover
+						striped
+						pagination>
 						<TableHeaderColumn isKey dataField='id_bien' hidden>ID</TableHeaderColumn>
 						<TableHeaderColumn dataField='id_tipo_bien' dataFormat={this.colTipoBien} dataSort>Tipo Bien</TableHeaderColumn>
 						<TableHeaderColumn dataField='descripcion' dataSort>Descripción</TableHeaderColumn>
 						<TableHeaderColumn dataField='servicio_nombre' dataSort>Servicio</TableHeaderColumn>
 						<TableHeaderColumn dataField='estado' dataFormat={this.colEstado} dataSort>Estado</TableHeaderColumn>
-						<TableHeaderColumn dataField='id_orden_trabajo' dataFormat={this.colAccion.bind(this)} dataAlign="center">Acción</TableHeaderColumn>
+						<TableHeaderColumn dataField='id_orden_trabajo' dataFormat={this.colAccion.bind(this)} dataAlign="center" width="10%">Acción</TableHeaderColumn>
 
 					</BootstrapTable>
 				</div>

@@ -38,11 +38,14 @@ class TableTecnicos extends React.Component {
 			<BootstrapTable
 				height='auto'
 				search={true}
+				multiColumnSearch
 				data={this.props.datos_elemento}
 				deleteRow={true}
 				selectRow={BsTable.selectFila}
 				options={opciones}
-				hover>
+				hover
+				striped
+				pagination>
 				<TableHeaderColumn isKey dataField='tecnico_key' hidden>key</TableHeaderColumn>
 				<TableHeaderColumn dataField='legajo'>Legajo</TableHeaderColumn>
 				<TableHeaderColumn dataField='nombre_apellido'>Nombre</TableHeaderColumn>

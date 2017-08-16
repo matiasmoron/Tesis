@@ -50,7 +50,8 @@ class TableEquipo extends React.Component {
 				selectRow = {BsTable.selectFila}
 				cellEdit  = {editar}
 				options   = {opciones}
-				hover>
+				hover
+				striped>
 				<TableHeaderColumn isKey dataField='id_equipo' hidden>ID</TableHeaderColumn>
 				<TableHeaderColumn dataField='id_tipo_equipo' hidden>Tipo equipo</TableHeaderColumn>
 				<TableHeaderColumn dataField='descripcion' dataSort>Descripción</TableHeaderColumn>
