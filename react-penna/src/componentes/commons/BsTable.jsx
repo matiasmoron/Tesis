@@ -37,6 +37,14 @@ export const btnClear = (onClick) => {
   );
 }
 
+export const btnXls  = (onClick) => {
+  return (
+    <ExportCSVButton
+      btnText='Descargar XLS'
+      onClick={onClick}/>
+  );
+}
+
 export const selectFila={
 		mode: 'checkbox'
 };

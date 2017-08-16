@@ -12,7 +12,6 @@ import {Boton,TextArea,SelectInput,Label,Input} from './genericos/FormElements';
 import {ModalBs} from './genericos/ModalBs';
 import {VerMasModal} from './ordenes_trabajo/templates/VerMasModal';
 
-
 class TableOrdenesAdmin extends React.Component {
 	 constructor() {
        super();
@@ -40,18 +39,18 @@ class TableOrdenesAdmin extends React.Component {
 			switch (row.estado) {
 				case 2://En curso
 				case 1://Pendiente
-						acciones.push(<Boton onClick={this.modalActualizarOrden.bind(this,row)} clases="btn-warning" label="Act" titulo="Modificar los datos de la orden de trabajo"/>);
-						acciones.push(<Boton onClick={this.modalDerivarOrden.bind(this,row)} clases="btn-info" label="Der" titulo="Derivar orden de trabajo"/>)
-						acciones.push(<Boton onClick={this.modalAsignarOrden.bind(this,row)} clases="btn-success" label="Asig" titulo="Asignar la orden a otro técnico"/>)
+						acciones.push(<Boton onClick={this.modalActualizarOrden.bind(this,row)} clases="btn-warning" titulo="Modificar los datos de la orden de trabajo"><i className="fa fa-pencil" aria-hidden="true"></i></Boton>);
+						acciones.push(<Boton onClick={this.modalDerivarOrden.bind(this,row)} 	clases="btn-info" 	 titulo="Derivar orden de trabajo"><i className="fa fa-reply" aria-hidden="true"></i></Boton>)
+						acciones.push(<Boton onClick={this.modalAsignarOrden.bind(this,row)} 	clases="btn-success" titulo="Asignar la orden a otro técnico"><i className="fa fa-plus" aria-hidden="true"></i></Boton>)
 				case 3://Resuelta
 				case 4://Finalizada
 				case 5://Cancelada por usuario
 				case 6://Cancelada por técnico
-						acciones.push(<Boton onClick={this.modalVerMas.bind(this,row)} clases="btn-primary" label="Ver" titulo="Ver datos adicionales de la orden de trabajo"/>)
+						acciones.push(<Boton onClick={this.modalVerMas.bind(this,row)} clases="btn-primary" titulo="Ver datos adicionales de la orden de trabajo"><i className="fa fa-search" aria-hidden="true"></i></Boton>)
 
 			}
 			return (
-					<div >
+					<div className="botonera">
 						{acciones}
 					</div>
 			);

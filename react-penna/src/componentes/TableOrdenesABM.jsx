@@ -9,12 +9,12 @@ import * as BsTable from './commons/BsTable';
 import {estadoOrden,tipoBien} from './commons/Utils';
 import {Boton,TextArea,SelectInput,Label} from './genericos/FormElements';
 import {ModalBs} from './genericos/ModalBs';
-
+import {VerMasModal} from './ordenes_trabajo/templates/VerMasModal';
 
 class TableOrdenes extends React.Component {
 	 constructor() {
        super();
-	   this.state = {showModalVer:false,showModalCrear:false};
+	   this.state = {showModalVer:false,showModalCrear:false,datosOrden:[]};
      }
 
 	   colEstado(estado,row){
@@ -27,27 +27,32 @@ class TableOrdenes extends React.Component {
 	   }
 
 	   colAccion(estado,row){
+			var acciones=[];
 			if(row.estado == 1 || row.estado==2)
-				return <Boton onClick={this.verMas.bind(this,row)} clases="btn-primary" label="Ver más"/>;
+				acciones.push(<Boton onClick={this.modalVerMas.bind(this,row)} clases="btn-primary" titulo="Ver datos adicionales de la orden de trabajo"><i className="fa fa-search" aria-hidden="true"></i></Boton>);
 			else
-				return <Boton onClick={this.modalcrearOrden.bind(this,row)} clases="btn-success" label="Crear orden"/>;
+				acciones.push(<Boton onClick={this.modalcrearOrden.bind(this,row)} clases="btn-success" titulo="Crear nueva orden de trabajo"><i className="fa fa-plus" aria-hidden="true"></i></Boton>);
 
+			return (
+					<div className="botonera">
+						{acciones}
+					</div>
+			);
 		}
 
-	   verMas(row){
-		   this.setState({showModalVer : true});
-		   Api.getOrden({id_orden_trabajo:row.id_orden_trabajo});
-	   }
+	   //Funciones del Modal "Ver más"
+	  modalVerMas(row){
+			this.setState({showModalVer :!this.state.showModalVer});
+			if (row!=null)
+				this.setState({datosOrden : row});
+	  }
+
 	   modalcrearOrden(row){
 		    this.setState({showModalCrear : true,  row :row});
 	   }
 
 	   cerrarCrear(){
 		   	this.setState({showModalCrear : false});
-	   }
-
-	   cerrarVer(){
-		   	this.setState({showModalVer : false});
 	   }
 
 		crearOrden(){
@@ -73,6 +78,10 @@ class TableOrdenes extends React.Component {
 
 		 return (
 				<div>
+					{/* Modal ver más */}
+					<VerMasModal datosOrden={this.state.datosOrden} show={this.state.showModalVer} onHide={this.modalVerMas.bind(this)}></VerMasModal>
+
+					{/* Modal crear orden */}
 					<ModalBs show={this.state.showModalCrear} onHide={this.cerrarCrear.bind(this)} titulo="Solicitar">
 						<div>
 							<TextArea cols="50" rows="10" valor={input => this._observacion_creacion = input}/>
@@ -80,15 +89,7 @@ class TableOrdenes extends React.Component {
 							<Boton onClick={this.crearOrden.bind(this)} clases="btn-success" label="Crear orden"/>
 						</div>
 					</ModalBs>
-					<ModalBs show={this.state.showModalVer} onHide={this.cerrarVer.bind(this)} titulo="Detalles">
-						<div>
-							<Label label="Fecha Creación" value={this.props.orden.fecha_creacion}/>
-							<Label label="Legajo Creación" value={this.props.orden.leg_creacion}/>
-							<Label label="Legajo Recepción" value={this.props.orden.leg_recepcion}/>
-							<Label label="Observación Creación" value={this.props.orden.obs_creacion}/>
-							<Boton onClick={this.cerrarVer.bind(this)} clases="btn-success" label="Cerrar"/>
-						</div>
-					</ModalBs>
+
 					<BootstrapTable
 						height='auto'
 						search={true}

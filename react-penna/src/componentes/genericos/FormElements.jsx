@@ -1,6 +1,7 @@
 var React = require('react');
 var Popover = require("react-bootstrap/lib/Popover");
 
+
 export const Formulario = (props) => {
       return (
         <div className="panel panel-primary">
@@ -25,7 +26,7 @@ export const Input = (props) => {
 
 export const Boton = (props) => {
 	return (
-			<button onClick={props.onClick} title={props.titulo} className={"btn " +props.clases}>{props.label}</button>
+			<button onClick={props.onClick} title={props.titulo} className={"btn " +props.clases}>{props.children}{props.label}</button>
 	);
 }
 
