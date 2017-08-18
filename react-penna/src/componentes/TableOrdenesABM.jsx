@@ -35,7 +35,9 @@ class TableOrdenes extends React.Component {
 
 			return (
 					<div className="botonera">
-						{acciones}
+						{acciones.map((boton,i) =>
+							 <span key={i}> {boton}</span>
+						 )}
 					</div>
 			);
 		}
@@ -114,7 +116,7 @@ class TableOrdenes extends React.Component {
 }
 
 const mapStateToProps = function(store) {
-	console.log("store",store);
+	// console.log("store",store);
   return {
 	  orden : store.ordenesState.orden
   };

@@ -42,9 +42,13 @@ class TableOrdenesVer extends React.Component {
 					acciones.push(<Boton onClick={this.modalVerMas.bind(this,row)} clases="btn-primary" titulo="Ver datos adicionales de la orden de trabajo"><i className="fa fa-search" aria-hidden="true"></i></Boton>)
 
 		}
+
+
 		return (
 				<div className="botonera">
-					{acciones}
+					{acciones.map((boton,i) =>
+						 <span key={i}> {boton}</span>
+					 )}
 				</div>
 		);
 
@@ -123,12 +127,12 @@ class TableOrdenesVer extends React.Component {
 						exportCSV
 						csvFileName='OrdenesTrabajo'
 						pagination>
-						<TableHeaderColumn isKey dataField='id_bien' hidden>ID</TableHeaderColumn>
+						<TableHeaderColumn  dataField='id_bien' hidden>ID</TableHeaderColumn>
 						<TableHeaderColumn dataField='id_tipo_bien' dataFormat={this.colTipoBien}>Tipo Bien</TableHeaderColumn>
 						<TableHeaderColumn dataField='descripcion'>Descripción</TableHeaderColumn>
 						<TableHeaderColumn dataField='servicio_nombre'>Servicio</TableHeaderColumn>
 						<TableHeaderColumn dataField='estado' dataFormat={this.colEstado} >Estado</TableHeaderColumn>
-						<TableHeaderColumn dataField='id_orden_trabajo' dataFormat={this.colAccion.bind(this)} dataAlign="center" width="10%">Acción</TableHeaderColumn>
+						<TableHeaderColumn isKey dataField='id_orden_trabajo' dataFormat={this.colAccion.bind(this)} dataAlign="center" width="10%">Acción</TableHeaderColumn>
 					</BootstrapTable>
 				</div>
 		 );
