@@ -125,6 +125,7 @@ class Orden_Trabajo_Controller extends Controller
                     s.nombre                                      as servicio_nombre,
                     CONCAT(p1.apellido,' ',p1.nombre)             as p_creacion,
                     IFNULL(CONCAT(p2.apellido,' ',p2.nombre),'-') as p_recepcion,
+                    ot.leg_recepcion                              as leg_recepcion,
                     date_format(ot.fecha_creacion,'%d/%m/%Y')     as fecha_creacion,
                     ot.obs_creacion                               as obs_creacion,
                     IFNULL(ot.obs_devolucion,'-')                 as obs_devolucion,
@@ -134,7 +135,8 @@ class Orden_Trabajo_Controller extends Controller
                     ent.nombre                                    as entidad_destino,
                     ent.id_entidad                                as id_entidad_destino, 
                     otd.hs_insumidas                              as hs_insumidas,
-                    IFNULL(otd.conformidad,'-')                   as conformidad
+                    IFNULL(otd.conformidad,'-')                   as conformidad,
+                    IFNULL(otd.prioridad,'')                      as prioridad
                 FROM
                     orden_trabajo ot
                 LEFT JOIN
@@ -307,10 +309,10 @@ class Orden_Trabajo_Controller extends Controller
 
         //Ya está creada en está instancia
         $queries[count($queries)]="UPDATE
-                                        orden_trabajo_detalle
+                                        orden_trabajo_detalle ot
                                     SET
                                         prioridad    = ?,
-                                        hs_insumidas =hs_insumidas + ?
+                                        hs_insumidas = ot.hs_insumidas + ?
                                     WHERE
                                         id_orden_trabajo=? ";
 

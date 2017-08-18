@@ -5,7 +5,7 @@ import {Boton} from './FormElements';
 export const ModalBs = (props) => {
       return (
             <div>
-    	        <Modal show={props.show} onHide={props.onHide} style={"holaaa "  +props.style}>
+    	        <Modal show={props.show} onHide={props.onHide}>
     				  <Modal.Header closeButton>
     					<Modal.Title>{props.titulo}</Modal.Title>
     				  </Modal.Header>

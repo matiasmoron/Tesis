@@ -9,6 +9,7 @@ import * as ApiTecnico from '../api/tecnico_api';
 import * as BsTable from './commons/BsTable';
 import {estadoOrden,tipoBien,conformidad,prioridad} from './commons/Utils';
 import {Boton,TextArea,SelectInput,Label,Input} from './genericos/FormElements';
+import SelectChosen from './genericos/SelectChosen';
 import {ModalBs} from './genericos/ModalBs';
 import {VerMasModal} from './ordenes_trabajo/templates/VerMasModal';
 
@@ -50,9 +51,11 @@ class TableOrdenesAdmin extends React.Component {
 
 			}
 			return (
-					<div className="botonera">
-						{acciones}
-					</div>
+					<div >
+	                    {acciones.map((boton,i) =>
+	                         <span key={i}> {boton}</span>
+	                     )}
+	                </div>
 			);
 
 		}
@@ -92,17 +95,24 @@ class TableOrdenesAdmin extends React.Component {
 
 	  //Muestra/Oculta el modal de tomar orden guardando los datos de la fila segun corresponda
 	   modalAsignarOrden(row=null){
-		   if(!this.state.showModalAsignar) {// Si se abre el modal de asignar
-			   var promesa= ApiTecnico.getTecnicoEntidadTable({id_entidad:row.id_entidad_destino});
-			   promesa.then(valor => {
-					this.setState({showModalAsignar : !this.state.showModalAsignar});
-					this.setState({datosOrden : row});
+			console.log("this",this);
+			if(!this.state.showModalAsignar){// Si se abre el modal de asignar
+				const not_this=this;
+			    const prom = new Promise(function(resolve, reject) {
+					not_this.setState({datosOrden : row});
+					resolve(1);
+			    });
+				prom.then(valor=>{
+						const promesa= ApiTecnico.getTecnicoEntidadTable({id_entidad:this.state.datosOrden.id_entidad_destino});
+						promesa.then(valor => {
+							this.setState({showModalAsignar : !this.state.showModalAsignar});
+						});
 				});
-
-		   }
-		   else{
-			   this.setState({showModalAsignar : !this.state.showModalAsignar});
-		   }
+			}
+			else{
+				console.log("ENTRO");
+				this.setState({showModalAsignar : !this.state.showModalAsignar});
+			}
 	   }
 
 	  //Asigna la orden de trabajo a un técnico
@@ -111,26 +121,38 @@ class TableOrdenesAdmin extends React.Component {
 
 		  promesa.then(valor => {
 			   this.props.getOrdenes();
+			   this.modalAsignarOrden();
 		   });
 	   }
 
 	//Actualiza la orden de trabajo con los datos ingresados y cambiandole el estado a finalizado
+	//TODO: HACER CONSULTA FINALIZAR
 	finalizarOrden(){
-
-	   	Api.actualizarOrden({id_orden_trabajo:this.state.datosOrden.id_orden_trabajo});
+	   const promesa=Api.actualizarOrden({
+								id_orden_trabajo:this.state.datosOrden.id_orden_trabajo,
+								hs_insumidas    : this._hs_insumidas.value,
+								prioridad       : this._prioridad.value,
+								obs_devolucion  : this._obs_devolucion.value,
+								estado          : 3
+							});
+		promesa.then(valor => {
+			this.props.getOrdenes();
+			 this.modalActualizarOrden();
+		 });
 	}
 
 	//Actualiza la orden de trabajo con los datos ingresados
 	actualizarOrden(){
+		console.log("this",this);
 		var promesa=Api.actualizarOrden({
 								id_orden_trabajo: this.state.datosOrden.id_orden_trabajo,
-								prioridad       : this._prioridad.value,
 								hs_insumidas    : this._hs_insumidas.value,
+								prioridad       : this._prioridad.value,
 								obs_devolucion  : this._obs_devolucion.value
 							});
 		promesa.then(valor => {
-			 this.modalAsignarOrden();
-			 this.props.getOrdenes();
+			this.props.getOrdenes();
+			 this.modalActualizarOrden();
 		 });
 
 
@@ -159,7 +181,6 @@ class TableOrdenesAdmin extends React.Component {
  		};
 
 		var data_prioridades = this._dataPrioridades();
-
 		return (
 				<div>
 
@@ -170,8 +191,10 @@ class TableOrdenesAdmin extends React.Component {
 					<ModalBs show={this.state.showModalDerivar} onHide={this.modalDerivarOrden.bind(this)} titulo="Solicitar">
 						<div className="modal-body">
 							<div className="form-group row">
-								<SelectInput clases="d-inline"  data_opciones={this.props.entidades} llave="id_entidad" descripcion="nombre" label="Entidad destino" valor={input => this._entidad_destino = input} />
-								<Boton onClick={this.derivarOrden.bind(this)} clases="btn-success" label="Derivar"/>
+								<SelectChosen defaultVal={this.state.datosOrden.id_entidad_destino}  data={this.props.entidades} llave="id_entidad" descripcion="nombre" label="Entidad destino" valor={input => this._entidad_destino = input} />
+								<div className="btn-form">
+									<Boton onClick={this.derivarOrden.bind(this)} clases="btn-success" label="Derivar"/>
+								</div>
 							</div>
 						</div>
 					</ModalBs>
@@ -180,8 +203,10 @@ class TableOrdenesAdmin extends React.Component {
 					<ModalBs show={this.state.showModalAsignar} onHide={this.modalAsignarOrden.bind(this)} titulo="Asignar" >
 						<div className="modal-body">
 							<div className="form-group row">
-								<SelectInput clases="d-inline"  data_opciones={this.props.tecnicos_entidad_table} llave="legajo" descripcion="nombre_apellido" label="Asignar A" valor={input => this._leg_recepcion = input} />
-								<Boton onClick={this.AsignarOrden.bind(this)} clases="btn-success" label="Asignar A"/>
+								<SelectChosen  defaultVal={this.state.datosOrden.leg_recepcion}  data={this.props.tecnicos_entidad_table} llave="legajo" descripcion="nombre_apellido" label="Asignar A" valor={input =>{ this._leg_recepcion = input;console.log("valor",this._leg_recepcion)}} />
+								<div className="btn-form">
+									<Boton onClick={this.AsignarOrden.bind(this)} clases="btn-success" label="Asignar A"/>
+								</div>
 							</div>
 						</div>
 					</ModalBs>
@@ -190,14 +215,14 @@ class TableOrdenesAdmin extends React.Component {
 					<ModalBs show={this.state.showModalActualizar} onHide={this.modalActualizarOrden.bind(this)} titulo="Actualizar orden de trabajo">
 						<div className="modal-body">
 							<div className="row">
-								<SelectInput clases="col-md-4"  data_opciones={data_prioridades} llave="prioridad" descripcion="descripcion" label="Prioridad" valor={input => this._prioridad = input} />
+								<SelectChosen clases="col-md-4" defaultVal={this.state.datosOrden.prioridad}   data={data_prioridades} llave="prioridad" descripcion="descripcion" label="Prioridad" valor={input => this._prioridad = input} />
 							</div>
 							<div className="row">
-								<Input clases="col-md-4" label="Tiempo dedicado" valor={input => this._hs_insumidas = input} />
-								<Label clases="col-md-4" label="Total hs" value="Total hs"/>
+								<Input clases="col-md-4"  label="Tiempo dedicado" valor={input => this._hs_insumidas = input} />
+								<Label clases="col-md-4" value={this.state.datosOrden.hs_insumidas} label="Total hs" />
 							</div>
 							<div className="row">
-								<TextArea rows="3" clases="col-md-12" label="Obs devolución"  valor={input => this._obs_devolucion = input} />
+								<TextArea rows="3" clases="col-md-12" value={this.state.datosOrden.obs_devolucion}  label="Obs devolución"  valor={input => this._obs_devolucion = input} />
 							</div>
 							<div className="btn-form">
 								<Boton onClick={this.actualizarOrden.bind(this)} clases="btn-warning" label="Actualizar"/>
@@ -213,9 +238,8 @@ class TableOrdenesAdmin extends React.Component {
 						data={this.props.datos_elemento}
 						deleteRow={false}
 						options={opciones}
-						hover
-						striped>
-						<TableHeaderColumn isKey dataField='id_bien' hidden>ID</TableHeaderColumn>
+						hover>
+						<TableHeaderColumn isKey dataField='id_orden_trabajo' hidden>ID</TableHeaderColumn>
 						<TableHeaderColumn dataField='id_tipo_bien' dataFormat={this.colTipoBien}>Tipo Bien</TableHeaderColumn>
 						<TableHeaderColumn dataField='descripcion'>Descripción</TableHeaderColumn>
 						<TableHeaderColumn dataField='servicio_nombre'>Servicio</TableHeaderColumn>

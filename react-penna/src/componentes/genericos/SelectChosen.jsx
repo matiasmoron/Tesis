@@ -3,12 +3,19 @@ import Select from 'react-select';
 require("../../styles/select.scss");
 
 class SelectChosen extends React.Component {
-	constructor() {
+	constructor(props) {
       super();
-	  this.state = {value:''};
+	  if (props.defaultVal){
+			this.state = {value:props.defaultVal};
+			props.valor({value:props.defaultVal});
+		}
+	  else {
+	  	this.state = {value:''};
+	  }
     }
 
 	armarOptions(data,llave,descripcion){
+		// console.log("this this",this);
 		var newArray=[];
 		data.map(function(opt) {
 			newArray.push(
@@ -29,7 +36,6 @@ class SelectChosen extends React.Component {
 
 	render() {
 
-	// console.log(this.pro);
 	  return (
 		 <div className={this.props.clases}>
 			<label>{this.props.label}</label>
