@@ -9,6 +9,7 @@ import equipoReducer from './equipos_reducer';
 import solicitudReducer from './solicitudes_reducer';
 import personalReducer from './personal_reducer';
 import ordenesReducer from './ordenes_reducer';
+import autenticacionReducer from './autenticacion_reducer';
 
 
 
@@ -16,14 +17,15 @@ import ordenesReducer from './ordenes_reducer';
 
 // Combine Reducers
 var reducers = combineReducers({
-    servicioState: servicioReducer,
-    puestoState: puestoReducer,
-    tecnicoState: tecnicoReducer,
-    entidadState: entidadReducer,
-    equipoState: equipoReducer,
-    solicitudState: solicitudReducer,
-    personalState: personalReducer,
-    ordenesState: ordenesReducer,
+    servicioState     : servicioReducer,
+    puestoState       : puestoReducer,
+    tecnicoState      : tecnicoReducer,
+    entidadState      : entidadReducer,
+    equipoState       : equipoReducer,
+    solicitudState    : solicitudReducer,
+    personalState     : personalReducer,
+    ordenesState      : ordenesReducer,
+    autenticacionState: autenticacionReducer,
 
 });
 

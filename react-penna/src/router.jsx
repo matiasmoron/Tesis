@@ -1,6 +1,7 @@
 // require("./styles/menu.scss");
 import React from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import store from './store';
+import { BrowserRouter as Router, Route, Link,Redirect,Switch } from 'react-router-dom'
 import Container from './componentes/Container';
 import servicio from './componentes/personal/PanelServicio';
 //import puesto from './componentes/personal/PanelPuesto';
@@ -17,32 +18,44 @@ import submenuOrdenes from './componentes/menu/SubmenuOrdenes';
 import submenuPersonal from './componentes/menu/SubmenuPersonal';
 import submenuBienes from './componentes/menu/SubmenuBienes';
 import submenuConfiguracion from './componentes/menu/SubmenuConfiguracion';
+import PagInicial from './componentes/PagInicial';
+import AuthorizedRoute from './componentes/AuthorizedRoute';
+import PublicRoute from './componentes/PublicRoute';
+
+
+
 
 export default (
 
    <Router history={Router.hashHistory}>
-   <Layout>
-        <Menu/>
-        <Container>
-            <Route exact path="/ordenes"  component={submenuOrdenes} />
-            <Route exact path="/ordenes/ver"  component={ordenes_ver} />
-            <Route exact path="/ordenes/abm"  component={ordenes_abm} />
-            <Route exact path="/ordenes/administrar"  component={ordenes_admin} />
+        <div>
+               <Route path="/auth"  component={PagInicial} />
+               <AuthorizedRoute>
+                   <Layout>
+                       <Menu/>
+                       <Container>
+                                <Route exact path="/ordenes"  component={submenuOrdenes} />
+                                <Route exact path="/ordenes/ver"  component={ordenes_ver} />
+                                <Route exact path="/ordenes/abm"  component={ordenes_abm} />
+                                <Route exact path="/ordenes/administrar"  component={ordenes_admin} />
 
-            <Route exact path="/personal"  component={submenuPersonal} />
-            <Route exact path="/personal/personal" component={personal} />
-            <Route exact path="/personal/puesto_servicio" component={servicio} />
-            <Route exact path="/personal/tecnicos" component={tecnicos} />
-            <Route path="/personal/entidades" component={entidades} />
+                                <Route exact path="/personal"  component={submenuPersonal} />
+                                <Route exact path="/personal/personal" component={personal} />
+                                <Route exact path="/personal/puesto_servicio" component={servicio} />
+                                <Route exact path="/personal/tecnicos" component={tecnicos} />
+                                <Route path="/personal/entidades" component={entidades} />
 
-            <Route exact path="/bienes"  component={submenuBienes} />
-            <Route path="/bienes/equipos" component={equipos} />
-            <Route path="/bienes/prestaciones" component={equipos} />
+                                <Route exact path="/bienes"  component={submenuBienes} />
+                                <Route path="/bienes/equipos" component={equipos} />
+                                <Route path="/bienes/prestaciones" component={equipos} />
 
-            <Route exact path="/configuracion"  component={submenuConfiguracion} />
-            <Route path="/configuracion/mi_cuenta" component={equipos} />
-        </Container>
-   </Layout>
+                                <Route exact path="/configuracion"  component={submenuConfiguracion} />
+                                <Route path="/configuracion/mi_cuenta" component={equipos} />
+
+                    </Container>
+                </Layout>
+            </AuthorizedRoute>
+        </div>
    </Router>
 
   );
