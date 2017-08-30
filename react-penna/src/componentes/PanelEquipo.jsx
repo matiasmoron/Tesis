@@ -4,8 +4,7 @@ import * as Api from '../api/equipo_api';
 import * as ApiServicio from '../api/servicio_api';
 import { connect } from 'react-redux';
 import store from '../store';
-import Formulario from './genericos/Formulario';
-import {SelectInput,Input,PopOver} from './genericos/FormElements';
+import {SelectInput,Input,PopOver,Formulario} from './genericos/FormElements';
 import TableEquipo from './TableEquipo';
 import SelectChosen from './genericos/SelectChosen';
 

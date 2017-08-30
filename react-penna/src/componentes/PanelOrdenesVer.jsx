@@ -5,8 +5,8 @@ import * as ApiServicio from '../api/servicio_api';
 import * as ApiEntidad from '../api/entidad_api';
 import { connect } from 'react-redux';
 import store from '../store';
-import Formulario from './genericos/Formulario';
-import {SelectInput,Input,Boton} from './genericos/FormElements';
+// import Formulario from './genericos/Formulario';
+import {SelectInput,Input,Boton,Formulario} from './genericos/FormElements';
 import TableOrdenesVer from './TableOrdenesVer';
 import {tipoBien,estadoOrden} from './commons/Utils';
 // import DatePicker from './genericos/DatePicker';
@@ -86,7 +86,7 @@ class PanelOrdenes extends React.Component {
 	  	return (
 			<div className="col-md-10">
 				<div className="col-md-6 col-md-offset-3">
-					<Formulario titulo="Ver ordenes de trabajo" submit={this._getOrdenesTabla.bind(this)}>
+					<Formulario titulo="Ver órdenes de trabajo" submit={this._getOrdenesTabla.bind(this)}>
 						<div className="row">
 							<SelectInput todos="true" clases="form-group col-md-6" onChange={this.changeSelect.bind(this)} data_opciones={this.props.servicios} llave="id_servicio" descripcion="nombre" label="Servicios" valor={input => this._id_servicio = input} />
 							<SelectInput todos="true" clases="form-group col-md-6" data_opciones={this.props.entidades} llave="id_entidad" descripcion="nombre" label="Entidad destino" valor={input => this._id_entidad = input} />

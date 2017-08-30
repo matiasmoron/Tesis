@@ -3,9 +3,22 @@ var Popover = require("react-bootstrap/lib/Popover");
 
 
 export const Formulario = (props) => {
+    const estilo ={
+        display: 'inline',
+        background: '#3c91bb',
+        border:'#3c91bb',
+        borderRadius:'5px',
+        marginRight:'10px',
+        color:'white'
+     }
       return (
         <div className="panel panel-primary">
-            <div className="panel-heading">{props.titulo}</div>
+            <div className="panel-heading">
+                <span className="input-group-addon" style={estilo}>
+                    <i className="fa fa-hospital-o fa-lg"></i>
+                </span>
+                {props.titulo}
+            </div>
             <div className="panel-body">
                 <form className="" onSubmit={props.submit}>
 					{props.children}

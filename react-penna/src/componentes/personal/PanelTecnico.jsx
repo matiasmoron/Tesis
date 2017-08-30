@@ -3,9 +3,8 @@ var React = require('react');
 import * as api from '../../api/tecnico_api';
 import { connect } from 'react-redux';
 import store from '../../store';
-import Formulario from '../genericos/Formulario';
 import TableTecnicos from './TableTecnicos';
-import {SelectInput,Input,Label} from '../genericos/FormElements';
+import {SelectInput,Input,Label,Formulario} from '../genericos/FormElements';
 
 class PanelTecnico extends React.Component {
 	constructor() {
