@@ -18,19 +18,16 @@ import submenuOrdenes from './componentes/menu/SubmenuOrdenes';
 import submenuPersonal from './componentes/menu/SubmenuPersonal';
 import submenuBienes from './componentes/menu/SubmenuBienes';
 import submenuConfiguracion from './componentes/menu/SubmenuConfiguracion';
-import PagInicial from './componentes/PagInicial';
-import AuthorizedRoute from './componentes/AuthorizedRoute';
-import PublicRoute from './componentes/PublicRoute';
-
-
+import pagInicial from './componentes/Inicio';
+import authorizedRoute from './componentes/AuthorizedRoute';
 
 
 export default (
 
    <Router history={Router.hashHistory}>
         <div>
-               <Route path="/auth"  component={PagInicial} />
-               <AuthorizedRoute>
+               <Route path="/auth"  component={pagInicial} />
+               <authorizedRoute>
                    <Layout>
                        <Menu/>
                        <Container>
@@ -54,7 +51,7 @@ export default (
 
                     </Container>
                 </Layout>
-            </AuthorizedRoute>
+            </authorizedRoute>
         </div>
    </Router>
 
