@@ -18,16 +18,16 @@ import submenuOrdenes from './componentes/menu/SubmenuOrdenes';
 import submenuPersonal from './componentes/menu/SubmenuPersonal';
 import submenuBienes from './componentes/menu/SubmenuBienes';
 import submenuConfiguracion from './componentes/menu/SubmenuConfiguracion';
-import pagInicial from './componentes/Inicio';
-import authorizedRoute from './componentes/AuthorizedRoute';
+import Inicio from './componentes/Inicio';
+import AuthorizedRoute from './componentes/AuthorizedRoute';
 
 
 export default (
 
    <Router history={Router.hashHistory}>
         <div>
-               <Route path="/auth"  component={pagInicial} />
-               <authorizedRoute>
+               <Route path="/auth"  component={Inicio} />
+               <AuthorizedRoute>
                    <Layout>
                        <Menu/>
                        <Container>
@@ -51,7 +51,7 @@ export default (
 
                     </Container>
                 </Layout>
-            </authorizedRoute>
+            </AuthorizedRoute>
         </div>
    </Router>
 

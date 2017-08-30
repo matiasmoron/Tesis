@@ -1,6 +1,6 @@
 var React = require('react');
 import { connect } from 'react-redux';
-import {loginUser} from '../api/autenticacion_api';
+import * as ApiAutenticacion from '../api/autenticacion_api';
 
 require("../styles/form-elements.scss");
 require("../styles/inicio.scss");
@@ -14,10 +14,11 @@ class Inicio extends React.Component {
       super();
     }
 	handleClick(event) {
+		event.preventDefault();
 		const email = this.refs.email
 		const password = this.refs.password
 		const creds = { email: email.value.trim(), password: password.value.trim() }
-		loginUser(creds)
+		ApiAutenticacion.loginUser(creds);
 	}
 
 	render(){
