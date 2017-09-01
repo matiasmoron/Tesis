@@ -26,13 +26,13 @@ export default (
 
    <Router history={Router.hashHistory}>
         <div>
-               <Route path="/auth"  component={Inicio} />
+               <Route exact path="/auth"  component={Inicio} />
                <AuthorizedRoute>
                    <Layout>
                        <Menu/>
                        <Container>
                                 <Route exact path="/ordenes"  component={submenuOrdenes} />
-                                <Route exact path="/ordenes/ver"  component={ordenes_ver} />
+                                {/* <Route exact path="/ordenes/ver"  component={ordenes_ver} /> */}
                                 <Route exact path="/ordenes/abm"  component={ordenes_abm} />
                                 <Route exact path="/ordenes/administrar"  component={ordenes_admin} />
 
@@ -48,6 +48,7 @@ export default (
 
                                 <Route exact path="/configuracion"  component={submenuConfiguracion} />
                                 <Route path="/configuracion/mi_cuenta" component={equipos} />
+                                <Redirect to ="/ordenes"/>
 
                     </Container>
                 </Layout>
