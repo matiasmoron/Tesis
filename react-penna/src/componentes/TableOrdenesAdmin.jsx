@@ -177,7 +177,8 @@ class TableOrdenesAdmin extends React.Component {
 			searchField           : BsTable.searchField,
  			handleConfirmDeleteRow: this.customConfirm,
  			clearSearch           : true,
-			clearSearchBtn        : BsTable.btnClear
+			clearSearchBtn        : BsTable.btnClear,
+			noDataText            : 'No se encontraron resultados'
  		};
 
 		var data_prioridades = this._dataPrioridades();
@@ -215,7 +216,7 @@ class TableOrdenesAdmin extends React.Component {
 					<ModalBs show={this.state.showModalActualizar} onHide={this.modalActualizarOrden.bind(this)} titulo="Actualizar orden de trabajo">
 						<div className="modal-body">
 							<div className="row">
-								<SelectChosen clases="col-md-4" defaultVal={this.state.datosOrden.prioridad}   data={data_prioridades} llave="prioridad" descripcion="descripcion" label="Prioridad" valor={input => this._prioridad = input} />
+								<SelectChosen clases="col-md-6" defaultVal={this.state.datosOrden.prioridad}   data={data_prioridades} llave="prioridad" descripcion="descripcion" label="Prioridad" valor={input => this._prioridad = input} />
 							</div>
 							<div className="row">
 								<Input clases="col-md-4"  label="Tiempo dedicado" valor={input => this._hs_insumidas = input} />

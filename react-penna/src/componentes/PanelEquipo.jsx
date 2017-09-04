@@ -63,7 +63,7 @@ class PanelEquipo extends React.Component {
 					<div className="row">
 						<Input clases="col-md-8" label="Código patrimonial" valor={input => this._cod_patrimonial = input} />
 					</div>
-					<SelectChosen llave="id_equipo" descripcion="cod_desc" label="Equipo Contenedor" data={this.props.equipos} multi={true} valor={input => this._id_equipo_padre = input}/>
+					<SelectChosen llave="id_bien" descripcion="cod_desc" label="Equipo Contenedor" data={this.props.equipos} valor={input => this._id_equipo_padre = input}/>
 					<div className="btn-form">
 						<button type="submit" className="btn btn-success">Agregar equipo</button>
 					</div>

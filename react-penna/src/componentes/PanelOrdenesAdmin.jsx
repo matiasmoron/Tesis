@@ -9,7 +9,7 @@ import store from '../store';
 import {SelectInput,Input,Boton,Formulario} from './genericos/FormElements';
 import TableOrdenesAdmin from './TableOrdenesAdmin';
 import {tipoBien,estadoOrden} from './commons/Utils';
-
+import SelectChosen from './genericos/SelectChosen';
 
 class PanelOrdenesAdmin extends React.Component {
 	constructor() {
@@ -92,23 +92,23 @@ class PanelOrdenesAdmin extends React.Component {
 		var data_estados = this._dataEstados();
 	  	return (
 			<div className="col-md-10">
-				<div className="col-md-6 col-md-offset-3">
+				<div className="col-md-8 col-md-offset-2">
 					<Formulario titulo="Administración de órdenes de trabajo" submit={this._getOrdenesTabla.bind(this)}>
 						<div className="row">
-							<SelectInput todos="true" clases="form-group col-md-6" onChange={this.changeSelect.bind(this)} data_opciones={this.props.servicios} llave="id_servicio" descripcion="nombre" label="Servicios Creación" valor={input => this._id_servicio = input} />
-							<SelectInput todos="true" clases="form-group col-md-6" onChange={this.changeSelectEntidad.bind(this)} data_opciones={this.props.entidades} llave="id_entidad" descripcion="nombre" label="Entidad destino" valor={input => this._id_entidad = input} />
+							<SelectChosen llave="id_servicio" descripcion="nombre" label="Servicios" clearable={false} clases="form-group col-md-6" onChange={this.changeSelect.bind(this)} data={this.props.servicios} valor={input => this._id_servicio = input}/>
+							<SelectChosen llave="id_entidad" descripcion="nombre" label="Entidad destino" clases="form-group col-md-6" onChange={this.changeSelect.bind(this)} data={this.props.entidades} valor={input => this._id_entidad = input}/>
 						</div>
 						<div className="row">
-							<SelectInput clases="form-group col-md-5"  onChange={this.changeSelect.bind(this)} data_opciones={data_tipo_bienes} llave="tipo_bien" descripcion="descripcion" label="Tipo bien" valor={input => this._id_tipo_bien = input} />
-							<SelectInput todos="true" clases="form-group col-md-7" data_opciones={this.props.bienes} llave="id_equipo" descripcion="descripcion" label="Bien" valor={input => this._id_bien = input} />
+							<SelectChosen llave="tipo_bien" descripcion="descripcion" label="Tipo Bien" clearable={false} clases="form-group col-md-5" onChange={this.changeSelect.bind(this)} data={data_tipo_bienes} valor={input => this._id_tipo_bien = input}/>
+							<SelectChosen llave="id_bien" descripcion="descripcion" label="Bien" clases="form-group col-md-7" onChange={this.changeSelect.bind(this)} data={this.props.bienes} valor={input => this._id_bien = input}/>
 						</div>
 						<div className="row">
 							<Input clases="form-group col-md-5" label="Fecha inicio (creación)" valor={input => this._fecha_ini = input} />
 							<Input clases="form-group col-md-5" label="Fecha fin (creación)" valor={input => this._fecha_fin = input} />
 						</div>
 						<div className="row">
-							<SelectInput todos="true" clases="form-group col-md-5" data_opciones={data_estados} llave="estado" descripcion="descripcion" label="Estado" valor={input => this._estado = input} />
-							<SelectInput todos="true" clases="form-group col-md-5" data_opciones={this.props.tecnicos_entidad_form} llave="legajo" descripcion="nombre_apellido" label="Tomado Por" valor={input => this._legajo = input} />
+							<SelectChosen llave="estado" descripcion="descripcion" label="Estado" multi={true} clases="form-group col-md-5" onChange={this.changeSelect.bind(this)} data={data_estados} valor={input => this._estado = input}/>
+							<SelectChosen llave="legajo" descripcion="nombre_apellido" label="Tomado por" clases="form-group col-md-5" onChange={this.changeSelect.bind(this)} data={this.props.tecnicos_entidad_form} valor={input => this._legajo = input}/>
 						</div>
 						<div className="row">
 							<Input clases="form-group col-md-5" disabled = {this.state.disabled_cod_patrimonial} label="Cód. Patrimonial" valor={input => this._cod_patrimonial = input} />

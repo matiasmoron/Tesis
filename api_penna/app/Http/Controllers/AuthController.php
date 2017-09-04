@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\DB;
 class AuthController extends Controller
 {
     public function run(){
-         DB::table('personal')->insert([
-            'name' => 'ftoniolo',
+         DB::table('users')->insert([
+             'name' =>'Raquel',
             'email' => 'a@a.com',
             'password' => bcrypt('1234'),
         ]);
@@ -62,6 +62,6 @@ class AuthController extends Controller
         return response()->json(compact('user'));
     }
 
-    
+
 
 }

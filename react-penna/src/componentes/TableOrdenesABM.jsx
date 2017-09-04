@@ -75,7 +75,8 @@ class TableOrdenes extends React.Component {
 			searchField           : BsTable.searchField,
  			handleConfirmDeleteRow: this.customConfirm,
  			clearSearch           : true,
-			clearSearchBtn        : BsTable.btnClear
+			clearSearchBtn        : BsTable.btnClear,
+			noDataText            : 'No se encontraron resultados'
  		};
 
 

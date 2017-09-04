@@ -10,7 +10,7 @@ class Equipo_Controller extends Controller
     public function get_equipos(Request $request){
         $params= array();
         $query='SELECT
-                    e.id_equipo,
+                    e.id_equipo id_bien,
                     e.id_tipo_equipo,
                     e.id_equipo_padre,
                     e.cod_patrimonial,

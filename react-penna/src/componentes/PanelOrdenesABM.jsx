@@ -8,7 +8,7 @@ import store from '../store';
 import {SelectInput,Input,Formulario} from './genericos/FormElements';
 import TableOrdenesABM from './TableOrdenesABM';
 import {tipoBien} from './commons/Utils';
-
+import SelectChosen from './genericos/SelectChosen';
 
 class PanelOrdenes extends React.Component {
 	constructor() {
@@ -56,14 +56,14 @@ class PanelOrdenes extends React.Component {
 		var data_tipo_bienes = this._dataTipoBienes();
 	  	return (
 			<div className="col-md-10">
-				<div className="col-md-6 col-md-offset-3">
+				<div className="col-md-8 col-md-offset-2">
 					<Formulario titulo="Nueva orden de trabajo" submit={this._getBienesTablas.bind(this)}>
 						<div className="row">
-							<SelectInput todos="true" clases="form-group col-md-6" onChange={this.changeSelect.bind(this)} data_opciones={this.props.servicios} llave="id_servicio" descripcion="nombre" label="Servicios" valor={input => this._id_servicio = input} />
+							<SelectChosen llave="id_servicio" descripcion="nombre" label="Servicios" clases="form-group col-md-6" onChange={this.changeSelect.bind(this)} data={this.props.servicios} valor={input => this._id_servicio = input}/>
 						</div>
 						<div className="row">
-							<SelectInput clases="form-group col-md-5"  onChange={this.changeSelect.bind(this)} data_opciones={data_tipo_bienes} llave="tipo_bien" descripcion="descripcion" label="Tipo Bien"   valor={input => this._id_tipo_bien = input} />
-							<SelectInput todos="true" clases="form-group col-md-7"  data_opciones={this.props.bienes} llave="id_equipo" descripcion="descripcion" label="Bien" valor={input => this._id_bien = input} />
+							<SelectChosen llave="tipo_bien" descripcion="descripcion" label="Tipo Bien" clases="form-group col-md-5" onChange={this.changeSelect.bind(this)} data={data_tipo_bienes} valor={input => this._id_tipo_bien = input}/>
+							<SelectChosen llave="id_bien" descripcion="descripcion" label="Bien" clases="form-group col-md-7" onChange={this.changeSelect.bind(this)} data={this.props.bienes} valor={input => this._id_bien = input}/>
 						</div>
 						<div className="row">
 							<Input clases="form-group col-md-5" disabled = {this.state.disabled_cod_patrimonial} label="Cód. Patrimonial" valor={input => this._cod_patrimonial = input} />

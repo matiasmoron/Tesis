@@ -97,7 +97,8 @@ class TableOrdenesVer extends React.Component {
  			handleConfirmDeleteRow: this.customConfirm,
  			clearSearch           : true,
 			clearSearchBtn        : BsTable.btnClear,
-			exportCSVBtn          : BsTable.btnXls
+			exportCSVBtn          : BsTable.btnXls,
+			noDataText            : 'No se encontraron resultados'
  		};
 
 		var dataConformidad = this._dataConformidad();

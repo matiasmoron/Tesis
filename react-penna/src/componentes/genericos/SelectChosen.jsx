@@ -5,19 +5,29 @@ require("../../styles/select.scss");
 class SelectChosen extends React.Component {
 	constructor(props) {
       super();
-	  if (props.defaultVal){
+
+	  	if (props.defaultVal){
 			this.state = {value:props.defaultVal};
 			props.valor({value:props.defaultVal});
 		}
-	  else {
-	  	this.state = {value:''};
-	  }
+		else {
+			if(props.data.length>0){
+				//Si es la primera opción y quiero dejar seteado el primero por defecto sin poder dejar el select vacío
+				if(props.clearable != undefined  && !props.clearable && props.defaultVal == undefined){
+					this.state = {value:props.data[0][props.llave]};
+					props.valor({value:props.data[0][props.llave]});
+				}
+				else
+		  			this.state = {value:''};
+			}
+			else
+	  			this.state = {value:''};
+		}
     }
 
 	armarOptions(data,llave,descripcion){
-		// console.log("this this",this);
 		var newArray=[];
-		data.map(function(opt) {
+		data.map(function(opt,index) {
 			newArray.push(
 				{
 					value:opt[llave],
@@ -50,6 +60,7 @@ class SelectChosen extends React.Component {
 			  multi={this.props.multi}
 			  clearValueText='Borrar'
 			  clearAllText='Borrar todo'
+			  clearable={this.props.clearable}
 			/>
 		</div>
 	  );
