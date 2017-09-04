@@ -5,11 +5,14 @@ const initialState = {
  bienes: [], //Son todos los bienes que se usan en  los filtros
  bienes_tabla:[],//Una vez aplicados los filtros son los bienes que te muestran en la tabla
  orden:[],
- ordenes_tabla:[]//Las ordenes que se muestran en la tabla de ver y administrar luego de aplicar los filtros
+ datos_tabla:[]//Las ordenes que se muestran en la tabla de ver y administrar luego de aplicar los filtros
 };
 
 const ordenesReducer = function(state = initialState, action) {
   switch(action.type) {
+
+    case types.RESET_TABLA_ORDENES :
+        return Object.assign({}, state, {datos_tabla: []});
 
     ////////////////
     //ABM ORDENES //
@@ -27,12 +30,14 @@ const ordenesReducer = function(state = initialState, action) {
     case types.GET_ORDEN_TRABAJO_SUCCESS:
       return Object.assign({}, state, {orden: action.orden[0]});
 
+
+
     ////////////////
     //VER ORDENES //
     ////////////////
 
     case types.GET_ORDENES_SUCCESS:
-      return Object.assign({}, state, {ordenes_tabla: action.ordenes});
+      return Object.assign({}, state, {datos_tabla: action.ordenes});
 
     case types.PUT_CONFORMIDAD_ORDEN:
       return Object.assign({}, state);

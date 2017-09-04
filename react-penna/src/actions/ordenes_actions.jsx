@@ -1,5 +1,15 @@
 import * as types from '../actions/action-types';
 
+////////////////
+///ORDENES /////
+////////////////
+
+export function resetTablaOrdenes(){
+    return {
+        type: types.RESET_TABLA_ORDENES,
+    }
+}
+
 
 ////////////////
 //ABM ORDENES //

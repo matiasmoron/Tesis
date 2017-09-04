@@ -24,7 +24,7 @@ class PanelOrdenes extends React.Component {
 		ApiServicio.getServicios();
 		Api.getBienes({id_tipo_bien:1});
 		ApiEntidad.getEntidades();
-		Api.getOrdenes({id_tipo_bien :1});
+		Api.resetTabla();
 	}
 
 	_getOrdenesTabla(event){
@@ -41,6 +41,7 @@ class PanelOrdenes extends React.Component {
 						});
     }
 
+	//Arma los datos del select para los tipos de bienes
 	_dataTipoBienes(){
 		var resultado = {};
 		var resultado = Object.keys(tipoBien).map((valor) =>{
@@ -54,6 +55,8 @@ class PanelOrdenes extends React.Component {
         );
 		return resultado;
 	}
+
+	//Arma los datos del select para los estados de las ordenes de trabajo excluyendo el estado disponible
 	_dataEstados(){
 		var resultado = {};
 		var resultado = Object.keys(estadoOrden).map((valor) =>{
@@ -69,6 +72,7 @@ class PanelOrdenes extends React.Component {
 		return resultado;
 	}
 
+	//Obtiene los bienes según el tipo bien seleccionado y deshabilita  el código patrimonial en caso de elegir un tipo servicio
 	changeSelect(event){
 		// Habilita/Desabilita el input de cod_patrimonial
 		this.setState({ disabled_cod_patrimonial: this._id_tipo_bien.value == 2 ? true : false});
@@ -120,10 +124,9 @@ class PanelOrdenes extends React.Component {
 
 
 const mapStateToProps = function(store) {
-	// console.log("store",store);
   return {
 	  bienes   	   : store.ordenesState.bienes,
-	  ordenes_tabla : store.ordenesState.ordenes_tabla,
+	  ordenes_tabla : store.ordenesState.datos_tabla,
 	  servicios    : store.servicioState.servicios,
 	  entidades    : store.entidadState.entidades
   };

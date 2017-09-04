@@ -2,7 +2,7 @@
 import axios from 'axios';
 import store from '../store';
 import * as DbCall from '../componentes/commons/DbCall';
-import {getSuccess,getBienesTablasSuccess,addOrdenSuccess,getOrdenSuccess,getOrdenesSuccess,putConformidadSuccess,asignarOrdenSuccess,derivarOrdenSuccess,actualizarOrdenSuccess} from '../actions/ordenes_actions';
+import {getSuccess,getBienesTablasSuccess,addOrdenSuccess,getOrdenSuccess,getOrdenesSuccess,putConformidadSuccess,asignarOrdenSuccess,derivarOrdenSuccess,actualizarOrdenSuccess,resetTablaOrdenes} from '../actions/ordenes_actions';
 
 export function getBienes(bienes) {
     var args={metodo:'post',
@@ -107,4 +107,11 @@ export function actualizarOrden(orden) {
               callback: actualizarOrdenSuccess
            };
     return DbCall.DbCall(args);
+}
+
+/**
+ * Resetea el store de la tabla
+ */
+export function resetTabla(){
+    store.dispatch(resetTablaOrdenes());
 }

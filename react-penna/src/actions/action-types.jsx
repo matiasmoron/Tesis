@@ -33,6 +33,9 @@ export const ADD_EQUIPO_SUCCESS              = 'ADD_EQUIPO_SUCCESS';
 export const UPDATE_EQUIPO_SUCCESS           = 'UPDATE_EQUIPO_SUCCESS';
 export const DELETE_EQUIPO_SUCCESS           = 'DELETE_EQUIPO_SUCCESS';
 
+////////ORDENES ////////////////
+export const RESET_TABLA_ORDENES 			 = 'RESET_TABLA_ORDENES';
+
 //ABM Ordenes
 export const GET_BIENES_SUCCESS              = 'GET_BIENES_SUCCESS';
 export const GET_BIENES_TABLAS_SUCCESS       = 'GET_BIENES_TABLAS_SUCCESS';
