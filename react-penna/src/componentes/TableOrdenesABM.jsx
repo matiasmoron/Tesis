@@ -44,6 +44,7 @@ class TableOrdenes extends React.Component {
 
 	   //Funciones del Modal "Ver más"
 	  modalVerMas(row){
+		  	console.log("ROW ABM",row);
 			this.setState({showModalVer :!this.state.showModalVer});
 			if (row!=null)
 				this.setState({datosOrden : row});
@@ -115,13 +116,4 @@ class TableOrdenes extends React.Component {
    }
 }
 
-const mapStateToProps = function(store) {
-	// console.log("store",store);
-  return {
-	  orden : store.ordenesState.orden
-  };
-};
-
-export default connect(mapStateToProps)(TableOrdenes);
-
-{/* export default TableOrdenes; */}
+export default TableOrdenes;

@@ -8,6 +8,9 @@ const EQUIPO=1;
 const PRESTACION=2;
 class Orden_Trabajo_Controller extends Controller
 {
+    /**
+    *Obtiene los bienes con los detalles de las ordenes de trabajo que esta involucrado
+    */
     public function get_bienes_solicitud(Request $request){
         switch ($request->id_tipo_bien) {
             case EQUIPO:
@@ -22,21 +25,48 @@ class Orden_Trabajo_Controller extends Controller
 
     private function get_equipos_solicitud(Request $request){
         $params= array();
-        $query='SELECT
-                    e.id_equipo as id_bien,
+        $query="SELECT
+                    e.id_equipo                                             as id_bien,
                     ot.id_orden_trabajo,
-                    "1" as id_tipo_bien,
-                    IFNULL(ot.obs_creacion,"-") as obs_creacion,
-                    IFNULL(ot.estado,0) as estado,
-                    e.descripcion,s.nombre as servicio_nombre
+                    '1'                                                     as id_tipo_bien,
+                    IFNULL(ot.obs_creacion,'-')                             as obs_creacion,
+                    IFNULL(ot.estado,0)                                     as estado,
+                    e.descripcion,
+                    s.nombre                                                as servicio_nombre,
+                    IFNULL(CONCAT(p1.apellido,' ',p1.nombre),'-')           as p_creacion,
+                    IFNULL(CONCAT(p2.apellido,' ',p2.nombre),'-')           as p_recepcion,
+                    IFNULL(ot.leg_recepcion,'-')                            as leg_recepcion,
+                    IFNULL(date_format(ot.fecha_creacion,'%d/%m/%Y'),'-')   as fecha_creacion,
+                    IFNULL(ot.obs_creacion,'-')                             as obs_creacion,
+                    IFNULL(ot.obs_devolucion,'-')                           as obs_devolucion,
+                    IFNULL(ot.estado,'-')                                   as estado,
+                    IFNULL(date_format(otd.fecha_ini,'%d/%m/%Y'),'-')       as fecha_inicio,
+                    IFNULL(date_format(otd.fecha_fin,'%d/%m/%Y'),'-')       as fecha_fin,
+                    IFNULL(ent.nombre,'-')                                  as entidad_destino,
+                    IFNULL(ent.id_entidad,'-')                              as id_entidad_destino, 
+                    IFNULL(otd.hs_insumidas,'-')                            as hs_insumidas,
+                    IFNULL(otd.conformidad,'-')                             as conformidad,
+                    IFNULL(otd.prioridad,'')                                as prioridad
                 FROM  equipo e
                 LEFT JOIN
                     orden_trabajo ot
                     ON e.id_equipo=ot.id_bien AND ot.id_tipo_bien=1 and ot.estado IN (1,2)
                 LEFT JOIN
+                    orden_trabajo_detalle otd
+                    USING (id_orden_trabajo)
+                LEFT JOIN
                     servicio s
                     ON e.id_servicio=s.id_servicio
-                WHERE e.estado=1';
+                LEFT JOIN
+                    entidad ent
+                    ON ent.id_entidad=ot.entidad_destino
+                LEFT JOIN
+                    personal p1
+                    ON ot.leg_creacion=p1.legajo
+                LEFT JOIN
+                    personal p2
+                    ON ot.leg_recepcion=p2.legajo
+                WHERE e.estado=1";
 
         if(isset($request->id_bien)){
             $query.=' AND e.id_equipo=?';

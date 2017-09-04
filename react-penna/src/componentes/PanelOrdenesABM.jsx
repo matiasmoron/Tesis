@@ -21,6 +21,7 @@ class PanelOrdenes extends React.Component {
 		//id_servicio seria el del login
 		ApiServicio.getServicios();
 		Api.getBienes({id_tipo_bien:1});
+		Api.resetTabla();
 		entidadApi.getEntidades();
 	}
 
@@ -85,7 +86,7 @@ const mapStateToProps = function(store) {
 	console.log("store",store);
   return {
 	  bienes   	   : store.ordenesState.bienes,
-	  bienes_tabla : store.ordenesState.bienes_tabla,
+	  bienes_tabla : store.ordenesState.datos_tabla,
 	  servicios    : store.servicioState.servicios,
 	  entidades    : store.entidadState.entidades
   };

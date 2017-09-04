@@ -3,9 +3,8 @@ import _ from 'lodash';
 
 const initialState = {
  bienes: [], //Son todos los bienes que se usan en  los filtros
- bienes_tabla:[],//Una vez aplicados los filtros son los bienes que te muestran en la tabla
  orden:[],
- datos_tabla:[]//Las ordenes que se muestran en la tabla de ver y administrar luego de aplicar los filtros
+ datos_tabla:[]//Las ordenes que se muestran en la tabla de ver,abm y administrar luego de aplicar los filtros
 };
 
 const ordenesReducer = function(state = initialState, action) {
@@ -22,7 +21,7 @@ const ordenesReducer = function(state = initialState, action) {
       return Object.assign({}, state, { bienes: action.bienes });
 
     case types.GET_BIENES_TABLAS_SUCCESS:
-      return Object.assign({}, state, { bienes_tabla: action.bienes_solicitud });
+      return Object.assign({}, state, { datos_tabla: action.bienes_solicitud });
 
     case types.ADD_ORDEN_TRABAJO_SUCCESS:
       return Object.assign({}, state);

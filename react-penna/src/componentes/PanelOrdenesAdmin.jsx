@@ -130,7 +130,7 @@ class PanelOrdenesAdmin extends React.Component {
 const mapStateToProps = function(store) {
   return {
 	  bienes 	            : store.ordenesState.bienes,
-	  ordenes_tabla         : store.ordenesState.ordenes_tabla,
+	  ordenes_tabla         : store.ordenesState.datos_tabla,
 	  servicios             : store.servicioState.servicios,
 	  entidades             : store.entidadState.entidades,
 	  tecnicos_entidad_form : store.tecnicoState.tecnicos_entidad_form
