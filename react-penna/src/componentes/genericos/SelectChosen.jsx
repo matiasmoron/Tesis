@@ -17,13 +17,15 @@ class SelectChosen extends React.Component {
 					this.state = {value:props.data[0][props.llave]};
 					props.valor({value:props.data[0][props.llave]});
 				}
-				else
+				else{
 		  			this.state = {value:''};
 					props.valor({value:''});
+				}
 			}
-			else
+			else{
 	  			this.state = {value:''};
 				props.valor({value:''});
+			}
 		}
     }
 

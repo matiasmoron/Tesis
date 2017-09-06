@@ -100,9 +100,17 @@ export function derivarOrden(orden) {
  *                     )
  */
 export function actualizarOrden(orden) {
-    console.log("ENTRO API",orden);
     var args={metodo  : 'put',
               url     : 'ordenes/actualizar',
+              params  : orden,
+              callback: actualizarOrdenSuccess
+           };
+    return DbCall.DbCall(args);
+}
+
+export function actualizarEstadoOrden(orden){
+    var args={metodo  : 'put',
+              url     : 'ordenes/actualizar_estado',
               params  : orden,
               callback: actualizarOrdenSuccess
            };

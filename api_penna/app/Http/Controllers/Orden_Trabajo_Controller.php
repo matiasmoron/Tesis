@@ -355,4 +355,24 @@ class Orden_Trabajo_Controller extends Controller
         return $this->execute_multiple_query($metodo,$queries,$array_params,true);
     }
 
+    /**
+    *Actualiza el estado de una orden de trabajo
+    *@param estado el estado a actualizar
+    *@param id_orden_trabajo 
+    */
+    public function actualizar_estado(Request $request){
+        $params=array();
+        $query="UPDATE
+                    orden_trabajo
+                SET
+                    estado=?
+                WHERE
+                    id_orden_trabajo=? ";
+        
+        array_push($params,$request->estado);
+        array_push($params,$request->id_orden_trabajo);
+
+        return $this->execute_simple_query("update",$query,$params);
+    }
+
 }

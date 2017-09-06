@@ -28,11 +28,14 @@ class PanelOrdenesAdmin extends React.Component {
 	}
 
 	_getOrdenesTabla(event){
+		console.log("ENTRO PRIMERO",this);
 		event.preventDefault();
 		this.getOrdenesTabla.bind(this);
     }
 
 	getOrdenesTabla(){
+		console.log("ENTRO SEGUNDO",this);
+
 		Api.getOrdenes({
 							id_tipo_bien   :this._id_tipo_bien.value,
 							id_servicio    :this._id_servicio.value,
@@ -93,22 +96,22 @@ class PanelOrdenesAdmin extends React.Component {
 	  	return (
 			<div className="col-md-10">
 				<div className="col-md-8 col-md-offset-2">
-					<Formulario titulo="Administración de órdenes de trabajo" submit={this._getOrdenesTabla.bind(this)}>
+					<Formulario titulo="Administración de órdenes de trabajo" submit={(event)=>{ event.preventDefault();this.getOrdenesTabla()}}>
 						<div className="row">
 							<SelectChosen llave="id_servicio" descripcion="nombre" label="Servicios" clases="form-group col-md-6" onChange={this.changeSelect.bind(this)} data={this.props.servicios} valor={input => this._id_servicio = input}/>
-							<SelectChosen llave="id_entidad" descripcion="nombre" label="Entidad destino" clases="form-group col-md-6" onChange={this.changeSelect.bind(this)} data={this.props.entidades} valor={input => this._id_entidad = input}/>
+							<SelectChosen llave="id_entidad" descripcion="nombre" label="Entidad destino" clases="form-group col-md-6" onChange={this.changeSelectEntidad.bind(this)} data={this.props.entidades} valor={input => this._id_entidad = input}/>
 						</div>
 						<div className="row">
 							<SelectChosen llave="tipo_bien" descripcion="descripcion" label="Tipo Bien" clearable={false} clases="form-group col-md-5" onChange={this.changeSelect.bind(this)} data={data_tipo_bienes} valor={input => this._id_tipo_bien = input}/>
-							<SelectChosen llave="id_bien" descripcion="descripcion" label="Bien" clases="form-group col-md-7" onChange={this.changeSelect.bind(this)} data={this.props.bienes} valor={input => this._id_bien = input}/>
+							<SelectChosen llave="id_bien" descripcion="descripcion" label="Bien" clases="form-group col-md-7"  data={this.props.bienes} valor={input => this._id_bien = input}/>
 						</div>
 						<div className="row">
 							<Input clases="form-group col-md-5" label="Fecha inicio (creación)" valor={input => this._fecha_ini = input} />
 							<Input clases="form-group col-md-5" label="Fecha fin (creación)" valor={input => this._fecha_fin = input} />
 						</div>
 						<div className="row">
-							<SelectChosen llave="estado" descripcion="descripcion" label="Estado" multi={true} clases="form-group col-md-5" onChange={this.changeSelect.bind(this)} data={data_estados} valor={input => this._estado = input}/>
-							<SelectChosen llave="legajo" descripcion="nombre_apellido" label="Tomado por" clases="form-group col-md-5" onChange={this.changeSelect.bind(this)} data={this.props.tecnicos_entidad_form} valor={input => this._legajo = input}/>
+							<SelectChosen llave="estado" descripcion="descripcion" label="Estado" multi={true} clases="form-group col-md-5"  data={data_estados} valor={input => this._estado = input}/>
+							<SelectChosen llave="legajo" descripcion="nombre_apellido" label="Tomado por" clases="form-group col-md-5"  data={this.props.tecnicos_entidad_form} valor={input => this._legajo = input}/>
 						</div>
 						<div className="row">
 							<Input clases="form-group col-md-5" disabled = {this.state.disabled_cod_patrimonial} label="Cód. Patrimonial" valor={input => this._cod_patrimonial = input} />

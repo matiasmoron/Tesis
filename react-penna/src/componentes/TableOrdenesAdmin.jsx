@@ -39,8 +39,8 @@ class TableOrdenesAdmin extends React.Component {
 			var acciones=[];
 			switch (row.estado) {
 				case 2://En curso
-				case 1://Pendiente
 						acciones.push(<Boton onClick={this.modalActualizarOrden.bind(this,row)} clases="btn-warning" titulo="Modificar los datos de la orden de trabajo"><i className="fa fa-pencil" aria-hidden="true"></i></Boton>);
+				case 1://Pendiente
 						acciones.push(<Boton onClick={this.modalDerivarOrden.bind(this,row)} 	clases="btn-info" 	 titulo="Derivar orden de trabajo"><i className="fa fa-reply" aria-hidden="true"></i></Boton>)
 						acciones.push(<Boton onClick={this.modalAsignarOrden.bind(this,row)} 	clases="btn-success" titulo="Asignar la orden a otro técnico"><i className="fa fa-plus" aria-hidden="true"></i></Boton>)
 				case 3://Resuelta
@@ -132,12 +132,18 @@ class TableOrdenesAdmin extends React.Component {
 								id_orden_trabajo:this.state.datosOrden.id_orden_trabajo,
 								hs_insumidas    : this._hs_insumidas.value,
 								prioridad       : this._prioridad.value,
-								obs_devolucion  : this._obs_devolucion.value,
-								estado          : 3
+								obs_devolucion  : this._obs_devolucion.value
+
 							});
 		promesa.then(valor => {
-			this.props.getOrdenes();
-			 this.modalActualizarOrden();
+			const promesa2 = Api.actualizarEstadoOrden({
+				id_orden_trabajo:this.state.datosOrden.id_orden_trabajo,
+				estado          : 3
+			});
+			promesa2.then(valor => {
+				this.props.getOrdenes();
+				this.modalActualizarOrden();
+			});
 		 });
 	}
 
