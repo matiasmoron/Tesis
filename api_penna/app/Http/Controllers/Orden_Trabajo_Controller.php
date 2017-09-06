@@ -39,7 +39,6 @@ class Orden_Trabajo_Controller extends Controller
                     IFNULL(date_format(ot.fecha_creacion,'%d/%m/%Y'),'-')   as fecha_creacion,
                     IFNULL(ot.obs_creacion,'-')                             as obs_creacion,
                     IFNULL(ot.obs_devolucion,'-')                           as obs_devolucion,
-                    IFNULL(ot.estado,'-')                                   as estado,
                     IFNULL(date_format(otd.fecha_ini,'%d/%m/%Y'),'-')       as fecha_inicio,
                     IFNULL(date_format(otd.fecha_fin,'%d/%m/%Y'),'-')       as fecha_fin,
                     IFNULL(ent.nombre,'-')                                  as entidad_destino,
@@ -123,7 +122,7 @@ class Orden_Trabajo_Controller extends Controller
             array_push($params,$request->cod_patrimonial);
         }
         if(isset($request->id_servicio)){
-            $whr.=' AND ot.id_servicio=?';
+            $whr.=' AND e.id_servicio=?';
             array_push($params,$request->id_servicio);
         }
         if(isset($request->estado)){

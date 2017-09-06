@@ -13,14 +13,14 @@ import SelectChosen from './genericos/SelectChosen';
 class PanelOrdenes extends React.Component {
 	constructor() {
       super();
-	  this.state = {disabled_cod_patrimonial :false};
+	  this.state = {disabled_cod_patrimonial :false,id_tbien_def: "1",id_serv_def:"1"}; //@TODO después el id_servicio es el del usuario
     }
 
 	//@todo cargar por defecto el servicio de login y todos los bienes que corresponden a servicio
 	componentDidMount(){
 		//id_servicio seria el del login
 		ApiServicio.getServicios();
-		Api.getBienes({id_tipo_bien:1});
+		Api.getBienes({id_tipo_bien:this.state.id_tbien_def,id_servicio:this.state.id_serv_def});
 		Api.resetTabla();
 		entidadApi.getEntidades();
 	}
@@ -59,10 +59,10 @@ class PanelOrdenes extends React.Component {
 				<div className="col-md-8 col-md-offset-2">
 					<Formulario titulo="Nueva orden de trabajo" submit={this._getBienesTablas.bind(this)}>
 						<div className="row">
-							<SelectChosen llave="id_servicio" descripcion="nombre" label="Servicios" clases="form-group col-md-6" onChange={this.changeSelect.bind(this)} data={this.props.servicios} valor={input => this._id_servicio = input}/>
+							<SelectChosen llave="id_servicio" descripcion="nombre" label="Servicios" clearable={false} clases="form-group col-md-6" onChange={this.changeSelect.bind(this)} data={this.props.servicios} valor={input => this._id_servicio = input}/>
 						</div>
 						<div className="row">
-							<SelectChosen llave="tipo_bien" descripcion="descripcion" label="Tipo Bien" clases="form-group col-md-5" onChange={this.changeSelect.bind(this)} data={data_tipo_bienes} valor={input => this._id_tipo_bien = input}/>
+							<SelectChosen llave="tipo_bien" descripcion="descripcion" label="Tipo Bien" clases="form-group col-md-5" clearable={false} defaultVal={this.state.id_tbien_def} onChange={this.changeSelect.bind(this)} data={data_tipo_bienes} valor={input => this._id_tipo_bien = input}/>
 							<SelectChosen llave="id_bien" descripcion="descripcion" label="Bien" clases="form-group col-md-7" onChange={this.changeSelect.bind(this)} data={this.props.bienes} valor={input => this._id_bien = input}/>
 						</div>
 						<div className="row">

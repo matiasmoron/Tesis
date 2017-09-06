@@ -19,9 +19,11 @@ class SelectChosen extends React.Component {
 				}
 				else
 		  			this.state = {value:''};
+					props.valor({value:''});
 			}
 			else
 	  			this.state = {value:''};
+				props.valor({value:''});
 		}
     }
 
@@ -38,6 +40,7 @@ class SelectChosen extends React.Component {
 	}
 
 	onChange(val) {
+		val= (val==null)? "" : val;
 		this.setState({ value:val });
 		this.props.valor(val);
 		if(this.props.onChange)

@@ -14,17 +14,17 @@ import SelectChosen from './genericos/SelectChosen';
 class PanelOrdenesAdmin extends React.Component {
 	constructor() {
       super();
-	  this.state = {disabled_cod_patrimonial :false};
+	  this.state = {disabled_cod_patrimonial :false,id_tbien_def: "1"};
     }
 
 	//@todo cargar por defecto el servicio de login y todos los bienes que corresponden a servicio
 	componentDidMount(){
 		//id_servicio seria el del login
 		ApiServicio.getServicios();
-		Api.getBienes({id_tipo_bien:1});
+		Api.getBienes({id_tipo_bien:this.state.id_tbien_def});
 		ApiEntidad.getEntidades();
 		ApiTecnico.getTecnicoEntidadForm();
-		Api.getOrdenes({id_tipo_bien   :1});
+		Api.getOrdenes({id_tipo_bien:this.state.id_tbien_def});
 	}
 
 	_getOrdenesTabla(event){
@@ -95,7 +95,7 @@ class PanelOrdenesAdmin extends React.Component {
 				<div className="col-md-8 col-md-offset-2">
 					<Formulario titulo="Administración de órdenes de trabajo" submit={this._getOrdenesTabla.bind(this)}>
 						<div className="row">
-							<SelectChosen llave="id_servicio" descripcion="nombre" label="Servicios" clearable={false} clases="form-group col-md-6" onChange={this.changeSelect.bind(this)} data={this.props.servicios} valor={input => this._id_servicio = input}/>
+							<SelectChosen llave="id_servicio" descripcion="nombre" label="Servicios" clases="form-group col-md-6" onChange={this.changeSelect.bind(this)} data={this.props.servicios} valor={input => this._id_servicio = input}/>
 							<SelectChosen llave="id_entidad" descripcion="nombre" label="Entidad destino" clases="form-group col-md-6" onChange={this.changeSelect.bind(this)} data={this.props.entidades} valor={input => this._id_entidad = input}/>
 						</div>
 						<div className="row">

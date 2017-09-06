@@ -18,6 +18,7 @@ class TableOrdenes extends React.Component {
      }
 
 	   colEstado(estado,row){
+		   console.log("ESTADO",estado);
 			var clase = (row.estado == 1 || row.estado==2) ? 'text-danger' : 'text-success';
 		   	return '<span class='+clase+'><b>'+estadoOrden[estado]+'</b></span>';
 	   }
