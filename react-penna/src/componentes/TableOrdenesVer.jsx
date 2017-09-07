@@ -81,7 +81,7 @@ class TableOrdenesVer extends React.Component {
    }
 
 	finalizarOrden(){
-		var promesa = Api.putConformidadOrden({id_orden_trabajo:this.state.row.id_orden_trabajo,conformidad:this._conformidad.value});
+		var promesa = Api.putConformidadOrden({id_orden_trabajo:this.state.datosOrden.id_orden_trabajo,conformidad:this._conformidad.value});
 
 		promesa.then(valor => {
 			Api.getOrdenes();

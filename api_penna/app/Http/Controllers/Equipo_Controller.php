@@ -73,19 +73,14 @@ class Equipo_Controller extends Controller
     public function update_equipo(Request $request){
         $params= array();
         $query='UPDATE equipo
-                SET    id_tipo_equipo=?,
-                       id_equipo_padre=?,
+                SET    
                        cod_patrimonial=?,
-                       id_servicio=?,
                        descripcion=?
                 WHERE  id_equipo=?';
 
-        array_push($params,$request->id_tipo_equipo);
-        array_push($params,$request->id_equipo_padre);
         array_push($params,$request->cod_patrimonial);
-        array_push($params,$request->id_servicio);
         array_push($params,$request->descripcion);;
-        array_push($params,$request->id_equipo);
+        array_push($params,$request->id_bien);
 
 
         return $this->execute_simple_query("update",$query,$params);

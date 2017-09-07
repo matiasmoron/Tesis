@@ -27,15 +27,7 @@ class PanelOrdenesAdmin extends React.Component {
 		Api.getOrdenes({id_tipo_bien:this.state.id_tbien_def});
 	}
 
-	_getOrdenesTabla(event){
-		console.log("ENTRO PRIMERO",this);
-		event.preventDefault();
-		this.getOrdenesTabla.bind(this);
-    }
-
 	getOrdenesTabla(){
-		console.log("ENTRO SEGUNDO",this);
-
 		Api.getOrdenes({
 							id_tipo_bien   :this._id_tipo_bien.value,
 							id_servicio    :this._id_servicio.value,

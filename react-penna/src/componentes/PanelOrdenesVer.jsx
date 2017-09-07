@@ -25,8 +25,7 @@ class PanelOrdenes extends React.Component {
 		Api.resetTabla();
 	}
 
-	_getOrdenesTabla(event){
-		event.preventDefault();
+	getOrdenesTabla(){
 		Api.getOrdenes({
 							id_tipo_bien   :this._id_tipo_bien.value,
 							id_servicio    :this._id_servicio.value,
@@ -89,7 +88,7 @@ class PanelOrdenes extends React.Component {
 	  	return (
 			<div className="col-md-10">
 				<div className="col-md-8 col-md-offset-2">
-					<Formulario titulo="Ver órdenes de trabajo" submit={this._getOrdenesTabla.bind(this)}>
+					<Formulario titulo="Ver órdenes de trabajo" submit={(event)=>{ event.preventDefault();this.getOrdenesTabla()}}>
 						<div className="row">
 							<SelectChosen llave="id_servicio" descripcion="nombre" label="Servicios" clearable={false} clases="form-group col-md-6" onChange={this.changeSelect.bind(this)} data={this.props.servicios} valor={input => this._id_servicio = input}/>
 							<SelectChosen llave="id_entidad" descripcion="nombre" label="Entidad destino" clases="form-group col-md-6" data={this.props.entidades} valor={input => this._id_entidad = input}/>
@@ -114,7 +113,7 @@ class PanelOrdenes extends React.Component {
 					</Formulario>
 				</div>
 				<div className="col-md-12">
-        			<TableOrdenesVer datos_elemento={this.props.ordenes_tabla} getOrdenes = {this._getOrdenesTabla.bind(this)}/>
+        			<TableOrdenesVer datos_elemento={this.props.ordenes_tabla} getOrdenes = {this.getOrdenesTabla.bind(this)}/>
 				</div>
 			</div>
       	);
