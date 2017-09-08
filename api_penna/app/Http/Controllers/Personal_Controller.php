@@ -42,7 +42,7 @@ class Personal_Controller extends Controller
         $query=array();
 
         $query='INSERT INTO personal (legajo,dni,usuario,nombre,apellido,id_puesto,id_servicio,fecha_ingreso,estado)
-                VALUES(?,?,?,?,?,?,?,?,'.ALTA.')';
+                VALUES(?,?,?,?,?,?,?,str_to_date(?,"%d/%m/%Y"),'.ALTA.')';
 
         array_push($params,$request->legajo);
         array_push($params,$request->dni);
@@ -53,7 +53,7 @@ class Personal_Controller extends Controller
         array_push($params,$request->id_servicio);
         array_push($params,$request->fecha_ingreso);
 
-        
+
         return $this->execute_simple_query("insert",$query,$params);
     }
 
@@ -76,7 +76,7 @@ class Personal_Controller extends Controller
                        usuario=?,
                        nombre=?,
                        apellido=?,
-                       fecha_ingreso=?
+                       fecha_ingreso=str_to_date(?,"%d/%m/%Y")
                 WHERE  legajo=?';
 
         array_push($params,$request->dni);

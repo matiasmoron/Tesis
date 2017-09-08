@@ -18,7 +18,7 @@ const equipoReducer = function(state = initialState, action) {
         return Object.assign({}, state);
 
     case types.DELETE_EQUIPO_SUCCESS:
-      const newEquipos = _.filter(state.equipos, equipo => equipo.id_equipo != action.id_equipo);
+      const newEquipos = _.filter(state.equipos, equipo => equipo.id_bien != action.id_bien);
       return Object.assign({}, state, { equipos: newEquipos });
   }
 

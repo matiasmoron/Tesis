@@ -4,41 +4,44 @@ import store from '../store';
 import * as DbCall from '../componentes/commons/DbCall';
 import { getSuccess,addSuccess,updateSuccess, deleteSuccess } from '../actions/equipo_actions';
 
-export function getEquipos(equipo) {
+export function getEquipos(data) {
     var args={metodo:'get',
               url:'equipos',
-              params:equipo,
+              params:data,
               callback:getSuccess
            };
     return DbCall.DbCall(args);
 }
 
-export function addEquipo(equipo) {
-   var args={metodo:'post',
-             url:'equipos',
-             params:equipo,
-             callback:addSuccess
+export function addEquipo(data) {
+   var args={
+             metodo  : 'post',
+             url     : 'equipos',
+             params  : data,
+             callback: addSuccess
           };
    return DbCall.DbCall(args);
 }
 
 
-export function updateEquipo(equipo) {
-   var args={metodo:'put',
-             url:'equipos',
-             params:equipo,
-             callback:updateSuccess
+export function updateEquipo(data) {
+   var args={
+             metodo  : 'put',
+             url     : 'equipos',
+             params  : data,
+             callback: updateSuccess
           };
    return DbCall.DbCall(args);
 }
 
 
-export function deleteEquipo(id_equipo) {
-   var args={metodo:'delete',
-             url:'equipos',
-             params:{id_equipo:id_equipo},
-             callback:deleteSuccess,
-             callbackParams: id_equipo
+export function deleteEquipo(data) {
+   var args={
+             metodo        :'delete',
+             url           :'equipos',
+             params        : data,
+             callback      : deleteSuccess,
+             callbackParams: data.id_bien
           };
    return DbCall.DbCall(args);
 }

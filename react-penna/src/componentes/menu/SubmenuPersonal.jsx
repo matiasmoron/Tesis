@@ -13,7 +13,7 @@ const SubmenuPersonal = (props) => {
             <Cards>
                 <Card url="/personal/personal" nombre="Personal" logo={imgPersonal}/>
                 <Card url="/personal/tecnicos"  nombre="Tecnico" logo={imgTecnico}/>
-                <Card url="/personal/puesto_servicio" nombre="Puesto - Servicio" logo={imgPuestoServicio} />
+                <Card url="/personal/puesto_servicio" nombre="Servicio" logo={imgPuestoServicio} />
                 <Card url="/personal/entidades" nombre="Entidad" logo={imgEntidad}/>
             </Cards>
       );

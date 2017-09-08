@@ -25,9 +25,9 @@ class Equipo_Controller extends Controller
                 LEFT JOIN equipo e_padre ON(e.id_equipo_padre=e_padre.id_equipo)
                 WHERE e.estado='.ALTA;
 
-        if(isset($request->id_equipo)){
+        if(isset($request->id_bien)){
             $query.=' AND e.id_equipo=?';
-            array_push($params,$request->id_equipo);
+            array_push($params,$request->id_bien);
         }
         if(isset($request->cod_patrimonial)){
             $query.=' AND e.cod_patrimonial=?';
@@ -59,12 +59,13 @@ class Equipo_Controller extends Controller
     }
 
     public function remove_equipo(Request $request){
+        // die(var_dump("ENTREEEEEEEEE"));
         $params= array();
         $query='UPDATE equipo
         		    SET    estado='.BAJA.'
                 WHERE  id_equipo=?';
 
-        array_push($params,$request->id_equipo);
+        array_push($params,$request->id_bien);
 
         return $this->execute_simple_query("update",$query,$params);
 
@@ -73,7 +74,7 @@ class Equipo_Controller extends Controller
     public function update_equipo(Request $request){
         $params= array();
         $query='UPDATE equipo
-                SET    
+                SET
                        cod_patrimonial=?,
                        descripcion=?
                 WHERE  id_equipo=?';

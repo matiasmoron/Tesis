@@ -14,10 +14,10 @@ export function addSuccess(equipo) {
   };
 }
 
-export function deleteSuccess(id_equipo) {
+export function deleteSuccess(id_bien) {
   return {
     type: types.DELETE_EQUIPO_SUCCESS,
-    id_equipo
+    id_bien
   };
 }
 

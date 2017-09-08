@@ -38,10 +38,14 @@ class PanelEquipo extends React.Component {
     }
 
 	_deleteElemento(id){
-		Api.deleteEquipo(id);
+		Api.deleteEquipo({id_bien:id});
     }
 	_updateElemento(equipo){
-		Api.updateEquipo(equipo);
+		Api.updateEquipo({
+							id_bien        :equipo['id_bien'],
+							cod_patrimonial:equipo['cod_patrimonial'],
+							descripcion    :equipo['descripcion']
+					});
 	}
 
 	//Obtiene los equipos pertenecientes al servicio seleccionado
