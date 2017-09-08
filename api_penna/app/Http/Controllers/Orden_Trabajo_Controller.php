@@ -158,7 +158,7 @@ class Orden_Trabajo_Controller extends Controller
                     date_format(ot.fecha_creacion,'%d/%m/%Y')     as fecha_creacion,
                     ot.obs_creacion                               as obs_creacion,
                     IFNULL(ot.obs_devolucion,'-')                 as obs_devolucion,
-                    ot.estado                                     as estado,
+                    IFNULL(ot.estado,0)                           as estado,
                     date_format(otd.fecha_ini,'%d/%m/%Y')         as fecha_inicio,
                     date_format(otd.fecha_fin,'%d/%m/%Y')         as fecha_fin,
                     ent.nombre                                    as entidad_destino,
