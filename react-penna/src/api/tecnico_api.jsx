@@ -78,7 +78,7 @@ export function deleteElemento(tecnico) {
              url:'tecnicos',
              params:{id_entidad:tecnico.id_entidad,legajo: tecnico.legajo },
              callback:deleteSuccess,
-             callbackParams: {id_entidad:tecnico.id_entidad,legajo: tecnico.legajo }
+             callbackParams: tecnico
           };
    return DbCall.DbCall(args);
 }
