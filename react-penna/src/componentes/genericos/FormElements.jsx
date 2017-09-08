@@ -38,8 +38,12 @@ export const Input = (props) => {
 }
 
 export const Boton = (props) => {
+    const iconStyle= (props.label) ? {marginRight:"5px"} :{};
+    const icono = (props.icon) ? <i style={iconStyle} className={props.icon} aria-hidden="true"></i> :"";
 	return (
-			<button onClick={props.onClick} title={props.titulo} className={"btn " +props.clases}>{props.children}{props.label}</button>
+			<button onClick={props.onClick} title={props.titulo} className={"btn " +props.clases}>
+                {icono}
+                {props.children}{props.label}</button>
 	);
 }
 

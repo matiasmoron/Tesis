@@ -1,7 +1,5 @@
 var React             = require('react');
 var ReactBsTable      = require('react-bootstrap-table');
-// var BootstrapTable    = ReactBsTable.BootstrapTable;
-// var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
 import {BootstrapTable,ExportCSVButton,TableHeaderColumn} from 'react-bootstrap-table';
 import { connect } from 'react-redux';
 import * as Api from '../api/ordenes_api';
@@ -24,34 +22,43 @@ class TableOrdenesVer extends React.Component {
 		}
 	}
 
-	colEstado(estado,row){
-		var clase = (row.estado == 1 || row.estado==2) ? 'text-danger' : 'text-success';
-	   	return '<span class='+clase+'><b>'+estadoOrden[estado]+'</b></span>';
+   colEstado(estado){
+			let clase="";
+
+   		 switch (estado) {
+   			 case "1":
+   				 clase='t-error';
+   				 break;
+   			 case "2":
+   				 clase='t-orange';
+   				 break;
+   			 case "3":
+   				 clase='t-ok';
+   				 break;
+		 	}
+			return '<span class='+clase+'><b>'+estadoOrden[estado]+'</b></span>';
 	}
 
-	colTipoBien(tBien,row){
-		return '<span class="">'+tipoBien[tBien]+'</span>';
+	colTipoBien(tBien){
+		return '<span>'+tipoBien[tBien]+'</span>';
 	}
 
    colAccion(estado,row){
 		var acciones=[];
 		switch (row.estado) {
-			case 3:
-					acciones.push(<Boton onClick={this.modalFinalizarOrden.bind(this,row)} clases="btn-success" label="Cerrar" titulo="Dar conformidad y cerrar orden de trabajo"><i className="fa fa-plus" aria-hidden="true"></i></Boton>)
+			case "3":
+					acciones.push(<Boton onClick={this.modalFinalizarOrden.bind(this,row)} clases="btn-success" titulo="Dar conformidad y cerrar orden de trabajo" icon="fa fa-check"></Boton>);
 			default:
-					acciones.push(<Boton onClick={this.modalVerMas.bind(this,row)} clases="btn-primary" titulo="Ver datos adicionales de la orden de trabajo"><i className="fa fa-search" aria-hidden="true"></i></Boton>)
+					acciones.push(<Boton onClick={this.modalVerMas.bind(this,row)} clases="btn-primary" titulo="Ver datos adicionales de la orden de trabajo" icon="fa fa-search"></Boton>);
 
 		}
-
-
 		return (
-				<div className="botonera">
+				<div >
 					{acciones.map((boton,i) =>
 						 <span key={i}> {boton}</span>
 					 )}
 				</div>
 		);
-
 	}
 
 	_dataConformidad(){
@@ -84,7 +91,7 @@ class TableOrdenesVer extends React.Component {
 		var promesa = Api.putConformidadOrden({id_orden_trabajo:this.state.datosOrden.id_orden_trabajo,conformidad:this._conformidad.value});
 
 		promesa.then(valor => {
-			Api.getOrdenes();
+			this.props.getOrdenes();
 			this.modalFinalizarOrden();
 		});
 	}
@@ -109,7 +116,9 @@ class TableOrdenesVer extends React.Component {
 						<div className="modal-body">
 							<div className="form-group row">
 								<SelectInput clases="d-inline"  data_opciones={dataConformidad} llave="conformidad" descripcion="descripcion" label="Conformidad" valor={input => this._conformidad = input} />
-								<Boton onClick={this.finalizarOrden.bind(this)} clases="btn-success" label="Cerrar orden"/>
+								<div className="btn-form">
+									<Boton onClick={this.finalizarOrden.bind(this)} clases="btn-success" label="Cerrar orden"/>
+								</div>
 							</div>
 						</div>
 					</ModalBs>
@@ -125,8 +134,6 @@ class TableOrdenesVer extends React.Component {
 						options={opciones}
 						hover
 						striped
-						exportCSV
-						csvFileName='OrdenesTrabajo'
 						pagination>
 						<TableHeaderColumn  dataField='id_bien' hidden>ID</TableHeaderColumn>
 						<TableHeaderColumn dataField='id_tipo_bien' dataFormat={this.colTipoBien}>Tipo Bien</TableHeaderColumn>

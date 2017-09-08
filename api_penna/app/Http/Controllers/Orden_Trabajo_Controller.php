@@ -42,7 +42,7 @@ class Orden_Trabajo_Controller extends Controller
                     IFNULL(date_format(otd.fecha_ini,'%d/%m/%Y'),'-')       as fecha_inicio,
                     IFNULL(date_format(otd.fecha_fin,'%d/%m/%Y'),'-')       as fecha_fin,
                     IFNULL(ent.nombre,'-')                                  as entidad_destino,
-                    IFNULL(ent.id_entidad,'-')                              as id_entidad_destino, 
+                    IFNULL(ent.id_entidad,'-')                              as id_entidad_destino,
                     IFNULL(otd.hs_insumidas,'-')                            as hs_insumidas,
                     IFNULL(otd.conformidad,'-')                             as conformidad,
                     IFNULL(otd.prioridad,'')                                as prioridad
@@ -162,7 +162,7 @@ class Orden_Trabajo_Controller extends Controller
                     date_format(otd.fecha_ini,'%d/%m/%Y')         as fecha_inicio,
                     date_format(otd.fecha_fin,'%d/%m/%Y')         as fecha_fin,
                     ent.nombre                                    as entidad_destino,
-                    ent.id_entidad                                as id_entidad_destino, 
+                    ent.id_entidad                                as id_entidad_destino,
                     otd.hs_insumidas                              as hs_insumidas,
                     IFNULL(otd.conformidad,'-')                   as conformidad,
                     IFNULL(otd.prioridad,'')                      as prioridad
@@ -188,7 +188,7 @@ class Orden_Trabajo_Controller extends Controller
                     ON ot.leg_recepcion=p2.legajo
                 WHERE 1=1 {$whr}
                 ORDER BY
-                    ot.fecha_creacion desc";
+                    ot.estado asc,ot.fecha_creacion desc";
 
         return $this->execute_simple_query("select",$query,$params);
     }
@@ -289,7 +289,7 @@ class Orden_Trabajo_Controller extends Controller
         $queries=array();
         $array_params= array();
         $metodo=array();
-        
+
         $queries[count($queries)]="INSERT IGNORE INTO
                                     orden_trabajo_detalle(id_orden_trabajo,fecha_ini,hs_insumidas)
                                 VALUES (?,NOW(),0)
@@ -336,18 +336,24 @@ class Orden_Trabajo_Controller extends Controller
         array_push($array_params,$params);
         array_push($metodo, "update");
 
+        $set_hs="";
+        if(isset($request->hs_insumidas)){
+            $set_hs =', hs_insumidas = ot.hs_insumidas + ?';
+        }
+
         //Ya está creada en está instancia
         $queries[count($queries)]="UPDATE
                                         orden_trabajo_detalle ot
                                     SET
-                                        prioridad    = ?,
-                                        hs_insumidas = ot.hs_insumidas + ?
+                                        prioridad    = ?
+                                        {$set_hs}
                                     WHERE
                                         id_orden_trabajo=? ";
-
         $params=array();
         array_push($params,$request->prioridad);
-        array_push($params,$request->hs_insumidas);
+        if(isset($request->hs_insumidas)){
+            array_push($params,$request->hs_insumidas);
+        }
         array_push($params,$request->id_orden_trabajo);
         array_push($array_params,$params);
         array_push($metodo, "update");
@@ -358,7 +364,7 @@ class Orden_Trabajo_Controller extends Controller
     /**
     *Actualiza el estado de una orden de trabajo
     *@param estado el estado a actualizar
-    *@param id_orden_trabajo 
+    *@param id_orden_trabajo
     */
     public function actualizar_estado(Request $request){
         $params=array();
@@ -368,7 +374,7 @@ class Orden_Trabajo_Controller extends Controller
                     estado=?
                 WHERE
                     id_orden_trabajo=? ";
-        
+
         array_push($params,$request->estado);
         array_push($params,$request->id_orden_trabajo);
 

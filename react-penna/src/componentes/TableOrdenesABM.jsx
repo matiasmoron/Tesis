@@ -17,11 +17,26 @@ class TableOrdenes extends React.Component {
 	   this.state = {showModalVer:false,showModalCrear:false,datosOrden:[]};
      }
 
-	   colEstado(estado,row){
-		   console.log("ESTADO",estado);
-			var clase = (row.estado == 1 || row.estado==2) ? 'text-danger' : 'text-success';
-		   	return '<span class='+clase+'><b>'+estadoOrden[estado]+'</b></span>';
-	   }
+	   colEstado(estado){
+   			let clase="";
+
+	   		 switch (estado) {
+				 case "0":
+					 clase='t-ok';
+					 break;
+	   			 case "1":
+	   				 clase='t-error';
+	   				 break;
+	   			 case "2":
+	   				 clase='t-orange';
+	   				 break;
+	   			 case "3":
+	   				 clase='t-ok';
+	   				 break;
+   		 	}
+   			return '<span class='+clase+'><b>'+estadoOrden[estado]+'</b></span>';
+   		}
+
 
 	   colTipoBien(tBien,row){
 		   return '<span class="">'+tipoBien[tBien]+'</span>';
@@ -29,10 +44,10 @@ class TableOrdenes extends React.Component {
 
 	   colAccion(estado,row){
 			var acciones=[];
-			if(row.estado == 1 || row.estado==2)
-				acciones.push(<Boton onClick={this.modalVerMas.bind(this,row)} clases="btn-primary" titulo="Ver datos adicionales de la orden de trabajo"><i className="fa fa-search" aria-hidden="true"></i></Boton>);
+			if(row.estado == "1" || row.estado=="2")
+				acciones.push(<Boton onClick={this.modalVerMas.bind(this,row)} clases="btn-primary" titulo="Ver datos adicionales de la orden de trabajo" icon="fa fa-search"></Boton>);
 			else
-				acciones.push(<Boton onClick={this.modalcrearOrden.bind(this,row)} clases="btn-success" titulo="Crear nueva orden de trabajo"><i className="fa fa-plus" aria-hidden="true"></i></Boton>);
+				acciones.push(<Boton onClick={this.modalcrearOrden.bind(this,row)} clases="btn-success" titulo="Crear nueva orden de trabajo" icon="fa fa-plus"></Boton>);
 
 			return (
 					<div className="botonera">
@@ -89,19 +104,21 @@ class TableOrdenes extends React.Component {
 					{/* Modal crear orden */}
 					<ModalBs show={this.state.showModalCrear} onHide={this.cerrarCrear.bind(this)} titulo="Solicitar">
 						<div>
-							<TextArea cols="50" rows="10" valor={input => this._observacion_creacion = input}/>
+							<TextArea cols="50" rows="3" valor={input => this._observacion_creacion = input}/>
 							<SelectInput  data_opciones={this.props.entidades} llave="id_entidad" descripcion="nombre" label="Entidad Destino" valor={input => this._id_entidad = input} />
-							<Boton onClick={this.crearOrden.bind(this)} clases="btn-success" label="Crear orden"/>
+							<div className="btn-form">
+								<Boton onClick={this.crearOrden.bind(this)} clases="btn-success" icon="fa fa-check" label="Crear orden"/>
+							</div>
 						</div>
 					</ModalBs>
 
 					<BootstrapTable
-						height='auto'
-						search={true}
+						height    = 'auto'
+						search    = {true}
 						multiColumnSearch
-						data={this.props.datos_elemento}
-						deleteRow={false}
-						options={opciones}
+						data      = {this.props.datos_elemento}
+						deleteRow = {false}
+						options   = {opciones}
 						hover
 						striped
 						pagination>
@@ -111,7 +128,6 @@ class TableOrdenes extends React.Component {
 						<TableHeaderColumn dataField='servicio_nombre' dataSort>Servicio</TableHeaderColumn>
 						<TableHeaderColumn dataField='estado' dataFormat={this.colEstado} dataSort>Estado</TableHeaderColumn>
 						<TableHeaderColumn dataField='id_orden_trabajo' dataFormat={this.colAccion.bind(this)} dataAlign="center" width="10%">Acción</TableHeaderColumn>
-
 					</BootstrapTable>
 				</div>
 		 );

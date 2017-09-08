@@ -1,6 +1,7 @@
 var React = require('react');
 import {ModalBs} from '../../genericos/ModalBs';
 import {Boton,Label} from '../../genericos/FormElements';
+import {conformidad} from '../../commons/Utils';
 
 
 export const VerMasModal = (props) => {
@@ -21,7 +22,7 @@ export const VerMasModal = (props) => {
 						<Label label="Observación devolución" value={props.datosOrden.obs_devolucion}/>
 					</div>
 					<div className="row">
-						<Label label="Conformidad" value={props.datosOrden.conformidad}/>
+						<Label label="Conformidad" value={conformidad[props.datosOrden.conformidad]}/>
 					</div>
 					<div className="btn-form">
 						<Boton onClick={props.onHide} clases="btn-primary" label="Cerrar"/>

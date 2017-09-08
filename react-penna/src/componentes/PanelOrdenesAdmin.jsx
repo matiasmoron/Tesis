@@ -109,7 +109,7 @@ class PanelOrdenesAdmin extends React.Component {
 							<Input clases="form-group col-md-5" disabled = {this.state.disabled_cod_patrimonial} label="Cód. Patrimonial" valor={input => this._cod_patrimonial = input} />
 						</div>
 						<div className="btn-form">
-							<Boton clases="btn-primary"  label="Buscar"/>
+							<Boton clases="btn btn-primary" label="Buscar"/>
 						</div>
 					</Formulario>
 				</div>

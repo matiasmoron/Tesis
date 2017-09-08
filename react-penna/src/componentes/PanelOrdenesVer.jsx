@@ -108,7 +108,7 @@ class PanelOrdenes extends React.Component {
 						<div className="row">
 						</div>
 						<div className="btn-form">
-							<Boton clases="btn-primary" label="Buscar"/>
+							<Boton clases="btn btn-primary" label="Buscar"/>
 						</div>
 					</Formulario>
 				</div>

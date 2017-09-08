@@ -69,7 +69,7 @@ class PanelOrdenes extends React.Component {
 							<Input clases="form-group col-md-5" disabled = {this.state.disabled_cod_patrimonial} label="Cód. Patrimonial" valor={input => this._cod_patrimonial = input} />
 						</div>
 						<div className="btn-form">
-							<button type="submit" className="btn btn-success">Buscar</button>
+							<button type="submit" className="btn btn-primary">Buscar</button>
 						</div>
 					</Formulario>
 				</div>

@@ -26,28 +26,43 @@ class TableOrdenesAdmin extends React.Component {
 		 }
 	   }
 
-	   colEstado(estado,row){
-			var clase = (row.estado == 1 || row.estado==2) ? 'text-danger' : 'text-success';
-		   	return '<span class='+clase+'><b>'+estadoOrden[estado]+'</b></span>';
-	   }
+      colEstado(estado,row){
+  			let clase="";
+
+	   		 switch (String(row.estado)) {
+	   			 case "1":
+	   				 clase='t-error';
+	   				 break;
+	   			 case "2":
+	   				 clase='t-orange';
+	   				 break;
+	   			 case "3":
+	   				 clase='t-ok';
+	   				 break;
+  		 	}
+  			return '<span class='+clase+'><b>'+estadoOrden[estado]+'</b></span>';
+  		}
 
 	   colTipoBien(tBien,row){
 		   return '<span class="">'+tipoBien[tBien]+'</span>';
 	   }
 
 	   colAccion(estado,row){
-			var acciones=[];
-			switch (row.estado) {
-				case 2://En curso
-						acciones.push(<Boton onClick={this.modalActualizarOrden.bind(this,row)} clases="btn-warning" titulo="Modificar los datos de la orden de trabajo"><i className="fa fa-pencil" aria-hidden="true"></i></Boton>);
-				case 1://Pendiente
-						acciones.push(<Boton onClick={this.modalDerivarOrden.bind(this,row)} 	clases="btn-info" 	 titulo="Derivar orden de trabajo"><i className="fa fa-reply" aria-hidden="true"></i></Boton>)
-						acciones.push(<Boton onClick={this.modalAsignarOrden.bind(this,row)} 	clases="btn-success" titulo="Asignar la orden a otro técnico"><i className="fa fa-plus" aria-hidden="true"></i></Boton>)
-				case 3://Resuelta
-				case 4://Finalizada
-				case 5://Cancelada por usuario
-				case 6://Cancelada por técnico
-						acciones.push(<Boton onClick={this.modalVerMas.bind(this,row)} clases="btn-primary" titulo="Ver datos adicionales de la orden de trabajo"><i className="fa fa-search" aria-hidden="true"></i></Boton>)
+		   console.log("colAccion",typeof row.estado, typeof String(row.estado));
+
+
+			let acciones=[];
+			switch (String(row.estado)) {
+				case "2"://En curso
+						acciones.push(<Boton onClick={this.modalActualizarOrden.bind(this,row)} clases="btn-warning" titulo="Modificar los datos de la orden de trabajo" icon="fa fa-pencil"></Boton>);
+				case "1"://Pendiente
+						acciones.push(<Boton onClick={this.modalDerivarOrden.bind(this,row)} 	clases="btn-info" 	 titulo="Derivar orden de trabajo" icon="fa fa-reply"></Boton>)
+						acciones.push(<Boton onClick={this.modalAsignarOrden.bind(this,row)} 	clases="btn-success" titulo="Asignar la orden a otro técnico" icon="fa fa-plus"></Boton>)
+				case "3"://Resuelta
+				case "4"://Finalizada
+				case "5"://Cancelada por usuario
+				case "6"://Cancelada por técnico
+						acciones.push(<Boton onClick={this.modalVerMas.bind(this,row)} clases="btn-primary" titulo="Ver datos adicionales de la orden de trabajo" icon="fa fa-search"></Boton>)
 
 			}
 			return (
@@ -95,7 +110,6 @@ class TableOrdenesAdmin extends React.Component {
 
 	  //Muestra/Oculta el modal de tomar orden guardando los datos de la fila segun corresponda
 	   modalAsignarOrden(row=null){
-			console.log("this",this);
 			if(!this.state.showModalAsignar){// Si se abre el modal de asignar
 				const not_this=this;
 			    const prom = new Promise(function(resolve, reject) {
@@ -110,7 +124,6 @@ class TableOrdenesAdmin extends React.Component {
 				});
 			}
 			else{
-				console.log("ENTRO");
 				this.setState({showModalAsignar : !this.state.showModalAsignar});
 			}
 	   }
@@ -149,7 +162,6 @@ class TableOrdenesAdmin extends React.Component {
 
 	//Actualiza la orden de trabajo con los datos ingresados
 	actualizarOrden(){
-		console.log("this",this);
 		var promesa=Api.actualizarOrden({
 								id_orden_trabajo: this.state.datosOrden.id_orden_trabajo,
 								hs_insumidas    : this._hs_insumidas.value,
@@ -222,7 +234,7 @@ class TableOrdenesAdmin extends React.Component {
 					<ModalBs show={this.state.showModalActualizar} onHide={this.modalActualizarOrden.bind(this)} titulo="Actualizar orden de trabajo">
 						<div className="modal-body">
 							<div className="row">
-								<SelectChosen clases="col-md-6" defaultVal={this.state.datosOrden.prioridad}   data={data_prioridades} llave="prioridad" descripcion="descripcion" label="Prioridad" valor={input => this._prioridad = input} />
+								<SelectChosen clases="col-md-6" clearable={false} defaultVal={this.state.datosOrden.prioridad}   data={data_prioridades} llave="prioridad" descripcion="descripcion" label="Prioridad" valor={input => this._prioridad = input} />
 							</div>
 							<div className="row">
 								<Input clases="col-md-4"  label="Tiempo dedicado" valor={input => this._hs_insumidas = input} />
@@ -247,10 +259,10 @@ class TableOrdenesAdmin extends React.Component {
 						options={opciones}
 						hover>
 						<TableHeaderColumn isKey dataField='id_orden_trabajo' hidden>ID</TableHeaderColumn>
-						<TableHeaderColumn dataField='id_tipo_bien' dataFormat={this.colTipoBien}>Tipo Bien</TableHeaderColumn>
+						<TableHeaderColumn dataField='id_tipo_bien' dataFormat={this.colTipoBien} dataSort>Tipo Bien</TableHeaderColumn>
 						<TableHeaderColumn dataField='descripcion'>Descripción</TableHeaderColumn>
-						<TableHeaderColumn dataField='servicio_nombre'>Servicio</TableHeaderColumn>
-						<TableHeaderColumn dataField='estado' dataFormat={this.colEstado} >Estado</TableHeaderColumn>
+						<TableHeaderColumn dataField='servicio_nombre' dataSort>Servicio</TableHeaderColumn>
+						<TableHeaderColumn dataField='estado' dataFormat={this.colEstado} dataSort>Estado</TableHeaderColumn>
 						<TableHeaderColumn dataField='id_orden_trabajo' dataFormat={this.colAccion.bind(this)} dataAlign="center">Acción</TableHeaderColumn>
 					</BootstrapTable>
 				</div>

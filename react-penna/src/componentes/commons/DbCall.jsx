@@ -22,6 +22,7 @@ export function DbCall(args) {
                 }
          })
          .catch(error => {
+             console.log("DBCALL: ",error);
               switch (error.response.data.error) {
                 case 'token_expired':
                   ApiAuth.logoutUser();
