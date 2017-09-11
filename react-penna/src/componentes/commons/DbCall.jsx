@@ -1,6 +1,7 @@
 import axios from 'axios';
 import store from '../../store';
 import * as ApiAuth from '../../api/autenticacion_api';
+import * as ApiError from '../../api/error_server_api';
 
 export function DbCall(args) {
     const base_url='http://localhost:8000/api/';
@@ -8,6 +9,7 @@ export function DbCall(args) {
     var promise = new Promise(function(resolve, reject) {
         axios({method: args.metodo,url:base_url+args.url,params: args.params,headers:{'Content-Type': 'application/x-www-form-urlencoded','Authorization': `Bearer ${token}`}})
         .then(response => {
+
                 if (response.data.success){
                     if (typeof args.callbackParams == "undefined"){
                         store.dispatch(args.callback(response.data.result));
@@ -18,11 +20,11 @@ export function DbCall(args) {
                     resolve(1);
                 }
                 else{
+                    ApiError.ShowError(response.data.msg);
                     reject(response.data.msg);
                 }
          })
          .catch(error => {
-             console.log("DBCALL: ",error);
               switch (error.response.data.error) {
                 case 'token_expired':
                   ApiAuth.logoutUser();

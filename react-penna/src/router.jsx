@@ -20,6 +20,7 @@ import submenuBienes from './componentes/menu/SubmenuBienes';
 import submenuConfiguracion from './componentes/menu/SubmenuConfiguracion';
 import Inicio from './componentes/Inicio';
 import AuthorizedRoute from './componentes/AuthorizedRoute';
+import ErrorServer from './componentes/commons/ErrorServer';
 
 
 export default (
@@ -29,6 +30,7 @@ export default (
                <Route  path="/auth"  component={Inicio} />
                <AuthorizedRoute>
                    <Layout>
+                       <ErrorServer/>
                        <Menu/>
                        <Container>
                                 <Route exact path="/ordenes"  component={submenuOrdenes} />

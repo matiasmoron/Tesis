@@ -63,3 +63,8 @@ export const LOGIN_SUCCESS 				     = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE 				     = 'LOGIN_FAILURE';
 //Logout
 export const LOGOUT_SUCCESS 				 = 'LOGOUT_SUCCESS';
+
+
+//ErrorServer
+export const SHOW_ERROR 				     = 'SHOW_ERROR';
+export const HIDE_ERROR 				     = 'HIDE_ERROR';

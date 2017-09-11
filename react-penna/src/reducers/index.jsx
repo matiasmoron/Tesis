@@ -10,6 +10,7 @@ import solicitudReducer from './solicitudes_reducer';
 import personalReducer from './personal_reducer';
 import ordenesReducer from './ordenes_reducer';
 import autenticacionReducer from './autenticacion_reducer';
+import errorServerReducer from './error_server_reducer';
 
 
 
@@ -26,7 +27,7 @@ var reducers = combineReducers({
     personalState     : personalReducer,
     ordenesState      : ordenesReducer,
     autenticacionState: autenticacionReducer,
-
+    errorServerState  : errorServerReducer
 });
 
 export default reducers;
