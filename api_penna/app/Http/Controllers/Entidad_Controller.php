@@ -26,9 +26,14 @@ class Entidad_Controller extends Controller
         return $this->execute_simple_query("select",$query,$params);
     }*/
 
+
+    function __construct(){ 
+       $this->entidad= new EntidadModel(); 
+    } 
+
     public function get_entidades(Request $request){
-         $entidad= new EntidadModel();
-        return $entidad->get_entidades($request->id_entidad);
+        // $entidad= new EntidadModel();
+        return $this->entidad->get_entidades($request->id_entidad);
     }
 
 
