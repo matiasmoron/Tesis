@@ -11,10 +11,22 @@ class Entidad_Controller extends Controller
 {
 
     //Obtiene todas las entidades internas
+<<<<<<< Updated upstream
     /*public function get_entidades(Request $request){
+=======
+    public function get_entidades(Request $request){
+        $reglas=[
+                    'id_entidad' => 'required|numeric'
+                ];
+
+        $this->validar($request,$reglas);
+
+>>>>>>> Stashed changes
         $params= array();
         $query='SELECT
-                    id_entidad,nombre,tipo_entidad
+                    id_entidad,
+                    nombre,
+                    tipo_entidad
                 FROM entidad
                 WHERE estado='.ALTA.' AND tipo_entidad=1';
 
@@ -33,8 +45,13 @@ class Entidad_Controller extends Controller
 
 
     public function add_entidad(Request $request){
-        $this->validarActualizar($request->all());
-       
+        $reglas=[
+                    'nombre' => 'required|max:45',
+                    'tipo_entidad' => 'required|numeric'
+                ];
+
+        $this->validar($request,$reglas);
+
         $params=array();
         $query=array();
 
@@ -50,7 +67,11 @@ class Entidad_Controller extends Controller
     }
 
     public function update_entidad(Request $request){
-        $this->validarIDEntidad($request->all());
+        $reglas=[
+                    'id_entidad' => 'required|numeric'
+                ];
+
+        $this->validar($request,$reglas);
 
         $params= array();
         $query='UPDATE entidad
@@ -67,7 +88,11 @@ class Entidad_Controller extends Controller
 
 
     public function remove_entidad(Request $request){
-        $this->validarIDEntidad($request->all());
+        $reglas=[
+                    'id_entidad' => 'required|numeric'
+                ];
+
+        $this->validar($request,$reglas);
 
         $params= array();
         $query='UPDATE entidad
@@ -79,23 +104,5 @@ class Entidad_Controller extends Controller
         return $this->execute_simple_query("update",$query,$params);
 
     }
-
-    private function validarActualizar($datos){
-        $reglas=[
-            'nombre' => 'required|max:45',
-            'tipo_entidad' => 'required|numeric',
-            ];
-
-        $this->validar($datos,$reglas);
-    }
-
-    private function validarIDEntidad($datos){
-        $reglas=[
-            'id_entidad' => 'required|numeric',
-            ];
-
-        $this->validar($datos,$reglas);
-    }
-
 
 }
