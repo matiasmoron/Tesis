@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Entidad;
+use App\Http\Models\EntidadModel;
 
 
 class Entidad_Controller extends Controller
 {
+
     //Obtiene todas las entidades internas
-    public function get_entidades(Request $request){
+    /*public function get_entidades(Request $request){
         $params= array();
         $query='SELECT
                     id_entidad,nombre,tipo_entidad
@@ -22,6 +24,11 @@ class Entidad_Controller extends Controller
         }
 
         return $this->execute_simple_query("select",$query,$params);
+    }*/
+
+    public function get_entidades(Request $request){
+         $entidad= new EntidadModel();
+        return $entidad->get_entidades($request->id_entidad);
     }
 
 
