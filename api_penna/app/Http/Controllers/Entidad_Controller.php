@@ -11,41 +11,19 @@ class Entidad_Controller extends Controller
 {
 
     //Obtiene todas las entidades internas
-<<<<<<< Updated upstream
-    /*public function get_entidades(Request $request){
-=======
-    public function get_entidades(Request $request){
-        $reglas=[
-                    'id_entidad' => 'required|numeric'
-                ];
-
-        $this->validar($request,$reglas);
-
->>>>>>> Stashed changes
-        $params= array();
-        $query='SELECT
-                    id_entidad,
-                    nombre,
-                    tipo_entidad
-                FROM entidad
-                WHERE estado='.ALTA.' AND tipo_entidad=1';
-
-        if(isset($request->id_entidad)){
-            $query.=' AND id_entidad=?';
-            array_push($params,$request->id_entidad);
-        }
-
-        return $this->execute_simple_query("select",$query,$params);
-    }*/
-
 
     function __construct(){ 
        $this->entidad= new EntidadModel(); 
     } 
 
     public function get_entidades(Request $request){
-        // $entidad= new EntidadModel();
-        return $this->entidad->get_entidades($request->id_entidad);
+        $reglas=[
+            'id_entidad' => 'numeric',
+            ];
+
+        $this->validar($request->all(),$reglas);
+
+        return $this->entidad->get_entidades($request->all());
     }
 
 
@@ -55,20 +33,10 @@ class Entidad_Controller extends Controller
                     'tipo_entidad' => 'required|numeric'
                 ];
 
-        $this->validar($request,$reglas);
+        $this->validar($request->all(),$reglas);
 
-        $params=array();
-        $query=array();
+        return $this->entidad->add_entidad($request->all());
 
-        $query='INSERT INTO entidad (nombre,tipo_entidad,estado)
-                VALUES(?,?,?)';
-
-        array_push($params,$request->nombre);
-        array_push($params,$request->tipo_entidad);
-        array_push($params,ALTA);
-
-
-        return $this->execute_simple_query("insert",$query,$params);
     }
 
     public function update_entidad(Request $request){
@@ -76,18 +44,9 @@ class Entidad_Controller extends Controller
                     'id_entidad' => 'required|numeric'
                 ];
 
-        $this->validar($request,$reglas);
+        $this->validar($request->all(),$reglas);
 
-        $params= array();
-        $query='UPDATE entidad
-        		SET    nombre=?
-                WHERE  id_entidad=?';
-
-        array_push($params,$request->nombre);
-        array_push($params,$request->id_entidad);
-
-
-        return $this->execute_simple_query("update",$query,$params);
+        return $this->entidad->update_entidad($request->all());
 
     }
 
@@ -97,16 +56,9 @@ class Entidad_Controller extends Controller
                     'id_entidad' => 'required|numeric'
                 ];
 
-        $this->validar($request,$reglas);
+        $this->validar($request->all(),$reglas);
 
-        $params= array();
-        $query='UPDATE entidad
-        		SET    estado='.BAJA.'
-                WHERE  id_entidad=?';
-
-        array_push($params,$request->id_entidad);
-
-        return $this->execute_simple_query("update",$query,$params);
+        return $this->entidad->remove_entidad($request->all());
 
     }
 
