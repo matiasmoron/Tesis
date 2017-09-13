@@ -19,8 +19,9 @@ class Controller extends BaseController
     protected function validar($datos,$reglas){
     	$mensajes = [
 		    'required'    => ':attribute es necesario ingresarlo.',
-		    'max'    => ':attribute debe ser menor a  :max.',
-		    'numeric' => ':attribute debe ser un número.',
+		    'max'         => ':attribute debe ser menor a :max.',
+		    'numeric'     => ':attribute debe ser un número.',
+            'date_format' => ':attribute debe ser con el formato dd/mm/yyyy.'
 		];
 
     	$validator = Validator::make($datos,$reglas,$mensajes);
@@ -100,7 +101,7 @@ class Controller extends BaseController
             /*header('HTTP/1.1 422 Internal Server Booboo');
             header('Content-Type: application/json; charset=UTF-8');
             die(json_encode(array("success"=>FALSE,"msg"=>$e->getMessage(),"result"=>FALSE,'code' => 1337)));*/
-            
+
             if ($transaccion){
                 DB::rollback();
             }

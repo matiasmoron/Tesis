@@ -10,11 +10,9 @@ use App\Http\Models\EntidadModel;
 class Entidad_Controller extends Controller
 {
 
-    //Obtiene todas las entidades internas
-
-    function __construct(){ 
-       $this->entidad= new EntidadModel(); 
-    } 
+    function __construct(){
+       $this->entidad= new EntidadModel();
+    }
 
     public function get_entidades(Request $request){
         $reglas=[
