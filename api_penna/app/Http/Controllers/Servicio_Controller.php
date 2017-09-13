@@ -4,56 +4,49 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Servicio;
-use Illuminate\Support\Facades\DB;
+use App\Http\Models\ServicioModel;
 
 class Servicio_Controller extends Controller
 {
+    function __construct(){ 
+       $this->servicio= new ServicioModel(); 
+    } 
+
     public function get_servicios(){
-        $query= "SELECT id_servicio,nombre
-                 FROM servicio;";
-       
-       return $this->execute_simple_query("select",$query);
+        return $this->servicio->get_servicios();
     }
 
     public function add_servicio(Request $request){
-        $params=array();
-        $query=array();
+        $reglas=[
+                    'nombre' => 'required|max:45'
+                ];
 
-        $query="INSERT INTO servicio(nombre) VALUES(?)";
-        array_push($params,$request->nombre);
+        $this->validar($request->all(),$reglas);
 
-
-        return $this->execute_simple_query("insert",$query,$params);
+        return $this->servicio->add_servicio($request);
 
     }
 
     public function remove_servicio(Request $request){
-        $params= array();
-        
-        $query='DELETE 
-                FROM   servicio
-                WHERE  id_servicio=?';
+        $reglas=[
+                    'id_servicio' => 'required|numeric'
+                ];
 
-        array_push($params,$request->id_servicio);
+        $this->validar($request->all(),$reglas);
 
-
-        return $this->execute_simple_query("delete",$query,$params);
+        return $this->servicio->remove_servicio($request);
     }
 
     public function update_servicio(Request $request){
-        $params= array();
-        $query='UPDATE servicio
-                SET    nombre=?
-                WHERE  id_servicio=?';
+        $reglas=[
+                    'nombre' => 'required|max:45',
+                    'id_servicio' => 'required|numeric'
+                ];
 
-        array_push($params,$request->nombre);
-        array_push($params,$request->id_servicio);
+        $this->validar($request->all(),$reglas);
 
+        return $this->servicio->update_servicio($request);
 
-        return $this->execute_simple_query("update",$query,$params);
-
-    }
-
-    
+    } 
 
 }
