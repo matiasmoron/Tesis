@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 require_once('Equipo_Controller.php');
+require_once('Prestacion_Controller.php');
 
 const EQUIPO=1;
 const PRESTACION=2;
@@ -17,9 +18,9 @@ class Bien_Controller extends Controller
                 return $equipo->get_equipos($request);
                 break;
             
-            /*case PRESTACION:
-                return Equipo_Controller::get_equipos($request);
-                break;*/
+            case PRESTACION:
+                return Prestacion_Controller::get_prestaciones($request);
+                break;
         }
     }
 

@@ -51,7 +51,7 @@ Route::middleware('jwt.auth')->put('/personal', 'Personal_Controller@update_pers
 Route::middleware('jwt.auth')->delete('/personal', 'Personal_Controller@remove_personal');
 
 //Entidad
-Route::middleware('jwt.auth')->get('/entidades/{id_entidad?}', 'Entidad_Controller@get_entidades');
+Route::middleware('cors')->get('/entidades/{id_entidad?}', 'Entidad_Controller@get_entidades');
 Route::middleware('jwt.auth')->post('/entidades', 'Entidad_Controller@add_entidad');
 Route::middleware('jwt.auth')->put('/entidades', 'Entidad_Controller@update_entidad');
 Route::middleware('jwt.auth')->delete('/entidades', 'Entidad_Controller@remove_entidad');
@@ -61,6 +61,13 @@ Route::middleware('jwt.auth')->get('/equipos/{id_equipo?}', 'Equipo_Controller@g
 Route::middleware('jwt.auth')->post('/equipos', 'Equipo_Controller@add_equipo');
 Route::middleware('jwt.auth')->put('/equipos', 'Equipo_Controller@update_equipo');
 Route::middleware('jwt.auth')->delete('/equipos', 'Equipo_Controller@remove_equipo');
+
+//Prestacion
+Route::middleware('jwt.auth')->get('/prestaciones/{id_equipo?}', 'Prestacion_Controller@get_prestaciones');
+Route::middleware('jwt.auth')->post('/prestaciones', 'Prestacion_Controller@add_prestacion');
+Route::middleware('jwt.auth')->put('/prestaciones', 'Prestacion_Controller@update_prestacion');
+Route::middleware('jwt.auth')->delete('/prestaciones', 'Prestacion_Controller@remove_prestacion');
+
 
 //ABM Orden Trabajo
 Route::middleware('jwt.auth')->post('/bienes_solicitud', 'Orden_Trabajo_Controller@get_bienes_solicitud');

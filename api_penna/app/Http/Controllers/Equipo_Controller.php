@@ -57,6 +57,6 @@ class Equipo_Controller extends Controller{
 
         $this->validar($request->all(),$reglas);
 
-        return $this-> equipo ->remove_equipo($request);
+        return $this-> equipo ->update_equipo($request);
     }
 }

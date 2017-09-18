@@ -8,6 +8,7 @@ import servicio from './componentes/personal/PanelServicio';
 import tecnicos from './componentes/personal/PanelTecnico';
 import entidades from './componentes/personal/PanelEntidad';
 import equipos from './componentes/PanelEquipo';
+import prestaciones from './componentes/PanelPrestacion';
 import personal from './componentes/personal/PanelPersonal';
 import ordenes_ver from './componentes/PanelOrdenesVer';
 import ordenes_abm from './componentes/PanelOrdenesABM';
@@ -46,7 +47,7 @@ export default (
 
                                 <Route exact path="/bienes"  component={submenuBienes} />
                                 <Route path="/bienes/equipos" component={equipos} />
-                                <Route path="/bienes/prestaciones" component={equipos} />
+                                <Route path="/bienes/prestaciones" component={prestaciones} />
 
                                 <Route exact path="/configuracion"  component={submenuConfiguracion} />
                                 <Route path="/configuracion/mi_cuenta" component={equipos} />
