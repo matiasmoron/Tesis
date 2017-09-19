@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import * as ApiAutenticacion from '../api/autenticacion_api';
 
 // require("../styles/form-elements.scss");
-// require("../styles/inicio.scss");
+require("../styles/inicio.scss");
 require("../styles/font-awesome-4.7.0/scss/font-awesome.scss");
 import logo from '../img/fotor_penna2.png';
 import Background from '../img/1.jpg';
@@ -27,11 +27,11 @@ class Inicio extends React.Component {
 		  backgroundImage: `url(${Background})`
 		}
 		return (
-				<div className="top-content" style={sectionStyle}>
+				<div className="inicio-penna" style={sectionStyle}>
 		            <div className="inner-bg">
 		                <div className="container">
 		                    <div className="row">
-		                        <div className="col-sm-2 text">
+		                        <div className="col-sm-2 text text-center">
 		                            <img src={logo}/>
 		                            <h1><strong>SisPenna</strong></h1>
 		                        </div>
@@ -64,8 +64,8 @@ class Inicio extends React.Component {
 					                        	<label className="sr-only" >Contraseña</label>
 					                        	<input type="password" ref="password" name="form-password" placeholder="Contraseña..." className="form-password form-control" id="form-password" />
 					                        </div>
-											<button onClick={(event) => this.handleClick(event)} className="btn">
-												Ingresar!
+											<button onClick={(event) => this.handleClick(event)} className="btn-inicio">
+												Ingresar
 											</button>
 											{this.props.autenticacion.errorMessage &&
 												<p>{this.props.autenticacion.errorMessage}</p>
