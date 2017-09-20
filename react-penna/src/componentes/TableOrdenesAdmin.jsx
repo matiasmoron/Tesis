@@ -92,6 +92,7 @@ class TableOrdenesAdmin extends React.Component {
 
 		//Muestra/Oculta el modal de actualizar orden guardando los datos de la fila segun corresponda
 		modalActualizarOrden(row=null){
+			console.log(row);
 			this.setState({showModalActualizar : !this.state.showModalActualizar});
  			if (row!=null)
  				this.setState({datosOrden : row});
