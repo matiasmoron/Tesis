@@ -63,15 +63,6 @@ class Personal_Controller extends Controller
 
         $this->validar($request->all(),$reglas);
 
-        $params= array();
-        $query='UPDATE personal
-                SET    dni=?,
-                       usuario=?,
-                       nombre=?,
-                       apellido=?,
-                       fecha_ingreso=str_to_date(?,"%d/%m/%Y")
-                WHERE  legajo=?';
-
         return $this->personal->update_personal($request);
     }
 }
