@@ -21,6 +21,7 @@
     "express": "^4.15.3",
     "fetch-jsonp": "^1.0.6",
     "flag-icon-css": "^2.8.0",
+    "history": "^4.7.2",
     "immutability-helper": "^2.1.1",
     "node-sass": "^4.5.0",
     "react": "^15.5.4",

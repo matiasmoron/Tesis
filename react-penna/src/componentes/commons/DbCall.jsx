@@ -2,6 +2,13 @@ import axios from 'axios';
 import store from '../../store';
 import * as ApiAuth from '../../api/autenticacion_api';
 import * as ApiError from '../../api/error_server_api';
+// import {
+//   push,
+//   replace,
+//   go,
+//   goBack,
+//   goForward,
+// } from 'react-router-redux';
 
 export function DbCall(args) {
     const base_url='http://localhost:8000/api/';
@@ -27,8 +34,11 @@ export function DbCall(args) {
          .catch(error => {
               switch (error.response.data.error) {
                 case 'token_expired':
-                  ApiAuth.logoutUser();
-                  break
+                      ApiAuth.logoutUser();
+                      break
+                 case 'token_not_provided':
+                     ApiAuth.logoutUser();
+                     break
               }
               reject(error.response.data.error);
             })

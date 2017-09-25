@@ -27,8 +27,8 @@ export function loginErrorSuccess(message) {
   }
 }
 
-function requestLogout() {
+export function requestLogout() {
   return {
-    type: LOGOUT_SUCCESS
+    type: types.LOGOUT_SUCCESS
   }
 }
