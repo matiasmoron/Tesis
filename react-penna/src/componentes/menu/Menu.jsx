@@ -1,28 +1,33 @@
 var React = require('react');
-// var FontAwesome = require('react-fontawesome');
-var FA = require('react-fontawesome');
 import {Link} from 'react-router-dom';
-import Fa500px from 'react-icons/lib/fa/500px';
 require("../../styles/nuevo_menu.scss");
 
-var tabData = [
-	{icon: Fa500px, tag: "a1",to:"/ordenes", nombre:"Ordenes de Trabajo", isActive:true },
-	// {icon: Fa500px, tag: "a2",to:"", nombre:"Stock / Compras", isActive:false },
-	// {icon: Fa500px, tag: "a3",to:"/solicitud", nombre:"Solicitudes", isActive:false},
-	{icon: Fa500px, tag: "a4",to:"/personal", nombre:"Personal", isActive:false},
-	{icon: Fa500px, tag: "a5",to:"/bienes", nombre:"Bienes", isActive:false},
-	{icon: Fa500px, tag: "a6",to:"/configuracion", nombre:"Configuración", isActive:false}
-]
+let menu_habilitados=[1,4];
 
+var tabData = {
+	1:{ to:"/ordenes"		, nombre:"Ordenes de Trabajo"	, isActive:true },
+	2:{ to:"/personal"		, nombre:"Personal"				, isActive:false},
+	3:{ to:"/bienes"		, nombre:"Bienes"				, isActive:false},
+	4:{ to:"/configuracion"	, nombre:"Configuración"		, isActive:false}
+};
+
+var cargar_menu = (props) => {
+	let menu = [];
+	menu_habilitados.map(function(opcion){
+		menu.push(tabData[opcion])
+	});
+	return menu;
+}
 
 var Tabs = (props) => {
+	 let menu = cargar_menu();
       return (
         <ul className="menu nav nav-tabs">
-			{tabData.map(function(tab){
-				return (
-					<Tab data={tab} key={tab.nombre} icon={tab.icon} to={tab.to} isActive={props.activeTab===tab} handleClick={props.changeTab.bind(this,tab)} />
-				);
-			}.bind(this))}
+			 {menu.map(function(tab){
+			 	return (
+			 		<Tab data={tab} key={tab.nombre} icon={tab.icon} to={tab.to} isActive={props.activeTab===tab} handleClick={props.changeTab.bind(this,tab)}/>
+			 	);
+			 }.bind(this))}
 		</ul>
       );
 }

@@ -13,6 +13,7 @@ import ordenesReducer from './ordenes_reducer';
 import autenticacionReducer from './autenticacion_reducer';
 import errorServerReducer from './error_server_reducer';
 import formsReducer from './forms_reducer';
+import {routerReducer} from 'react-router-redux'
 
 
 
@@ -31,7 +32,8 @@ var reducers = combineReducers({
     ordenesState      : ordenesReducer,
     autenticacionState: autenticacionReducer,
     errorServerState  : errorServerReducer,
-    formsState        : formsReducer
+    formsState        : formsReducer,
+    router            : routerReducer
 });
 
 export default reducers;
