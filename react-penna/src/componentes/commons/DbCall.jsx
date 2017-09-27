@@ -2,19 +2,23 @@ import axios from 'axios';
 import store from '../../store';
 import * as ApiAuth from '../../api/autenticacion_api';
 import * as ApiError from '../../api/error_server_api';
-// import {
-//   push,
-//   replace,
-//   go,
-//   goBack,
-//   goForward,
-// } from 'react-router-redux';
+
+//Crea un nuevo objecto sacando las campos que estan vacios
+const removeEmpty = (obj) => {
+  return Object.keys(obj).filter(key => obj[key]).reduce(
+    (newObj, key) => {
+      newObj[key] = obj[key]
+      return newObj
+    }, {}
+  )
+ }
+
 
 export function DbCall(args) {
     const base_url='http://localhost:8000/api/';
     const token= localStorage.getItem('id_token');
     var promise = new Promise(function(resolve, reject) {
-        axios({method: args.metodo,url:base_url+args.url,params: args.params,headers:{'Content-Type': 'application/x-www-form-urlencoded','Authorization': `Bearer ${token}`}})
+        axios({method: args.metodo,url:base_url+args.url,params: removeEmpty(args.params),headers:{'Content-Type': 'application/x-www-form-urlencoded','Authorization': `Bearer ${token}`}})
         .then(response => {
 
                 if (response.data.success){
