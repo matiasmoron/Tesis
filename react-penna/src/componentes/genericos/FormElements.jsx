@@ -30,9 +30,27 @@ export const Formulario = (props) => {
 
 export const Input = (props) => {
       return (
+            <div className={"form-group " +props.clases}>
+                <label >{props.label}</label>
+                <input type="text" disabled={props.disabled} className="form-control" value={props.value}  placeholder={props.placeholder} ref={props.valor}/>
+            </div>
+      );
+}
+
+export const Input2 = (props) => {
+    const validacion = (event,validaciones) => {
+        if(props.requerido && event.target.value.length>5)
+            props.cambiar({isValid : true, message : ""});
+        else {
+            props.cambiar({isValid : false, message : "Completar"});
+        }
+    }
+
+      return (
 			<div className={"form-group " +props.clases}>
 				<label >{props.label}</label>
-				<input type="text" disabled={props.disabled} className="form-control" value={props.value}  placeholder={props.placeholder} ref={props.valor}/>
+				<input type="text" disabled={props.disabled} onChange={validacion} className="form-control" value={props.value}  placeholder={props.placeholder} ref={props.valor}/>
+                <span className={props.validacion.isValid ?  'hidden' :  ''} > {props.validacion.message}</span>
 			</div>
       );
 }

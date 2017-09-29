@@ -2,7 +2,7 @@ var React = require('react');
 import {Link} from 'react-router-dom';
 require("../../styles/nuevo_menu.scss");
 
-let menu_habilitados=[1,4];
+let menu_habilitados=[1,2,4];
 
 var tabData = {
 	1:{ to:"/ordenes"		, nombre:"Ordenes de Trabajo"	, isActive:true },

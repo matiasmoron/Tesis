@@ -27,8 +27,8 @@ import { ConnectedRouter} from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
 const history = createHistory();
 
-let submenu_hablitadas= [1,2,3,12];
-let menu_hablitadas= [1,4];
+let submenu_hablitadas= [1,2,3,4,5,12];
+let menu_hablitadas= [1,2,4];
 
 var cargar_rutas = (props) => {
 	let habilitados = [];
@@ -61,11 +61,14 @@ let SubmenuRoute ={
         1:{path:"/ordenes/ver"         ,component:ordenes_ver  },
         2:{path:"/ordenes/abm"         ,component:ordenes_abm },
         3:{path:"/ordenes/administrar" ,component:ordenes_admin },
+		4:{path:"/personal/puesto_servicio" ,component:servicio},
+		5:{path:"/personal/personal" ,component:personal},
         12:{path:"/configuracion/mi_cuenta" ,component:equipos },
 }
 
 let MenuRoute ={
         1:{path:"/ordenes" ,component:submenuOrdenes,exact:true},
+		2:{path:"/personal" ,component:submenuPersonal,exact:true},
         4:{path:"/configuracion" ,component:submenuConfiguracion,exact:true}
 
 }

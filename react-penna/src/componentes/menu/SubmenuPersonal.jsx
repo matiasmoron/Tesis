@@ -6,15 +6,38 @@ import imgTecnico from '../../img/menu/tecnico.png';
 import imgPuestoServicio from '../../img/menu/puesto-servicio.png';
 import imgEntidad from '../../img/menu/entidad.png';
 
+let opc_habilitados = [1,2];
+
+let Submenu ={
+        1:{url:"/personal/personal"         ,nombre:"Personal"     ,logo:imgPersonal},
+        2:{url:"/personal/puesto_servicio"   ,nombre:"Servicio"     ,logo:imgPuestoServicio}
+}
+var cargar_submenu = (props) => {
+	let habilitados = [];
+	opc_habilitados.map(function(opcion){
+		habilitados.push(Submenu[opcion])
+	});
+	return habilitados;
+}
+
+var CardsHabilitados = (props) => {
+	 let subMenu = cargar_submenu();
+      return (
+          <ul className="cards col-md-12">
+			{subMenu.map(function(card){
+               return (
+                   <Card url={card.url} nombre={card.nombre} logo={card.logo} />
+               );
+            })}
+        </ul>
+      );
+}
 
 
 const SubmenuPersonal = (props) => {
       return (
             <Cards>
-                <Card url="/personal/personal" nombre="Personal" logo={imgPersonal}/>
-                <Card url="/personal/tecnicos"  nombre="Tecnico" logo={imgTecnico}/>
-                <Card url="/personal/puesto_servicio" nombre="Servicio" logo={imgPuestoServicio} />
-                <Card url="/personal/entidades" nombre="Entidad" logo={imgEntidad}/>
+                <CardsHabilitados/>
             </Cards>
       );
 }
