@@ -83,7 +83,7 @@ class PanelOrdenes extends React.Component {
 
 
 const mapStateToProps = function(store) {
-	console.log("store",store);
+	// console.log("store",store);
   return {
 	  bienes   	   : store.ordenesState.bienes,
 	  bienes_tabla : store.ordenesState.datos_tabla,

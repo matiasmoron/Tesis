@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import store from '../../store';
 import TableServicio from './TableServicio';
 import {Input2,Formulario} from '../genericos/FormElements';
+import {Alert} from 'react-bootstrap';
+
 
 class PanelServicio extends React.Component {
 	constructor() {
@@ -12,9 +14,13 @@ class PanelServicio extends React.Component {
 	  this.state= {
 		  validation : {
 			  nombre :{
-				  isValid:false,
-				  message:""
-			  }
+				  isValid: false,
+				  message: ""
+			  },
+			   nombre2 :{
+ 				  isValid: true,
+ 				  message: ""
+ 			  }
 		  }
 	  }
     }
@@ -26,11 +32,23 @@ class PanelServicio extends React.Component {
 
 	_addElemento(event){
 		event.preventDefault();
-		var promesa = servicioApi.addServicio(this._nombre.value);
 
-		promesa.then( valor => {
-			servicioApi.getServicios();
-		});
+		let obj = this.state.validation;
+		let habilitarSubmit =  Object.keys(obj).reduce(function(valorAnterior,valorAct){
+			 return valorAnterior && obj[valorAct].isValid;
+		}
+	  	,true);
+		console.log("valor",habilitarSubmit);
+		if(habilitarSubmit){
+			var promesa = servicioApi.addServicio(this._nombre.value);
+
+			promesa.then( valor => {
+				servicioApi.getServicios();
+			});
+		}
+		else{
+			//Se podria tirar el mensaje de error superior de que hay campos inválidos
+		}
     }
 
 	_deleteServicio(id){

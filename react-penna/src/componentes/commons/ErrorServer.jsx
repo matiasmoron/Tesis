@@ -17,10 +17,12 @@ class ErrorServer extends React.Component {
 		if (this.props.errorServer.display_error){
 			return (
 					<div className="text-center">
-					<Alert bsStyle="danger"  >
-				     {this.props.errorServer.msg_error}
-					 <button onClick={this.closeError}>Hide Alert</button>
-				  	</Alert>
+						<Alert bsStyle="danger">
+					     {this.props.errorServer.msg_error}
+						 	<button type="button" onClick={this.closeError} className="close" data-dismiss="alert" aria-label="Close">
+	    						<span aria-hidden="true">&times;</span>
+	  						</button>
+					  	</Alert>
 					</div>
 		      );
 		 }

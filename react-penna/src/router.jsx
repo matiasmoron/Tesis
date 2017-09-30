@@ -31,29 +31,43 @@ let submenu_hablitadas= [1,2,3,4,5,12];
 let menu_hablitadas= [1,2,4];
 
 var cargar_rutas = (props) => {
-	let habilitados = [];
-	submenu_hablitadas.map(function(opcion){
-		habilitados.push(SubmenuRoute[opcion])
-	});
+    let habilitados = [];
+    submenu_hablitadas.map(function(opcion){
+        habilitados.push(SubmenuRoute[opcion])
+    });
     menu_hablitadas.map(function(opcion){
-		habilitados.push(MenuRoute[opcion])
-	});
-	return habilitados;
+        habilitados.push(MenuRoute[opcion])
+    });
+    return habilitados;
 }
 
 var RutasHabilitadas = (props) => {
-	 let rutas = cargar_rutas();
-      return (
-          <Switch>
-              <Route exact path="/" component={submenuOrdenes} />
-			{rutas.map(function(ruta){
-               return (
-                   <Route path={ruta.path} exact={ruta.exact} component={ruta.component}  />
-               );
-            })}
+    let rutas = cargar_rutas();
+    // Object.keys(rutas).map( (elem) =>{
+    //     console.log(elem);
+    //     console.log(rutas[elem].path);
+    //     }
+    // );
+
+    // {rutas.map(function(ruta){
+    //    return (
+    //        <Route path={ruta.path} exact={ruta.exact} component={ruta.component}  />
+    //    );
+    // })}
+    return (
+        <Switch>
+            <Route exact path="/" component={submenuOrdenes} />
+            {
+                Object.keys(rutas).map( (elem,index) =>{
+                    // console.log(rutas[elem].path);
+                    return (
+                        <Route key={index} path={rutas[elem].path} exact={rutas[elem].exact} component={rutas[elem].component}  />
+                    )
+                })
+            }
             <Redirect to="/ordenes"/>
         </Switch>
-      );
+    );
 }
 
 
@@ -61,14 +75,14 @@ let SubmenuRoute ={
         1:{path:"/ordenes/ver"         ,component:ordenes_ver  },
         2:{path:"/ordenes/abm"         ,component:ordenes_abm },
         3:{path:"/ordenes/administrar" ,component:ordenes_admin },
-		4:{path:"/personal/puesto_servicio" ,component:servicio},
-		5:{path:"/personal/personal" ,component:personal},
+        4:{path:"/personal/puesto_servicio" ,component:servicio},
+        5:{path:"/personal/personal" ,component:personal},
         12:{path:"/configuracion/mi_cuenta" ,component:equipos },
 }
 
 let MenuRoute ={
         1:{path:"/ordenes" ,component:submenuOrdenes,exact:true},
-		2:{path:"/personal" ,component:submenuPersonal,exact:true},
+        2:{path:"/personal" ,component:submenuPersonal,exact:true},
         4:{path:"/configuracion" ,component:submenuConfiguracion,exact:true}
 
 }

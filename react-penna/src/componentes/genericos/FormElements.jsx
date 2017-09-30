@@ -4,12 +4,12 @@ var Popover = require("react-bootstrap/lib/Popover");
 
 export const Formulario = (props) => {
     const estilo ={
-        display: 'inline',
-        background: '#3c91bb',
-        border:'#3c91bb',
+        display     : 'inline',
+        background  : '#3c91bb',
+        border      :'#3c91bb',
         borderRadius:'5px',
-        marginRight:'10px',
-        color:'white'
+        marginRight :'10px',
+        color       :'white'
      }
       return (
         <div className="panel panel-primary">
@@ -42,7 +42,7 @@ export const Input2 = (props) => {
         if(props.requerido && event.target.value.length>5)
             props.cambiar({isValid : true, message : ""});
         else {
-            props.cambiar({isValid : false, message : "Completar"});
+            props.cambiar({isValid : false, message : "El campo no puede quedar vacío"});
         }
     }
 

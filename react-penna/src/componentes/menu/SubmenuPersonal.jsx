@@ -24,9 +24,9 @@ var CardsHabilitados = (props) => {
 	 let subMenu = cargar_submenu();
       return (
           <ul className="cards col-md-12">
-			{subMenu.map(function(card){
+			{subMenu.map(function(card,index){
                return (
-                   <Card url={card.url} nombre={card.nombre} logo={card.logo} />
+                   <Card key={index} url={card.url} nombre={card.nombre} logo={card.logo} />
                );
             })}
         </ul>
