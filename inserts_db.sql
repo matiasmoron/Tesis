@@ -116,3 +116,20 @@ values
 	(1,1,1004,1000,NULL,'2017-08-05',1,2,"Una obs creación2",NULL,5),
 	(1,1,1004,1000,NULL,'2017-08-04',1,2,"Una obs creación3","Cancelada por falta de insumos",6),
 	(1,8,1003,NULL,NULL,'2017-08-05',1,1,"Una obs creación4",NULL,1);
+
+
+
+create table perfil (
+	id_perfil smallint unsigned auto_increment,
+	nombre varchar(45),
+	PRIMARY KEY(id_perfil)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO perfil(id_perfil,nombre) VALUES(1,'Administrador'),(2,'Tecnico Admin'),(3,'Tecnico'),(4,'Basico');
+
+create table permiso_perfil (
+	id_perfil smallint unsigned ,
+	legajo int unsigned,
+	id_opcion smallint unsigned,
+	id_menu smallint unsigned
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
