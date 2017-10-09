@@ -9,12 +9,13 @@ export function requestLoginSuccess(creds) {
   }
 }
 
-export function receiveLoginSuccess(id_token) {
+export function receiveLoginSuccess(id_token,permisos) {
   return {
     type: types.LOGIN_SUCCESS,
     isFetching: false,
     isAuthenticated: true,
-    id_token: id_token
+    id_token: id_token,
+    permisos: permisos
   }
 }
 
@@ -23,7 +24,7 @@ export function loginErrorSuccess(message) {
     type: types.LOGIN_FAILURE,
     isFetching: false,
     isAuthenticated: false,
-    message
+    message:''
   }
 }
 

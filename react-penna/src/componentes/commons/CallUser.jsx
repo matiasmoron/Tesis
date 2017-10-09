@@ -13,10 +13,10 @@ export function CallUser(args) {
         .then(response => {
                 if (response.data.success){
                   // If login was successful, set the token in local storage
-		          localStorage.setItem('id_token', response.data.result)
-		        //   localStorage.setItem('id_token', user.access_token)
+		          localStorage.setItem('id_token', response.data.result.token);
+                  localStorage.setItem('permisos', JSON.stringify(response.data.result.permisos));
 		          // Dispatch the success action
-		          store.dispatch(receiveLoginSuccess(response.data.result));
+		          store.dispatch(receiveLoginSuccess(response.data.result.token,JSON.stringify(response.data.result.permisos)));
                   resolve(1);
                 }
                 else{

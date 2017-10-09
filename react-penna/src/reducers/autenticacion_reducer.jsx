@@ -2,8 +2,9 @@ import * as types from '../actions/action-types';
 import _ from 'lodash';
 
 const initialState = {
- isFetching: false,
- isAuthenticated: localStorage.getItem('id_token') ? true : false
+ isFetching      : false,
+ isAuthenticated : localStorage.getItem('id_token') ? true : false,
+ permisos        : localStorage.getItem('permisos') ? localStorage.getItem('permisos') : []
 };
 
 const autenticacionReducer = function(state = initialState, action) {
@@ -15,10 +16,12 @@ const autenticacionReducer = function(state = initialState, action) {
         isAuthenticated: false,
       })
     case types.LOGIN_SUCCESS:
+      console.log("ACTIONNNN",action);
       return Object.assign({}, state, {
         isFetching: false,
         isAuthenticated: true,
-        errorMessage: ''
+        errorMessage: '',
+        permisos : action.permisos
 	});
     case types.LOGIN_FAILURE:
       return Object.assign({}, state, {

@@ -2,7 +2,6 @@ var React = require('react');
 import {Link} from 'react-router-dom';
 require("../../styles/nuevo_menu.scss");
 
-let menu_habilitados=[1,2,4];
 
 var tabData = {
 	1:{ to:"/ordenes"		, nombre:"Ordenes de Trabajo"	, isActive:true },
@@ -12,9 +11,11 @@ var tabData = {
 };
 
 var cargar_menu = (props) => {
+	let menu_habilitados= localStorage.getItem('permisos') ? JSON.parse(localStorage.getItem('permisos')) : [];
 	let menu = [];
-	menu_habilitados.map(function(opcion){
-		menu.push(tabData[opcion])
+	menu_habilitados.forEach(function(menu_hab){
+		if (menu_hab.id_opcion==0) //Habilita el tab menu si el id_opcion=0
+			menu.push(tabData[menu_hab.id_menu])
 	});
 	return menu;
 }
@@ -33,7 +34,7 @@ var Tabs = (props) => {
 }
 
 var Tab = (props) => {
-      return (
+	  return (
         <li onClick={props.handleClick} className={props.isActive ? "active" : null}>
 			<Link to={props.to}>{props.icon}<span className="izquierda">{props.data.nombre}</span></Link>
 		</li>
@@ -56,11 +57,10 @@ class Menu extends React.Component {
 	render() {
 		return (
 			<nav>
-				<Tabs activeTab={this.state.activeTab} changeTab={this.handleClick.bind(this)}/>
+				<Tabs  activeTab={this.state.activeTab} changeTab={this.handleClick.bind(this)}/>
 			</nav>
 		);
 	}
 }
 
-
-export default Menu
+export default Menu;
