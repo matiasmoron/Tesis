@@ -5,10 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use JWTAuth;
-use Illuminate\Support\Facades\DB;
+//use Illuminate\Support\Facades\DB;
+use App\Http\Models\PermisoModel;
+use App\Http\Models\PersonalModel;
 
 class AuthController extends Controller
 {
+    function __construct(){
+       $this-> permiso  = new PermisoModel();
+       $this-> personal = new PersonalModel();
+    }
+
     public function run(){
          DB::table('users')->insert([
              'name' =>'Raquel',
@@ -30,9 +37,19 @@ class AuthController extends Controller
             // something went wrong whilst attempting to encode the token
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
-        $token= compact('token');
+        $token    = compact('token');
+        
+        //Obtiene los permisos del usuario
+        $permisos = $this -> permiso -> get_permisos($request);
+
+        //Obtiene los datos del usuario
+        $datos_usuario = $this -> personal -> get_personal((object) array("usuario" => $request->email));
+        $usuario_result = $datos_usuario['result'];
+        $usuario = array("nombre" => $usuario_result[0]->nombre_apellido);
+
+
         // all good so return the token
-        return array("success"=>TRUE,"msg"=>"","result"=>$token['token']);
+        return array("success"=>TRUE,"msg"=>"","result"=>array("token" => $token['token'],"usuario" => $usuario, "permisos" =>$permisos['result']));
         //return response()->json(compact('token'));
     }
 
