@@ -5,7 +5,7 @@ use App\Http\Models\Model;
 class PersonalModel extends Model {
 
 	public function get_personal($request){
-		$params= array();
+        $params= array();
          $query='SELECT
                     CONCAT(p.apellido,", ",p.nombre) as nombre_apellido,
                     p.nombre,
@@ -28,6 +28,11 @@ class PersonalModel extends Model {
          if(isset($request->legajo)){
              $query.=' AND p.legajo=?';
              array_push($params,$request->legajo);
+         }
+
+         if(isset($request->usuario)){
+             $query.=' AND p.usuario=?';
+             array_push($params,$request->usuario);
          }
  
  
