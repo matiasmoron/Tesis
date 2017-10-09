@@ -133,3 +133,10 @@ create table permiso_perfil (
 	id_opcion smallint unsigned,
 	id_menu smallint unsigned
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+INSERT INTO permiso_perfil(id_perfil,legajo,id_opcion,id_menu) VALUES(1,0,0,1),(1,0,1,1),(1,0,2,1),(1,0,0,2),(1,0,1,2),(1,0,2,2),(1,0,3,2),(1,0,4,2),(1,0,0,3),(1,0,1,3),(1,0,2,3),(1,0,0,4),(1,0,1,4);
+
+create table users(
+	
+)
