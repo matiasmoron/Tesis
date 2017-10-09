@@ -11,7 +11,9 @@ let menu=2 ;
 
 let Submenu ={
         1:{url:"/personal/personal"          ,nombre:"Personal"     ,logo:imgPersonal},
-        2:{url:"/personal/puesto_servicio"   ,nombre:"Servicio"     ,logo:imgPuestoServicio}
+        2:{url:"/personal/puesto_servicio"   ,nombre:"Servicio"     ,logo:imgPuestoServicio},
+        3:{url:"/personal/tecnicos"          ,nombre:"Tecnico"     ,logo:imgTecnico},
+        4:{url:"/personal/entidades"         ,nombre:"Entidad"     ,logo:imgEntidad}
 }
 
 var cargar_submenu = (opc_habilitados) => {
