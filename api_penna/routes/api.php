@@ -92,5 +92,5 @@ Route::middleware('jwt.auth')->put('/ordenes/actualizar_estado', 'Orden_Trabajo_
 Route::middleware('cors')->post('/bienes', 'Bien_Controller@get_bienes');
 
 
-Route::middleware('cors')->post('/auth', 'AuthController@authenticate');
+Route::middleware('cors')->post('/auth', 'AuthController@crear_token');
 Route::middleware('cors')->post('/crear', 'AuthController@run');

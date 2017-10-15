@@ -18,23 +18,22 @@ class AuthController extends Controller
 
     public function run(){
          DB::table('users')->insert([
-             'name' =>'Raquel',
+            'name' =>'Raquel',
             'email' => 'a@a.com',
             'password' => bcrypt('1234'),
         ]);
     }
 
-    public function authenticate(Request $request)
+    public function crear_token(Request $request)
     {
-        // grab credentials from the request
-        $credentials = $request->only('email', 'password');
+        // obtiene las credenciales del request
+        $credentials = $request->only('usuario', 'password');
         try {
-            // attempt to verify the credentials and create a token for the user
+            // Crea el token con las credenciales obtenidas
             if (! $token = JWTAuth::attempt($credentials)) {
                 return response()->json(['error' => 'invalid_credentials'], 401);
             }
         } catch (JWTException $e) {
-            // something went wrong whilst attempting to encode the token
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
         $token    = compact('token');
@@ -43,16 +42,16 @@ class AuthController extends Controller
         $permisos = $this -> permiso -> get_permisos($request);
 
         //Obtiene los datos del usuario
-        $datos_usuario = $this -> personal -> get_personal((object) array("usuario" => $request->email));
+        $datos_usuario = $this -> personal -> get_personal((object) array("usuario" => $request->usuario));
         $usuario_result = $datos_usuario['result'];
         $usuario = array("nombre" => $usuario_result[0]->nombre_apellido);
 
 
-        // all good so return the token
+        // Devuelvo el token con los datos
         return array("success"=>TRUE,"msg"=>"","result"=>array("token" => $token['token'],"usuario" => $usuario, "permisos" =>$permisos['result']));
-        //return response()->json(compact('token'));
     }
 
+    //Obtiene los datos del usuario conectado
     public function getAuthenticatedUser()
     {
         try {
@@ -75,8 +74,8 @@ class AuthController extends Controller
 
         }
 
-        // the token is valid and we have found the user via the sub claim
-        return response()->json(compact('user'));
+        // El token es correcto y devuelve los datos del usuario
+        return $user['original'];
     }
 
 

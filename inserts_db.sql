@@ -138,5 +138,15 @@ create table permiso_perfil (
 INSERT INTO permiso_perfil(id_perfil,legajo,id_opcion,id_menu) VALUES(1,0,0,1),(1,0,1,1),(1,0,2,1),(1,0,0,2),(1,0,1,2),(1,0,2,2),(1,0,3,2),(1,0,4,2),(1,0,0,3),(1,0,1,3),(1,0,2,3),(1,0,0,4),(1,0,1,4);
 
 create table users(
-	
-)
+	id int  unsigned  AUTO_INCREMENT,
+	usuario varchar(20) NOT NULL,
+	id_perfil smallint unsigned NOT NULL,
+	password varchar(255) NOT NULL,
+	remember_token varchar(100),
+	created_at datetime,
+	updated_at timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	PRIMARY KEY(id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+INSERT INTO users(usuario,id_perfil,password) VALUES ('ftoniolo',1,'$2y$10$XjC7ffr62iNe56ixqd0UZuBm9gEmdwfPMp5t2eF0SyKDFWe6CQ/Ee');

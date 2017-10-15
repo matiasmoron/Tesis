@@ -18,7 +18,7 @@ class PermisoModel extends Model {
                 JOIN
                     permiso_perfil p USING(id_perfil)
                 WHERE 
-                    u.email=?
+                    u.usuario=?
                 
                 UNION 
 
@@ -33,8 +33,8 @@ class PermisoModel extends Model {
                 ;';
 
 
-        array_push($params,$request->email);
-        array_push($params,$request->email);
+        array_push($params,$request->usuario);
+        array_push($params,$request->usuario);
         
 
         return $this->execute_simple_query("select",$query,$params);
