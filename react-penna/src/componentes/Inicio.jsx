@@ -15,9 +15,9 @@ class Inicio extends React.Component {
     }
 	handleClick(event) {
 		event.preventDefault();
-		const email = this.refs.email
+		const usuario = this.refs.usuario
 		const password = this.refs.password
-		const creds = { email: email.value.trim(), password: password.value.trim() }
+		const creds = { usuario: usuario.value.trim(), password: password.value.trim() }
 		ApiAutenticacion.loginUser(creds);
 	}
 
@@ -58,7 +58,7 @@ class Inicio extends React.Component {
 					                    <form role="form" action="" method="post" className="login-form">
 					                    	<div className="form-group">
 					                    		<label className="sr-only" >Usuario</label>
-					                        	<input type="text" ref="email" name="form-username" placeholder="Usuario..." className="form-username form-control" id="form-username" />
+					                        	<input type="text" ref="usuario" name="form-username" placeholder="Usuario..." className="form-username form-control" id="form-username" />
 					                        </div>
 					                        <div className="form-group">
 					                        	<label className="sr-only" >Contraseña</label>
