@@ -8,6 +8,10 @@ const BAJA=0;
 
 class Model 
 {
+
+    function __construct(){ 
+    }
+    
 	protected function execute_simple_query($metodo,$query,$params=array()){
     	try{
     		$resultado;

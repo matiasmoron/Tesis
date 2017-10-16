@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Personal;
+// use App\Personal;
 use App\Http\Models\PersonalModel;
+use App\Http\Controllers\Tecnico_Controller;
 
 class Personal_Controller extends Controller
 {
     function __construct(){ 
-       $this->personal= new PersonalModel(); 
+       $this->personal= new PersonalModel();
+       $this->tecnico = new Tecnico_Controller(); 
     } 
 
     public function get_personal(Request $request){
@@ -22,6 +24,7 @@ class Personal_Controller extends Controller
         return $this->personal->get_personal($request);
     }
 
+    //@TODO ver que pasa si se da de alta un personal que estaba dado de baja
     public function add_personal(Request $request){
         $reglas=[
                     'legajo'        => 'numeric',
@@ -29,17 +32,22 @@ class Personal_Controller extends Controller
                     'usuario'       => 'required|max:20',
                     'nombre'        => 'required|max:20',
                     'apellido'      => 'required|max:20',
-                    'id_puesto'     => 'numeric',
                     'id_servicio'   => 'numeric',
                     'fecha_ingreso' => 'date_format:d/m/Y'
                 ];
 
         $this->validar($request->all(),$reglas);
 
+        if ($this->personal->existe_personal_baja($request)){
+            return $this->personal->dar_alta($request);
+        }
+        else{
+            return $this->personal->add_personal($request);
+        }
 
-        return $this->personal->add_personal($request);
     }
 
+    //Da de baja a un personal si es que ya no es técnico  
     public function remove_personal(Request $request){
         $reglas=[
                     'legajo' => 'numeric'
@@ -47,8 +55,12 @@ class Personal_Controller extends Controller
 
         $this->validar($request->all(),$reglas);
 
-        return $this->personal->remove_personal($request);
-
+        if ($this->tecnico->es_tecnico($request)){
+            return array("success"=>FALSE,"msg"=>"No se puede eliminar el personal porque existe un técnico con ese legajo","result"=>TRUE);
+        }
+        else{
+            return $this->personal->remove_personal($request);
+        }
     }
 
     public function update_personal(Request $request){

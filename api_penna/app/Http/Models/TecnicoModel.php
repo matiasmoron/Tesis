@@ -38,6 +38,28 @@ class TecnicoModel extends Model {
         return $this->execute_simple_query("select",$query,$params);
     }
 
+    //Devuelve true si el personal es un tecnico y false en caso contrario    
+    public function es_tecnico($request){
+        $params = array();
+        $query='SELECT 
+                    1
+                FROM
+                    tecnico
+                WHERE
+                    legajo=?
+                ';
+
+        array_push($params,$request->legajo);
+
+        $existe= $this->execute_simple_query("select",$query,$params);
+
+        if ($existe['success'] && (count($existe['result'])>0))
+            return true;
+        else
+            return false;
+
+    }
+
     public function get_entidades_no_asignadas($request){
         $params = array();
         array_push($params,$request-> legajo);

@@ -67,4 +67,14 @@ class Tecnico_Controller extends Controller{
         return $this-> tecnico -> remove_tecnico($request);
     }
 
+    //Devuelve true si el personal es un tecnico y false en caso contrario
+    public function es_tecnico(Request $request){
+        $reglas=[
+                    'legajo'     => 'required|numeric'
+                ];
+
+        $this->validar($request->all(),$reglas);
+        return $this-> tecnico -> es_tecnico($request);
+    }
+
 }

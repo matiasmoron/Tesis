@@ -40,4 +40,36 @@ class PermisoModel extends Model {
         return $this->execute_simple_query("select",$query,$params);
 	}
 
+    //Agrega una cuenta personal con el personal ingresado
+    public function agregar_personal($request){
+        $params= array();
+
+        $query= 'INSERT INTO users(usuario,id_perfil,password)
+                    VALUES  (?,?,?)';
+
+        array_push($params,$request->usuario);
+        array_push($params,4);
+        array_push($params,bcrypt('1234'));
+
+        return $this->execute_simple_query("insert",$query,$params);
+    }
+
+    //Borra la cuenta de un personal
+    public function quitar_personal($request){
+        $params= array();
+
+        $query='DELETE
+                    users
+                FROM
+                    users
+                JOIN
+                    personal USING (usuario)
+                WHERE
+                    legajo=?';
+
+        array_push($params,$request->legajo);
+
+        return $this->execute_simple_query("delete",$query,$params);
+    }
+
 }
