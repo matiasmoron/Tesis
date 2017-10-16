@@ -36,7 +36,6 @@ CREATE TABLE `personal` (
   `nombre` varchar(45) DEFAULT NULL,
   `apellido` varchar(45) DEFAULT NULL,
   `dni` int(10) unsigned DEFAULT NULL,
-  `id_puesto` smallint(5) unsigned NOT NULL,
   `id_servicio` smallint(5) unsigned NOT NULL,
   `fecha_ingreso` date DEFAULT NULL,
   `estado` tinyint(3) unsigned NOT NULL,
@@ -47,12 +46,12 @@ CREATE TABLE `personal` (
 INSERT INTO personal
 (legajo,usuario,nombre,apellido,dni,id_puesto,id_servicio,fecha_ingreso,estado)
 VALUES
-		(1000,'mmoron','Matías','Moroón',35276690,1,1,'2017-08-07',1),
-		(1001,'ftoniolo','Franco','Toniolo',36328547,1,1,'2017-08-07',1),
-		(1002,'jperez','Juan','Perez',36328548,1,1,'2017-08-07',1),
-		(1003,'ptroglio','Pedro','Troglio',36328549,1,1,'2017-08-07',1),
-		(1004,'grodriguez','Guido','Rodriguez',36328550,1,1,'2017-08-07',1),
-		(1005,'erasmussen','Esteban','Rasmussen',36328551,1,1,'2017-08-07',1);
+		(1000,'mmoron','Matías','Moroón',35276690,1,'2017-08-07',1),
+		(1001,'ftoniolo','Franco','Toniolo',36328547,1,'2017-08-07',1),
+		(1002,'jperez','Juan','Perez',36328548,1,'2017-08-07',1),
+		(1003,'ptroglio','Pedro','Troglio',36328549,1,'2017-08-07',1),
+		(1004,'grodriguez','Guido','Rodriguez',36328550,1,'2017-08-07',1),
+		(1005,'erasmussen','Esteban','Rasmussen',36328551,1,'2017-08-07',1);
 
 drop table tecnico;
 CREATE TABLE `tecnico` (
@@ -150,3 +149,5 @@ create table users(
 
 
 INSERT INTO users(usuario,id_perfil,password) VALUES ('ftoniolo',1,'$2y$10$XjC7ffr62iNe56ixqd0UZuBm9gEmdwfPMp5t2eF0SyKDFWe6CQ/Ee');
+
+ALTER TABLE personal drop column id_puesto;

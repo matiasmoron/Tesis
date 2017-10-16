@@ -16,7 +16,6 @@ class PanelPersonal extends React.Component {
 	componentDidMount(){
 		ApiPersonal.getPersonal();
 		ApiServicio.getServicios();
-		ApiPuesto.getPuestos();
 	}
 
 
