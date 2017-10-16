@@ -54,6 +54,45 @@ class PermisoModel extends Model {
         return $this->execute_simple_query("insert",$query,$params);
     }
 
+    //Le agrega el perfil tecnico a la cuenta del personal
+    public function agregar_tecnico($request){
+        $params= array();
+
+        $query= 'UPDATE 
+                    users u
+                 INNER JOIN
+                    personal p USING(usuario)
+                SET
+                    u.id_perfil=3
+                WHERE
+                    p.legajo=?
+
+                    ';
+
+        array_push($params,$request->legajo);
+
+        return $this->execute_simple_query("update",$query,$params);
+    }
+
+    public function quitar_tecnico($request){
+        $params= array();
+
+        $query= 'UPDATE 
+                    users u
+                 INNER JOIN
+                    personal p USING(usuario)
+                SET
+                    u.id_perfil=4
+                WHERE
+                    p.legajo=?
+
+                    ';
+
+        array_push($params,$request->legajo);
+
+        return $this->execute_simple_query("update",$query,$params);
+    }
+
     //Borra la cuenta de un personal
     public function quitar_personal($request){
         $params= array();

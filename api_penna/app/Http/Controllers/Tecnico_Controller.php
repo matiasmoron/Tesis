@@ -6,12 +6,14 @@ use Illuminate\Http\Request;
 // use Illuminate\Support\Facades\DB;
 use App\Tecnico;
 use App\Http\Models\TecnicoModel;
+use App\Http\Models\PermisoModel;
 
 
 class Tecnico_Controller extends Controller{
 
     function __construct(){
        $this->tecnico = new TecnicoModel();
+       $this->permiso= new PermisoModel();
     }
     //obtiene los técnicos con su respectiva entidad (puede haber mas de una entidad asiganada a un técnico)
     public function get_tecnicos(Request $request){
@@ -54,7 +56,17 @@ class Tecnico_Controller extends Controller{
                 ];
 
         $this->validar($request->all(),$reglas);
-        return $this-> tecnico -> add_tecnico($request);
+
+
+        if ($this->tecnico->es_tecnico($request)){
+            return $this-> tecnico -> add_tecnico($request);
+        }
+        else{
+            $resultado=$this-> tecnico -> add_tecnico($request);
+            $this-> permiso -> agregar_tecnico($request);
+            return $resultado;
+        }
+
     }
 
     public function remove_tecnico(Request $request){
@@ -64,7 +76,14 @@ class Tecnico_Controller extends Controller{
                 ];
 
         $this->validar($request->all(),$reglas);
-        return $this-> tecnico -> remove_tecnico($request);
+        $resultado= $this-> tecnico -> remove_tecnico($request);
+
+        //Le quita el perfil de técnico 
+        if (!$this->tecnico->es_tecnico($request)){
+            $this-> permiso -> quitar_tecnico($request);
+        }
+        return $resultado;
+
     }
 
     //Devuelve true si el personal es un tecnico y false en caso contrario
