@@ -16,7 +16,6 @@ const autenticacionReducer = function(state = initialState, action) {
         isAuthenticated: false,
       })
     case types.LOGIN_SUCCESS:
-      console.log("ACTIONNNN",action);
       return Object.assign({}, state, {
         isFetching: false,
         isAuthenticated: true,
@@ -32,7 +31,8 @@ const autenticacionReducer = function(state = initialState, action) {
     case types.LOGOUT_SUCCESS:
       return Object.assign({}, state, {
         isFetching: true,
-        isAuthenticated: false
+        isAuthenticated: false,
+        permisos : []
 	});
   }
 

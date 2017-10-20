@@ -14,6 +14,7 @@ export function CallUser(args) {
                 if (response.data.success){
                   // If login was successful, set the token in local storage
 		          localStorage.setItem('id_token', response.data.result.token);
+		          localStorage.setItem('usuario', response.data.result.usuario.nombre);
                   localStorage.setItem('permisos', JSON.stringify(response.data.result.permisos));
 		          // Dispatch the success action
 		          store.dispatch(receiveLoginSuccess(response.data.result.token,JSON.stringify(response.data.result.permisos)));

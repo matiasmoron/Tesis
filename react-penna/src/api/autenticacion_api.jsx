@@ -14,5 +14,7 @@ export function loginUser(creds) {
 
 export function logoutUser() {
     localStorage.removeItem('id_token');
+    localStorage.removeItem('permisos');
+    localStorage.removeItem('usuario');
     store.dispatch(requestLogout());
 }
