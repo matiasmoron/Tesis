@@ -1,5 +1,6 @@
 var React   = require('react');
 var Popover = require("react-bootstrap/lib/Popover");
+import {ShowError} from '../../api/error_server_api';
 
 
 export const Formulario = (props) => {
@@ -37,35 +38,54 @@ export const Input = (props) => {
       );
 }
 
-export const Input2 = (props) => {
-    const validacion = (event) => {
-
-        if(props.requerido && event.target.value.length==0){
-            props.cambiar(Object.assign({}, props.validacion, {esValido : false, msg : "El campo no puede quedar vacío"}));
-            return;
-        }
-
-        if(props.validacion.tipo != undefined){
-            switch (props.validacion.tipo) {
-                case "number":
-                    if(isNaN(event.target.value)){
-                        props.cambiar(Object.assign({}, props.validacion, {esValido : false, msg : "El campo debe ser un entero"}));
-                        return;
-                    }
-                break;
-            }
-        }
-        props.cambiar(Object.assign({}, props.validacion, {esValido : true, msg : ""}));
+const validator = (event,props) => {
+    if(props.validator.required && event.target.value.length==0){
+        props.cambiar(Object.assign({}, props.validator, {isValid : false, msg : "El campo no puede quedar vacío"}));
+        return;
     }
 
-    const style =  (props.validacion.esValido) ?  'hidden' :  '';
+    if(props.validator.type != undefined){
+        switch (props.validator.type) {
+            case "numeric":
+                if(isNaN(event.target.value)){
+                    props.cambiar(Object.assign({}, props.validator, {isValid : false, msg : "El campo debe ser un entero"}));
+                    return;
+                }
+            break;
+        }
+    }
+    props.cambiar(Object.assign({}, props.validator, {isValid : true, msg : ""}));
+}
+
+
+export const Input2 = (props) => {
+    const style =  (props.validator.isValid) ?  'hidden' :  '';
       return (
 			<div className={"form-group " +props.clases}>
 				<label>{props.label}</label>
-				<input type="text" disabled={props.disabled} onBlur={validacion.bind(props.validacion)} onChange={validacion} className="form-control" value={props.value}  placeholder={props.placeholder} ref={props.valor}/>
-                <span className={"msj_error " +style}> {props.validacion.msg}</span>
+				<input type="text" disabled={props.disabled} onBlur={(e) => validator(e, props)} onChange={(e) => validator(e, props)} className="form-control" value={props.value}  placeholder={props.placeholder} ref={props.valor}/>
+                <span className={"msj_error " +style}> {props.validator.msg}</span>
 			</div>
       );
+}
+
+/**
+ * Verifica si se habilita el submit según las validaciones pasadas, si valida ejecuta la función de callback y sino muestra un mensaje
+ * @param  {[type]}   validator [description]
+ * @param  {Function} callback  funcion que se ejecuta si valida
+ */
+export const habilitarSubmit = (validator,callback) => {
+     let habilita = Object.keys(validator).reduce(function(valorAnterior,valorAct){
+                         return valorAnterior && validator[valorAct].isValid;
+                    }
+                    ,true);
+
+    if (habilita){
+        callback();
+    }
+    else{
+	    ShowError("Debe completar todos los campos para poder continuar");
+    }
 }
 
 export const Boton = (props) => {
