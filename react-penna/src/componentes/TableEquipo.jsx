@@ -55,9 +55,9 @@ class TableEquipo extends React.Component {
 				striped>
 				<TableHeaderColumn isKey dataField='id_bien' hidden>ID</TableHeaderColumn>
 				<TableHeaderColumn dataField='id_tipo_equipo' hidden>Tipo equipo</TableHeaderColumn>
-				<TableHeaderColumn dataField='descripcion' dataSort>Descripción</TableHeaderColumn>
-				<TableHeaderColumn dataField='cod_patrimonial' dataSort>Cód. patrimonial</TableHeaderColumn>
-				<TableHeaderColumn editable={false} dataField='servicio_nombre' dataSort>Servicio</TableHeaderColumn>
+				<TableHeaderColumn dataField='descripcion' dataSort  editable={ { validator: BsTable.columnRequired } } invalidEditColumnClassName={ BsTable.invalidClass }>Descripción</TableHeaderColumn>
+				<TableHeaderColumn dataField='cod_patrimonial' dataSort editable={ { validator: BsTable.columnRequired } } invalidEditColumnClassName={ BsTable.invalidClass }>Cód. patrimonial</TableHeaderColumn>
+				<TableHeaderColumn editable={false} dataField='servicio_nombre' dataSort >Servicio</TableHeaderColumn>
 				<TableHeaderColumn editable={false} dataField='padre_desc' dataSort >Equipo contenedor</TableHeaderColumn>
 			</BootstrapTable>
 		 );

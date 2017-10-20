@@ -1,5 +1,19 @@
 @import "_variables";
 
+.t-ok,.t-success{
+	color:$ok !important;
+}
+.t-warning{
+	color: $warning !important;
+}
+.t-orange{
+	color:$orange !important;
+}
+.t-error,.t-fail{
+	color:$error !important;
+}
+
+
 .gral-container{
 	margin-top: 5%;
 	margin-bottom: 5%;
@@ -33,7 +47,7 @@ table td .botonera button{
 }
 
 .msj_error{
-	color: red;
+	color: $error;
 	font-size: 13px;
 	font-weight: bold;
 }
@@ -46,5 +60,28 @@ table td .botonera button{
 }
 
 td.invalid input{
-	border: 1px solid red;
+	border: 1px solid $error;
+}
+input.invalid{
+	border: 1px solid $error;
+}
+input.invalid:focus{
+	// box-shadow: 1px 1px 1px 1px $error;
+	border-color: $error;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(210, 58, 55, 0.58);
+  outline: 0 none;
+}
+#toast-container{
+	.toast-title{
+		font-size: 15px;
+		overflow: visible;
+	}
+	.toast-message{
+		font-size: 13px;
+		overflow: visible;
+	}
+	.toast-error .toast-title{
+		color:$error;
+	}
+
 }

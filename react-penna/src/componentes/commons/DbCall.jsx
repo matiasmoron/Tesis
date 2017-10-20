@@ -1,7 +1,7 @@
 import axios from 'axios';
 import store from '../../store';
 import * as ApiAuth from '../../api/autenticacion_api';
-import * as ApiError from '../../api/error_server_api';
+import * as ApiMsg from '../../api/msg_alert_api';
 
 //Crea un nuevo objecto sacando las campos que estan vacios
 const removeEmpty = (obj) => {
@@ -31,7 +31,7 @@ export function DbCall(args) {
                     resolve(1);
                 }
                 else{
-                    ApiError.ShowError(response.data.msg);
+                    ApiMsg.showMsg(response.data.msg);
                     reject(response.data.msg);
                 }
          })

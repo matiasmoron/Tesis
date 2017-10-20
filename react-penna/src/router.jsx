@@ -6,7 +6,7 @@ import Layout from './componentes/genericos/Layout';
 import Menu from './componentes/menu/Menu';
 import Inicio from './componentes/Inicio';
 import AuthorizedRoute from './componentes/AuthorizedRoute';
-import ErrorServer from './componentes/commons/ErrorServer';
+import MessageAlert from './componentes/commons/MessageAlert';
 import RutasHabilitadas from './RutasHabilitadas';
 import { ConnectedRouter} from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
@@ -19,7 +19,7 @@ export default (
             <Route exact  path="/auth"  component={Inicio} />
             <AuthorizedRoute>
                <Layout>
-                   <ErrorServer/>
+                   <MessageAlert/>
                    <Menu/>
                    <Container>
                         <RutasHabilitadas />

@@ -74,6 +74,6 @@ export const LOGIN_FAILURE 				     = 'LOGIN_FAILURE';
 export const LOGOUT_SUCCESS 				 = 'LOGOUT_SUCCESS';
 
 
-//ErrorServer
-export const SHOW_ERROR 				     = 'SHOW_ERROR';
-export const HIDE_ERROR 				     = 'HIDE_ERROR';
+//msgAlert
+export const SHOW_MSG 				     = 'SHOW_MSG';
+export const HIDE_MSG 				     = 'HIDE_MSG';

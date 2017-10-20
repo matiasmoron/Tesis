@@ -53,13 +53,55 @@ export const selectFila={
 ////////////////
 //VALIDACIONES //
 ////////////////
+export const invalidClass = (cell, row) =>{
+    return 'invalid';
+}
 
-export const columnRequerida = (valor) => {
+export const columnRequired = (valor) => {
+    const response = { isValid: true, notification: { type: 'success', msg: '', title: '' } };
 
- const response = { isValid: true, notification: { type: 'success', msg: '', title: '' } };
-   response.isValid = false;
-    response.notification.type = 'success';
-    response.notification.msg = 'Value must be inserted';
-    response.notification.title = 'Requested Value';
+    if(valor.length==0){
+        response.isValid            = false;
+        response.notification.type  = 'error';
+        response.notification.title = 'El campo no puede ser vacío';
+        response.notification.msg   = 'Esc para cancelar';
+    }
+    return response;
+}
+export const columnNumeric = (valor) => {
+    const response = columnRequired(valor);
+
+    if(response.isValid && isNaN(valor)){
+        response.isValid            = false;
+        response.notification.type  = 'error';
+        response.notification.title = 'El campo debe ser un valor numérico';
+        response.notification.msg   = 'Esc para cancelar';
+    }
+    return response;
+}
+
+export const columnDate = (valor) => {
+    console.log("ENTRE");
+    const response = columnRequired(valor);
+    if(response.isValid){
+        var t = valor.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+        if(t === null)
+            response.isValid = false;
+        else{
+            var d = +t[1], m = +t[2], y = +t[3];
+
+            if(m < 1 || m > 12 || d < 1 || d > 31) {
+                response.isValid = false;
+            }
+
+        }
+
+        if(!response.isValid){
+            response.notification.type  = 'error';
+            response.notification.title = 'Formato: dd/mm/yyyy';
+            response.notification.msg   = 'Esc para cancelar';
+        }
+
+    }
     return response;
 }

@@ -1,12 +1,6 @@
-.t-ok,.t-success{
-	color:#3ca93e !important;
-}
-.t-warning{
-	color:#c1b01e !important;
-}
-.t-orange{
-	color:#e48506 !important;
-}
-.t-error,.t-fail{
-	color:#d23a37 !important;
-}
+$warning:#c1b01e;
+$orange :#e48506;
+$success:#3ca93e;
+$ok     :$success;
+$error  :#d23a37;
+$fail   :$error;

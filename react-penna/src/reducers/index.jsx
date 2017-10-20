@@ -11,7 +11,7 @@ import solicitudReducer from './solicitudes_reducer';
 import personalReducer from './personal_reducer';
 import ordenesReducer from './ordenes_reducer';
 import autenticacionReducer from './autenticacion_reducer';
-import errorServerReducer from './error_server_reducer';
+import msgAlertReducer from './msg_alert_reducer';
 import formsReducer from './forms_reducer';
 import {routerReducer} from 'react-router-redux'
 
@@ -31,7 +31,7 @@ var reducers = combineReducers({
     personalState     : personalReducer,
     ordenesState      : ordenesReducer,
     autenticacionState: autenticacionReducer,
-    errorServerState  : errorServerReducer,
+    msgAlertState     : msgAlertReducer,
     formsState        : formsReducer,
     router            : routerReducer
 });

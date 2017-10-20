@@ -54,8 +54,8 @@ class TablePrestacion extends React.Component {
 				hover
 				striped>
 				<TableHeaderColumn isKey dataField='id_bien' hidden>ID</TableHeaderColumn>
-				<TableHeaderColumn dataField='descripcion' dataSort>Descripción</TableHeaderColumn>
-				<TableHeaderColumn dataField='observacion' dataSort>Observacion</TableHeaderColumn>
+				<TableHeaderColumn dataField='descripcion' dataSort editable={ { validator: BsTable.columnRequired } } invalidEditColumnClassName={ BsTable.invalidClass }>Descripción</TableHeaderColumn>
+				<TableHeaderColumn dataField='observacion' dataSort editable={ { validator: BsTable.columnRequired } } invalidEditColumnClassName={ BsTable.invalidClass }>Observacion</TableHeaderColumn>
 				<TableHeaderColumn editable={false} dataField='servicio_nombre' dataSort>Servicio</TableHeaderColumn>
 			</BootstrapTable>
 		 );

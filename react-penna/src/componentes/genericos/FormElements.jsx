@@ -1,6 +1,6 @@
 var React   = require('react');
 var Popover = require("react-bootstrap/lib/Popover");
-import {ShowError} from '../../api/error_server_api';
+import {showMsg} from '../../api/msg_alert_api';
 
 
 export const Formulario = (props) => {
@@ -59,12 +59,14 @@ const validator = (event,props) => {
 
 
 export const Input2 = (props) => {
-    const style =  (props.validator.isValid) ?  'hidden' :  '';
+    let isValid = (props.validator.isValid == undefined) ? false : props.validator.isValid;
+    const styleLabel =  (isValid) ?  'hidden' :  '';
+    const styleInput =  (isValid || props.validator.msg == undefined) ?  '' :  'invalid';
       return (
 			<div className={"form-group " +props.clases}>
 				<label>{props.label}</label>
-				<input type="text" disabled={props.disabled} onBlur={(e) => validator(e, props)} onChange={(e) => validator(e, props)} className="form-control" value={props.value}  placeholder={props.placeholder} ref={props.valor}/>
-                <span className={"msj_error " +style}> {props.validator.msg}</span>
+				<input type="text" disabled={props.disabled} onBlur={(e) => validator(e, props)} onChange={(e) => validator(e, props)} className={"form-control "+styleInput} value={props.value}  placeholder={props.placeholder} ref={props.valor}/>
+                <span className={"msj_error " +styleLabel}> {props.validator.msg}</span>
 			</div>
       );
 }
@@ -84,7 +86,7 @@ export const habilitarSubmit = (validator,callback) => {
         callback();
     }
     else{
-	    ShowError("Debe completar todos los campos para poder continuar");
+	    showMsg("Debe completar todos los campos para poder continuar");
     }
 }
 

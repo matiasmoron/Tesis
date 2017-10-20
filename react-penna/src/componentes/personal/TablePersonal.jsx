@@ -59,14 +59,13 @@ class TablePersonal extends React.Component {
 				hover
 				striped
 				pagination>
-				<TableHeaderColumn isKey dataField='legajo'>Legajo</TableHeaderColumn>
-				<TableHeaderColumn dataField='usuario'>Usuario</TableHeaderColumn>
-				<TableHeaderColumn dataField='dni'>DNI</TableHeaderColumn>
-				<TableHeaderColumn dataField='nombre'>Nombre</TableHeaderColumn>
-				<TableHeaderColumn dataField='apellido'>Apellido</TableHeaderColumn>
-				<TableHeaderColumn  editable={false} dataField='puesto_nombre'>Puesto</TableHeaderColumn>
+				<TableHeaderColumn isKey dataField='legajo' editable={ { validator: BsTable.columnNumeric } } invalidEditColumnClassName={ BsTable.invalidClass }>Legajo</TableHeaderColumn>
+				<TableHeaderColumn dataField='usuario' editable={ { validator: BsTable.columnRequired } } invalidEditColumnClassName={ BsTable.invalidClass }>Usuario</TableHeaderColumn>
+				<TableHeaderColumn dataField='dni' editable={ { validator: BsTable.columnNumeric } } invalidEditColumnClassName={ BsTable.invalidClass }>DNI</TableHeaderColumn>
+				<TableHeaderColumn dataField='nombre' editable={ { validator: BsTable.columnRequired } } invalidEditColumnClassName={ BsTable.invalidClass }>Nombre</TableHeaderColumn>
+				<TableHeaderColumn dataField='apellido' editable={ { validator: BsTable.columnRequired } } invalidEditColumnClassName={ BsTable.invalidClass }>Apellido</TableHeaderColumn>
                 <TableHeaderColumn  editable={false}  dataField='servicio_nombre'>Servicio</TableHeaderColumn>
-				<TableHeaderColumn dataField='fecha_ingreso'>Fecha ingreso</TableHeaderColumn>
+				<TableHeaderColumn dataField='fecha_ingreso' editable={ { validator: BsTable.columnDate } } invalidEditColumnClassName={ BsTable.invalidClass }>Fecha ingreso</TableHeaderColumn>
 			</BootstrapTable>
 		 );
    }

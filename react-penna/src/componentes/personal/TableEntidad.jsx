@@ -61,13 +61,8 @@ class TableEntidad extends React.Component {
 				striped
 				pagination>
 				<TableHeaderColumn editable={false} isKey dataField='id_entidad' hidden>ID</TableHeaderColumn>
-				<TableHeaderColumn
-					 dataFormat={ this.tipoEntidadFormatter}
-					 editable={false}
-					 dataField='tipo_entidad'>
-					 Tipo entidad
-				</TableHeaderColumn>
-				<TableHeaderColumn editable={true} dataField='nombre'>Nombre</TableHeaderColumn>
+				<TableHeaderColumn dataFormat={ this.tipoEntidadFormatter} editable={false} dataField='tipo_entidad'>Tipo entidad</TableHeaderColumn>
+				<TableHeaderColumn editable={ { validator: BsTable.columnRequired } } invalidEditColumnClassName={ BsTable.invalidClass } dataField='nombre'>Nombre</TableHeaderColumn>
 			</BootstrapTable>
 		 );
    }

@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import store from '../../store';
 import TableServicio from './TableServicio';
 import {Input2,Formulario,habilitarSubmit} from '../genericos/FormElements';
-import * as ApiError from '../../api/error_server_api';
 
 class PanelServicio extends React.Component {
 	constructor() {
@@ -13,8 +12,6 @@ class PanelServicio extends React.Component {
 	  this.state= {
 		  validator : {
 			  nombre :{
-				  isValid : false,
-				  msg      : "",
 				  required : true
 			  }
 		  }
