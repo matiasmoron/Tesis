@@ -16,7 +16,10 @@ class TableServicio extends React.Component {
 
 	 }
 	updateServicio(row, cellName, cellValue) {
-			this.props.updateServicio(row);
+		//Validar
+		return;
+		this.props.updateServicio(row);
+		ApiError.ShowError("Debe completar todos los campos para poder continuar");
 	}
 	customConfirm(next, dropRowKeys) {
 	  const dropRowKeysStr = dropRowKeys.join(',');
@@ -25,7 +28,10 @@ class TableServicio extends React.Component {
 	  }
 	}
 
-
+	invalidClass(cell, row){
+		console.log("entre");
+	  return 'invalid';
+	}
    render() {
 	    const editar = {
 			mode: 'dbclick',
@@ -57,7 +63,7 @@ class TableServicio extends React.Component {
 				striped
 				pagination>
 				<TableHeaderColumn isKey dataField='id_servicio'>ID</TableHeaderColumn>
-				<TableHeaderColumn dataField='nombre'>Nombre</TableHeaderColumn>
+				<TableHeaderColumn dataField='nombre' editable={ { validator: BsTable.columnRequerida } } invalidEditColumnClassName={ this.invalidClass }>Nombre</TableHeaderColumn>
 			</BootstrapTable>
 		 );
    }

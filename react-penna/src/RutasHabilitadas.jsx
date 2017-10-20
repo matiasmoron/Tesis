@@ -27,6 +27,7 @@ let SubmenuRoute = [
 
 var cargar_rutas = (opc_habilitados) => {
     let habilitados=[];
+    console.log(opc_habilitados);
 	opc_habilitados.map(function(opcion){
 		if(opcion.id_opcion!=0)
 			 habilitados.push(SubmenuRoute[opcion.id_menu-1][opcion.id_opcion]);
@@ -42,6 +43,7 @@ var cargar_rutas = (opc_habilitados) => {
 
 class RutasHabilitadas extends React.Component {
 	render(){
+        // console.log("EASDASD",typeof this.props.permisos);
 		let rutas = cargar_rutas(JSON.parse(this.props.permisos));
 	    return (
 	        <Switch>

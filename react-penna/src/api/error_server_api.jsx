@@ -6,6 +6,6 @@ export function HideError() {
     store.dispatch(hideErrorServer());
 }
 
-export function ShowError(msg) {
-    store.dispatch(showErrorServer(msg));
+export function ShowError(msg,timeout=2000) {
+    store.dispatch(showErrorServer(msg,timeout));
 }

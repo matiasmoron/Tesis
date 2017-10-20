@@ -6,9 +6,10 @@ export function hideErrorServer() {
   };
 }
 
-export function showErrorServer(msg) {
+export function showErrorServer(msg,timeout) {
   return {
     type: types.SHOW_ERROR,
-	msg
+	msg,
+    timeout
   };
 }

@@ -31,3 +31,20 @@ table td .botonera button{
 .d-inline{
 	display: inline-block;
 }
+
+.msj_error{
+	color: red;
+	font-size: 13px;
+	font-weight: bold;
+}
+.alert-penna{
+	position: sticky;
+    z-index : 100;
+    width   : 100%;
+    top     : 0px;
+	font-weight: bold;
+}
+
+td.invalid input{
+	border: 1px solid red;
+}

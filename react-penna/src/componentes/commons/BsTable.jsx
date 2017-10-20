@@ -46,5 +46,20 @@ export const btnXls  = (onClick) => {
 }
 
 export const selectFila={
-		mode: 'checkbox'
+	mode: 'checkbox'
 };
+
+
+////////////////
+//VALIDACIONES //
+////////////////
+
+export const columnRequerida = (valor) => {
+
+ const response = { isValid: true, notification: { type: 'success', msg: '', title: '' } };
+   response.isValid = false;
+    response.notification.type = 'success';
+    response.notification.msg = 'Value must be inserted';
+    response.notification.title = 'Requested Value';
+    return response;
+}

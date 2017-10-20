@@ -15,9 +15,12 @@ class ErrorServer extends React.Component {
 
 	render() {
 		if (this.props.errorServer.display_error){
+			setTimeout(function(){
+				Api.HideError();
+			},this.props.errorServer.timeout);
 			return (
-					<div className="text-center">
-						<Alert bsStyle="danger">
+					<div className="text-center alert-penna">
+						<Alert bsStyle="success">
 					     {this.props.errorServer.msg_error}
 						 	<button type="button" onClick={this.closeError} className="close" data-dismiss="alert" aria-label="Close">
 	    						<span aria-hidden="true">&times;</span>

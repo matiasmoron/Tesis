@@ -6,7 +6,7 @@ import imgVerOrden from '../../img/menu/ver_orden.png';
 import imgAdmin from '../../img//menu/orden_admin2.png';
 import imgNuevaOrden from '../../img/menu/nueva_orden2.png';
 
-let menu=1 ;
+let menu=1;
 
 let Submenu ={
         1:{url:"/ordenes/ver"         ,nombre:"Ver órdenes"     ,logo:imgVerOrden},
@@ -16,6 +16,7 @@ let Submenu ={
 
 var cargar_submenu = (opc_habilitados) => {
     let habilitados = [];
+    console.log(typeof opc_habilitados);
     opc_habilitados.map(function(opcion){
         if (menu==opcion.id_menu && opcion.id_opcion!=0)
 		    habilitados.push(Submenu[opcion.id_opcion]);
@@ -36,7 +37,13 @@ var CardsHabilitados = (props) => {
 }
 
 const SubmenuOrdenes = (props) => {
-     let subMenu = cargar_submenu(JSON.parse(props.permisos));
+    let aux;
+    if((typeof props.permisos) ==  'object')
+        aux = props.permisos;
+    else
+        aux = JSON.parse(props.permisos);
+
+    let subMenu = cargar_submenu(aux);
       return (
             <Cards>
                 <CardsHabilitados subMenu={subMenu}/>

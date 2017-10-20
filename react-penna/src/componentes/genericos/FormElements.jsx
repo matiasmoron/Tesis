@@ -1,4 +1,4 @@
-var React = require('react');
+var React   = require('react');
 var Popover = require("react-bootstrap/lib/Popover");
 
 
@@ -6,10 +6,10 @@ export const Formulario = (props) => {
     const estilo ={
         display     : 'inline',
         background  : '#3c91bb',
-        border      :'#3c91bb',
-        borderRadius:'5px',
-        marginRight :'10px',
-        color       :'white'
+        border      : '#3c91bb',
+        borderRadius: '5px',
+        marginRight : '10px',
+        color       : 'white'
      }
       return (
         <div className="panel panel-primary">
@@ -38,19 +38,32 @@ export const Input = (props) => {
 }
 
 export const Input2 = (props) => {
-    const validacion = (event,validaciones) => {
-        if(props.requerido && event.target.value.length>5)
-            props.cambiar({isValid : true, message : ""});
-        else {
-            props.cambiar({isValid : false, message : "El campo no puede quedar vacío"});
+    const validacion = (event) => {
+
+        if(props.requerido && event.target.value.length==0){
+            props.cambiar(Object.assign({}, props.validacion, {esValido : false, msg : "El campo no puede quedar vacío"}));
+            return;
         }
+
+        if(props.validacion.tipo != undefined){
+            switch (props.validacion.tipo) {
+                case "number":
+                    if(isNaN(event.target.value)){
+                        props.cambiar(Object.assign({}, props.validacion, {esValido : false, msg : "El campo debe ser un entero"}));
+                        return;
+                    }
+                break;
+            }
+        }
+        props.cambiar(Object.assign({}, props.validacion, {esValido : true, msg : ""}));
     }
 
+    const style =  (props.validacion.esValido) ?  'hidden' :  '';
       return (
 			<div className={"form-group " +props.clases}>
-				<label >{props.label}</label>
-				<input type="text" disabled={props.disabled} onChange={validacion} className="form-control" value={props.value}  placeholder={props.placeholder} ref={props.valor}/>
-                <span className={props.validacion.isValid ?  'hidden' :  ''} > {props.validacion.message}</span>
+				<label>{props.label}</label>
+				<input type="text" disabled={props.disabled} onBlur={validacion.bind(props.validacion)} onChange={validacion} className="form-control" value={props.value}  placeholder={props.placeholder} ref={props.valor}/>
+                <span className={"msj_error " +style}> {props.validacion.msg}</span>
 			</div>
       );
 }

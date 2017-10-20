@@ -5,22 +5,18 @@ import { connect } from 'react-redux';
 import store from '../../store';
 import TableServicio from './TableServicio';
 import {Input2,Formulario} from '../genericos/FormElements';
-import {Alert} from 'react-bootstrap';
-
+import * as ApiError from '../../api/error_server_api';
 
 class PanelServicio extends React.Component {
 	constructor() {
       super();
 	  this.state= {
-		  validation : {
+		  validacion : {
 			  nombre :{
-				  isValid: false,
-				  message: ""
-			  },
-			   nombre2 :{
- 				  isValid: true,
- 				  message: ""
- 			  }
+				  esValido : false,
+				  msg      : "",
+				  requerido: true
+			  }
 		  }
 	  }
     }
@@ -33,9 +29,9 @@ class PanelServicio extends React.Component {
 	_addElemento(event){
 		event.preventDefault();
 
-		let obj = this.state.validation;
-		let habilitarSubmit =  Object.keys(obj).reduce(function(valorAnterior,valorAct){
-			 return valorAnterior && obj[valorAct].isValid;
+		let obj             = this.state.validacion;
+		let habilitarSubmit = Object.keys(obj).reduce(function(valorAnterior,valorAct){
+			 return valorAnterior && obj[valorAct].esValido;
 		}
 	  	,true);
 		console.log("valor",habilitarSubmit);
@@ -47,7 +43,7 @@ class PanelServicio extends React.Component {
 			});
 		}
 		else{
-			//Se podria tirar el mensaje de error superior de que hay campos inválidos
+			ApiError.ShowError("Debe completar todos los campos para poder continuar");
 		}
     }
 
@@ -63,7 +59,7 @@ class PanelServicio extends React.Component {
 		<div className="col-md-5">
 			<Formulario titulo="Creación servicio" submit={this._addElemento.bind(this)}>
 				<div className="row">
-					<Input2 clases="form-group col-md-6"  requerido={true} validacion={this.state.validation.nombre}  label="Nombre" valor={input => this._nombre = input} cambiar={p1 => this.setState({validation:{nombre:p1}})}  />
+					<Input2 clases="form-group col-md-6"  requerido={true} validacion={this.state.validacion.nombre}  label="Nombre" valor={input => this._nombre = input} cambiar={p1 => this.setState({validacion:{nombre:p1}})}  />
 					<div className="btn-form">
 						<button type="submit" className="btn btn-success">Agregar servicio</button>
 					</div>
