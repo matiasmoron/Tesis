@@ -16,10 +16,7 @@ class TableServicio extends React.Component {
 
 	 }
 	updateServicio(row, cellName, cellValue) {
-		//Validar
-		return;
 		this.props.updateServicio(row);
-		ApiMsg.showMsg("Debe completar todos los campos para poder continuar");
 	}
 	customConfirm(next, dropRowKeys) {
 	  const dropRowKeysStr = dropRowKeys.join(',');

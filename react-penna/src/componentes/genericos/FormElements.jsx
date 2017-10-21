@@ -21,12 +21,27 @@ export const Formulario = (props) => {
                 {props.titulo}
             </div>
             <div className="panel-body">
-                <form className="" onSubmit={props.submit}>
+                <form className="" id={props.id} onSubmit={props.submit}>
 					{props.children}
                 </form>
             </div>
         </div>
       );
+}
+
+/**
+ * Resetea el fomulario y vuelve a falso las validaciones del mismo
+ * @param string id        id del formulario que se quiere resetear los valores del input
+ * @param        validator validator del formulario
+ * @return un nuevo validator con los isValid en undefined
+ */
+export const resetForm = (id,validator) => {
+    document.getElementById(id).reset();
+    for (var campo_validator in validator) {
+        validator[`${campo_validator}`]=Object.assign({}, validator[`${campo_validator}`], {isValid : undefined , msg: undefined});
+    }
+
+    return validator;
 }
 
 export const Input = (props) => {
