@@ -41,16 +41,34 @@ class SelectChosen extends React.Component {
 		return newArray;
 	}
 
+	validate(validator,value){
+        if(validator.required &&  (value==null || value.length==0)){
+            this.props.cambiar(Object.assign({},validator, {isValid : false, msg : "El campo no puede quedar vacío"}));
+            return;
+        }
+        this.props.cambiar(Object.assign({}, validator, {isValid : true, msg : ""}));
+    }
+
 	onChange(val) {
 		val= (val==null)? "" : val;
+		this.validate(this.props.validator,val);
 		this.setState({ value:val });
 		this.props.valor(val);
 		if(this.props.onChange)
 			this.props.onChange(val);
 	}
 
-	render() {
+	//Utilizado para validar en caso que ingrese manualmente la busqueda
+	onBlur(event){
+		if (event.target.value!="" && event.target.value.length>0){
+			this.props.cambiar(Object.assign({},this.props.validator, {isValid : false, msg : "El campo no puede quedar vacío"}));
+		}
+	}
 
+	render() {
+	 let isValid = (this.props.validator.isValid == undefined) ? false : this.props.validator.isValid;
+	 const styleLabel =  (isValid) ?  'hidden' :  '';
+	 const styleInput =  (isValid || this.props.validator.msg == undefined) ?  '' :  'invalid';
 	  return (
 		 <div className={this.props.clases}>
 			<label>{this.props.label}</label>
@@ -66,7 +84,9 @@ class SelectChosen extends React.Component {
 			  clearValueText='Borrar'
 			  clearAllText='Borrar todo'
 			  clearable={this.props.clearable}
+			  onBlur= {this.onBlur.bind(this)}
 			/>
+			<span className={"msj_error " +styleLabel}> {this.props.validator.msg}</span>
 		</div>
 	  );
 	}

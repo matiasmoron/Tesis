@@ -6,6 +6,7 @@ import * as ApiPuesto from '../../api/puesto_api';
 import { connect } from 'react-redux';
 import store from '../../store';
 import DatePicker from '../genericos/DatePicker';
+import SelectChosen from '../genericos/SelectChosen';
 import {SelectInput,Input2,Formulario,habilitarSubmit,resetForm} from '../genericos/FormElements';
 import {showMsg} from '../../api/msg_alert_api';
 import TablePersonal from './TablePersonal';
@@ -39,7 +40,10 @@ class PanelPersonal extends React.Component {
 	  			  },
 	  			  fecha_ingreso :{
 	  				  required : true
-	  			  }
+	  			  },
+				  id_servicio : {
+					  required : true
+				  }
 	  		  };
 	}
 
@@ -90,7 +94,7 @@ class PanelPersonal extends React.Component {
 					<Input2 validator={this.state.validator.nombre} clases="form-group col-md-4" label="Nombre" valor={input => this._nombre = input} cambiar={p1 =>this.setState({validator :Object.assign({}, this.state.validator,{nombre:p1})})}  />
 					<Input2 validator={this.state.validator.apellido} clases="form-group col-md-4" label="Apellido" valor={input => this._apellido = input}  cambiar={p1 =>this.setState({validator :Object.assign({}, this.state.validator,{apellido:p1})})}  />
 					<DatePicker validator={this.state.validator.fecha_ingreso} clases="form-group col-md-4" label="Fecha Ingreso"  valor={input => this._fecha_ingreso = input} cambiar={p1 =>this.setState({validator :Object.assign({}, this.state.validator,{fecha_ingreso:p1})})}/>
-					<SelectInput clases="form-group col-md-6" data_opciones={this.props.servicios} llave="id_servicio" descripcion="nombre" label="Servicio"   valor={input => this._id_servicio = input} />
+					<SelectChosen validator={this.state.validator.id_servicio} clases="form-group col-md-6" data={this.props.servicios} llave="id_servicio" descripcion="nombre" label="Servicio"   valor={input => this._id_servicio = input} cambiar={p1 =>this.setState({validator :Object.assign({}, this.state.validator,{id_servicio:p1})})} />
 					<div className="btn-form">
 						<button type="submit" className="btn btn-success">Agregar Personal</button>
 					</div>
