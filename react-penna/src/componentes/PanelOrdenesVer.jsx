@@ -77,6 +77,10 @@ class PanelOrdenes extends React.Component {
 		Api.getBienes({id_tipo_bien:this._id_tipo_bien.value,id_servicio:this._id_servicio.value});
 	}
 
+	cleanInput(inputValue){
+		console.log("HOLAAA",inputValue);
+	}
+
 	// changeDatepicker(valor,formattedValue){
 	// 	console.log("date",valor);
 	// 	console.log(formattedValue);
@@ -90,19 +94,15 @@ class PanelOrdenes extends React.Component {
 				<div className="col-md-8 col-md-offset-2">
 					<Formulario titulo="Ver órdenes de trabajo" submit={(event)=>{ event.preventDefault();this.getOrdenesTabla()}}>
 						<div className="row">
-							<SelectChosen llave="id_servicio" descripcion="nombre" label="Servicios" clearable={false} clases="form-group col-md-6" onChange={this.changeSelect.bind(this)} data={this.props.servicios} valor={input => this._id_servicio = input}/>
-							<SelectChosen llave="id_entidad" descripcion="nombre" label="Entidad destino" clases="form-group col-md-6" data={this.props.entidades} valor={input => this._id_entidad = input}/>
+							<SelectChosen cleanInput={this.cleanInput.bind(this)} llave="id_servicio" descripcion="nombre" label="Servicios" clearable={false} clases="form-group col-md-6" onChange={this.changeSelect.bind(this)} data={this.props.servicios} valor={input => this._id_servicio = input}/>
 						</div>
 						<div className="row">
-							<SelectChosen llave="tipo_bien" descripcion="descripcion" label="Tipo bien" clearable={false} defaultVal={this.state.id_tbien_def} clases="form-group col-md-5" onChange={this.changeSelect.bind(this)} data={data_tipo_bienes} valor={input => this._id_tipo_bien = input}/>
-							<SelectChosen llave="id_bien" descripcion="descripcion" label="Bien" clases="form-group col-md-7" data={this.props.bienes} valor={input => this._id_bien = input}/>
 						</div>
 						<div className="row">
 							<Input clases="form-group col-md-5" label="Fecha inicio (creación)" valor={input => this._fecha_ini = input} />
 							<Input clases="form-group col-md-5" label="Fecha fin (creación)" valor={input => this._fecha_fin = input} />
 						</div>
 						<div className="row">
-							<SelectChosen llave="estado" descripcion="descripcion" label="Estado" multi={true} clases="form-group col-md-5" data={data_estados} valor={input => this._estado = input}/>
 							<Input clases="form-group col-md-5" disabled = {this.state.disabled_cod_patrimonial} label="Cód. Patrimonial" valor={input => this._cod_patrimonial = input} />
 						</div>
 						<div className="row">

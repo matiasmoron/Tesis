@@ -21,20 +21,26 @@ export const DELETE_TECNICO_SUCCESS          = 'DELETE_TECNICO_SUCCESS';
 // export const UPDATE_TECNICO_SUCCESS       = 'UPDATE_TECNICO_SUCCESS';
 
 
-//Entidad
+////////////
+//Entidad //
+////////////
 export const GET_ENTIDADES_SUCCESS           = 'GET_ENTIDADES_SUCCESS';
 export const ADD_ENTIDAD_SUCCESS             = 'ADD_ENTIDAD_SUCCESS';
 export const UPDATE_ENTIDAD_SUCCESS          = 'UPDATE_ENTIDAD_SUCCESS';
 export const DELETE_ENTIDAD_SUCCESS          = 'DELETE_ENTIDAD_SUCCESS';
 
-//Equipo
+///////////
+//Equipo //
+///////////
 export const GET_EQUIPOS_SUCCESS             = 'GET_EQUIPOS_SUCCESS';
 export const ADD_EQUIPO_SUCCESS              = 'ADD_EQUIPO_SUCCESS';
 export const UPDATE_EQUIPO_SUCCESS           = 'UPDATE_EQUIPO_SUCCESS';
 export const DELETE_EQUIPO_SUCCESS           = 'DELETE_EQUIPO_SUCCESS';
 
 
-//Prestacion
+///////////////
+//Prestacion //
+///////////////
 export const GET_PRESTACIONES_SUCCESS        = 'GET_PRESTACIONES_SUCCESS';
 export const ADD_PRESTACION_SUCCESS          = 'ADD_PRESTACION_SUCCESS';
 export const UPDATE_PRESTACION_SUCCESS       = 'UPDATE_PRESTACION_SUCCESS';
@@ -42,7 +48,10 @@ export const DELETE_PRESTACION_SUCCESS       = 'DELETE_PRESTACION_SUCCESS';
 
 
 
-////////ORDENES ////////////////
+
+///////////////////////////////////
+//ORDENES
+///////////////////////////////////
 export const RESET_TABLA_ORDENES 			 = 'RESET_TABLA_ORDENES';
 
 //ABM Ordenes
@@ -60,13 +69,24 @@ export const ASIGNAR_ORDEN 		             = 'ASIGNAR_ORDEN';
 export const DERIVAR_ORDEN 		             = 'DERIVAR_ORDEN';
 export const ACTUALIZAR_ORDEN 		         = 'ACTUALIZAR_ORDEN';
 
-//Personal
+
+/////////////
+//Personal //
+/////////////
 export const GET_PERSONAL_SUCCESS            = 'GET_PERSONAL_SUCCESS';
 export const ADD_PERSONAL_SUCCESS            = 'ADD_PERSONAL_SUCCESS';
 export const UPDATE_PERSONAL_SUCCESS         = 'UPDATE_PERSONAL_SUCCESS';
 export const DELETE_PERSONAL_SUCCESS         = 'DELETE_PERSONAL_SUCCESS';
 
-//Autenticación
+//////////////////
+//CONFIGURACION //
+//////////////////
+export const UPDATE_PASSWORD_SUCCESS         = 'UPDATE_PASSWORD_SUCCESS';
+
+//////////////////
+//Autenticación //
+//////////////////
+
 export const LOGIN_REQUEST 				     = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS 				     = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE 				     = 'LOGIN_FAILURE';

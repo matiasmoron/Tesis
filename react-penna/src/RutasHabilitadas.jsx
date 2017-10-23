@@ -11,6 +11,7 @@ import personal from './componentes/personal/PanelPersonal';
 import ordenes_ver from './componentes/PanelOrdenesVer';
 import ordenes_abm from './componentes/PanelOrdenesABM';
 import ordenes_admin from './componentes/PanelOrdenesAdmin';
+import configuracion from './componentes/configuracion/PanelConfiguracion';
 import submenuOrdenes from './componentes/menu/SubmenuOrdenes';
 import submenuPersonal from './componentes/menu/SubmenuPersonal';
 import submenuBienes from './componentes/menu/SubmenuBienes';
@@ -20,7 +21,7 @@ let SubmenuRoute = [
     [{path:"/ordenes" ,component:submenuOrdenes,exact:true},{path:"/ordenes/ver",component:ordenes_ver},{path:"/ordenes/abm",component:ordenes_abm },{path:"/ordenes/administrar" ,component:ordenes_admin }],
     [{path:"/personal" ,component:submenuPersonal,exact:true},{path:"/personal/personal" ,component:personal},{path:"/personal/puesto_servicio" ,component:servicio},{path:"/personal/tecnicos" ,component:tecnicos},{path:"/personal/entidades" ,component:entidades}],
     [{path:"/bienes" ,component:submenuBienes,exact:true},{path:"/bienes/equipos" ,component:equipos },{path:"/bienes/prestaciones" ,component:prestaciones }],
-    [{path:"/configuracion" ,component:submenuConfiguracion,exact:true},{path:"/configuracion/mi_cuenta" ,component:equipos }]
+    [{path:"/configuracion" ,component:submenuConfiguracion,exact:true},{path:"/configuracion/mi_cuenta" ,component:configuracion }]
 ];
 
 
