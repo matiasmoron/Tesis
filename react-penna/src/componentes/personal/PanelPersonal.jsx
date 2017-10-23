@@ -14,30 +14,34 @@ class PanelPersonal extends React.Component {
 	constructor() {
       super();
 	  this.state= {
-		  validator : {
-			  legajo :{
-				  required : true,
-				  type : "numeric"
-			  },
-			  usuario :{
-				  required : true
-			  },
-			  dni :{
-				  required : true,
-				  type : "numeric"
-			  },
-			  nombre :{
-				  required : true
-			  },
-			  apellido :{
-				  required : true
-			  },
-			  fecha_ingreso :{
-				  required : true
-			  }
-		  }
+		  validator :this.initValidator()
 	  }
     }
+
+	initValidator(){
+		return {
+	  			  legajo :{
+	  				  required : true,
+	  				  type : "numeric"
+	  			  },
+	  			  usuario :{
+	  				  required : true
+	  			  },
+	  			  dni :{
+	  				  required : true,
+	  				  type : "numeric"
+	  			  },
+	  			  nombre :{
+	  				  required : true
+	  			  },
+	  			  apellido :{
+	  				  required : true
+	  			  },
+	  			  fecha_ingreso :{
+	  				  required : true
+	  			  }
+	  		  };
+	}
 
 	componentDidMount(){
 		ApiPersonal.getPersonal();
@@ -51,8 +55,8 @@ class PanelPersonal extends React.Component {
 
 		promesa.then( valor => {
 			ApiPersonal.getPersonal();
-			let new_validator= resetForm("form_personal",this.state.validator);
-			this.setState({validator:new_validator});
+			resetForm("form_personal");
+			this.setState({validator:this.initValidator()});
 			showMsg("Se creo  el personal correctamente","ok");
 		});
 	}

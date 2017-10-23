@@ -11,13 +11,17 @@ class PanelServicio extends React.Component {
 	constructor() {
       super();
 	  this.state= {
-		  validator : {
-			  nombre :{
-				  required : true
-			  }
+		  validator :this.initValidator()
 		  }
-	  }
-    }
+	}
+
+	initValidator(){
+		return {
+				nombre :{
+					required : true
+				}
+			};
+	}
 
 	componentDidMount(){
 		servicioApi.getServicios();
@@ -28,8 +32,8 @@ class PanelServicio extends React.Component {
 
 		promesa.then( valor => {
 			servicioApi.getServicios();
-			let new_validator= resetForm("form_servicio",this.state.validator);
-			this.setState({validator:new_validator});
+			resetForm("form_servicio");
+			this.setState({validator:this.initValidator()});
 			showMsg("Se creo correctamente el servicio","ok");
 		});
 	}
@@ -56,7 +60,7 @@ class PanelServicio extends React.Component {
 		<div className="col-md-5">
 			<Formulario titulo="Creación servicio" id="form_servicio" submit={this._addElemento.bind(this)}>
 				<div className="row">
-					<Input2 clases="form-group col-md-6"  validator={this.state.validator.nombre}  label="Nombre" valor={input => this._nombre = input} cambiar={p1 => this.setState({validator:{nombre:p1}})}  />
+					<Input2 clases="form-group col-md-6"  name="nombre" validator={this.state.validator.nombre}  label="Nombre" valor={input => this._nombre = input} cambiar={p1 =>this.setState({validator :Object.assign({}, this.state.validator,{nombre:p1})})}  />
 					<div className="btn-form">
 						<button type="submit" className="btn btn-success">Agregar servicio</button>
 					</div>

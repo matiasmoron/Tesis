@@ -13,13 +13,17 @@ class PanelEntidad extends React.Component {
 	constructor() {
       super();
 	  this.state= {
-		  validator : {
-			  nombre :{
-				  required : true
-			  }
-		  }
+		   validator :this.initValidator()
 	  }
     }
+
+	initValidator(){
+		return {
+				nombre :{
+					required : true
+				}
+			};
+	}
 
 	componentDidMount(){
 		entidadApi.getEntidades();
@@ -37,8 +41,8 @@ class PanelEntidad extends React.Component {
 
 		promesa.then( valor => {
 			entidadApi.getEntidades();
-			let new_validator= resetForm("form_entidad",this.state.validator);
-			this.setState({validator:new_validator});
+			resetForm("form_entidad");
+			this.setState({validator:this.initValidator()});
 			showMsg("Se creo correctamente la entidad","ok");
 		});
 	}
@@ -71,7 +75,7 @@ class PanelEntidad extends React.Component {
 				<div className="col-md-6 col-md-offset-3">
 					<Formulario titulo="Creación entidad" id="form_entidad" submit={this._addElemento.bind(this)}>
 						<div className="row">
-							<Input2 clases="form-group col-md-6" label="Nombre"  validator={this.state.validator.nombre} valor={input => this._nombre = input} cambiar={p1 => this.setState({validator:{nombre:p1}})}/>
+							<Input2 clases="form-group col-md-6" label="Nombre"  validator={this.state.validator.nombre} valor={input => this._nombre = input} cambiar={p1 =>this.setState({validator :Object.assign({}, this.state.validator,{nombre:p1})})} />
 							<SelectChosen clearable={false} clases="form-group col-md-6" data={datos_select} llave="tipo_entidad" descripcion="descripcion" label="Tipo"   valor={input => this._tipo_entidad = input}/>
 						</div>
 						<div className="btn-form">
@@ -89,7 +93,6 @@ class PanelEntidad extends React.Component {
 
 
 const mapStateToProps = function(store) {
-console.log( store.entidadState);
   return {
     entidades: store.entidadState.entidades
   };
