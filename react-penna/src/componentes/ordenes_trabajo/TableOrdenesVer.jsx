@@ -2,12 +2,12 @@ var React             = require('react');
 var ReactBsTable      = require('react-bootstrap-table');
 import {BootstrapTable,ExportCSVButton,TableHeaderColumn} from 'react-bootstrap-table';
 import { connect } from 'react-redux';
-import * as Api from '../api/ordenes_api';
-import * as BsTable from './commons/BsTable';
-import {estadoOrden,tipoBien,conformidad} from './commons/Utils';
-import {Boton,TextArea,SelectInput,Label} from './genericos/FormElements';
-import {ModalBs} from './genericos/ModalBs';
-import {VerMasModal} from './ordenes_trabajo/templates/VerMasModal';
+import * as Api from '../../api/ordenes_api';
+import * as BsTable from '../commons/BsTable';
+import {estadoOrden,tipoBien,conformidad} from '../commons/Utils';
+import {Boton,TextArea,SelectInput,Label} from '../genericos/FormElements';
+import {ModalBs} from '../genericos/ModalBs';
+import {VerMasModal} from './templates/VerMasModal';
 
 class TableOrdenesVer extends React.Component {
 	 constructor() {

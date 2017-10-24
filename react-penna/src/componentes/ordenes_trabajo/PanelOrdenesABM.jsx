@@ -1,14 +1,14 @@
 var React = require('react');
 
-import * as Api from '../api/ordenes_api';
-import * as ApiServicio from '../api/servicio_api';
-import * as entidadApi from '../api/entidad_api';
+import * as Api from '../../api/ordenes_api';
+import * as ApiServicio from '../../api/servicio_api';
+import * as entidadApi from '../../api/entidad_api';
 import { connect } from 'react-redux';
-import store from '../store';
-import {SelectInput,Input,Formulario} from './genericos/FormElements';
+import store from '../../store';
+import {SelectInput,Input,Formulario} from '../genericos/FormElements';
 import TableOrdenesABM from './TableOrdenesABM';
-import {tipoBien} from './commons/Utils';
-import SelectChosen from './genericos/SelectChosen';
+import {tipoBien} from '../commons/Utils';
+import SelectChosen from '../genericos/SelectChosen';
 
 class PanelOrdenes extends React.Component {
 	constructor() {

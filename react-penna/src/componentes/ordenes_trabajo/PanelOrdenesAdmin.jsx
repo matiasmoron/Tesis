@@ -1,15 +1,15 @@
 var React = require('react');
 
-import * as Api from '../api/ordenes_api';
-import * as ApiServicio from '../api/servicio_api';
-import * as ApiEntidad from '../api/entidad_api';
-import * as ApiTecnico from '../api/tecnico_api';
+import * as Api from '../../api/ordenes_api';
+import * as ApiServicio from '../../api/servicio_api';
+import * as ApiEntidad from '../../api/entidad_api';
+import * as ApiTecnico from '../../api/tecnico_api';
 import { connect } from 'react-redux';
-import store from '../store';
-import {SelectInput,Input,Boton,Formulario} from './genericos/FormElements';
+import store from '../../store';
+import {SelectInput,Input,Boton,Formulario} from '../genericos/FormElements';
 import TableOrdenesAdmin from './TableOrdenesAdmin';
-import {tipoBien,estadoOrden} from './commons/Utils';
-import SelectChosen from './genericos/SelectChosen';
+import {tipoBien,estadoOrden} from '../commons/Utils';
+import SelectChosen from '../genericos/SelectChosen';
 
 class PanelOrdenesAdmin extends React.Component {
 	constructor() {

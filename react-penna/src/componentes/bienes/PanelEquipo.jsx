@@ -1,16 +1,16 @@
 var React = require('react');
 
-import * as Api from '../api/equipo_api';
-import * as ApiServicio from '../api/servicio_api';
+import * as Api from '../../api/equipo_api';
+import * as ApiServicio from '../../api/servicio_api';
 import { connect } from 'react-redux';
-import store from '../store';
-import {SelectInput,Input,PopOver,Formulario} from './genericos/FormElements';
+import store from '../../store';
+import {SelectInput,Input,PopOver,Formulario} from '../genericos/FormElements';
 import TableEquipo from './TableEquipo';
-import SelectChosen from './genericos/SelectChosen';
+import SelectChosen from '../genericos/SelectChosen';
 
 // Be sure to include styles at some point, probably during your bootstrapping
 // import 'react-select/dist/react-select.css';
-require("../styles/select.scss");
+require("../../styles/select.scss");
 
 class PanelEquipo extends React.Component {
 	constructor() {

@@ -2,7 +2,6 @@ var React = require('react');
 import { connect } from 'react-redux';
 import * as ApiAutenticacion from '../api/autenticacion_api';
 
-// require("../styles/form-elements.scss");
 require("../styles/inicio.scss");
 require("../styles/font-awesome-4.7.0/scss/font-awesome.scss");
 import logo from '../img/fotor_penna2.png';

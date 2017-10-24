@@ -3,15 +3,15 @@ var ReactBsTable      = require('react-bootstrap-table');
 var BootstrapTable    = ReactBsTable.BootstrapTable;
 var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
 import { connect } from 'react-redux';
-import store from '../store';
-import * as Api from '../api/ordenes_api';
-import * as ApiTecnico from '../api/tecnico_api';
-import * as BsTable from './commons/BsTable';
-import {estadoOrden,tipoBien,conformidad,prioridad} from './commons/Utils';
-import {Boton,TextArea,SelectInput,Label,Input} from './genericos/FormElements';
-import SelectChosen from './genericos/SelectChosen';
-import {ModalBs} from './genericos/ModalBs';
-import {VerMasModal} from './ordenes_trabajo/templates/VerMasModal';
+import store from '../../store';
+import * as Api from '../../api/ordenes_api';
+import * as ApiTecnico from '../../api/tecnico_api';
+import * as BsTable from '../commons/BsTable';
+import {estadoOrden,tipoBien,conformidad,prioridad} from '../commons/Utils';
+import {Boton,TextArea,SelectInput,Label,Input} from '../genericos/FormElements';
+import SelectChosen from '../genericos/SelectChosen';
+import {ModalBs} from '../genericos/ModalBs';
+import {VerMasModal} from './templates/VerMasModal';
 
 class TableOrdenesAdmin extends React.Component {
 	 constructor() {

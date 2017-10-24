@@ -34,14 +34,14 @@ class PanelConfiguracion extends React.Component {
             showMsg("Las contraseñas ingresadas deben ser iguales","error");
             return;
         }
-        var promesa = configuracionApi.updatePassword({passAnterior:this._passAnterior.value,passNueva:this._passNueva.value);
+        // var promesa = configuracionApi.updatePassword({passAnterior:this._passAnterior.value,passNueva:this._passNueva.value);
 
-        promesa.then( valor => {
-            configuracionApi.getServicios();
-            resetForm("form_configuracion");
-            this.setState({validator:this.initValidator()});
-            showMsg("La contraseña fué actualizada correctamente","ok");
-        });
+        // promesa.then( valor => {
+        //     configuracionApi.getServicios();
+        //     resetForm("form_configuracion");
+        //     this.setState({validator:this.initValidator()});
+        //     showMsg("La contraseña fué actualizada correctamente","ok");
+        // });
     }
 
     _updatePassword(event){

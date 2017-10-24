@@ -1,14 +1,14 @@
 var React = require('react');
 
-import * as Api from '../api/ordenes_api';
-import * as ApiServicio from '../api/servicio_api';
-import * as ApiEntidad from '../api/entidad_api';
+import * as Api from '../../api/ordenes_api';
+import * as ApiServicio from '../../api/servicio_api';
+import * as ApiEntidad from '../../api/entidad_api';
 import { connect } from 'react-redux';
-import store from '../store';
-import {SelectInput,Input,Boton,Formulario} from './genericos/FormElements';
+import store from '../../store';
+import {SelectInput,Input,Boton,Formulario} from '../genericos/FormElements';
 import TableOrdenesVer from './TableOrdenesVer';
-import {tipoBien,estadoOrden} from './commons/Utils';
-import SelectChosen from './genericos/SelectChosen';
+import {tipoBien,estadoOrden} from '../commons/Utils';
+import SelectChosen from '../genericos/SelectChosen';
 
 class PanelOrdenes extends React.Component {
 	constructor() {
@@ -94,7 +94,7 @@ class PanelOrdenes extends React.Component {
 				<div className="col-md-8 col-md-offset-2">
 					<Formulario titulo="Ver órdenes de trabajo" submit={(event)=>{ event.preventDefault();this.getOrdenesTabla()}}>
 						<div className="row">
-							<SelectChosen cleanInput={this.cleanInput.bind(this)} llave="id_servicio" descripcion="nombre" label="Servicios" clearable={false} clases="form-group col-md-6" onChange={this.changeSelect.bind(this)} data={this.props.servicios} valor={input => this._id_servicio = input}/>
+							{/* <SelectChosen cleanInput={this.cleanInput.bind(this)} llave="id_servicio" descripcion="nombre" label="Servicios" clearable={false} clases="form-group col-md-6" onChange={this.changeSelect.bind(this)} data={this.props.servicios} valor={input => this._id_servicio = input}/> */}
 						</div>
 						<div className="row">
 						</div>

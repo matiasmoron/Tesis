@@ -4,12 +4,12 @@ var BootstrapTable    = ReactBsTable.BootstrapTable;
 var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
 import { connect } from 'react-redux';
 // var Modal=require("react-bootstrap/lib/Modal");
-import * as Api from '../api/ordenes_api';
-import * as BsTable from './commons/BsTable';
-import {estadoOrden,tipoBien} from './commons/Utils';
-import {Boton,TextArea,SelectInput,Label} from './genericos/FormElements';
-import {ModalBs} from './genericos/ModalBs';
-import {VerMasModal} from './ordenes_trabajo/templates/VerMasModal';
+import * as Api from '../../api/ordenes_api';
+import * as BsTable from '../commons/BsTable';
+import {estadoOrden,tipoBien} from '../commons/Utils';
+import {Boton,TextArea,SelectInput,Label} from '../genericos/FormElements';
+import {ModalBs} from '../genericos/ModalBs';
+import {VerMasModal} from './templates/VerMasModal';
 
 class TableOrdenes extends React.Component {
 	 constructor() {
