@@ -111,4 +111,41 @@ class PermisoModel extends Model {
         return $this->execute_simple_query("delete",$query,$params);
     }
 
+    //Verifica que la contraseña sea igual a la almacenada 
+    public function validar_pass_anterior($usuario,$password){
+        $query="SELECT 
+                    1
+                FROM
+                    users
+                WHERE
+                    password=?
+                    AND 
+                    usuario=?";
+
+        array_push($params,bcrypt($password));
+        array_push($params,$usuario);
+
+       $validacion =$this->execute_simple_query("select",$query,$params);
+
+       if ($validacion['success'] && (count($validacion['result'])>0))
+            return true;
+        else
+            return false;
+    }
+
+    
+    public function cambiar_password($usuario,$request){
+        $query="UPDATE
+                    users
+                SET
+                    password=?
+                WHERE
+                    usuario=?";
+
+        array_push($params,bcrypt($password));
+        array_push($params,$request->usuario);
+
+        return $this->execute_simple_query("update",$query,$params);
+    }
+
 }

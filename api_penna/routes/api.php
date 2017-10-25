@@ -84,9 +84,9 @@ Route::middleware('jwt.auth')->put('/ordenes/asignar', 'Orden_Trabajo_Controller
 Route::middleware('jwt.auth')->put('/ordenes/actualizar', 'Orden_Trabajo_Controller@actualizar_orden');
 Route::middleware('jwt.auth')->put('/ordenes/actualizar_estado', 'Orden_Trabajo_Controller@actualizar_estado');
 
-// Route::middleware('cors')->put('/ordenes', 'Orden_Trabajo_Controller@update_orden');
-// Route::middleware('cors')->get('/ordenes/{id_orden_trabajo?}', 'Orden_Trabajo_Controller@get_ordenes');
-// Route::middleware('cors')->delete('/ordenes', 'Orden_Trabajo_Controller@remove_orden');
+
+//Configuracion
+Route::middleware('jwt.auth')->put('/password', 'Permiso_Controller@actualizar_password');
 
 //Bien
 Route::middleware('cors')->post('/bienes', 'Bien_Controller@get_bienes');
