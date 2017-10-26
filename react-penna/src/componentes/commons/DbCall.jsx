@@ -24,11 +24,13 @@ export function DbCall(args) {
         .then(response => {
 
                 if (response.data.success){
-                    if (typeof args.callbackParams == "undefined"){
-                        store.dispatch(args.callback(response.data.result));
-                    }
-                    else{
-                        store.dispatch(args.callback(args.callbackParams));
+                    if (typeof args.callback != "undefined"){
+                        if (typeof args.callbackParams == "undefined"){
+                            store.dispatch(args.callback(response.data.result));
+                        }
+                        else{
+                            store.dispatch(args.callback(args.callbackParams));
+                        }
                     }
                     resolve(1);
                 }
@@ -38,6 +40,7 @@ export function DbCall(args) {
                 }
          })
          .catch(error => {
+             console.log("error",error);
               switch (error.response.data.error) {
                 case 'token_expired':
                       ApiAuth.logoutUser();

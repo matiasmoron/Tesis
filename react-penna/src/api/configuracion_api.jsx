@@ -16,3 +16,13 @@ export function updatePassword(data) {
 
    return DbCall.DbCall(args);
 }
+
+export function resetPassword(data) {
+   var args={
+             metodo  : 'post',
+             url     : 'password',
+             params  : data
+          };
+
+   return DbCall.DbCall(args);
+}

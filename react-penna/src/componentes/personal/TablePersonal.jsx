@@ -2,11 +2,16 @@ var React             = require('react');
 var ReactBsTable      = require('react-bootstrap-table');
 var BootstrapTable    = ReactBsTable.BootstrapTable;
 var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
+import {Boton} from '../genericos/FormElements';
+import {ModalBs} from '../genericos/ModalBs';
+import {showMsg} from '../../api/msg_alert_api';
 import * as BsTable from '../commons/BsTable';
+import * as ApiConfiguracion from '../../api/configuracion_api';
 
 class TablePersonal extends React.Component {
 	 constructor() {
        super();
+	   this.state = {showResetPass:false,datosPersonal:[]};
      }
 
 	onAfterDeleteRow(rowKeys){
@@ -23,6 +28,27 @@ class TablePersonal extends React.Component {
 	 if (confirm(`Está seguro que desea eliminar las fila seleccionada ${dropRowKeysStr}?`)) {
 	   next();
 	 }
+   }
+
+	//Resetea la contraseña de un usuario que toma del state
+   resetPassword(){
+	   var promesa =ApiConfiguracion.resetPassword({usuario: this.state.datosPersonal.usuario});
+	   promesa.then(valor => {
+		   this.modalResetPass();
+			showMsg("Se reseteo la contraseña del usuario " + this.state.datosPersonal.usuario,"ok");
+	   });
+   }
+
+	//Renderiza el boton para resetear la contraseña
+   colResetPassword(cell,row){
+	    return <Boton onClick={this.modalResetPass.bind(this,row)} clases="btn-success" titulo="Resetear password" label="Reset Pass"></Boton>;
+   }
+
+	//Muestra y oculta el modal para resetear la contraseña guardando en el state los datos del usuario
+   modalResetPass(row){
+	 this.setState({showResetPass :!this.state.showResetPass});
+	 if (row!=null)
+		 this.setState({datosPersonal : row});
    }
 
    render() {
@@ -43,30 +69,42 @@ class TablePersonal extends React.Component {
 			noDataText            : 'No se encontraron resultados'
 		}
 
-		// const servicios=this.props.servicios;
-		// const createPriceEditor = (onUpdate, props) => (<PriceEditor onUpdate={ this.updateElemento.bind(this) } {...props}/>);
 		 return (
-			<BootstrapTable
-				height    = 'auto'
-				search    = {true}
-				multiColumnSearch
-				data      = {this.props.datos_elemento}
-				deleteRow = {true}
-				selectRow = {BsTable.selectFila}
-				cellEdit  = {editar}
-				options   = {opciones}
-				exportCSV
-				hover
-				striped
-				pagination>
-				<TableHeaderColumn isKey dataField='legajo' editable={ { validator: BsTable.columnNumeric } } invalidEditColumnClassName={ BsTable.invalidClass }>Legajo</TableHeaderColumn>
-				<TableHeaderColumn dataField='usuario' editable={ { validator: BsTable.columnRequired } } invalidEditColumnClassName={ BsTable.invalidClass }>Usuario</TableHeaderColumn>
-				<TableHeaderColumn dataField='dni' editable={ { validator: BsTable.columnNumeric } } invalidEditColumnClassName={ BsTable.invalidClass }>DNI</TableHeaderColumn>
-				<TableHeaderColumn dataField='nombre' editable={ { validator: BsTable.columnRequired } } invalidEditColumnClassName={ BsTable.invalidClass }>Nombre</TableHeaderColumn>
-				<TableHeaderColumn dataField='apellido' editable={ { validator: BsTable.columnRequired } } invalidEditColumnClassName={ BsTable.invalidClass }>Apellido</TableHeaderColumn>
-                <TableHeaderColumn  editable={false}  dataField='servicio_nombre'>Servicio</TableHeaderColumn>
-				<TableHeaderColumn dataField='fecha_ingreso' editable={ { validator: BsTable.columnDate } } invalidEditColumnClassName={ BsTable.invalidClass }>Fecha ingreso</TableHeaderColumn>
-			</BootstrapTable>
+			<div>
+				<ModalBs show={this.state.showResetPass} onHide={this.modalResetPass.bind(this)} titulo="Resetear Contraseña">
+					<div className="modal-body">
+						<div>
+							¿Desea resetear la contraseña  de {this.state.datosPersonal.usuario}?
+						</div>
+						<div className="text-center">
+							<Boton onClick={this.resetPassword.bind(this)} clases="btn-info" label="Aceptar"/>
+							<Boton onClick={this.modalResetPass.bind(this)} clases="btn-info" label="Cancelar"/>
+						</div>
+					</div>
+				</ModalBs>
+				<BootstrapTable
+					height    = 'auto'
+					search    = {true}
+					multiColumnSearch
+					data      = {this.props.datos_elemento}
+					deleteRow = {true}
+					selectRow = {BsTable.selectFila}
+					cellEdit  = {editar}
+					options   = {opciones}
+					exportCSV
+					hover
+					striped
+					pagination>
+					<TableHeaderColumn isKey dataField='legajo' editable={ { validator: BsTable.columnNumeric } } invalidEditColumnClassName={ BsTable.invalidClass }>Legajo</TableHeaderColumn>
+					<TableHeaderColumn dataField='usuario' editable={ { validator: BsTable.columnRequired } } invalidEditColumnClassName={ BsTable.invalidClass }>Usuario</TableHeaderColumn>
+					<TableHeaderColumn dataField='dni' editable={ { validator: BsTable.columnNumeric } } invalidEditColumnClassName={ BsTable.invalidClass }>DNI</TableHeaderColumn>
+					<TableHeaderColumn dataField='nombre' editable={ { validator: BsTable.columnRequired } } invalidEditColumnClassName={ BsTable.invalidClass }>Nombre</TableHeaderColumn>
+					<TableHeaderColumn dataField='apellido' editable={ { validator: BsTable.columnRequired } } invalidEditColumnClassName={ BsTable.invalidClass }>Apellido</TableHeaderColumn>
+	                <TableHeaderColumn  editable={false}  dataField='servicio_nombre'>Servicio</TableHeaderColumn>
+					<TableHeaderColumn dataField='fecha_ingreso' editable={ { validator: BsTable.columnDate } } invalidEditColumnClassName={ BsTable.invalidClass }>Fecha ingreso</TableHeaderColumn>
+					<TableHeaderColumn dataField="reset_pass" dataFormat={this.colResetPassword.bind(this)}>Reset Password</TableHeaderColumn>
+				</BootstrapTable>
+			</div>
 		 );
    }
 }

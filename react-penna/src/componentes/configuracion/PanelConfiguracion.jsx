@@ -34,14 +34,13 @@ class PanelConfiguracion extends React.Component {
             showMsg("Las contraseñas ingresadas deben ser iguales","error");
             return;
         }
-        // var promesa = configuracionApi.updatePassword({passAnterior:this._passAnterior.value,passNueva:this._passNueva.value);
+        var promesa = configuracionApi.updatePassword({password_anterior:this._passAnterior.value,password:this._passNueva.value});
 
-        // promesa.then( valor => {
-        //     configuracionApi.getServicios();
-        //     resetForm("form_configuracion");
-        //     this.setState({validator:this.initValidator()});
-        //     showMsg("La contraseña fué actualizada correctamente","ok");
-        // });
+        promesa.then( valor => {
+            resetForm("form_configuracion");
+            this.setState({validator:this.initValidator()});
+            showMsg("La contraseña fué actualizada correctamente","ok");
+        });
     }
 
     _updatePassword(event){
@@ -58,27 +57,30 @@ class PanelConfiguracion extends React.Component {
             <Formulario titulo="Configuración" id="form_configuracion" submit={this._updatePassword.bind(this)}>
                 <div className="row">
                     <Input2
+                        label="Contraseña anterior"
 						clases="form-group col-md-12"
 						validator={this.state.validator.passAnterior}
-						label="Contraseña anterior"
+                        type="password"
 						valor={input => this._passAnterior = input}
 						cambiar={p1 =>this.setState({validator :Object.assign({}, this.state.validator,{passAnterior:p1})})}
 					/>
 				</div>
 				<div className="row">
                     <Input2
+                        label="Contraseña nueva"
 						clases="form-group col-md-12"
 						validator={this.state.validator.passNueva}
-						label="Contraseña nueva"
+                        type="password"
 						valor={input => this._passNueva = input}
 						cambiar={p1 =>this.setState({validator :Object.assign({}, this.state.validator,{passNueva:p1})})}
 					/>
                 </div>
                 <div className="row">
                     <Input2
+                        label="Repetir contraseña"
 						clases="form-group  col-md-12"
 						validator={this.state.validator.passNuevaCheck}
-						label="Repetir contraseña"
+                        type="password"
 						valor={input => this._passNuevaCheck = input}
 						cambiar={p1 =>this.setState({validator :Object.assign({}, this.state.validator,{passNuevaCheck:p1})})}
 					/>
