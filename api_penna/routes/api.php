@@ -87,6 +87,7 @@ Route::middleware('jwt.auth')->put('/ordenes/actualizar_estado', 'Orden_Trabajo_
 
 //Configuracion
 Route::middleware('jwt.auth')->put('/password', 'Permiso_Controller@actualizar_password');
+Route::middleware('jwt.auth')->post('/password', 'Permiso_Controller@reset_password');
 
 //Bien
 Route::middleware('cors')->post('/bienes', 'Bien_Controller@get_bienes');

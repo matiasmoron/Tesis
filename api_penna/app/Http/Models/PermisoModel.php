@@ -1,6 +1,9 @@
 <?php
 namespace App\Http\Models;
 use App\Http\Models\Model;
+use Illuminate\Support\Facades\Hash;
+
+define("BASIC_PASSWORD",1234);
 
 class PermisoModel extends Model {
 
@@ -113,28 +116,34 @@ class PermisoModel extends Model {
 
     //Verifica que la contraseña sea igual a la almacenada 
     public function validar_pass_anterior($usuario,$password){
+        $params=array();
         $query="SELECT 
-                    1
+                    password
                 FROM
                     users
                 WHERE
-                    password=?
-                    AND 
                     usuario=?";
 
-        array_push($params,bcrypt($password));
+        //array_push($params, bcrypt($password));
         array_push($params,$usuario);
 
        $validacion =$this->execute_simple_query("select",$query,$params);
-
-       if ($validacion['success'] && (count($validacion['result'])>0))
-            return true;
+       if ($validacion['success'] && (count($validacion['result'])>0)){
+            
+            if(Hash::check($password,$validacion['result'][0]->password)) {
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
         else
             return false;
     }
 
     
     public function cambiar_password($usuario,$request){
+        $params=array();
         $query="UPDATE
                     users
                 SET
@@ -142,10 +151,27 @@ class PermisoModel extends Model {
                 WHERE
                     usuario=?";
 
-        array_push($params,bcrypt($password));
-        array_push($params,$request->usuario);
+        array_push($params,bcrypt($request->password));
+        array_push($params,$usuario);
 
         return $this->execute_simple_query("update",$query,$params);
+    }
+
+    //Pone la contraseña por defecto al usuario
+    public function reset_password($usuario){
+        $params=array();
+        $query="UPDATE
+                    users
+                SET
+                    password=?
+                WHERE
+                    usuario=?";
+
+        array_push($params,bcrypt(BASIC_PASSWORD));
+        array_push($params,$usuario);
+
+        return $this->execute_simple_query("update",$query,$params);
+
     }
 
 }
