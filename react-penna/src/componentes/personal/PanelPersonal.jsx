@@ -21,30 +21,30 @@ class PanelPersonal extends React.Component {
 
 	initValidator(){
 		return {
-	  			  legajo :{
-	  				  required : true,
-	  				  type : "numeric"
-	  			  },
-	  			  usuario :{
-	  				  required : true
-	  			  },
-	  			  dni :{
-	  				  required : true,
-	  				  type : "numeric"
-	  			  },
-	  			  nombre :{
-	  				  required : true
-	  			  },
-	  			  apellido :{
-	  				  required : true
-	  			  },
-	  			  fecha_ingreso :{
-	  				  required : true
-	  			  },
-				  id_servicio : {
-					  required : true
-				  }
-	  		  };
+			legajo :{
+				required : true,
+				type     : "numeric"
+		  	},
+		  	usuario :{
+				required : true
+		  	},
+		  	dni :{
+				required : true,
+				type     : "numeric"
+		  	},
+		  	nombre :{
+				required : true
+		  	},
+		  	apellido :{
+				required : true
+		  	},
+		  	fecha_ingreso :{
+				required : true
+		  	},
+			id_servicio : {
+		  		required : true
+			}
+		};
 	}
 
 	componentDidMount(){
@@ -53,15 +53,21 @@ class PanelPersonal extends React.Component {
 	}
 
 	callbackSubmit(){
-		var promesa=ApiPersonal.addPersonal({legajo:this._legajo.value,usuario:this._usuario.value,
-						id_servicio:this._id_servicio.value,dni:this._dni.value, nombre: this._nombre.value,
-						apellido: this._apellido.value, fecha_ingreso: this._fecha_ingreso.value});
+		var promesa = ApiPersonal.addPersonal({
+												legajo       : this._legajo.value,
+												usuario      : this._usuario.value,
+												id_servicio  : this._id_servicio.value,
+												dni          : this._dni.value,
+												nombre       : this._nombre.value,
+												apellido     : this._apellido.value,
+												fecha_ingreso: this._fecha_ingreso.value
+											});
 
 		promesa.then( valor => {
 			ApiPersonal.getPersonal();
 			resetForm("form_personal");
 			this.setState({validator:this.initValidator()});
-			showMsg("Se creo  el personal correctamente","ok");
+			showMsg("Se creo el personal correctamente","ok");
 		});
 	}
 
@@ -88,15 +94,66 @@ class PanelPersonal extends React.Component {
 		<div className="col-md-10">
 			<div className="col-md-6 col-md-offset-3">
 				<Formulario titulo="Creación Personal" id="form_personal" submit={this._addElemento.bind(this)}>
-					<Input2 validator={this.state.validator.legajo} clases="form-group col-md-4" label="Legajo" valor={input => this._legajo = input} cambiar={p1 =>this.setState({validator :Object.assign({}, this.state.validator,{legajo:p1})})}  />
-					<Input2 validator={this.state.validator.usuario} clases="form-group col-md-4" label="Usuario" valor={input => this._usuario = input} cambiar={p1 => this.setState({validator :Object.assign({}, this.state.validator,{usuario:p1})})} />
-					<Input2 validator={this.state.validator.dni} clases="form-group col-md-4" label="DNI" valor={input => this._dni = input} cambiar={p1 =>this.setState({validator :Object.assign({}, this.state.validator,{dni:p1})})}  />
-					<Input2 validator={this.state.validator.nombre} clases="form-group col-md-4" label="Nombre" valor={input => this._nombre = input} cambiar={p1 =>this.setState({validator :Object.assign({}, this.state.validator,{nombre:p1})})}  />
-					<Input2 validator={this.state.validator.apellido} clases="form-group col-md-4" label="Apellido" valor={input => this._apellido = input}  cambiar={p1 =>this.setState({validator :Object.assign({}, this.state.validator,{apellido:p1})})}  />
-					<DatePicker validator={this.state.validator.fecha_ingreso} clases="form-group col-md-4" label="Fecha Ingreso"  valor={input => this._fecha_ingreso = input} cambiar={p1 =>this.setState({validator :Object.assign({}, this.state.validator,{fecha_ingreso:p1})})}/>
-					<SelectChosen validator={this.state.validator.id_servicio} clases="form-group col-md-6" data={this.props.servicios} llave="id_servicio" descripcion="nombre" label="Servicio"   valor={input => this._id_servicio = input} cambiar={p1 =>this.setState({validator :Object.assign({}, this.state.validator,{id_servicio:p1})})} />
-					<div className="btn-form">
-						<button type="submit" className="btn btn-success">Agregar Personal</button>
+					<div className="row">
+						<Input2
+							label     = "Legajo"
+							valor     = {input => this._legajo = input}
+							clases    = "col-md-4"
+							validator = {this.state.validator.legajo}
+							cambiar   = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{legajo:p1})})}
+						/>
+						<Input2
+							label     = "Usuario"
+							valor     = {input => this._usuario = input}
+							clases    = "col-md-4"
+							validator = {this.state.validator.usuario}
+							cambiar   = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{usuario:p1})})}
+						/>
+						<Input2
+							label     = "DNI"
+							valor     = {input => this._dni = input}
+							clases    = "col-md-4"
+							validator = {this.state.validator.dni}
+							cambiar   = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{dni:p1})})}
+						/>
+					</div>
+					<div className="row">
+						<Input2
+							label     = "Nombre"
+							valor     = {input => this._nombre = input}
+							clases    = "col-md-4"
+							validator = {this.state.validator.nombre}
+							cambiar   = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{nombre:p1})})}
+						/>
+						<Input2
+							label     = "Apellido"
+							valor     = {input => this._apellido = input}
+							clases    = "col-md-4"
+							validator = {this.state.validator.apellido}
+							cambiar   = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{apellido:p1})})}
+						/>
+						<DatePicker
+							label     = "Fecha Ingreso"
+							valor     = {input => this._fecha_ingreso = input}
+							clases    = "col-md-4"
+							validator = {this.state.validator.fecha_ingreso}
+							cambiar   = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{fecha_ingreso:p1})})}
+						/>
+					</div>
+					<div className="row">
+						<SelectChosen
+							label       = "Servicio"
+							llave       = "id_servicio"
+							valor       = {input => this._id_servicio = input}
+							descripcion = "nombre"
+							clases      = "col-md-6"
+							data        = {this.props.servicios}
+							validator   = {this.state.validator.id_servicio}
+							cambiar     = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{id_servicio:p1})})}
+						/>
+						<div className="btn-form">
+							<button type="submit" className="btn btn-success">Agregar personal</button>
+						</div>
 					</div>
 				</Formulario>
 			</div>
@@ -110,10 +167,10 @@ class PanelPersonal extends React.Component {
 
 
 const mapStateToProps = function(store) {
-  return {
-    personal: store.personalState.personal,
-	servicios: store.servicioState.servicios
-  };
+	return {
+		personal : store.personalState.personal,
+		servicios: store.servicioState.servicios
+	};
 };
 
 export default connect(mapStateToProps)(PanelPersonal);

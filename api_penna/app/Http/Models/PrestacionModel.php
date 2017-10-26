@@ -44,11 +44,11 @@ class PrestacionModel extends Model {
                 VALUES(?,?,?,'.ALTA.')';
 
         $id_servicio= ($request ->id_servicio) ? $request->id_servicio : '';
-        $observacion= ($request ->observacion) ? $request->observacion : '';
+		$observacion= ($request ->observacion) ? $request->observacion : '';
 
         array_push($params,$id_servicio);
+		array_push($params,$request->descripcion);
         array_push($params,$observacion);
-        array_push($params,$request->descripcion);
 
 
         return $this->execute_simple_query("insert",$query,$params);

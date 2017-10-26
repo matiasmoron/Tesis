@@ -5,10 +5,11 @@ import * as DbCall from '../componentes/commons/DbCall';
 import { getSuccess,addSuccess,updateSuccess, deleteSuccess } from '../actions/equipo_actions';
 
 export function getEquipos(data) {
-    var args={metodo:'get',
-              url:'equipos',
-              params:data,
-              callback:getSuccess
+    var args={
+                metodo  :'get',
+                url     :'equipos',
+                params  : data,
+                callback: getSuccess
            };
     return DbCall.DbCall(args);
 }

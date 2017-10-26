@@ -66,25 +66,26 @@ class SelectChosen extends React.Component {
 	}
 
 	render() {
-	 let isValid = (this.props.validator.isValid == undefined) ? false : this.props.validator.isValid;
-	 const styleLabel =  (isValid) ?  'hidden' :  '';
-	 const styleInput =  (isValid || this.props.validator.msg == undefined) ?  '' :  'invalid';
+	 const isValid    = (this.props.validator.isValid == undefined) ? false : this.props.validator.isValid;
+	 const styleLabel = (isValid) ? 'hidden': '';
+	 const styleInput = (isValid || this.props.validator.msg == undefined) ? '': 'invalid';
+	 const clases = (this.props.clases== undefined) ? "" : this.props.clases;
 	  return (
-		 <div className={this.props.clases}>
+		 <div className={'form-group ' + clases}>
 			<label>{this.props.label}</label>
 			<Select
-			  name="form-field-name"
-			  placeholder="Seleccione una opción"
-			  noResultsText="No existen opciones"
-			  options={this.armarOptions(this.props.data,this.props.llave,this.props.descripcion)}
-			  onChange={this.onChange.bind(this)}
-			  value={this.state.value}
-			  className='form-group '
-			  multi={this.props.multi}
-			  clearValueText='Borrar'
-			  clearAllText='Borrar todo'
-			  clearable={this.props.clearable}
-			  onBlur= {this.onBlur.bind(this)}
+			  name           = "form-field-name"
+			  placeholder    = "Seleccione una opción"
+			  noResultsText  = "No existen opciones"
+			  options        = {this.armarOptions(this.props.data,this.props.llave,this.props.descripcion)}
+			  onChange       = {this.onChange.bind(this)}
+			  value          = {this.state.value}
+			  className      = ''
+			  multi          = {this.props.multi}
+			  clearValueText = 'Borrar'
+			  clearAllText   = 'Borrar todo'
+			  clearable      = {this.props.clearable}
+			  onBlur         = {this.onBlur.bind(this)}
 			/>
 			<span className={"msj_error " +styleLabel}> {this.props.validator.msg}</span>
 		</div>

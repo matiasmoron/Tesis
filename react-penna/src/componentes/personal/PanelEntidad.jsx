@@ -21,6 +21,9 @@ class PanelEntidad extends React.Component {
 		return {
 				nombre :{
 					required : true
+				},
+				tipo:{
+					required: true
 				}
 			};
 	}
@@ -75,11 +78,27 @@ class PanelEntidad extends React.Component {
 				<div className="col-md-6 col-md-offset-3">
 					<Formulario titulo="Creación entidad" id="form_entidad" submit={this._addElemento.bind(this)}>
 						<div className="row">
-							<Input2 clases="form-group col-md-6" label="Nombre"  validator={this.state.validator.nombre} valor={input => this._nombre = input} cambiar={p1 =>this.setState({validator :Object.assign({}, this.state.validator,{nombre:p1})})} />
-							<SelectChosen clearable={false} clases="form-group col-md-6" data={datos_select} llave="tipo_entidad" descripcion="descripcion" label="Tipo"   valor={input => this._tipo_entidad = input}/>
+							<Input2
+								label     = "Nombre"
+								clases    = "col-md-6"
+								valor     = {input => this._nombre = input}
+								validator = {this.state.validator.nombre}
+								cambiar   = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{nombre:p1})})}
+							/>
+							<SelectChosen
+								label       = "Tipo"
+								valor       = {input => this._tipo_entidad = input}
+								clearable   = {false}
+								clases      = "col-md-6"
+								data        = {datos_select}
+								llave       = "tipo_entidad"
+								descripcion = "descripcion"
+								validator   = {this.state.validator.tipo}
+								cambiar     = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{tipo:p1})})}
+							/>
 						</div>
 						<div className="btn-form">
-							<button type="submit" className="btn btn-success">Agregar Entidad</button>
+							<button type="submit" className="btn btn-success">Agregar entidad</button>
 						</div>
 					</Formulario>
 				</div>

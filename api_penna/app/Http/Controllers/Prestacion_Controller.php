@@ -23,7 +23,7 @@ class Prestacion_Controller extends Controller{
 
     public function add_prestacion(Request $request){
         $reglas=[
-                    'id_servicio'     => 'numeric',
+                    'id_servicio'     => 'required|numeric',
                     'descripcion'     => 'required|max:45',
                     'observacion'     => 'max:45'
                 ];

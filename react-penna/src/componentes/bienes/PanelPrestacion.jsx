@@ -4,32 +4,57 @@ import * as Api from '../../api/prestacion_api';
 import * as ApiServicio from '../../api/servicio_api';
 import { connect } from 'react-redux';
 import store from '../../store';
-import {SelectInput,Input,PopOver,Formulario} from '../genericos/FormElements';
+import {Input2,PopOver,Formulario,habilitarSubmit,resetForm} from '../genericos/FormElements';
 import TablePrestacion from './TablePrestacion';
+import {showMsg} from '../../api/msg_alert_api';
 import SelectChosen from '../genericos/SelectChosen';
 
 
 
 class PanelPrestacion extends React.Component {
 	constructor() {
-      super();
+      	super();
+	   	this.state = {validator :this.initValidator()};
     }
+
+	initValidator(){
+		return {
+			id_servicio:{
+				required : true
+			},
+			descripcion:{
+				required : true
+			},
+			observacion:{
+				required : false
+			}
+		}
+	}
+
 	componentDidMount(){
 		Api.getPrestaciones();
 		ApiServicio.getServicios();
 	}
 
-
-	_addElemento(event){
-		event.preventDefault();
+	callbackSubmit(){
 		var promesa = Api.addPrestacion({
-						descripcion    :this._descripcion.value,
-						id_servicio    :this._id_servicio.value,
-						observacion:this._observacion.value});
+						descripcion :this._descripcion.value,
+						id_servicio :this._id_servicio.value,
+						observacion :this._observacion.value
+					});
 
 		promesa.then( valor => {
 			Api.getPrestaciones({id_servicio:this._id_servicio.value});
+			resetForm("form_prestacion");
+			this.setState({validator:this.initValidator()});
+			showMsg("La prestación fué creada correctamente","ok");
 		});
+	}
+
+	_addElemento(event){
+		event.preventDefault();
+		let obj = this.state.validator;
+		habilitarSubmit(obj,this.callbackSubmit.bind(this));
     }
 
 	_deleteElemento(id){
@@ -41,6 +66,9 @@ class PanelPrestacion extends React.Component {
 							descripcion    :prestacion['descripcion'],
 							observacion    :prestacion['observacion']
 					});
+
+		showMsg("La prestación fué modificada correctamente","ok");
+
 	}
 
 	//Obtiene los equipos pertenecientes al servicio seleccionado
@@ -53,16 +81,37 @@ class PanelPrestacion extends React.Component {
 	  return (
 		<div className="col-md-8">
 			<div className="col-md-6 col-md-offset-3">
-				<Formulario titulo="Creación equipo" submit={this._addElemento.bind(this)}>
-					<SelectChosen  llave="id_servicio" descripcion="nombre" label="Servicios" onChange={this.changeSelect.bind(this)} data={this.props.servicios} valor={input => this._id_servicio = input}/>
+				<Formulario id="form_prestacion" titulo="Creación prestación" submit={this._addElemento.bind(this)}>
+					<SelectChosen
+						label       = "Servicios"
+						llave       = "id_servicio"
+						valor       = {input => this._id_servicio = input}
+						descripcion = "nombre"
+						onChange    = {this.changeSelect.bind(this)}
+						data        = {this.props.servicios}
+						validator   = {this.state.validator.id_servicio}
+						cambiar     = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{id_servicio:p1})})}
+					/>
 					<div className="row">
-						<Input clases="col-md-8" label="Descripcion" valor={input => this._descripcion = input} />
+						<Input2
+							label     = "Descripción"
+							clases    = "col-md-8"
+							valor     = {input => this._descripcion = input}
+							validator = {this.state.validator.descripcion}
+							cambiar   = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{descripcion:p1})})}
+						/>
 					</div>
 					<div className="row">
-						<Input clases="col-md-8" label="Observacion" valor={input => this._observacion = input} />
+						<Input2
+							label     = "Observación"
+							clases    = "col-md-8"
+							valor     = {input => this._observacion = input}
+							validator = {this.state.validator.observacion}
+							cambiar   = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{observacion:p1})})}
+						/>
 					</div>
 					<div className="btn-form">
-						<button type="submit" className="btn btn-success">Agregar Prestación</button>
+						<button type="submit" className="btn btn-success">Agregar prestación</button>
 					</div>
 				</Formulario>
 			</div>
