@@ -53,6 +53,9 @@ class Inicio extends React.Component {
 		                        			<i className="fa fa-lock"></i>
 		                        		</div>
 		                            </div>
+									<div className="form-error" hidden>
+										<strong>Nombre de usuario y/o contraseña incorrecta</strong>
+									</div>
 		                            <div className="form-bottom">
 					                    <form role="form" action="" method="post" className="login-form">
 					                    	<div className="form-group">

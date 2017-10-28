@@ -85,7 +85,7 @@ class PanelPersonal extends React.Component {
 	_updateElemento(personal){
 		var promesa =ApiPersonal.updatePersonal(personal);
 		promesa.then( valor => {
-			showMsg("Se actualizo el personal correctamente","ok");
+			showMsg("El cambio fué realizado correctamente","ok");
 		})
 	}
 

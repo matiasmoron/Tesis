@@ -5,15 +5,21 @@ import * as ApiServicio from '../../api/servicio_api';
 import * as ApiEntidad from '../../api/entidad_api';
 import { connect } from 'react-redux';
 import store from '../../store';
-import {SelectInput,Input,Boton,Formulario} from '../genericos/FormElements';
+import {Input2,PopOver,Formulario,habilitarSubmit,resetForm} from '../genericos/FormElements';
 import TableOrdenesVer from './TableOrdenesVer';
 import {tipoBien,estadoOrden} from '../commons/Utils';
 import SelectChosen from '../genericos/SelectChosen';
+import DatePicker from '../genericos/DatePicker';
+
 
 class PanelOrdenes extends React.Component {
 	constructor() {
       super();
-	  this.state = {disabled_cod_patrimonial :false,id_tbien_def: "1",id_serv_def:"1"}; //@TODO después el id_servicio es el del usuario
+	  this.state = {
+		  			validator: this.initValidator(),
+		  			disabled_cod_patrimonial :false,
+					id_tbien_def: "1",
+					id_serv_def:"1"}; //@TODO después el id_servicio es el del usuario
     }
 
 	//@todo cargar por defecto el servicio de login y todos los bienes que corresponden a servicio
@@ -25,7 +31,24 @@ class PanelOrdenes extends React.Component {
 		Api.resetTabla();
 	}
 
-	getOrdenesTabla(){
+	initValidator(){
+		return {
+			id_servicio:{
+				required : true
+			},
+			fecha_ini:{
+				required : true
+			},
+			fecha_fin:{
+				required : true
+			},
+			cod_patrimonial:{
+				required : false
+			}
+		}
+	}
+
+	callbackSubmit(){
 		Api.getOrdenes({
 							id_tipo_bien   :this._id_tipo_bien.value,
 							id_servicio    :this._id_servicio.value,
@@ -35,7 +58,11 @@ class PanelOrdenes extends React.Component {
 							fecha_ini      :this._fecha_ini.value,
 							fecha_fin      :this._fecha_fin.value,
 							estado         :this._estado.value
-						});
+					});
+	}
+	getOrdenesTabla(){
+		let obj = this.state.validator;
+		habilitarSubmit(obj,this.callbackSubmit.bind(this));
     }
 
 	//Arma los datos del select para los tipos de bienes
@@ -44,12 +71,11 @@ class PanelOrdenes extends React.Component {
 		var resultado = Object.keys(tipoBien).map((valor) =>{
 			var elem  = [];
 			elem      = {
-				tipo_bien  :valor,
-				descripcion:tipoBien[valor]
-			}
+							tipo_bien  :valor,
+							descripcion:tipoBien[valor]
+						}
 			return elem;
-			}
-        );
+			});
 		return resultado;
 	}
 
@@ -71,49 +97,81 @@ class PanelOrdenes extends React.Component {
 
 	//Obtiene los bienes según el tipo bien seleccionado y deshabilita  el código patrimonial en caso de elegir un tipo servicio
 	changeSelect(event){
-		console.log("ENTRO CHANGE");
 		// Habilita/Desabilita el input de cod_patrimonial
 		this.setState({ disabled_cod_patrimonial: this._id_tipo_bien.value == 2 ? true : false});
-		Api.getBienes({id_tipo_bien:this._id_tipo_bien.value,id_servicio:this._id_servicio.value});
+		Api.getBienes({
+						id_tipo_bien:this._id_tipo_bien.value,
+						id_servicio:this._id_servicio.value
+					});
 	}
 
 	cleanInput(inputValue){
 		console.log("HOLAAA",inputValue);
 	}
 
-	// changeDatepicker(valor,formattedValue){
-	// 	console.log("date",valor);
-	// 	console.log(formattedValue);
-	// }
-
 	render() {
 		let data_tipo_bienes = this._dataTipoBienes();
 		let data_estados = this._dataEstados();
 	  	return (
 			<div className="col-md-10">
-				<div className="col-md-8 col-md-offset-2">
+				<div className="col-md-8 center">
 					<Formulario titulo="Ver órdenes de trabajo" submit={(event)=>{ event.preventDefault();this.getOrdenesTabla()}}>
 						<div className="row">
-							{/* <SelectChosen cleanInput={this.cleanInput.bind(this)} llave="id_servicio" descripcion="nombre" label="Servicios" clearable={false} clases="form-group col-md-6" onChange={this.changeSelect.bind(this)} data={this.props.servicios} valor={input => this._id_servicio = input}/> */}
+							<SelectChosen
+								label       = "Servicios"
+								cleanInput  = {this.cleanInput.bind(this)}
+								llave       = "id_servicio"
+								descripcion = "nombre"
+								clearable   = {false}
+								clases      = "col-md-6"
+								onChange    = {this.changeSelect.bind(this)}
+								data        = {this.props.servicios}
+								valor       = {input => this._id_servicio = input}
+								validator   = {this.state.validator.id_servicio}
+								cambiar     = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{id_servicio:p1})})}
+							/>
 						</div>
 						<div className="row">
 						</div>
 						<div className="row">
-							<Input clases="form-group col-md-5" label="Fecha inicio (creación)" valor={input => this._fecha_ini = input} />
-							<Input clases="form-group col-md-5" label="Fecha fin (creación)" valor={input => this._fecha_fin = input} />
+							<DatePicker
+								label     = "Fecha inicio (creación)"
+								valor     = {input => this._fecha_ini = input}
+								clases    = "col-md-5"
+								validator = {this.state.validator.fecha_ini}
+								cambiar   = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{fecha_ini:p1})})}
+							/>
+							<DatePicker
+								label     = "Fecha fin (creación)"
+								valor     = {input => this.fecha_fin = input}
+								clases    = "col-md-5"
+								validator = {this.state.validator.fecha_fin}
+								cambiar   = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{fecha_fin:p1})})}
+							/>
 						</div>
 						<div className="row">
-							<Input clases="form-group col-md-5" disabled = {this.state.disabled_cod_patrimonial} label="Cód. Patrimonial" valor={input => this._cod_patrimonial = input} />
+							<Input2
+								label     = "Cód. Patrimonial"
+								clases    = "col-md-5"
+								disabled  = {this.state.disabled_cod_patrimonial}
+								valor     = {input => this._cod_patrimonial = input}
+								validator = {this.state.validator.cod_patrimonial}
+								cambiar   = {p1 => this.setState({validator :Object.assign({}, this.state.validator,{cod_patrimonial:p1})})}
+							/>
 						</div>
 						<div className="row">
 						</div>
 						<div className="btn-form">
-							<Boton clases="btn btn-primary" label="Buscar"/>
+							<button type="submit" className="btn btn-primary">Buscar</button>
+							{/* <Boton clases="btn btn-primary" label="Buscar"/> */}
 						</div>
 					</Formulario>
 				</div>
 				<div className="col-md-12">
-        			<TableOrdenesVer datos_elemento={this.props.ordenes_tabla} getOrdenes = {this.getOrdenesTabla.bind(this)}/>
+        			<TableOrdenesVer
+						datos_elemento={this.props.ordenes_tabla}
+						getOrdenes = {this.getOrdenesTabla.bind(this)}
+					/>
 				</div>
 			</div>
       	);

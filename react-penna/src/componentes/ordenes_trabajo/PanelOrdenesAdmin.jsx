@@ -6,16 +6,23 @@ import * as ApiEntidad from '../../api/entidad_api';
 import * as ApiTecnico from '../../api/tecnico_api';
 import { connect } from 'react-redux';
 import store from '../../store';
-import {SelectInput,Input,Boton,Formulario} from '../genericos/FormElements';
+import {Input2,PopOver,Formulario,habilitarSubmit,resetForm} from '../genericos/FormElements';
 import TableOrdenesAdmin from './TableOrdenesAdmin';
 import {tipoBien,estadoOrden} from '../commons/Utils';
 import SelectChosen from '../genericos/SelectChosen';
+import DatePicker from '../genericos/DatePicker';
 
 class PanelOrdenesAdmin extends React.Component {
 	constructor() {
       super();
-	  this.state = {disabled_cod_patrimonial :false,id_tbien_def: "1"};
+	  this.state = {
+		  			disabled_cod_patrimonial : false,
+					id_tbien_def             : "1",
+					validator                : this.initValidator()
+				};
     }
+
+
 
 	//@todo cargar por defecto el servicio de login y todos los bienes que corresponden a servicio
 	componentDidMount(){
@@ -27,7 +34,39 @@ class PanelOrdenesAdmin extends React.Component {
 		Api.getOrdenes({id_tipo_bien:this.state.id_tbien_def});
 	}
 
-	getOrdenesTabla(){
+	initValidator(){
+		return {
+			id_servicio:{
+				required : true
+			},
+			id_entidad:{
+				required : true
+			},
+			id_tipo_bien:{
+				required : true
+			},
+			id_bien:{
+				required : true
+			},
+			fecha_ini:{
+				required : true
+			},
+			fecha_fin:{
+				required : true
+			},
+			estado:{
+				required : true
+			},
+			legajo:{
+				required : true
+			},
+			cod_patrimonial:{
+				required : false
+			}
+		}
+	}
+
+	callbackSubmit(){
 		Api.getOrdenes({
 							id_tipo_bien   :this._id_tipo_bien.value,
 							id_servicio    :this._id_servicio.value,
@@ -39,6 +78,11 @@ class PanelOrdenesAdmin extends React.Component {
 							leg_recepcion  :this._legajo.value,
 							estado         :this._estado.value
 						});
+	}
+
+	getOrdenesTabla(){
+		let obj = this.state.validator;
+		habilitarSubmit(obj,this.callbackSubmit.bind(this));
 	}
 
 	_dataTipoBienes(){
@@ -87,29 +131,108 @@ class PanelOrdenesAdmin extends React.Component {
 		var data_estados = this._dataEstados();
 	  	return (
 			<div className="col-md-10">
-				<div className="col-md-8 col-md-offset-2">
+				<div className="col-md-8 center">
 					<Formulario titulo="Administración de órdenes de trabajo" submit={(event)=>{ event.preventDefault();this.getOrdenesTabla()}}>
 						<div className="row">
-							<SelectChosen llave="id_servicio" descripcion="nombre" label="Servicios" clases="form-group col-md-6" onChange={this.changeSelect.bind(this)} data={this.props.servicios} valor={input => this._id_servicio = input}/>
-							<SelectChosen llave="id_entidad" descripcion="nombre" label="Entidad destino" clases="form-group col-md-6" onChange={this.changeSelectEntidad.bind(this)} data={this.props.entidades} valor={input => this._id_entidad = input}/>
+							<SelectChosen
+								label       = "Servicios"
+								llave       = "id_servicio"
+								descripcion = "nombre"
+								clases      = "col-md-6"
+								onChange    = {this.changeSelect.bind(this)}
+								data        = {this.props.servicios}
+								valor       = {input => this._id_servicio = input}
+								validator   = {this.state.validator.id_servicio}
+								cambiar     = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{id_servicio:p1})})}
+							/>
+							<SelectChosen
+								label       = "Entidad destino"
+								llave       = "id_entidad"
+								descripcion = "nombre"
+								clases      = "col-md-6"
+								onChange    = {this.changeSelectEntidad.bind(this)}
+								data        = {this.props.entidades}
+								valor       = {input => this._id_entidad = input}
+								validator   = {this.state.validator.id_entidad}
+								cambiar     = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{id_entidad:p1})})}
+							/>
 						</div>
 						<div className="row">
-							<SelectChosen llave="tipo_bien" descripcion="descripcion" label="Tipo Bien" clearable={false} clases="form-group col-md-5" onChange={this.changeSelect.bind(this)} data={data_tipo_bienes} valor={input => this._id_tipo_bien = input}/>
-							<SelectChosen llave="id_bien" descripcion="descripcion" label="Bien" clases="form-group col-md-7"  data={this.props.bienes} valor={input => this._id_bien = input}/>
+							<SelectChosen
+								label       = "Tipo Bien"
+								llave       = "tipo_bien"
+								descripcion = "descripcion"
+								clearable   = {false}
+								clases      = "col-md-5"
+								onChange    = {this.changeSelect.bind(this)}
+								data        = {data_tipo_bienes}
+								valor       = {input => this._id_tipo_bien = input}
+								validator   = {this.state.validator.id_tipo_bien}
+								cambiar     = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{id_tipo_bien:p1})})}
+							/>
+							<SelectChosen
+								label       = "Bien"
+								llave       = "id_bien"
+								descripcion = "descripcion"
+								clases      = "col-md-7"
+								data        = {this.props.bienes}
+								valor       = {input => this._id_bien = input}
+								validator   = {this.state.validator.id_bien}
+								cambiar     = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{id_bien:p1})})}
+							/>
 						</div>
 						<div className="row">
-							<Input clases="form-group col-md-5" label="Fecha inicio (creación)" valor={input => this._fecha_ini = input} />
-							<Input clases="form-group col-md-5" label="Fecha fin (creación)" valor={input => this._fecha_fin = input} />
+							<DatePicker
+								label     = "Fecha inicio (creación)"
+								valor     = {input => this._fecha_ini = input}
+								clases    = "col-md-5"
+								validator = {this.state.validator.fecha_ini}
+								cambiar   = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{fecha_ini:p1})})}
+							/>
+							<DatePicker
+								label     = "Fecha fin (creación)"
+								valor     = {input => this.fecha_fin = input}
+								clases    = "col-md-5"
+								validator = {this.state.validator.fecha_fin}
+								cambiar   = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{fecha_fin:p1})})}
+							/>
 						</div>
 						<div className="row">
-							<SelectChosen llave="estado" descripcion="descripcion" label="Estado" multi={true} clases="form-group col-md-5"  data={data_estados} valor={input => this._estado = input}/>
-							<SelectChosen llave="legajo" descripcion="nombre_apellido" label="Tomado por" clases="form-group col-md-5"  data={this.props.tecnicos_entidad_form} valor={input => this._legajo = input}/>
+							<SelectChosen
+								llave       = "estado"
+								descripcion = "descripcion"
+								label       = "Estado"
+								multi       = {true}
+								clases      = "col-md-5"
+								data        = {data_estados}
+								valor       = {input => this._estado = input}
+								validator   = {this.state.validator.estado}
+								cambiar     = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{estado:p1})})}
+							/>
+							<SelectChosen
+								label       = "Tomado por"
+								llave       = "legajo"
+								valor       = {input => this._legajo = input}
+								descripcion = "nombre_apellido"
+								clases      = "col-md-5"
+								data        = {this.props.tecnicos_entidad_form}
+								validator   = {this.state.validator.legajo}
+								cambiar     = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{legajo:p1})})}
+							/>
 						</div>
 						<div className="row">
-							<Input clases="form-group col-md-5" disabled = {this.state.disabled_cod_patrimonial} label="Cód. Patrimonial" valor={input => this._cod_patrimonial = input} />
+							<Input2
+								label     = "Cód. Patrimonial"
+								clases    = "col-md-5"
+								disabled  = {this.state.disabled_cod_patrimonial}
+								valor     = {input => this._cod_patrimonial = input}
+								validator = {this.state.validator.cod_patrimonial}
+								cambiar   = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{cod_patrimonial:p1})})}
+							/>
 						</div>
 						<div className="btn-form">
-							<Boton clases="btn btn-primary" label="Buscar"/>
+							{/* <Boton clases="btn btn-primary" label="Buscar"/> */}
+							<button type="submit" className="btn btn-primary">Buscar</button>
 						</div>
 					</Formulario>
 				</div>

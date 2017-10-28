@@ -9,10 +9,6 @@ import TableEquipo from './TableEquipo';
 import SelectChosen from '../genericos/SelectChosen';
 import {showMsg} from '../../api/msg_alert_api';
 
-// Be sure to include styles at some point, probably during your bootstrapping
-// import 'react-select/dist/react-select.css';
-require("../../styles/select.scss");
-
 class PanelEquipo extends React.Component {
 	constructor() {
       super();
@@ -34,9 +30,7 @@ class PanelEquipo extends React.Component {
 			id_equipo_padre:{
 				required : true
 			}
-
 		}
-
 	}
 
 	componentDidMount(){
@@ -64,9 +58,22 @@ class PanelEquipo extends React.Component {
 
 	_addElemento(event){
 		event.preventDefault();
+		// console.log(this._descripcion);
+		this._descripcion.change("asdfasd");
+		console.log(this._descripcion);
+		document.getElementById("descrip")
+		// this._descripcion.focusout();
+		// console.log(inputs.refs);
+		// console.log();
+		// var event = new Event('input', { bubbles: true });
+		// console.log(event);
 		let obj = this.state.validator;
 		habilitarSubmit(obj,this.callbackSubmit.bind(this));
     }
+
+	dispatchEvent(event){
+		console.log(event,"golasd");
+	}
 
 	_deleteElemento(id){
 		Api.deleteEquipo({id_bien:id});
@@ -93,7 +100,7 @@ class PanelEquipo extends React.Component {
 	render() {
 	  return (
 		<div className="col-md-8">
-			<div className="col-md-6 col-md-offset-3">
+			<div className="col-md-6 center">
 				<Formulario id="form_equipo" titulo="Creación equipo" submit={this._addElemento.bind(this)}>
 					<SelectChosen
 						label       = "Servicios"
