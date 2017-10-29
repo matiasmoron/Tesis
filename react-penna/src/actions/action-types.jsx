@@ -78,10 +78,6 @@ export const ADD_PERSONAL_SUCCESS            = 'ADD_PERSONAL_SUCCESS';
 export const UPDATE_PERSONAL_SUCCESS         = 'UPDATE_PERSONAL_SUCCESS';
 export const DELETE_PERSONAL_SUCCESS         = 'DELETE_PERSONAL_SUCCESS';
 
-//////////////////
-//CONFIGURACION //
-//////////////////
-export const UPDATE_PASSWORD_SUCCESS         = 'UPDATE_PASSWORD_SUCCESS';
 
 //////////////////
 //Autenticación //

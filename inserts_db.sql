@@ -151,3 +151,13 @@ create table users(
 INSERT INTO users(usuario,id_perfil,password) VALUES ('ftoniolo',1,'$2y$10$XjC7ffr62iNe56ixqd0UZuBm9gEmdwfPMp5t2eF0SyKDFWe6CQ/Ee');
 
 ALTER TABLE personal drop column id_puesto;
+
+create table prestacion(
+  `id_prestacion` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(100) DEFAULT NULL,
+  `id_servicio` int(10) unsigned DEFAULT NULL,
+  `observacion` varchar(45) DEFAULT NULL,
+  `estado` tinyint(3) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id_prestacion`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+

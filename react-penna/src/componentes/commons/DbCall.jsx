@@ -18,7 +18,6 @@ export function DbCall(args) {
     const base_url='http://localhost:8000/api/';
     const token= localStorage.getItem('id_token');
     const params  =  (args.params == undefined) ? {} : removeEmpty(args.params);
-    console.log(params);
     var promise = new Promise(function(resolve, reject) {
         axios({method: args.metodo,url:base_url+args.url,params: params,headers:{'Content-Type': 'application/x-www-form-urlencoded','Authorization': `Bearer ${token}`}})
         .then(response => {

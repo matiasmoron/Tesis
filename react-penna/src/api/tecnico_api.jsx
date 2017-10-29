@@ -17,16 +17,7 @@ export function getTecnicos(filtro_tecnico) {
     return DbCall.DbCall(args);
 }
 
-export function getPersonal(legajo) {
-    var args={metodo:'get',
-              url:'personal',
-              params:{"legajo":legajo},
-              callback:getPersonalSuccess
 
-           };
-    return DbCall.DbCall(args);
-
-}
 
 //Obtiene todas las entidades a las que no pertenece el empleado con el legajo ingresado
 export function getTecnicoNoEntidad(legajo) {
