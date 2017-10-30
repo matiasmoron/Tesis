@@ -29,6 +29,26 @@ class SelectChosen extends React.Component {
 		}
     }
 
+	//Al actualizar las opciones verifica si el estado esta en dicha opciones
+	componentWillReceiveProps(props){
+		let state= this.state;
+		let esta=true;
+		if ( this.state.value!="" && this.state.value.value!=undefined){
+			esta=false;
+			props.data.forEach(function(opt) {
+				if (opt[props.llave]==state.value.value){
+					esta=true;
+				}
+			});
+		}
+
+		if (!esta){
+			this.setState({ value:"" });
+			props.valor({value:''});
+		}
+
+	}
+
 	armarOptions(data,llave,descripcion){
 		var newArray=[];
 		data.map(function(opt,index) {
