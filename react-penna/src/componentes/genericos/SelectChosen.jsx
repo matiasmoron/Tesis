@@ -91,7 +91,7 @@ class SelectChosen extends React.Component {
 	 const styleInput = (isValid || this.props.validator.msg == undefined) ? '': 'invalid';
 	 const clases = (this.props.clases== undefined) ? "" : this.props.clases;
 	  return (
-		 <div className={'form-group ' + clases} style={{zIndex:'100'}}>
+		 <div className={'form-group ' + clases}>
 			<label>{this.props.label}</label>
 			<Select
 			  name           = "form-field-name"

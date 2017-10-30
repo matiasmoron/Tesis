@@ -9,6 +9,8 @@ class DatePicker extends React.Component {
             dayLabels : ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
             monthLabels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
         }
+        props.valor({value : ""});
+
     }
 
     validate(validator,value){
@@ -44,7 +46,7 @@ class DatePicker extends React.Component {
                 onChange={this.handleChange.bind(this)}
                 dayLabels={this.state.dayLabels}
                 monthLabels={this.state.monthLabels}
-                className= {this.props.clases}
+                className= {"zIndez0 " +this.props.clases}
             />
             <span className={"msj_error " +styleLabel}> {this.props.validator.msg}</span>
         </div>

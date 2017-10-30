@@ -47,7 +47,7 @@ class Inicio extends React.Component {
 		                        	<div className="form-top">
 		                        		<div className="form-top-left">
 		                        			<h3>Ingresar a SisPenna</h3>
-		                            		<p>Ingrese nombre de usuario y contraseña</p>
+		                            		<p style={{whiteSpace: 'nowrap',marginTop: '20px'}}>Ingrese nombre de usuario y contraseña</p>
 		                        		</div>
 		                        		<div className="form-top-right">
 		                        			<i className="fa fa-lock"></i>

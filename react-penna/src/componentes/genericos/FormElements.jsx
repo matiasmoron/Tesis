@@ -87,9 +87,8 @@ export const Input2 = (props) => {
  */
 export const habilitarSubmit = (validator,callback) => {
      let habilita = Object.keys(validator).reduce(function(valorAnterior,valorAct){
-                         return valorAnterior && validator[valorAct].isValid;
-                    }
-                    ,true);
+                        return (valorAnterior && validator[valorAct].isValid || (validator[valorAct].isValid == undefined && !validator[valorAct].required));
+                    },true);
 
     if (habilita){
         callback();
@@ -105,7 +104,8 @@ export const Boton = (props) => {
 	return (
 			<button onClick={props.onClick} title={props.titulo} className={"btn " +props.clases}>
                 {icono}
-                {props.children}{props.label}</button>
+                {props.children}{props.label}
+            </button>
 	);
 }
 

@@ -152,6 +152,7 @@ class PanelPersonal extends React.Component {
 							cambiar     = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{id_servicio:p1})})}
 						/>
 						<div className="btn-form">
+							
 							<button type="submit" className="btn btn-success">Agregar personal</button>
 						</div>
 					</div>

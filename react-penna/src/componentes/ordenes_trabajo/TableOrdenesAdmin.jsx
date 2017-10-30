@@ -143,7 +143,7 @@ class TableOrdenesAdmin extends React.Component {
 	//TODO: HACER CONSULTA FINALIZAR
 	finalizarOrden(){
 	   const promesa=Api.actualizarOrden({
-								id_orden_trabajo:this.state.datosOrden.id_orden_trabajo,
+								id_orden_trabajo: this.state.datosOrden.id_orden_trabajo,
 								hs_insumidas    : this._hs_insumidas.value,
 								prioridad       : this._prioridad.value,
 								obs_devolucion  : this._obs_devolucion.value

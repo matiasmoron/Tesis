@@ -37,28 +37,28 @@ class PanelOrdenesAdmin extends React.Component {
 	initValidator(){
 		return {
 			id_servicio:{
-				required : true
+				required : false
 			},
 			id_entidad:{
-				required : true
+				required : false
 			},
 			id_tipo_bien:{
-				required : true
+				required : false
 			},
 			id_bien:{
-				required : true
+				required : false
 			},
 			fecha_ini:{
-				required : true
+				required : false
 			},
 			fecha_fin:{
-				required : true
+				required : false
 			},
 			estado:{
-				required : true
+				required : false
 			},
 			legajo:{
-				required : true
+				required : false
 			},
 			cod_patrimonial:{
 				required : false
@@ -67,6 +67,14 @@ class PanelOrdenesAdmin extends React.Component {
 	}
 
 	callbackSubmit(){
+		let estados =[];
+		if(this._estado.length){
+			let aux     = this._estado;
+			estados = Object.keys(aux).map((valor) =>{
+				return aux[valor].value;
+			});
+		}
+		console.log("estado",estados);
 		Api.getOrdenes({
 							id_tipo_bien   :this._id_tipo_bien.value,
 							id_servicio    :this._id_servicio.value,
@@ -76,7 +84,7 @@ class PanelOrdenesAdmin extends React.Component {
 							fecha_ini      :this._fecha_ini.value,
 							fecha_fin      :this._fecha_fin.value,
 							leg_recepcion  :this._legajo.value,
-							estado         :this._estado.value
+							estado         :estados
 						});
 	}
 
@@ -116,7 +124,10 @@ class PanelOrdenesAdmin extends React.Component {
 	changeSelect(event){
 		// Habilita/Desabilita el input de cod_patrimonial
 		this.setState({ disabled_cod_patrimonial: this._id_tipo_bien.value == 2 ? true : false});
-		Api.getBienes({id_tipo_bien:this._id_tipo_bien.value,id_servicio:this._id_servicio.value});
+		Api.getBienes({
+						id_tipo_bien:this._id_tipo_bien.value,
+						id_servicio:this._id_servicio.value
+					});
 	}
 
 	//Cuando cambia la entidad busca los técnicos relacionados con dicha entidad
@@ -191,7 +202,7 @@ class PanelOrdenesAdmin extends React.Component {
 							/>
 							<DatePicker
 								label     = "Fecha fin (creación)"
-								valor     = {input => this.fecha_fin = input}
+								valor     = {input => this._fecha_fin = input}
 								clases    = "col-md-5"
 								validator = {this.state.validator.fecha_fin}
 								cambiar   = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{fecha_fin:p1})})}

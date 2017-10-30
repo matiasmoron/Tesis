@@ -16,10 +16,11 @@ class PanelOrdenes extends React.Component {
 	constructor() {
       super();
 	  this.state = {
-		  			validator: this.initValidator(),
+		  			validator                : this.initValidator(),
 		  			disabled_cod_patrimonial :false,
-					id_tbien_def: "1",
-					id_serv_def:"1"}; //@TODO después el id_servicio es el del usuario
+					id_tbien_def             : "1",
+					id_serv_def              :"1"
+				}; //@TODO después el id_servicio es el del usuario
     }
 
 	//@todo cargar por defecto el servicio de login y todos los bienes que corresponden a servicio
@@ -34,30 +35,46 @@ class PanelOrdenes extends React.Component {
 	initValidator(){
 		return {
 			id_servicio:{
-				required : true
+				required : false
+			},
+			id_tipo_bien:{
+				required : false
+			},
+			id_bien:{
+				required : false
 			},
 			fecha_ini:{
-				required : true
+				required : false
 			},
 			fecha_fin:{
-				required : true
+				required : false
 			},
 			cod_patrimonial:{
 				required : false
-			}
+			},
+			estado:{
+				required : false
+			},
 		}
 	}
 
 	callbackSubmit(){
+		let estados = [];
+		if(this._estado.length){
+			let aux     = this._estado;
+			estados = Object.keys(aux).map((valor) =>{
+				return aux[valor].value;
+			});
+		}
+		console.log(estados);
 		Api.getOrdenes({
 							id_tipo_bien   :this._id_tipo_bien.value,
 							id_servicio    :this._id_servicio.value,
-							id_entidad     :this._id_entidad.value,
 							id_bien        :this._id_bien.value,
 							cod_patrimonial:this._cod_patrimonial.value,
 							fecha_ini      :this._fecha_ini.value,
 							fecha_fin      :this._fecha_fin.value,
-							estado         :this._estado.value
+							estado         :estados
 					});
 	}
 	getOrdenesTabla(){
@@ -69,12 +86,12 @@ class PanelOrdenes extends React.Component {
 	_dataTipoBienes(){
 		var resultado = {};
 		var resultado = Object.keys(tipoBien).map((valor) =>{
-			var elem  = [];
-			elem      = {
-							tipo_bien  :valor,
-							descripcion:tipoBien[valor]
-						}
-			return elem;
+				var elem  = [];
+				elem      = {
+								tipo_bien  :valor,
+								descripcion:tipoBien[valor]
+							}
+				return elem;
 			});
 		return resultado;
 	}
@@ -122,7 +139,6 @@ class PanelOrdenes extends React.Component {
 								cleanInput  = {this.cleanInput.bind(this)}
 								llave       = "id_servicio"
 								descripcion = "nombre"
-								clearable   = {false}
 								clases      = "col-md-6"
 								onChange    = {this.changeSelect.bind(this)}
 								data        = {this.props.servicios}
@@ -130,8 +146,43 @@ class PanelOrdenes extends React.Component {
 								validator   = {this.state.validator.id_servicio}
 								cambiar     = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{id_servicio:p1})})}
 							/>
+							<SelectChosen
+								llave       = "estado"
+								descripcion = "descripcion"
+								label       = "Estado"
+								multi       = {true}
+								clases      = "col-md-5"
+								data        = {data_estados}
+								valor       = {input => this._estado = input}
+								validator   = {this.state.validator.estado}
+								cambiar     = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{estado:p1})})}
+							/>
 						</div>
 						<div className="row">
+							<SelectChosen
+								label       = "Tipo bien"
+								llave       = "tipo_bien"
+								descripcion = "descripcion"
+								clases      = "col-md-5"
+								clearable   = {false}
+								defaultVal  = {this.state.id_tbien_def}
+								onChange    = {this.changeSelect.bind(this)}
+								data        = {data_tipo_bienes}
+								valor       = {input => this._id_tipo_bien = input}
+								validator   = {this.state.validator.id_tipo_bien}
+								cambiar     = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{id_tipo_bien:p1})})}
+							/>
+							<SelectChosen
+								label       = "Bien"
+								llave       = "id_bien"
+								descripcion = "descripcion"
+								clases      = "col-md-7"
+								onChange    = {this.changeSelect.bind(this)}
+								data        = {this.props.bienes}
+								valor       = {input => this._id_bien = input}
+								validator   = {this.state.validator.id_bien}
+								cambiar     = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{id_bien:p1})})}
+							/>
 						</div>
 						<div className="row">
 							<DatePicker
@@ -143,7 +194,7 @@ class PanelOrdenes extends React.Component {
 							/>
 							<DatePicker
 								label     = "Fecha fin (creación)"
-								valor     = {input => this.fecha_fin = input}
+								valor     = {input => this._fecha_fin = input}
 								clases    = "col-md-5"
 								validator = {this.state.validator.fecha_fin}
 								cambiar   = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{fecha_fin:p1})})}

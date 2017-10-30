@@ -73,7 +73,6 @@ class Orden_Trabajo_Controller extends Controller{
                     'id_bien'         => 'numeric',
                     'cod_patrimonial' => 'numeric',
                     'id_servicio'     => 'numeric',
-                    'estado'          => 'numeric',
                     'id_entidad'      => 'numeric',
                     'leg_recepcion'   => 'numeric',
                     'fecha_ini'       => 'date_format:"d/m/Y"',

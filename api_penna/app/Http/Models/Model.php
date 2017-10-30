@@ -6,15 +6,16 @@ use Illuminate\Support\Facades\DB;
 const ALTA=1;
 const BAJA=0;
 
-class Model 
+class Model
 {
 
-    function __construct(){ 
+    function __construct(){
     }
-    
+
 	protected function execute_simple_query($metodo,$query,$params=array()){
     	try{
     		$resultado;
+            DB::connection()->enableQueryLog();
 			switch ($metodo) {
                 case "select":
                     $resultado=DB::select($query,$params);
@@ -29,8 +30,9 @@ class Model
 			    	$resultado=DB::delete($query,$params);
 			        break;
 			}
-
-    		return array("success"=>TRUE,"msg"=>"","result"=>$resultado);
+            $auxQuery =DB::getQueryLog();
+            // die(var_dump($auxQuery));
+    		return array("success"=>TRUE,"msg"=>$auxQuery,"result"=>$resultado);
 
     	}
     	catch (\Exception $e) {
@@ -82,12 +84,12 @@ class Model
             /*header('HTTP/1.1 422 Internal Server Booboo');
             header('Content-Type: application/json; charset=UTF-8');
             die(json_encode(array("success"=>FALSE,"msg"=>$e->getMessage(),"result"=>FALSE,'code' => 1337)));*/
-            
+
             if ($transaccion){
             	DB::rollback();
             }
             die(json_encode(array("success"=>FALSE,"msg"=> $e->getMessage(),"result"=>FALSE)));
         }
     }
-    
+
 }

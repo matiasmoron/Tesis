@@ -95,8 +95,8 @@ class OrdenTrabajoModel extends Model {
 			array_push($params,$request->id_servicio);
 		}
 		if(isset($request->estado)){
-			$whr.=' AND ot.estado=?';
-			array_push($params,$request->estado);
+			$whr.=' AND ot.estado IN (?)';
+			array_push($params,implode(',',$request->estado));
 		}
 		if(isset($request->id_entidad)){
 			$whr.=' AND ot.entidad_destino=?';
