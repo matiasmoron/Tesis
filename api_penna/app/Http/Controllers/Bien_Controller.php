@@ -19,7 +19,8 @@ class Bien_Controller extends Controller
                 break;
             
             case PRESTACION:
-                return Prestacion_Controller::get_prestaciones($request);
+                $prestacion= new Prestacion_Controller;
+                return $prestacion->get_prestaciones($request);
                 break;
         }
     }

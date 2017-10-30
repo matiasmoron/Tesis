@@ -60,6 +60,9 @@ class TecnicoModel extends Model {
 
     }
 
+    /**Obtiene las entidades que no tiene asignadas un técnico
+    * @param legajo 
+    */
     public function get_entidades_no_asignadas($request){
         $params = array();
         array_push($params,$request-> legajo);
