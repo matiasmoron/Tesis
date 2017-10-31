@@ -140,10 +140,15 @@ export const Label = (props) => {
 }
 
 export const TextArea = (props) => {
+    let isValid = (props.validator.isValid == undefined) ? false : props.validator.isValid;
+    const styleLabel =  (isValid) ?  'hidden' :  '';
+    const styleInput =  (isValid || props.validator.msg == undefined) ?  '' :  'invalid';
+    const type       =  (props.type==undefined)? "text" : props.type;
 	return (
 		<div className={"form-group " +props.clases}>
 			<label>{props.label}</label>
-			<textarea rows={props.rows} cols={props.cols} className="form-control"  defaultValue={props.value} placeholder={props.placeholder} ref={props.valor}></textarea>
+			<textarea rows={props.rows} cols={props.cols} onBlur={(e) => validator(e, props)} onChange={(e) => validator(e, props)}  className={"form-control "+styleInput} value={props.value}  defaultValue={props.value} placeholder={props.placeholder} ref={props.valor}></textarea>
+            <span className={"msj_error " +styleLabel}> {props.validator.msg}</span>
 		</div>
 	);
 }

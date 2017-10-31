@@ -5,15 +5,28 @@ import { connect } from 'react-redux';
 import * as Api from '../../api/ordenes_api';
 import * as BsTable from '../commons/BsTable';
 import {estadoOrden,tipoBien,conformidad} from '../commons/Utils';
-import {Boton,TextArea,SelectInput,Label} from '../genericos/FormElements';
+import {Boton,habilitarSubmit} from '../genericos/FormElements';
+import SelectChosen from '../genericos/SelectChosen';
+import {showMsg} from '../../api/msg_alert_api';
 import {ModalBs} from '../genericos/ModalBs';
 import {VerMasModal} from './templates/VerMasModal';
 
 class TableOrdenesVer extends React.Component {
 	 constructor() {
        super();
-	   this.state = {showModalVer:false,showModalFinalizar:false,datosOrden:[]};
+	   this.state = {showModalVer:false,
+		   			showModalFinalizar:false,
+					datosOrden:[],
+					validatorFinalizar: this.initValidatorFinalizarOrden()};
      }
+
+	 initValidatorFinalizarOrden(){
+ 		return {
+ 			conformidad:{
+ 				required : true
+ 			}
+ 		}
+ 	}
 
 	customConfirm(next, dropRowKeys) {
 		const dropRowKeysStr = dropRowKeys.join(',');
@@ -87,13 +100,22 @@ class TableOrdenesVer extends React.Component {
 		 this.setState({datosOrden : row});
    }
 
-	finalizarOrden(){
+	//Da por finalizada la orden de trabajo
+	callbackFinalizarOrden(){
 		var promesa = Api.putConformidadOrden({id_orden_trabajo:this.state.datosOrden.id_orden_trabajo,conformidad:this._conformidad.value});
 
 		promesa.then(valor => {
 			this.props.getOrdenes();
 			this.modalFinalizarOrden();
+			showMsg("Se dio por finalizada la orden","ok");
+			this.setState({validatorFinalizar:this.initValidatorFinalizarOrden()});
 		});
+	}
+
+	//Valida los data y finaliza la orden
+	finalizarOrden(){
+		let obj = this.state.validator;
+		habilitarSubmit(obj,this.callbackSubmit.bind(this));
 	}
 
 
@@ -115,9 +137,22 @@ class TableOrdenesVer extends React.Component {
 					<ModalBs show={this.state.showModalFinalizar} onHide={this.modalFinalizarOrden.bind(this)} titulo="Solicitar">
 						<div className="modal-body">
 							<div className="form-group row">
-								<SelectInput clases="d-inline"  data_opciones={dataConformidad} llave="conformidad" descripcion="descripcion" label="Conformidad" valor={input => this._conformidad = input} />
+								<SelectChosen
+									clases="d-inline"
+									data={dataConformidad}
+									llave="conformidad"
+									descripcion="descripcion"
+									label="Conformidad"
+									valor={input => this._conformidad = input}
+									validator   = {this.state.validatorFinalizar.conformidad}
+									cambiar     = {p1    => this.setState({validator :Object.assign({}, this.state.validatorFinalizar,{conformidad:p1})})}
+								/>
 								<div className="btn-form">
-									<Boton onClick={this.finalizarOrden.bind(this)} clases="btn-success" label="Cerrar orden"/>
+									<Boton
+										onClick={this.finalizarOrden.bind(this)}
+										clases="btn-success"
+										label="Cerrar orden"
+									/>
 								</div>
 							</div>
 						</div>

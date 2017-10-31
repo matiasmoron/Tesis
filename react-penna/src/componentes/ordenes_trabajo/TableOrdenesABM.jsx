@@ -7,15 +7,32 @@ import { connect } from 'react-redux';
 import * as Api from '../../api/ordenes_api';
 import * as BsTable from '../commons/BsTable';
 import {estadoOrden,tipoBien} from '../commons/Utils';
-import {Boton,TextArea,SelectInput,Label} from '../genericos/FormElements';
+import {Boton,TextArea,habilitarSubmit} from '../genericos/FormElements';
+import SelectChosen from '../genericos/SelectChosen';
+import {showMsg} from '../../api/msg_alert_api'
 import {ModalBs} from '../genericos/ModalBs';
 import {VerMasModal} from './templates/VerMasModal';
 
 class TableOrdenes extends React.Component {
 	 constructor() {
        super();
-	   this.state = {showModalVer:false,showModalCrear:false,datosOrden:[]};
+	   this.state = {
+		   			showModalVer:false,
+		   			showModalCrear:false,
+					datosOrden:[],
+					validatorCrearOrden: this.initValidatorCrearOrden()};
      }
+
+	initValidatorCrearOrden(){
+	   return {
+		   observacion_creacion:{
+			   required : true
+		   },
+		   entidad_destino:{
+			   required : true
+		   }
+	   }
+   }
 
 	   colEstado(estado){
    			let clase="";
@@ -74,14 +91,21 @@ class TableOrdenes extends React.Component {
 		   	this.setState({showModalCrear : false});
 	   }
 
-		crearOrden(){
+		callbackSubmitCrearOrden(){
 			var promesa = Api.addOrden({id_tipo_bien:this.state.row.id_tipo_bien,id_bien:this.state.row.id_bien,obs_creacion:this._observacion_creacion.value,
 						'entidad_destino':this._id_entidad.value});
 
 			promesa.then(valor => {
 				Api.getBienesTablas({id_tipo_bien:this.state.row.id_tipo_bien,id_bien:this.state.row.id_bien});
 				this.cerrarCrear();
+				showMsg("Se creó la orden","ok");
+				this.setState({validatorCrearOrden:this.initValidatorCrearOrden()});
 			});
+		}
+
+		crearOrden(){
+			let obj = this.state.validatorCrearOrden;
+			habilitarSubmit(obj,this.callbackSubmitCrearOrden.bind(this));
 		}
 
 
@@ -104,10 +128,30 @@ class TableOrdenes extends React.Component {
 					{/* Modal crear orden */}
 					<ModalBs show={this.state.showModalCrear} onHide={this.cerrarCrear.bind(this)} titulo="Solicitar">
 						<div>
-							<TextArea cols="50" rows="3" valor={input => this._observacion_creacion = input}/>
-							<SelectInput  data_opciones={this.props.entidades} llave="id_entidad" descripcion="nombre" label="Entidad Destino" valor={input => this._id_entidad = input} />
+							<TextArea
+								cols="50"
+								rows="3"
+								valor={input => this._observacion_creacion = input}
+								validator   = {this.state.validatorCrearOrden.observacion_creacion}
+								cambiar     = {p1    => this.setState({validatorCrearOrden :Object.assign({}, this.state.validatorCrearOrden,{observacion_creacion:p1})})}
+							/>
+							<SelectChosen
+								data={this.props.entidades}
+								llave="id_entidad"
+								descripcion="nombre"
+								label="Entidad Destino"
+								clearable= {false}
+								valor={input => this._id_entidad = input}
+								validator   = {this.state.validatorCrearOrden.entidad_destino}
+								cambiar     = {p1    => this.setState({validatorCrearOrden :Object.assign({}, this.state.validatorCrearOrden,{entidad_destino:p1})})}
+							/>
 							<div className="btn-form">
-								<Boton onClick={this.crearOrden.bind(this)} clases="btn-success" icon="fa fa-check" label="Crear orden"/>
+								<Boton
+									onClick={this.crearOrden.bind(this)}
+									clases="btn-success"
+									icon="fa fa-check"
+									label="Crear orden"
+								/>
 							</div>
 						</div>
 					</ModalBs>
