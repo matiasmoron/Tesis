@@ -8,161 +8,229 @@ import * as Api from '../../api/ordenes_api';
 import * as ApiTecnico from '../../api/tecnico_api';
 import * as BsTable from '../commons/BsTable';
 import {estadoOrden,tipoBien,conformidad,prioridad} from '../commons/Utils';
-import {Boton,TextArea,SelectInput,Label,Input} from '../genericos/FormElements';
+import {Boton,TextArea,Label,Input2,habilitarSubmit} from '../genericos/FormElements';
 import SelectChosen from '../genericos/SelectChosen';
 import {ModalBs} from '../genericos/ModalBs';
 import {VerMasModal} from './templates/VerMasModal';
+import {showMsg} from '../../api/msg_alert_api'
 
 class TableOrdenesAdmin extends React.Component {
-	 constructor() {
-       super();
-	   this.state = {showModalVer:false,showModalDerivar:false,showModalAsignar:false,showModalActualizar:false,datosOrden:[]};
-     }
+	constructor() {
+		super();
+		this.state = {
+						showModalVer        : false,
+						showModalDerivar    : false,
+						showModalAsignar    : false,
+						showModalActualizar : false,
+						datosOrden          : [],
+						validatorDerivar    : this.initValidatorDerivar(),
+						validatorActualizar : this.initValidatorActualizar(),
+						validatorAsignar    : this.initValidatorAsignar()
+					};
+	 }
 
-	   customConfirm(next, dropRowKeys) {
-		 const dropRowKeysStr = dropRowKeys.join(',');
-		 if (confirm(`Está seguro que desea eliminar las fila seleccionada ${dropRowKeysStr}?`)) {
-		   next();
+	initValidatorDerivar(){
+		 return {
+			 id_entidad_destino:{
+				 required : true
+			 }
 		 }
+	}
+	initValidatorActualizar(){
+		return {
+			leg_recepcion:{
+			   required : true
+		   },
+		   hs_insumidas:{
+			   required:true,
+			   numeric:true
+		   },
+		   obs_devolucion:{
+			   required:true
+		   }
 	   }
-
-      colEstado(estado,row){
-  			let clase="";
-
-	   		 switch (String(row.estado)) {
-	   			 case "1":
-	   				 clase='t-error';
-	   				 break;
-	   			 case "2":
-	   				 clase='t-orange';
-	   				 break;
-	   			 case "3":
-	   				 clase='t-ok';
-	   				 break;
-  		 	}
-  			return '<span class='+clase+'><b>'+estadoOrden[estado]+'</b></span>';
-  		}
-
-	   colTipoBien(tBien,row){
-		   return '<span class="">'+tipoBien[tBien]+'</span>';
+	}
+	initValidatorAsignar(){
+	   return {
+		   leg_recepcion:{
+			   required : true
+		   }
 	   }
+	}
 
-	   colAccion(estado,row){
-		   console.log("colAccion",typeof row.estado, typeof String(row.estado));
+	customConfirm(next, dropRowKeys) {
+		const dropRowKeysStr = dropRowKeys.join(',');
+		if (confirm(`Está seguro que desea eliminar las fila seleccionada ${dropRowKeysStr}?`)) {
+			next();
+		}
+	}
 
+	colEstado(estado,row){
+		let clase="";
 
-			let acciones=[];
-			switch (String(row.estado)) {
-				case "2"://En curso
-						acciones.push(<Boton onClick={this.modalActualizarOrden.bind(this,row)} clases="btn-warning" titulo="Modificar los datos de la orden de trabajo" icon="fa fa-pencil"></Boton>);
-				case "1"://Pendiente
-						acciones.push(<Boton onClick={this.modalDerivarOrden.bind(this,row)} 	clases="btn-info" 	 titulo="Derivar orden de trabajo" icon="fa fa-reply"></Boton>)
-						acciones.push(<Boton onClick={this.modalAsignarOrden.bind(this,row)} 	clases="btn-success" titulo="Asignar la orden a otro técnico" icon="fa fa-plus"></Boton>)
-				case "3"://Resuelta
-				case "4"://Finalizada
-				case "5"://Cancelada por usuario
-				case "6"://Cancelada por técnico
-						acciones.push(<Boton onClick={this.modalVerMas.bind(this,row)} clases="btn-primary" titulo="Ver datos adicionales de la orden de trabajo" icon="fa fa-search"></Boton>)
+		 switch (String(row.estado)) {
+			 case "1":
+				 clase='t-error';
+				 break;
+			 case "2":
+				 clase='t-orange';
+				 break;
+			 case "3":
+				 clase='t-ok';
+				 break;
+		 }
+		return '<span class='+clase+'><b>'+estadoOrden[estado]+'</b></span>';
+	  }
 
-			}
-			return (
-					<div >
-	                    {acciones.map((boton,i) =>
-	                         <span key={i}> {boton}</span>
-	                     )}
-	                </div>
-			);
+	colTipoBien(tBien,row){
+	   return '<span class="">'+tipoBien[tBien]+'</span>';
+	}
+
+	colAccion(estado,row){
+		let acciones=[];
+		switch (String(row.estado)) {
+			case "2"://En curso
+					acciones.push(<Boton onClick={this.modalActualizarOrden.bind(this,row)} clases="btn-warning" titulo="Modificar los datos de la orden de trabajo" icon="fa fa-pencil"></Boton>);
+			case "1"://Pendiente
+					acciones.push(<Boton onClick={this.modalDerivarOrden.bind(this,row)}     clases="btn-info"      titulo="Derivar orden de trabajo" icon="fa fa-reply"></Boton>)
+					acciones.push(<Boton onClick={this.modalAsignarOrden.bind(this,row)}     clases="btn-success" titulo="Asignar la orden a otro técnico" icon="fa fa-plus"></Boton>)
+			case "3"://Resuelta
+			case "4"://Finalizada
+			case "5"://Cancelada por usuario
+			case "6"://Cancelada por técnico
+					acciones.push(<Boton onClick={this.modalVerMas.bind(this,row)} clases="btn-primary" titulo="Ver datos adicionales de la orden de trabajo" icon="fa fa-search"></Boton>)
 
 		}
+		return (
+				<div >
+					{acciones.map((boton,i) =>
+						 <span key={i}> {boton}</span>
+					 )}
+				</div>
+		);
 
-		//Funciones del Modal "Ver más"
-		modalVerMas(row){
-			this.setState({showModalVer :!this.state.showModalVer});
-			if (row!=null)
-				this.setState({datosOrden : row});
-		}
+	}
 
-		//Muestra/Oculta el modal de derivar orden guardando los datos de la fila segun corresponda
-	   modalDerivarOrden(row=null){
-		    this.setState({showModalDerivar : !this.state.showModalDerivar});
-			if (row!=null)
-				this.setState({datosOrden : row});
-	   }
+	//Funciones del Modal "Ver más"
+	modalVerMas(row){
+		this.setState({showModalVer :!this.state.showModalVer});
+		if (row!=null)
+			this.setState({datosOrden : row});
+	}
 
+	//Muestra/Oculta el modal de derivar orden guardando los datos de la fila segun corresponda
+	modalDerivarOrden(row=null){
+		this.setState({showModalDerivar : !this.state.showModalDerivar});
+		if (row!=null)
+			this.setState({datosOrden : row});
+	}
 
-		//Muestra/Oculta el modal de actualizar orden guardando los datos de la fila segun corresponda
-		modalActualizarOrden(row=null){
-			console.log(row);
-			this.setState({showModalActualizar : !this.state.showModalActualizar});
- 			if (row!=null)
- 				this.setState({datosOrden : row});
-	   }
+	//Muestra/Oculta el modal de actualizar orden guardando los datos de la fila segun corresponda
+	modalActualizarOrden(row=null){
+		console.log(row);
+		this.setState({showModalActualizar : !this.state.showModalActualizar});
+		 if (row!=null)
+			 this.setState({datosOrden : row});
+	}
 
-		//Action generada al presionar el boton "derivar" en el modal
-	   derivarOrden(){
-		   var promesa = Api.derivarOrden({id_orden_trabajo:this.state.datosOrden.id_orden_trabajo,entidad_destino:this._entidad_destino.value});
-
-		   promesa.then(valor => {
-				this.modalDerivarOrden();
-				this.props.getOrdenes();
+	//Muestra/Oculta el modal de tomar orden guardando los datos de la fila segun corresponda
+	modalAsignarOrden(row=null){
+		if(!this.state.showModalAsignar){// Si se abre el modal de asignar
+			const not_this=this;
+			const prom = new Promise(function(resolve, reject) {
+				not_this.setState({datosOrden : row});
+				resolve(1);
 			});
-	   }
-
-
-	  //Muestra/Oculta el modal de tomar orden guardando los datos de la fila segun corresponda
-	   modalAsignarOrden(row=null){
-			if(!this.state.showModalAsignar){// Si se abre el modal de asignar
-				const not_this=this;
-			    const prom = new Promise(function(resolve, reject) {
-					not_this.setState({datosOrden : row});
-					resolve(1);
-			    });
-				prom.then(valor=>{
-						const promesa= ApiTecnico.getTecnicoEntidadTable({id_entidad:this.state.datosOrden.id_entidad_destino});
-						promesa.then(valor => {
-							this.setState({showModalAsignar : !this.state.showModalAsignar});
-						});
+			prom.then(valor=>{
+				const promesa= ApiTecnico.getTecnicoEntidadTable({id_entidad:this.state.datosOrden.id_entidad_destino});
+				promesa.then(valor => {
+					this.setState({showModalAsignar : !this.state.showModalAsignar});
 				});
-			}
-			else{
-				this.setState({showModalAsignar : !this.state.showModalAsignar});
-			}
-	   }
+			});
+		}
+		else{
+			this.setState({showModalAsignar : !this.state.showModalAsignar});
+		}
+	}
 
-	  //Asigna la orden de trabajo a un técnico
-	   AsignarOrden(){
-		  var promesa = Api.asignarOrden({id_orden_trabajo:this.state.datosOrden.id_orden_trabajo,leg_recepcion:this._leg_recepcion.value});
+	//Action generada al presionar el boton "derivar" en el modal
+	derivarOrden(){
+		let obj = this.state.validatorDerivar;
+		habilitarSubmit(obj,this.callbackDerivarOrden.bind(this));
+	}
 
-		  promesa.then(valor => {
-			   this.props.getOrdenes();
-			   this.modalAsignarOrden();
-		   });
-	   }
+	callbackDerivarOrden(){
+		var promesa = Api.derivarOrden({
+										id_orden_trabajo:this.state.datosOrden.id_orden_trabajo,
+										entidad_destino:this._entidad_destino.value
+									});
 
-	//Actualiza la orden de trabajo con los datos ingresados y cambiandole el estado a finalizado
-	//TODO: HACER CONSULTA FINALIZAR
-	finalizarOrden(){
-	   const promesa=Api.actualizarOrden({
-								id_orden_trabajo: this.state.datosOrden.id_orden_trabajo,
-								hs_insumidas    : this._hs_insumidas.value,
-								prioridad       : this._prioridad.value,
-								obs_devolucion  : this._obs_devolucion.value
-
-							});
 		promesa.then(valor => {
-			const promesa2 = Api.actualizarEstadoOrden({
-				id_orden_trabajo:this.state.datosOrden.id_orden_trabajo,
-				estado          : 3
-			});
-			promesa2.then(valor => {
-				this.props.getOrdenes();
-				this.modalActualizarOrden();
-			});
-		 });
+			this.modalDerivarOrden();
+			this.props.getOrdenes();
+			showMsg("La orden de trabajo fué derivada correctamente a "+this._entidad_destino.label,"ok");
+			console.log("destino",this._entidad_destino.value);
+			console.log("destino",this._entidad_destino);
+
+		});
+	}
+
+	//Valida los campos y llama al asignar orden
+	asignarOrden(){
+		let obj = this.state.validatorAsignar;
+		habilitarSubmit(obj,this.callbackAsignarOrden.bind(this));
+	}
+
+	//Asigna la orden de trabajo a un técnico elegido
+	callbackAsignarOrden(){
+		var promesa = Api.asignarOrden({
+										id_orden_trabajo:this.state.datosOrden.id_orden_trabajo,
+										leg_recepcion:this._leg_recepcion.value
+									});
+
+		promesa.then(valor => {
+			this.props.getOrdenes();
+			this.modalAsignarOrden();
+			showMsg("La orden de trabajo fué asignada correctamente al legajo: "+this._leg_recepcion.value,"ok");
+			this.setState({validatorAsignar:this.initValidatorAsignar()});
+		});
+	}
+
+	//Valida los campos y llama para finalizar la orden
+	finalizarOrden(){
+		let obj = this.state.validatorActualizar;
+		habilitarSubmit(obj,this.callbackFinalizarOrden.bind(this));
+	}
+	//Actualiza la orden de trabajo con los datos ingresados y cambiandole el estado a finalizado
+	callbackFinalizarOrden(){
+		const promesa=Api.actualizarOrden({
+  								id_orden_trabajo: this.state.datosOrden.id_orden_trabajo,
+  								hs_insumidas    : this._hs_insumidas.value,
+  								prioridad       : this._prioridad.value,
+  								obs_devolucion  : this._obs_devolucion.value
+
+  							});
+  		promesa.then(valor => {
+  			const promesa2 = Api.actualizarEstadoOrden({
+  				id_orden_trabajo:this.state.datosOrden.id_orden_trabajo,
+  				estado          : 3
+  			});
+  			promesa2.then(valor => {
+  				this.props.getOrdenes();
+  				this.modalActualizarOrden();
+				showMsg("Se dio por finalizada la orden de trabajo","ok");
+				this.setState({validatorActualizar:this.initValidatorActualizar()});
+  			});
+  		 });
 	}
 
 	//Actualiza la orden de trabajo con los datos ingresados
 	actualizarOrden(){
+		let obj = this.state.validatorActualizar;
+		habilitarSubmit(obj,this.callbackActualizarOrden.bind(this));
+	}
+
+	callbackActualizarOrden(){
 		var promesa=Api.actualizarOrden({
 								id_orden_trabajo: this.state.datosOrden.id_orden_trabajo,
 								hs_insumidas    : this._hs_insumidas.value,
@@ -171,10 +239,10 @@ class TableOrdenesAdmin extends React.Component {
 							});
 		promesa.then(valor => {
 			this.props.getOrdenes();
-			 this.modalActualizarOrden();
-		 });
-
-
+			this.modalActualizarOrden();
+			showMsg("La orden de trabajo se actualizó correctamente","ok");
+			this.setState({validatorActualizar:this.initValidatorActualizar()});
+		});
 	}
 
 	_dataPrioridades(){
@@ -192,28 +260,46 @@ class TableOrdenesAdmin extends React.Component {
 
    render() {
 
- 		const opciones= {
+		const opciones = {
 			searchField           : BsTable.searchField,
- 			handleConfirmDeleteRow: this.customConfirm,
- 			clearSearch           : true,
+			handleConfirmDeleteRow: this.customConfirm,
+			clearSearch           : true,
 			clearSearchBtn        : BsTable.btnClear,
 			noDataText            : 'No se encontraron resultados'
- 		};
+		};
 
 		var data_prioridades = this._dataPrioridades();
 		return (
 				<div>
 
 					{/* Modal ver más */}
-					<VerMasModal datosOrden={this.state.datosOrden} show={this.state.showModalVer} onHide={this.modalVerMas.bind(this)}></VerMasModal>
+					<VerMasModal
+						datosOrden = {this.state.datosOrden}
+						show       = {this.state.showModalVer}
+						onHide     = {this.modalVerMas.bind(this)}>
+					</VerMasModal>
 
 					{/* Modal derivar */}
 					<ModalBs show={this.state.showModalDerivar} onHide={this.modalDerivarOrden.bind(this)} titulo="Solicitar">
 						<div className="modal-body">
 							<div className="form-group row">
-								<SelectChosen defaultVal={this.state.datosOrden.id_entidad_destino}  data={this.props.entidades} llave="id_entidad" descripcion="nombre" label="Entidad destino" valor={input => this._entidad_destino = input} />
+								<SelectChosen
+									label       = "Entidad destino"
+									valor       = {input => this._entidad_destino = input}
+									defaultVal  = {this.state.datosOrden.id_entidad_destino}
+									data        = {this.props.entidades}
+									llave       = "id_entidad"
+									clearable   = {false}
+									descripcion = "nombre"
+									validator   = {this.state.validatorDerivar.id_entidad_destino}
+									cambiar     = {p1    => this.setState({validatorDerivar :Object.assign({}, this.state.validatorDerivar,{id_entidad_destino:p1})})}
+								/>
 								<div className="btn-form">
-									<Boton onClick={this.derivarOrden.bind(this)} clases="btn-success" label="Derivar"/>
+									<Boton
+										label="Derivar"
+										onClick={this.derivarOrden.bind(this)}
+										clases="btn-success"
+									/>
 								</div>
 							</div>
 						</div>
@@ -223,9 +309,22 @@ class TableOrdenesAdmin extends React.Component {
 					<ModalBs show={this.state.showModalAsignar} onHide={this.modalAsignarOrden.bind(this)} titulo="Asignar" >
 						<div className="modal-body">
 							<div className="form-group row">
-								<SelectChosen  defaultVal={this.state.datosOrden.leg_recepcion}  data={this.props.tecnicos_entidad_table} llave="legajo" descripcion="nombre_apellido" label="Asignar A" valor={input =>{ this._leg_recepcion = input;console.log("valor",this._leg_recepcion)}} />
+								<SelectChosen
+									label       = "Asignar A"
+									defaultVal  = {this.state.datosOrden.leg_recepcion}
+									data        = {this.props.tecnicos_entidad_table}
+									llave       = "legajo"
+									descripcion = "nombre_apellido"
+									valor       = {input => { this._leg_recepcion = input;}}
+									validator   = {this.state.validatorAsignar.leg_recepcion}
+									cambiar     = {p1    => this.setState({validatorAsignar :Object.assign({}, this.state.validatorAsignar,{leg_recepcion:p1})})}
+								/>
 								<div className="btn-form">
-									<Boton onClick={this.AsignarOrden.bind(this)} clases="btn-success" label="Asignar A"/>
+									<Boton
+										label   = "Asignar A"
+										onClick = {this.asignarOrden.bind(this)}
+										clases  = "btn-success"
+									/>
 								</div>
 							</div>
 						</div>
@@ -235,29 +334,69 @@ class TableOrdenesAdmin extends React.Component {
 					<ModalBs show={this.state.showModalActualizar} onHide={this.modalActualizarOrden.bind(this)} titulo="Actualizar orden de trabajo">
 						<div className="modal-body">
 							<div className="row">
-								<SelectChosen clases="col-md-6" clearable={false} defaultVal={this.state.datosOrden.prioridad}   data={data_prioridades} llave="prioridad" descripcion="descripcion" label="Prioridad" valor={input => this._prioridad = input} />
+								<SelectChosen
+									label       = "Prioridad"
+									clases      = "col-md-6"
+									clearable   = {false}
+									defaultVal  = {this.state.datosOrden.prioridad}
+									data        = {data_prioridades} llave  = "prioridad"
+									descripcion = "descripcion"
+									valor       = {input => this._prioridad = input}
+									validator   = {this.state.validatorActualizar.leg_recepcion}
+									cambiar     = {p1    => this.setState({validatorActualizar :Object.assign({}, this.state.validatorActualizar,{leg_recepcion:p1})})}
+								/>
 							</div>
 							<div className="row">
-								<Input clases="col-md-4"  label="Tiempo dedicado" valor={input => this._hs_insumidas = input} />
-								<Label clases="col-md-4" value={this.state.datosOrden.hs_insumidas} label="Total hs" />
+								<Input2
+									label     = "Tiempo dedicado"
+									clases    = "col-md-4"
+									valor     = {input => this._hs_insumidas = input}
+									validator = {this.state.validatorActualizar.hs_insumidas}
+									cambiar   = {p1    => this.setState({validatorActualizar :Object.assign({}, this.state.validatorActualizar,{hs_insumidas:p1})})}
+								/>
+								<Label
+									label  = "Total hs"
+									clases = "col-md-4"
+									value  = {this.state.datosOrden.hs_insumidas}
+								/>
 							</div>
 							<div className="row">
-								<TextArea rows="3" clases="col-md-12" value={this.state.datosOrden.obs_devolucion}  label="Obs devolución"  valor={input => this._obs_devolucion = input} />
+								<TextArea
+									label     = "Obs devolución"
+									rows      = "3"
+									clases    = "col-md-12"
+									value     = {this.state.datosOrden.obs_devolucion}
+									valor     = {input => this._obs_devolucion = input}
+									validator = {this.state.validatorActualizar.obs_devolucion}
+									cambiar   = {p1    => this.setState({validatorActualizar :Object.assign({}, this.state.validatorActualizar,{obs_devolucion:p1})})}
+								/>
 							</div>
 							<div className="btn-form">
-								<Boton onClick={this.actualizarOrden.bind(this)} clases="btn-warning" label="Actualizar"/>
-								<Boton onClick={this.finalizarOrden.bind(this)} clases="btn-success" label="Guardar y finalizar"/>
-								<Boton onClick={this.modalActualizarOrden.bind(this)} clases="btn-danger" label="Cancelar"/>
+								<Boton
+									label   = "Actualizar"
+									onClick = {this.actualizarOrden.bind(this)}
+									clases  = "btn-warning"
+								/>
+								<Boton
+									label   = "Guardar y finalizar"
+									onClick = {this.finalizarOrden.bind(this)}
+									clases  = "btn-success"
+								/>
+								<Boton
+									label   = "Cancelar"
+									onClick = {this.modalActualizarOrden.bind(this)}
+									clases  = "btn-danger"
+								/>
 							</div>
 						</div>
 					</ModalBs>
 
 					<BootstrapTable
-						height='auto'
-						search={true}
-						data={this.props.datos_elemento}
-						deleteRow={false}
-						options={opciones}
+						height    = 'auto'
+						search    = {true}
+						data      = {this.props.datos_elemento}
+						deleteRow = {false}
+						options   = {opciones}
 						hover>
 						<TableHeaderColumn isKey dataField='id_orden_trabajo' hidden>ID</TableHeaderColumn>
 						<TableHeaderColumn dataField='id_tipo_bien' dataFormat={this.colTipoBien} dataSort>Tipo Bien</TableHeaderColumn>

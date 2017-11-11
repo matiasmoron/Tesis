@@ -6,7 +6,7 @@ import * as ApiEntidad from '../../api/entidad_api';
 import * as ApiTecnico from '../../api/tecnico_api';
 import { connect } from 'react-redux';
 import store from '../../store';
-import {Input2,PopOver,Formulario,habilitarSubmit,resetForm} from '../genericos/FormElements';
+import {Input2,PopOver,Formulario,habilitarSubmit,resetForm,Boton} from '../genericos/FormElements';
 import TableOrdenesAdmin from './TableOrdenesAdmin';
 import {tipoBien,estadoOrden} from '../commons/Utils';
 import SelectChosen from '../genericos/SelectChosen';
@@ -74,7 +74,6 @@ class PanelOrdenesAdmin extends React.Component {
 				return aux[valor].value;
 			});
 		}
-		console.log("estado",estados);
 		Api.getOrdenes({
 							id_tipo_bien   :this._id_tipo_bien.value,
 							id_servicio    :this._id_servicio.value,
@@ -242,8 +241,7 @@ class PanelOrdenesAdmin extends React.Component {
 							/>
 						</div>
 						<div className="btn-form">
-							{/* <Boton clases="btn btn-primary" label="Buscar"/> */}
-							<button type="submit" className="btn btn-primary">Buscar</button>
+							<Boton clases="btn btn-primary" label="Buscar"/>
 						</div>
 					</Formulario>
 				</div>

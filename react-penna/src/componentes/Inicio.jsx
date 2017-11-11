@@ -11,13 +11,19 @@ import Background from '../img/1.jpg';
 class Inicio extends React.Component {
 	constructor() {
       super();
+	  this.state = {showError:"hidden"};
     }
+
+
 	handleClick(event) {
 		event.preventDefault();
 		const usuario = this.refs.usuario
 		const password = this.refs.password
 		const creds = { usuario: usuario.value.trim(), password: password.value.trim() }
-		ApiAutenticacion.loginUser(creds);
+		var promesa = ApiAutenticacion.loginUser(creds);
+		promesa.then({},(reject) => {
+			this.setState ( {showError : ""});
+		});
 	}
 
 	render(){
@@ -53,7 +59,7 @@ class Inicio extends React.Component {
 		                        			<i className="fa fa-lock"></i>
 		                        		</div>
 		                            </div>
-									<div className="form-error" hidden>
+									<div className={"form-error "+ this.state.showError}>
 										<strong>Nombre de usuario y/o contraseña incorrecta</strong>
 									</div>
 		                            <div className="form-bottom">
