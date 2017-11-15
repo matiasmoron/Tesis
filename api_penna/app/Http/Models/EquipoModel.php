@@ -78,4 +78,23 @@ class EquipoModel extends Model {
 
         return $this->execute_simple_query("update",$query,$params);
     }
+
+    
+    /**
+    *Devuelve los equipos con hijos de los pasados por parámetro
+    **/
+    public function get_padres($request){
+        $params= array();
+        $query = "SELECT 
+                    DISTINC hijo.id_equipo_padre,
+                    hijo.descripcion hijo_descripcion,
+                    padre.descripcion padre_descripcion
+                FROM 
+                    equipo hijo
+                INNER JOIN equipo padre ON(hijo.id_equipo_padre=padre.id_equipo)
+                WHERE
+                    hijo.id_equipo_padre IN ("$request->id_bienes")";
+
+        return $this->execute_simple_query("select",$query,$params);
+    }
 }

@@ -59,4 +59,14 @@ class Equipo_Controller extends Controller{
 
         return $this-> equipo ->update_equipo($request);
     }
+
+    public function get_padres(Request $request){
+        $reglas=[
+                    'id_bienes' => 'required'
+                ];
+
+        $this->validar($request->all(),$reglas);
+
+        return $this-> equipo ->get_padres($request);
+    }
 }
