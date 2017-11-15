@@ -28,7 +28,7 @@ class PanelEquipo extends React.Component {
 				type     : "numeric"
 			},
 			id_equipo_padre:{
-				required : true
+				required : false
 			}
 		}
 	}
@@ -58,22 +58,9 @@ class PanelEquipo extends React.Component {
 
 	_addElemento(event){
 		event.preventDefault();
-		// console.log(this._descripcion);
-		this._descripcion.change("asdfasd");
-		console.log(this._descripcion);
-		document.getElementById("descrip")
-		// this._descripcion.focusout();
-		// console.log(inputs.refs);
-		// console.log();
-		// var event = new Event('input', { bubbles: true });
-		// console.log(event);
 		let obj = this.state.validator;
 		habilitarSubmit(obj,this.callbackSubmit.bind(this));
     }
-
-	dispatchEvent(event){
-		console.log(event,"golasd");
-	}
 
 	_deleteElemento(id){
 		Api.deleteEquipo({id_bien:id});

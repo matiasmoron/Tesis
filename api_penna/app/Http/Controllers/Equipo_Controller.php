@@ -26,7 +26,7 @@ class Equipo_Controller extends Controller{
     public function add_equipo(Request $request){
         $reglas=[
                     'id_tipo_equipo'  => 'required|numeric',
-                    'id_equipo_padre' => 'required|numeric',
+                    'id_equipo_padre' => 'numeric',
                     'cod_patrimonial' => 'required|numeric',
                     'id_servicio'     => 'required|numeric',
                     'descripcion'     => 'required|max:45'
