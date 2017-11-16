@@ -20,7 +20,7 @@ class PanelPrestacion extends React.Component {
 	initValidator(){
 		return {
 			id_servicio:{
-				required : true
+				required : false
 			},
 			descripcion:{
 				required : true

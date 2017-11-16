@@ -1,5 +1,4 @@
 var React   = require('react');
-var Popover = require("react-bootstrap/lib/Popover");
 import {showMsg} from '../../api/msg_alert_api';
 
 
@@ -87,7 +86,7 @@ export const Input2 = (props) => {
  */
 export const habilitarSubmit = (validator,callback) => {
      let habilita = Object.keys(validator).reduce(function(valorAnterior,valorAct){
-                        return (valorAnterior && validator[valorAct].isValid || (validator[valorAct].isValid == undefined && !validator[valorAct].required));
+                        return (valorAnterior && (validator[valorAct].isValid || (validator[valorAct].isValid == undefined && !validator[valorAct].required)));
                     },true);
 
     if (habilita){

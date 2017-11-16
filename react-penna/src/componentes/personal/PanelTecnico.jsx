@@ -60,6 +60,7 @@ class PanelTecnico extends React.Component {
 		event.preventDefault();
 
 		let obj = this.state.validator;
+		console.log(obj);
 		habilitarSubmit(obj,this.callbackSubmit.bind(this));
     }
 

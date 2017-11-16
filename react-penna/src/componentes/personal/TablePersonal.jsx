@@ -65,7 +65,6 @@ class TablePersonal extends React.Component {
 			handleConfirmDeleteRow: this.customConfirm,
 			clearSearch           : true,
 			clearSearchBtn        : BsTable.btnClear,
-			exportCSVBtn          : BsTable.btnXls,
 			noDataText            : 'No se encontraron resultados'
 		}
 
@@ -91,7 +90,6 @@ class TablePersonal extends React.Component {
 					selectRow = {BsTable.selectFila}
 					cellEdit  = {editar}
 					options   = {opciones}
-					exportCSV
 					hover
 					striped
 					pagination>

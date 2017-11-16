@@ -31,7 +31,7 @@ export function DbCall(args) {
                             store.dispatch(args.callback(args.callbackParams));
                         }
                     }
-                    resolve(1);
+                    resolve(response.data.result);
                 }
                 else{
                     ApiMsg.showMsg(response.data.msg);

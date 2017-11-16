@@ -57,8 +57,8 @@ Route::middleware('jwt.auth')->put('/entidades', 'Entidad_Controller@update_enti
 Route::middleware('jwt.auth')->delete('/entidades', 'Entidad_Controller@remove_entidad');
 
 //Equipo
+Route::middleware('jwt.auth')->post('/equipos/padre', 'Equipo_Controller@get_padres');
 Route::middleware('jwt.auth')->get('/equipos/{id_equipo?}', 'Equipo_Controller@get_equipos');
-Route::middleware('jwt.auth')->get('/equipos/padre/{id_equipo?}', 'Equipo_Controller@get_padres');
 Route::middleware('jwt.auth')->post('/equipos', 'Equipo_Controller@add_equipo');
 Route::middleware('jwt.auth')->put('/equipos', 'Equipo_Controller@update_equipo');
 Route::middleware('jwt.auth')->delete('/equipos', 'Equipo_Controller@remove_equipo');

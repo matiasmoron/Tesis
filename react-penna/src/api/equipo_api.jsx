@@ -14,6 +14,15 @@ export function getEquipos(data) {
     return DbCall.DbCall(args);
 }
 
+export function getPadres(data) {
+   var args={
+             metodo        :'post',
+             url           :'equipos/padre',
+             params        : data
+          };
+   return DbCall.DbCall(args);
+}
+
 export function addEquipo(data) {
    var args={
              metodo  : 'post',

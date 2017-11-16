@@ -5,7 +5,7 @@ import * as ApiServicio from '../../api/servicio_api';
 import * as entidadApi from '../../api/entidad_api';
 import { connect } from 'react-redux';
 import store from '../../store';
-import {Input2,PopOver,Formulario,habilitarSubmit,resetForm} from '../genericos/FormElements';
+import {Input2,Formulario,habilitarSubmit,resetForm} from '../genericos/FormElements';
 import TableOrdenesABM from './TableOrdenesABM';
 import {tipoBien} from '../commons/Utils';
 import SelectChosen from '../genericos/SelectChosen';

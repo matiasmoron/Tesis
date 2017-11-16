@@ -13,7 +13,7 @@ class PrestacionModel extends Model {
                     s.id_servicio,
                     s.nombre as servicio_nombre
                 FROM  prestacion p
-                JOIN servicio s USING(id_servicio)
+                LEFT JOIN servicio s USING(id_servicio)
                 WHERE p.estado='.ALTA;
 
         if(isset($request->id_bien)){
@@ -36,6 +36,7 @@ class PrestacionModel extends Model {
         $params=array();
         $query=array();
 
+
         $query='INSERT INTO prestacion (
                                     id_servicio,
                                     descripcion,
@@ -43,8 +44,8 @@ class PrestacionModel extends Model {
                                     estado)
                 VALUES(?,?,?,'.ALTA.')';
 
-        $id_servicio= ($request ->id_servicio) ? $request->id_servicio : '';
-		$observacion= ($request ->observacion) ? $request->observacion : '';
+        $id_servicio= ($request ->id_servicio) ? $request->id_servicio : NULL;
+		$observacion= ($request ->observacion) ? $request->observacion : NULL;
 
         array_push($params,$id_servicio);
 		array_push($params,$request->descripcion);

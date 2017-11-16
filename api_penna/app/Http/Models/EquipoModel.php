@@ -15,7 +15,7 @@ class EquipoModel extends Model {
                     e.descripcion,
                     s.id_servicio,
                     s.nombre as servicio_nombre,
-                	if(e.id_equipo_padre is not null,e_padre.descripcion,"-") as padre_desc,
+                	if(e.id_equipo_padre is not null,CONCAT(e_padre.cod_patrimonial," - ",e_padre.descripcion),"-") as padre_desc,
                 	if(e.id_equipo_padre is not null,e_padre.cod_patrimonial,"-") as padre_cod
                 FROM  equipo e
                 JOIN servicio s USING(id_servicio)
@@ -79,21 +79,22 @@ class EquipoModel extends Model {
         return $this->execute_simple_query("update",$query,$params);
     }
 
-    
+
     /**
     *Devuelve los equipos con hijos de los pasados por parámetro
     **/
     public function get_padres($request){
         $params= array();
-        $query = "SELECT 
-                    DISTINC hijo.id_equipo_padre,
+		$equipos =  implode(',',$request->id_bienes);
+        $query = "SELECT
+                    DISTINCT hijo.id_equipo_padre,
                     hijo.descripcion hijo_descripcion,
                     padre.descripcion padre_descripcion
-                FROM 
+                FROM
                     equipo hijo
                 INNER JOIN equipo padre ON(hijo.id_equipo_padre=padre.id_equipo)
                 WHERE
-                    hijo.id_equipo_padre IN ("$request->id_bienes")";
+                    hijo.id_equipo_padre IN (".$equipos.")";
 
         return $this->execute_simple_query("select",$query,$params);
     }

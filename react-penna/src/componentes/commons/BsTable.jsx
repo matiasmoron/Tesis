@@ -2,6 +2,10 @@ var React = require('react');
 var ReactBsTable  = require('react-bootstrap-table');
 var BootstrapTable = ReactBsTable.BootstrapTable;
 var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
+import {ModalBs} from '../genericos/ModalBs';
+import {Boton} from '../genericos/FormElements';
+
+
 
 // export function onAfterDeleteRow(rowKeys){
 // 	console.log("asdasdas");
@@ -104,4 +108,33 @@ export const columnDate = (valor) => {
 
     }
     return response;
+}
+
+export const genericCustomConfirm = (next, dropRowKeys) => {
+     const dropRowKeysStr = dropRowKeys.join(',');
+	 if (confirm(`Está seguro que desea eliminar las fila seleccionada ${dropRowKeysStr}?`)) {
+	   next();
+	 }
+//     let isVisible=true;
+//     console.log("easdasd");
+//     fucionrender()
+//     render(){
+//         return (
+//             <div>
+//             	<ModalBs show={true}  titulo="Solicitar">
+//             		<div>
+//                         Está seguro que desea eliminar las fila seleccionada
+//                         	<div className="btn-form">
+//                                 <Boton
+//                                     onClick={ () => {next();isVisible=false;}}
+//                                     clases="btn-success"
+//                                     icon="fa fa-check"
+//                                     label="Crear orden"
+//                                 />
+//                             </div>
+//             		</div>
+//             	</ModalBs>
+//             </div>
+//     )
+// }
 }
