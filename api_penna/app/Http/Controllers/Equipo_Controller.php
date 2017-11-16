@@ -69,4 +69,17 @@ class Equipo_Controller extends Controller{
 
         return $this-> equipo ->get_padres($request);
     }
+
+    /**
+    * Determina si ya existe el código patrimonial 
+    */
+    public function existe_cod_patrimonial(Request $request){
+        $reglas=[
+                    'cod_patrimonial' => 'required|numeric'
+                ];
+
+        $this->validar($request->all(),$reglas);
+
+        return $this-> equipo ->existe_cod_patrimonial($request);
+    }
 }

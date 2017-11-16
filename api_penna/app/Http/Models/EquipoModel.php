@@ -69,12 +69,14 @@ class EquipoModel extends Model {
         $query='UPDATE equipo
                 SET
                        cod_patrimonial=?,
-                       descripcion=?
+                       descripcion=?,
+                       estado = ?
                 WHERE  id_equipo=?';
 
         array_push($params,$request->cod_patrimonial);
-        array_push($params,$request->descripcion);;
+        array_push($params,$request->descripcion);
         array_push($params,$request->id_bien);
+        array_push($params,$request->estado);
 
         return $this->execute_simple_query("update",$query,$params);
     }
@@ -98,4 +100,23 @@ class EquipoModel extends Model {
 
         return $this->execute_simple_query("select",$query,$params);
     }
+
+    /**
+    * Determina si ya existe el código patrimonial
+    * @return [string] si ya existe devuelve el estado 'baja' o 'alta'
+    */
+    public function existe_cod_patrimonial($request){
+        $params= array();
+        $query = "SELECT 
+                    IF (estado=".BAJA.",'baja','alta') as estado,
+                    id_equipo
+                FROM
+                    equipo
+                WHERE
+                    cod_patrimonial=?";
+
+        return $this->execute_simple_query("select",$query,$params);
+    }
+
+
 }
