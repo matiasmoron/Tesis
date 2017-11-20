@@ -38,8 +38,9 @@ class Personal_Controller extends Controller
 
         $this->validar($request->all(),$reglas);
 
-        if ($this->personal->existe_personal_baja($request)){
-            return $this->personal->dar_alta($request);
+        $existe_personal=$this->personal->existe_personal($request);
+        if ($existe_personal['result']){
+            return array("success" => FALSE , "msg"=>$existe_personal['msg'] ,"result" => FALSE );
         }
         else{
             return $this->personal->add_personal($request);
@@ -76,5 +77,17 @@ class Personal_Controller extends Controller
         $this->validar($request->all(),$reglas);
 
         return $this->personal->update_personal($request);
+    }
+
+    public function existe_personal(Request $request){
+        $reglas=[
+                    'legajo'        => 'required|numeric',
+                    'dni'           => 'required|numeric',
+                    'usuario'       => 'required|max:20',
+                ];
+
+        $this->validar($request->all(),$reglas);
+
+        return $this->personal->existe_personal($request);
     }
 }

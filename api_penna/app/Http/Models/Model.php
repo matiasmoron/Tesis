@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\DB;
 const ALTA=1;
 const BAJA=0;
 
+const EQUIPO=1;
+const PRESTACION=2;
+
 class Model
 {
 
@@ -31,7 +34,7 @@ class Model
 			        break;
 			}
             $auxQuery =DB::getQueryLog();
-            // die(var_dump($auxQuery));
+            // die(var_dump(print_r($auxQuery,true) . " " . print_r($params,true)));
     		return array("success"=>TRUE,"msg"=>$auxQuery,"result"=>$resultado);
 
     	}

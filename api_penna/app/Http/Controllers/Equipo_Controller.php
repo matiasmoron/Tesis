@@ -34,7 +34,15 @@ class Equipo_Controller extends Controller{
 
         $this->validar($request->all(),$reglas);
 
-        return $this-> equipo ->add_equipo($request);
+        $existe_cod_patrimonial= $this->existe_cod_patrimonial($request);
+        if (count($existe_cod_patrimonial['result'])>0){
+            return array("success"=>FALSE,"msg"=>"Ya existe el código patrimonial ingresado","result"=>"");
+
+        }
+        else{
+            return $this-> equipo ->add_equipo($request);
+        }
+
     }
 
     public function remove_equipo(Request $request){
@@ -42,9 +50,17 @@ class Equipo_Controller extends Controller{
                     'id_bien' => 'required|numeric'
                 ];
 
+
         $this->validar($request->all(),$reglas);
 
-        return $this-> equipo ->remove_equipo($request);
+
+        $es_padre= $this-> equipo -> get_padres((object) array("id_bienes" => array($request->id_bien)));
+        if (count($es_padre['result'])>0){
+            return array("success"=>FALSE,"msg"=>"No se puede eliminar porque existen equipos que forman parte de él","result"=>"");
+        }
+        else{
+            return $this-> equipo ->remove_equipo($request);
+        }
 
     }
 

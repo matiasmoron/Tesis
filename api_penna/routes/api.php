@@ -47,6 +47,7 @@ Route::middleware('jwt.auth')->get('/tecnico_entidad', 'Tecnico_Controller@get_t
 //Personal
 Route::middleware('jwt.auth')->get('/personal/{legajo?}', 'Personal_Controller@get_personal');
 Route::middleware('jwt.auth')->post('/personal', 'Personal_Controller@add_personal');
+Route::middleware('jwt.auth')->post('/personal/existe', 'Personal_Controller@existe_personal');
 Route::middleware('jwt.auth')->put('/personal', 'Personal_Controller@update_personal');
 Route::middleware('jwt.auth')->delete('/personal', 'Personal_Controller@remove_personal');
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Orden_trabajo;
 use App\Http\Models\OrdenTrabajoModel;
+use App\Http\Models\PersonalModel;
 
 const EQUIPO=1;
 const PRESTACION=2;
@@ -24,9 +25,9 @@ class Orden_Trabajo_Controller extends Controller{
             return $this->get_equipos_solicitud($request);
             break;
 
-            /*case PRESTACION:
-            return Equipo_Controller::get_equipos($request);
-            break;*/
+            case PRESTACION:
+            return $this->get_prestaciones_solicitud($request);
+            break;
         }
     }
 
@@ -42,23 +43,22 @@ class Orden_Trabajo_Controller extends Controller{
         return $this-> OrdenTrabajo -> get_equipos_solicitud($request);
     }
 
-    //Obtiene las ordenes de trabajo segun los filtros ingresados
-    public function get_ordenes(Request $request){
-        switch ($request->id_tipo_bien) {
-            case EQUIPO:
-            return $this->get_ordenes_equipo($request);
-            break;
+    private function get_prestaciones_solicitud(Request $request){
+        $reglas=[
+            'id_entidad'      => 'numeric',
+            'id_servicio'     => 'numeric'
+        ];
 
-            /*case PRESTACION:
-            return Equipo_Controller::get_equipos($request);
-            break;*/
-        }
+        $this->validar($request->all(),$reglas);
+
+        return $this-> OrdenTrabajo -> get_prestaciones_solicitud($request);
     }
 
-    /**
+    //Obtiene las ordenes de trabajo segun los filtros ingresados
+      /**
     * Obtiene las ordenes de trabajo con sus detalles
     * @param  filtros de la consulta  $request array(
-    *                                     id_bien = id del equipo
+    *                                     id_bien = id del equipo/prestación
     *                                     cod_patrimonial= cod del equipo
     *                                     id_servicio = id del Servicio
     *                                     leg_recepcion= legajo del tecnico que toma la orden de trabajo
@@ -68,8 +68,9 @@ class Orden_Trabajo_Controller extends Controller{
     *                             )
     * @return {[type]
     */
-    private function get_ordenes_equipo($request){
-        $reglas=[
+    public function get_ordenes(Request $request){
+
+          $reglas=[
             'id_bien'         => 'numeric',
             'cod_patrimonial' => 'numeric',
             'id_servicio'     => 'numeric',
@@ -81,9 +82,11 @@ class Orden_Trabajo_Controller extends Controller{
 
         $this->validar($request->all(),$reglas);
 
-        return $this -> OrdenTrabajo ->get_ordenes_equipo($request);
+        return $this -> OrdenTrabajo ->get_ordenes($request);
+
     }
 
+  
     public function add_orden(Request $request){
         $reglas=[
             'id_tipo_bien'    => 'numeric',
@@ -94,6 +97,11 @@ class Orden_Trabajo_Controller extends Controller{
 
         ];
         $this->validar($request->all(),$reglas);
+        $this->personal= new PersonalModel();
+
+        $usuario_creacion =$this->getAuthenticatedUser()['usuario'];
+        $datos_usuario = $this -> personal -> get_personal((object) array("usuario" => $usuario_creacion));
+        $request->leg_creacion= $datos_usuario['result'][0]->legajo;
 
         return $this -> OrdenTrabajo ->add_orden($request);
     }
@@ -185,7 +193,7 @@ class Orden_Trabajo_Controller extends Controller{
         ];
         $this->validar($request->all(),$reglas);
 
-        return $this -> OrdenTrabajo ->actualizar_orden($request);
+        return $this -> OrdenTrabajo ->actualizar_estado($request);
     }
 
 }

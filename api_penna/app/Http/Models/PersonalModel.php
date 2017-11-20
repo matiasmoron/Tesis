@@ -33,6 +33,12 @@ class PersonalModel extends Model {
              array_push($params,$request->legajo);
          }
 
+
+         if(isset($request->dni)){
+             $query.=' AND p.dni=?';
+             array_push($params,$request->dni);
+         }
+
          if(isset($request->usuario)){
              $query.=' AND p.usuario=?';
              array_push($params,$request->usuario);
@@ -44,30 +50,28 @@ class PersonalModel extends Model {
 
     
     /**
-    *Se fija si existe el personal pero dado de baja
-    * @return true si existe y false caso contrario
+    *Se fija si existe el personal
+    * @return true si existe describiendo que campo esta siendo usado y false caso contrario
     */
-    public function existe_personal_baja($request){
-        $params= array();
-        $query='SELECT
-                    1
-                FROM
-                    personal
-                WHERE
-                    legajo=?
-                    AND
-                    estado='.BAJA.'
+    public function existe_personal($request){
+        $personal_legajo= $this -> get_personal((object) array("legajo"=> $request->legajo));
 
-                ;';
-
-        array_push($params,$request->legajo);
-
-        $existe=$this->execute_simple_query("select",$query,$params);
-
-        if ($existe['success'] && (count($existe['result'])>0))
-            return true;
-        else
-            return false;
+        if ($personal_legajo['success'] && (count($personal_legajo['result'])>0))
+            return array("success"=>TRUE,"msg"=>"El legajo esta siendo usado","result"=>TRUE);
+        else{
+            $personal_usuario= $this -> get_personal((object) array("usuario"=> $request->usuario));
+            if ($personal_usuario['success'] && (count($personal_usuario['result'])>0)){
+                return array("success"=>TRUE,"msg"=>"El usuario esta siendo usado","result"=>TRUE);
+            } 
+            else{
+                $personal_dni= $this -> get_personal((object) array("dni"=> $request->dni));
+                if ($personal_dni['success'] && (count($personal_dni['result'])>0)){
+                    return array("success"=>TRUE,"msg"=>"El dni esta siendo usado","result"=>TRUE);
+                } 
+                else
+                    return array("success"=>TRUE,"msg"=>"","result"=>FALSE);
+            } 
+        }
     }
 
 	public function add_personal($request){

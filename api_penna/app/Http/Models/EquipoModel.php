@@ -96,7 +96,10 @@ class EquipoModel extends Model {
                     equipo hijo
                 INNER JOIN equipo padre ON(hijo.id_equipo_padre=padre.id_equipo)
                 WHERE
-                    hijo.id_equipo_padre IN (".$equipos.")";
+                    hijo.id_equipo_padre IN (".$equipos.")
+                    AND hijo.estado=?";
+
+        array_push($params,ALTA);
 
         return $this->execute_simple_query("select",$query,$params);
     }
@@ -115,6 +118,8 @@ class EquipoModel extends Model {
                 WHERE
                     cod_patrimonial=?";
 
+        array_push($params,$request->cod_patrimonial);
+        
         return $this->execute_simple_query("select",$query,$params);
     }
 
