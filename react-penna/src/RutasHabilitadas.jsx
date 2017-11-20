@@ -44,7 +44,12 @@ var cargar_rutas = (opc_habilitados) => {
 class RutasHabilitadas extends React.Component {
 	render(){
         // console.log("EASDASD",typeof this.props.permisos);
-		let rutas = cargar_rutas(JSON.parse(this.props.permisos));
+        let rutas;
+        if((typeof this.props.permisos) ==  'object')
+            rutas = cargar_rutas(this.props.permisos);
+        else
+            rutas = cargar_rutas(JSON.parse(this.props.permisos));
+
 	    return (
 	        <Switch>
 	            <Route exact path="/" component={submenuOrdenes} />

@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import store from '../../store';
 import DatePicker from '../genericos/DatePicker';
 import SelectChosen from '../genericos/SelectChosen';
-import {SelectInput,Input2,Formulario,habilitarSubmit,resetForm} from '../genericos/FormElements';
+import {Input2,Formulario,habilitarSubmit,resetForm} from '../genericos/FormElements';
 import {showMsg} from '../../api/msg_alert_api';
 import TablePersonal from './TablePersonal';
 
@@ -53,21 +53,31 @@ class PanelPersonal extends React.Component {
 	}
 
 	callbackSubmit(){
-		var promesa = ApiPersonal.addPersonal({
-												legajo       : this._legajo.value,
-												usuario      : this._usuario.value,
-												id_servicio  : this._id_servicio.value,
-												dni          : this._dni.value,
-												nombre       : this._nombre.value,
-												apellido     : this._apellido.value,
-												fecha_ingreso: this._fecha_ingreso.value
-											});
+		//Verifica si ya existe el cliente ingresado
+		let promesa_existe= ApiPersonal.existePersonal({legajo: this._legajo.value,usuario: this._usuario.value,dni: this._dni.value });
 
-		promesa.then( valor => {
-			ApiPersonal.getPersonal();
-			resetForm("form_personal");
-			this.setState({validator:this.initValidator()});
-			showMsg("Se creo el personal correctamente","ok");
+		promesa_existe.then (res =>{
+			if(res['result']==true){
+				showMsg(res['msg'],"error");
+			}
+			else{ //Si los datos no existe agrega el personal
+				let promesa = ApiPersonal.addPersonal({
+														legajo       : this._legajo.value,
+														usuario      : this._usuario.value,
+														id_servicio  : this._id_servicio.value,
+														dni          : this._dni.value,
+														nombre       : this._nombre.value,
+														apellido     : this._apellido.value,
+														fecha_ingreso: this._fecha_ingreso.value
+													});
+
+				promesa.then( valor => {
+					ApiPersonal.getPersonal();
+					resetForm("form_personal");
+					this.setState({validator:this.initValidator()});
+					showMsg("Se creo el personal correctamente","ok");
+				});
+			}
 		});
 	}
 
@@ -79,10 +89,13 @@ class PanelPersonal extends React.Component {
 
 
 	_deleteElemento(legajo){
-		ApiPersonal.deletePersonal(legajo);
+		let promesa =ApiPersonal.deletePersonal(legajo);
+		promesa.then( valor => {
+			showMsg("Se dio de baja el personal con legajo " + legajo,"ok");
+		});
     }
 	_updateElemento(personal){
-		var promesa =ApiPersonal.updatePersonal(personal);
+		let promesa =ApiPersonal.updatePersonal(personal);
 		promesa.then( valor => {
 			showMsg("El cambio fué realizado correctamente","ok");
 		})

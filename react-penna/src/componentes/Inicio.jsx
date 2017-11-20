@@ -90,7 +90,6 @@ class Inicio extends React.Component {
 };
 
 const mapStateToProps = function(store) {
-	console.log("store autenticacion",store);
   return {
 	  autenticacion 	 : store.autenticacionState,
   };

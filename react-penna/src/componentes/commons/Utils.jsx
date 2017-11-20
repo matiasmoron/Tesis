@@ -9,6 +9,11 @@ export var tipoBien = {
 	2 : "Prestacion"
 }
 
+export var bienTipo = {
+	EQUIPO : 1,
+	PRESTACION : 2
+}
+
 
 export var estadoOrden = {
 	0 : "Disponible",

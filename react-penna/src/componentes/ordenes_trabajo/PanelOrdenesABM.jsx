@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import store from '../../store';
 import {Input2,Formulario,habilitarSubmit,resetForm} from '../genericos/FormElements';
 import TableOrdenesABM from './TableOrdenesABM';
-import {tipoBien} from '../commons/Utils';
+import {tipoBien,bienTipo} from '../commons/Utils';
 import SelectChosen from '../genericos/SelectChosen';
 
 
@@ -17,8 +17,9 @@ class PanelOrdenes extends React.Component {
 	  this.state = {
 		  			validator                : this.initValidator(),
 		  			disabled_cod_patrimonial : false,
-					id_tbien_def             : "1",
-					id_serv_def              : "1"
+					id_tipo_bien             : "1",
+					id_serv_def              : "1",
+					hideCodPatrimonial       :false
 				}; //@TODO después el id_servicio es el del usuario
     }
 
@@ -26,7 +27,7 @@ class PanelOrdenes extends React.Component {
 	componentDidMount(){
 		//id_servicio seria el del login
 		ApiServicio.getServicios();
-		Api.getBienes({id_tipo_bien:this.state.id_tbien_def,id_servicio:this.state.id_serv_def});
+		Api.getBienes({id_tipo_bien:this.state.id_tipo_bien,id_servicio:this.state.id_serv_def});
 		Api.resetTabla();
 		entidadApi.getEntidades();
 	}
@@ -34,13 +35,13 @@ class PanelOrdenes extends React.Component {
 	initValidator(){
 		return {
 			id_servicio:{
-				required : true
+				required : false
 			},
 			id_tipo_bien:{
 				required : true
 			},
 			id_bien:{
-				required : true
+				required : false
 			},
 			cod_patrimonial:{
 				required : false
@@ -49,6 +50,9 @@ class PanelOrdenes extends React.Component {
 	}
 
 	callbackSubmit(){
+		this.setState({id_tipo_bien :this._id_tipo_bien.value});
+		this.setState({hideCodPatrimonial :this._id_tipo_bien.value !=bienTipo['EQUIPO']});
+		console.log();
 		Api.getBienesTablas({
 								id_tipo_bien   :this._id_tipo_bien.value,
 								id_servicio    :this._id_servicio.value,
@@ -79,7 +83,17 @@ class PanelOrdenes extends React.Component {
 
 	changeSelect(event){
 		// Habilita/Desabilita el input de cod_patrimonial
-		this.setState({ disabled_cod_patrimonial: this._id_tipo_bien.value == 2 ? true : false});
+		this.setState({ disabled_cod_patrimonial: (this._id_tipo_bien.value == 2) ? true : false});
+
+		//Para una prestación el servicio no es requerido
+		// let servicio_requerido = (this._id_tipo_bien.value == 1) ? true : false;
+		// console.log("required",servicio_requerido);
+		// console.log("VALE 1",this.state.validator);
+		// this.setState({validator.id_servicio :Object.assign({}, this.state.validator.id_servicio,{required : true})});
+
+		if(!this.state.disabled_cod_patrimonial){
+			this._cod_patrimonial.value = "";
+		}
 		Api.getBienes({
 						id_tipo_bien:this._id_tipo_bien.value,
 						id_servicio:this._id_servicio.value
@@ -97,7 +111,7 @@ class PanelOrdenes extends React.Component {
 								label       = "Servicios"
 								llave       = "id_servicio"
 								descripcion = "nombre"
-								clearable   = {false}
+								clearable   = {true}
 								clases      = "col-md-6"
 								onChange    = {this.changeSelect.bind(this)}
 								data        = {this.props.servicios}
@@ -113,7 +127,7 @@ class PanelOrdenes extends React.Component {
 								descripcion = "descripcion"
 								clases      = "col-md-5"
 								clearable   = {false}
-								defaultVal  = {this.state.id_tbien_def}
+								defaultVal  = {this.state.id_tipo_bien}
 								onChange    = {this.changeSelect.bind(this)}
 								data        = {data_tipo_bienes}
 								valor       = {input => this._id_tipo_bien = input}
@@ -150,8 +164,9 @@ class PanelOrdenes extends React.Component {
 
 				<div className="col-md-12">
         			<TableOrdenesABM
-						datos_elemento={this.props.bienes_tabla}
-						entidades={this.props.entidades}
+						datos_elemento        = {this.props.bienes_tabla}
+						entidades             = {this.props.entidades}
+						hideCodPatrimonial = {this.state.hideCodPatrimonial}
 					/>
 				</div>
 			</div>

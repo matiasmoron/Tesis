@@ -20,7 +20,8 @@ class TableOrdenes extends React.Component {
 		   			showModalVer:false,
 		   			showModalCrear:false,
 					datosOrden:[],
-					validatorCrearOrden: this.initValidatorCrearOrden()};
+					validatorCrearOrden: this.initValidatorCrearOrden()
+				};
      }
 
 	initValidatorCrearOrden(){
@@ -53,11 +54,6 @@ class TableOrdenes extends React.Component {
    		 	}
    			return '<span class='+clase+'><b>'+estadoOrden[estado]+'</b></span>';
    		}
-
-
-	   colTipoBien(tBien,row){
-		   return '<span class="">'+tipoBien[tBien]+'</span>';
-	   }
 
 	   colAccion(estado,row){
 			var acciones=[];
@@ -166,8 +162,8 @@ class TableOrdenes extends React.Component {
 						hover
 						striped
 						pagination>
-						<TableHeaderColumn isKey dataField='id_bien' hidden>ID</TableHeaderColumn>
-						<TableHeaderColumn dataField='id_tipo_bien' dataFormat={this.colTipoBien} dataSort>Tipo Bien</TableHeaderColumn>
+						<TableHeaderColumn isKey dataField='id_bien' hidden={true}>ID</TableHeaderColumn>
+						<TableHeaderColumn  dataField='cod_patrimonial' hidden={this.props.hideCodPatrimonial}>Cod Patrimonial</TableHeaderColumn>
 						<TableHeaderColumn dataField='descripcion' dataSort>Descripción</TableHeaderColumn>
 						<TableHeaderColumn dataField='servicio_nombre' dataSort>Servicio</TableHeaderColumn>
 						<TableHeaderColumn dataField='estado' dataFormat={this.colEstado} dataSort>Estado</TableHeaderColumn>

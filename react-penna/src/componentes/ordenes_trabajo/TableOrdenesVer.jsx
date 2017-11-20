@@ -38,14 +38,14 @@ class TableOrdenesVer extends React.Component {
    colEstado(estado){
 			let clase="";
 
-   		 switch (estado) {
-   			 case "1":
+   		 switch (parseInt(estado)) {
+   			 case 1:
    				 clase='t-error';
    				 break;
-   			 case "2":
+   			 case 2:
    				 clase='t-orange';
    				 break;
-   			 case "3":
+   			 case 3:
    				 clase='t-ok';
    				 break;
 		 	}
@@ -58,8 +58,8 @@ class TableOrdenesVer extends React.Component {
 
    colAccion(estado,row){
 		var acciones=[];
-		switch (row.estado) {
-			case "3":
+		switch (parseInt(row.estado)) {
+			case 3:
 					acciones.push(<Boton onClick={this.modalFinalizarOrden.bind(this,row)} clases="btn-success" titulo="Dar conformidad y cerrar orden de trabajo" icon="fa fa-check"></Boton>);
 			default:
 					acciones.push(<Boton onClick={this.modalVerMas.bind(this,row)} clases="btn-primary" titulo="Ver datos adicionales de la orden de trabajo" icon="fa fa-search"></Boton>);

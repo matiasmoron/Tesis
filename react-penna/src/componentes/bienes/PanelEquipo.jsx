@@ -67,9 +67,8 @@ class PanelEquipo extends React.Component {
 		Api.deleteEquipo({id_bien:id});
 		showMsg("El equipo  fué eliminado correctamente","ok");
     }
-	
+
 	_updateElemento(equipo){
-		console.log("UPDATE",equipo);
 		var promesa = Api.updateEquipo({
 							id_bien        :equipo['id_bien'],
 							cod_patrimonial:equipo['cod_patrimonial'],

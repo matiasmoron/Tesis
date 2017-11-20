@@ -38,7 +38,7 @@ class PanelOrdenes extends React.Component {
 				required : false
 			},
 			id_tipo_bien:{
-				required : false
+				required : true
 			},
 			id_bien:{
 				required : false
@@ -67,7 +67,7 @@ class PanelOrdenes extends React.Component {
 			});
 		}
 		console.log(estados);
-		Api.getOrdenes({
+		let promesa=	Api.getOrdenes({
 							id_tipo_bien   :this._id_tipo_bien.value,
 							id_servicio    :this._id_servicio.value,
 							id_bien        :this._id_bien.value,
@@ -76,6 +76,8 @@ class PanelOrdenes extends React.Component {
 							fecha_fin      :this._fecha_fin.value,
 							estado         :estados
 					});
+
+		// promesa.then((val)=> {console.log(val["msg"])})
 	}
 	getOrdenesTabla(){
 		let obj = this.state.validator;
@@ -93,6 +95,7 @@ class PanelOrdenes extends React.Component {
 							}
 				return elem;
 			});
+
 		return resultado;
 	}
 
@@ -116,14 +119,14 @@ class PanelOrdenes extends React.Component {
 	changeSelect(event){
 		// Habilita/Desabilita el input de cod_patrimonial
 		this.setState({ disabled_cod_patrimonial: this._id_tipo_bien.value == 2 ? true : false});
+
+		if(!this.state.disabled_cod_patrimonial)
+			this._cod_patrimonial.value = "";
+
 		Api.getBienes({
 						id_tipo_bien:this._id_tipo_bien.value,
 						id_servicio:this._id_servicio.value
 					});
-	}
-
-	cleanInput(inputValue){
-		console.log("HOLAAA",inputValue);
 	}
 
 	render() {
@@ -136,10 +139,10 @@ class PanelOrdenes extends React.Component {
 						<div className="row">
 							<SelectChosen
 								label       = "Servicios"
-								cleanInput  = {this.cleanInput.bind(this)}
 								llave       = "id_servicio"
 								descripcion = "nombre"
 								clases      = "col-md-6"
+								clearable   = {true}
 								onChange    = {this.changeSelect.bind(this)}
 								data        = {this.props.servicios}
 								valor       = {input => this._id_servicio = input}
