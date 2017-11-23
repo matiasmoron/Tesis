@@ -30,6 +30,20 @@ class PanelTecnico extends React.Component {
 		};
 	}
 
+	resetValidator(){
+		return {
+			personal :{
+				required : true,
+				type     : "numeric",
+				isValid  : true
+		  	},
+			entidad :{
+				required : true,
+				type     : "numeric"
+		  	}
+		};
+	}
+
 	componentDidMount(){
 		api.getTecnicos();
 		apiPersonal.getPersonal();
@@ -48,7 +62,7 @@ class PanelTecnico extends React.Component {
 			api.getTecnicos(this._legajo.value);
 			api.getTecnicoNoEntidad(this._legajo.value); //Obtiene las entidades que les falta a un técnico
 			// resetForm("form_tecnico");
-			this.setState({validator:this.initValidator()});
+			this.setState({validator:this.resetValidator()});
 			showMsg("Se creo correctamente el tecnico","ok");
 		});
     }

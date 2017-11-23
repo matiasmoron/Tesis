@@ -74,11 +74,14 @@ class PanelOrdenesAdmin extends React.Component {
 				return aux[valor].value;
 			});
 		}
+		//[id_bien - id_tipo_bien]
+		let id_bien = (this._id_bien.value).split("-");
+		id_bien = id_bien[0];
 		Api.getOrdenes({
 							id_tipo_bien   :this._id_tipo_bien.value,
 							id_servicio    :this._id_servicio.value,
 							id_entidad     :this._id_entidad.value,
-							id_bien        :this._id_bien.value,
+							id_bien        :id_bien,
 							cod_patrimonial:this._cod_patrimonial.value,
 							fecha_ini      :this._fecha_ini.value,
 							fecha_fin      :this._fecha_fin.value,
@@ -182,7 +185,7 @@ class PanelOrdenesAdmin extends React.Component {
 							/>
 							<SelectChosen
 								label       = "Bien"
-								llave       = "id_bien"
+								llave       = "id_bien_tipo"
 								descripcion = "descripcion"
 								clases      = "col-md-7"
 								data        = {this.props.bienes}

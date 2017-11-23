@@ -52,11 +52,13 @@ class PanelOrdenes extends React.Component {
 	callbackSubmit(){
 		this.setState({id_tipo_bien :this._id_tipo_bien.value});
 		this.setState({hideCodPatrimonial :this._id_tipo_bien.value !=bienTipo['EQUIPO']});
-		console.log();
+		//[id_bien - id_tipo_bien]
+		let id_bien = (this._id_bien.value).split("-");
+		id_bien = id_bien[0];
 		Api.getBienesTablas({
 								id_tipo_bien   :this._id_tipo_bien.value,
 								id_servicio    :this._id_servicio.value,
-								id_bien        :this._id_bien.value,
+								id_bien        :id_bien,
 								cod_patrimonial:this._cod_patrimonial.value
 							});
 	}
@@ -82,6 +84,7 @@ class PanelOrdenes extends React.Component {
 	}
 
 	changeSelect(event){
+		console.log("entreee");
 		// Habilita/Desabilita el input de cod_patrimonial
 		this.setState({ disabled_cod_patrimonial: (this._id_tipo_bien.value == 2) ? true : false});
 
@@ -136,7 +139,7 @@ class PanelOrdenes extends React.Component {
 							/>
 							<SelectChosen
 								label       = "Bien"
-								llave       = "id_bien"
+								llave       = "id_bien_tipo"
 								descripcion = "descripcion"
 								clases      = "col-md-7"
 								onChange    = {this.changeSelect.bind(this)}
