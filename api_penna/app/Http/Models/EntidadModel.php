@@ -10,10 +10,11 @@ class EntidadModel extends Model {
     //Obtiene todas las entidades
     public function get_entidades($args) {
 		$params= array();
-        $query='SELECT
+        $query="SELECT
                     id_entidad,nombre,tipo_entidad
                 FROM entidad
-                WHERE estado='.ALTA.' AND tipo_entidad=1';
+                WHERE estado=".ALTA."
+                ORDER BY tipo_entidad,nombre asc";
 
         if(isset($args['id_entidad'])){
             $query.=' AND id_entidad=?';

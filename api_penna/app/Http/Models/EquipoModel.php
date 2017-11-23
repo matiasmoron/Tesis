@@ -6,21 +6,23 @@ class EquipoModel extends Model {
 
 	public function get_equipos($request){
 		$params= array();
-        $query='SELECT
+        $id_tipo_bien=EQUIPO;
+
+        $query="SELECT
                     e.id_equipo id_bien,
-                    e.id_tipo_equipo,
+                    CONCAT(e.id_equipo,'-',{$id_tipo_bien}) id_bien_tipo,
                     e.id_equipo_padre,
                     e.cod_patrimonial,
-                    CONCAT(e.cod_patrimonial," - ",e.descripcion) cod_desc,
+                    CONCAT(e.cod_patrimonial,' - ',e.descripcion) cod_desc,
                     e.descripcion,
                     s.id_servicio,
                     s.nombre as servicio_nombre,
-                	if(e.id_equipo_padre is not null,CONCAT(e_padre.cod_patrimonial," - ",e_padre.descripcion),"-") as padre_desc,
-                	if(e.id_equipo_padre is not null,e_padre.cod_patrimonial,"-") as padre_cod
+                	if(e.id_equipo_padre is not null,CONCAT(e_padre.cod_patrimonial,' - ',e_padre.descripcion),'-') as padre_desc,
+                	if(e.id_equipo_padre is not null,e_padre.cod_patrimonial,'-') as padre_cod
                 FROM  equipo e
-                JOIN servicio s USING(id_servicio)
+                INNER JOIN servicio s USING(id_servicio)
                 LEFT JOIN equipo e_padre ON(e.id_equipo_padre=e_padre.id_equipo)
-                WHERE e.estado='.ALTA;
+                WHERE e.estado=".ALTA;
 
         if(isset($request->id_bien)){
             $query.=' AND e.id_equipo=?';

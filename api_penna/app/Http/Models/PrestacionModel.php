@@ -6,15 +6,18 @@ class PrestacionModel extends Model {
 
 	public function get_prestaciones($request){
 		$params= array();
-        $query='SELECT
+        $id_tipo_bien=PRESTACION;
+
+        $query="SELECT
                     p.id_prestacion id_bien,
+                    CONCAT(p.id_prestacion,'-',{$id_tipo_bien}) id_bien_tipo,
                     p.descripcion,
                     p.observacion,
                     s.id_servicio,
                     s.nombre as servicio_nombre
                 FROM  prestacion p
                 LEFT JOIN servicio s USING(id_servicio)
-                WHERE p.estado='.ALTA;
+                WHERE p.estado=".ALTA;
 
         if(isset($request->id_bien)){
             $query.=' AND p.id_prestacion=?';
