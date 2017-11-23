@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use JWTAuth;
-//use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\DB;
 use App\Http\Models\PermisoModel;
 use App\Http\Models\PersonalModel;
 
@@ -18,9 +18,9 @@ class AuthController extends Controller
 
     public function run(){
          DB::table('users')->insert([
-            'name' =>'Raquel',
-            'email' => 'a@a.com',
+            'usuario' =>'hola',
             'password' => bcrypt('1234'),
+            'id_perfil' => 1
         ]);
     }
 

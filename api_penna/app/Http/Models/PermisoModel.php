@@ -4,6 +4,9 @@ use App\Http\Models\Model;
 use Illuminate\Support\Facades\Hash;
 
 define("BASIC_PASSWORD",1234);
+define("ADMINISTRADOR",1);
+define("TECNICO",2);
+define("BASICO",3);
 
 class PermisoModel extends Model {
 
@@ -51,7 +54,7 @@ class PermisoModel extends Model {
                     VALUES  (?,?,?)';
 
         array_push($params,$request->usuario);
-        array_push($params,4);
+        array_push($params,BASICO);
         array_push($params,bcrypt('1234'));
 
         return $this->execute_simple_query("insert",$query,$params);
@@ -66,12 +69,13 @@ class PermisoModel extends Model {
                  INNER JOIN
                     personal p USING(usuario)
                 SET
-                    u.id_perfil=3
+                    u.id_perfil=?
                 WHERE
                     p.legajo=?
 
                     ';
 
+        array_push($params,TECNICO);
         array_push($params,$request->legajo);
 
         return $this->execute_simple_query("update",$query,$params);
@@ -85,12 +89,13 @@ class PermisoModel extends Model {
                  INNER JOIN
                     personal p USING(usuario)
                 SET
-                    u.id_perfil=4
+                    u.id_perfil=?
                 WHERE
                     p.legajo=?
 
                     ';
 
+        array_push($params,BASICO);
         array_push($params,$request->legajo);
 
         return $this->execute_simple_query("update",$query,$params);
