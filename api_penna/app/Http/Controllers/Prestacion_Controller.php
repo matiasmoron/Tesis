@@ -24,8 +24,8 @@ class Prestacion_Controller extends Controller{
     public function add_prestacion(Request $request){
         $reglas=[
                     'id_servicio'     => 'numeric',
-                    'descripcion'     => 'required|max:45',
-                    'observacion'     => 'max:45'
+                    'descripcion'     => 'required|max:64',
+                    'observacion'     => 'max:128'
                 ];
 
         $this->validar($request->all(),$reglas);
@@ -46,9 +46,9 @@ class Prestacion_Controller extends Controller{
 
     public function update_prestacion(Request $request){
         $reglas=[
-                    'descripcion'     => 'required|max:45',
+                    'descripcion'     => 'required|max:64',
                     'id_bien'         => 'required|numeric',
-                    'observacion'     => 'max:45'
+                    'observacion'     => 'max:128'
                 ];
 
         $this->validar($request->all(),$reglas);

@@ -15,6 +15,7 @@ class EquipoModel extends Model {
                     e.cod_patrimonial,
                     CONCAT(e.cod_patrimonial,' - ',e.descripcion) cod_desc,
                     e.descripcion,
+                    e.observacion,
                     s.id_servicio,
                     s.nombre as servicio_nombre,
                 	if(e.id_equipo_padre is not null,CONCAT(e_padre.cod_patrimonial,' - ',e_padre.descripcion),'-') as padre_desc,
@@ -43,14 +44,19 @@ class EquipoModel extends Model {
         $params=array();
         $query=array();
 
-        $query='INSERT INTO equipo (id_tipo_equipo,id_equipo_padre,cod_patrimonial,id_servicio,descripcion,estado)
+        $query='INSERT INTO equipo (id_tipo_equipo,id_equipo_padre,cod_patrimonial,id_servicio,descripcion,observacion,estado)
                 VALUES(?,?,?,?,?,'.ALTA.')';
 
+        $observacion= ($request ->observacion) ? $request->observacion : NULL;
+
+        
         array_push($params,$request->id_tipo_equipo);
         array_push($params,$request->id_equipo_padre);
         array_push($params,$request->cod_patrimonial);
         array_push($params,$request->id_servicio);
         array_push($params,$request->descripcion);
+        array_push($params,$observacion);
+
 
         return $this->execute_simple_query("insert",$query,$params);
     }
@@ -72,13 +78,18 @@ class EquipoModel extends Model {
                 SET
                        cod_patrimonial=?,
                        descripcion=?,
+                       observacion=?,
                        estado = ?
                 WHERE  id_equipo=?';
 
+        $observacion= ($request ->observacion) ? $request->observacion : '';
+
         array_push($params,$request->cod_patrimonial);
         array_push($params,$request->descripcion);
-        array_push($params,$request->id_bien);
+        array_push($params,$request->observacion);
         array_push($params,$request->estado);
+        array_push($params,$request->id_bien);
+        
 
         return $this->execute_simple_query("update",$query,$params);
     }
