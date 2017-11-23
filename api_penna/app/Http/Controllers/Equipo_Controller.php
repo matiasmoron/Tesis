@@ -29,8 +29,8 @@ class Equipo_Controller extends Controller{
                     'id_equipo_padre' => 'numeric',
                     'cod_patrimonial' => 'required|numeric',
                     'id_servicio'     => 'required|numeric',
-                    'descripcion'     => 'max:64',
-                    'observacion'     => 'required|max:128'
+                    'descripcion'     => 'required|max:64',
+                    'observacion'     => 'max:128'
                 ];
 
         $this->validar($request->all(),$reglas);

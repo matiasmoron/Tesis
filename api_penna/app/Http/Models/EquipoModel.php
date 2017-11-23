@@ -45,9 +45,9 @@ class EquipoModel extends Model {
         $query=array();
 
         $query='INSERT INTO equipo (id_tipo_equipo,id_equipo_padre,cod_patrimonial,id_servicio,descripcion,observacion,estado)
-                VALUES(?,?,?,?,?,'.ALTA.')';
+                VALUES(?,?,?,?,?,?,'.ALTA.')';
 
-        $observacion= ($request ->observacion) ? $request->observacion : NULL;
+        $observacion= ($request ->observacion) ? $request->observacion : '';
 
         
         array_push($params,$request->id_tipo_equipo);
