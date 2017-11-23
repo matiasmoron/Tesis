@@ -15,7 +15,6 @@ class TableEquipo extends React.Component {
     onAfterDeleteRow(rowKeys){
         for (var i = 0; i < rowKeys.length; i++)
         this.props.deleteElemento(rowKeys[i]);
-
     }
     updateElemento(row, cellName, cellValue) {
         this.props.updateElemento(row);
@@ -69,12 +68,48 @@ class TableEquipo extends React.Component {
                 options   = {opciones}
                 hover
                 striped>
-                <TableHeaderColumn isKey dataField='id_bien' hidden>ID</TableHeaderColumn>
-                <TableHeaderColumn dataField='id_tipo_equipo' hidden>Tipo equipo</TableHeaderColumn>
-                <TableHeaderColumn dataField='descripcion' dataSort  editable={ { validator: BsTable.columnRequired } } invalidEditColumnClassName={ BsTable.invalidClass }>Descripción</TableHeaderColumn>
-                <TableHeaderColumn dataField='cod_patrimonial' dataSort editable={ { validator: BsTable.columnRequired } } invalidEditColumnClassName={ BsTable.invalidClass }>Cód. patrimonial</TableHeaderColumn>
-                <TableHeaderColumn editable={false} dataField='servicio_nombre' dataSort >Servicio</TableHeaderColumn>
-                <TableHeaderColumn editable={false} dataField='padre_desc' dataSort >Equipo contenedor</TableHeaderColumn>
+                <TableHeaderColumn
+                    isKey
+                    dataField='id_bien'
+                    hidden>ID
+                </TableHeaderColumn>
+                <TableHeaderColumn
+                    dataField='id_tipo_equipo'
+                    hidden>Tipo equipo
+                </TableHeaderColumn>
+                <TableHeaderColumn
+                    dataField='descripcion'
+                    dataSort
+                    columnTitle
+                    editable={ { validator: BsTable.columnRequired } }
+                    invalidEditColumnClassName={ BsTable.invalidClass }>Descripción
+                </TableHeaderColumn>
+                <TableHeaderColumn
+                    dataField='observacion'
+                    dataSort
+                    columnTitle
+                    editable={ { validator: BsTable.columnRequired } }
+                    invalidEditColumnClassName={ BsTable.invalidClass }>Observación
+                </TableHeaderColumn>
+                <TableHeaderColumn
+                    dataField='cod_patrimonial'
+                    dataSort
+                    columnTitle
+                    editable={ { validator: BsTable.columnRequired } }
+                    invalidEditColumnClassName={ BsTable.invalidClass }>Cód. patrimonial
+                </TableHeaderColumn>
+                <TableHeaderColumn
+                    editable={false}
+                    dataField='servicio_nombre'
+                    columnTitle
+                    dataSort >Servicio
+                </TableHeaderColumn>
+                <TableHeaderColumn
+                    editable={false}
+                    dataField='padre_desc'
+                    columnTitle
+                    dataSort >Equipo contenedor
+                </TableHeaderColumn>
             </BootstrapTable>
         );
     }

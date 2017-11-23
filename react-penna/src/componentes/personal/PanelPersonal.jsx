@@ -47,6 +47,36 @@ class PanelPersonal extends React.Component {
 		};
 	}
 
+	resetValidator(){
+		return {
+			legajo :{
+				required : true,
+				type     : "numeric"
+		  	},
+		  	usuario :{
+				required : true
+		  	},
+		  	dni :{
+				required : true,
+				type     : "numeric"
+		  	},
+		  	nombre :{
+				required : true
+		  	},
+		  	apellido :{
+				required : true
+		  	},
+		  	fecha_ingreso :{
+				required : true
+		  	},
+			id_servicio : {
+		  		required : true,
+				isValid:true
+			}
+		};
+	}
+
+
 	componentDidMount(){
 		ApiPersonal.getPersonal();
 		ApiServicio.getServicios();

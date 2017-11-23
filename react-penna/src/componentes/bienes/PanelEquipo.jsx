@@ -23,6 +23,30 @@ class PanelEquipo extends React.Component {
 			descripcion:{
 				required : true
 			},
+			observacion:{
+				required : false
+			},
+			cod_patrimonial:{
+				required : true,
+				type     : "numeric"
+			},
+			id_equipo_padre:{
+				required : false
+			}
+		}
+	}
+	resetValidator(){
+		return {
+			id_servicio:{
+				required : true,
+				isValid:true
+			},
+			descripcion:{
+				required : true
+			},
+			observacion:{
+				required : false
+			},
 			cod_patrimonial:{
 				required : true,
 				type     : "numeric"
@@ -42,6 +66,7 @@ class PanelEquipo extends React.Component {
 		var promesa = Api.addEquipo({
 						id_tipo_equipo :1,
 						descripcion    :this._descripcion.value,
+						observacion    :this._observacion.value,
 						cod_patrimonial:this._cod_patrimonial.value,
 						id_servicio    :this._id_servicio.value,
 						id_equipo_padre:this._id_equipo_padre.value
@@ -50,8 +75,8 @@ class PanelEquipo extends React.Component {
 		promesa.then( valor => {
 			Api.getEquipos({id_servicio:this._id_servicio.value});
 			resetForm("form_equipo");
-			this.setState({validator:this.initValidator()});
-			showMsg("Se creo el equipo correctamente","ok");
+			this.setState({validator:this.resetValidator()});
+			showMsg("El equipo fué creado correctamente","ok");
 		});
 	}
 
@@ -65,7 +90,7 @@ class PanelEquipo extends React.Component {
 
 	_deleteElemento(id){
 		Api.deleteEquipo({id_bien:id});
-		showMsg("El equipo  fué eliminado correctamente","ok");
+		showMsg("El equipo fué eliminado correctamente","ok");
     }
 
 	_updateElemento(equipo){
@@ -76,7 +101,7 @@ class PanelEquipo extends React.Component {
 					});
 
 		promesa.then( valor => {
-			showMsg("Se actualizó el equipo correctamente","ok");
+			showMsg("El equipo fué actualizado correctamente","ok");
 		});
 	}
 
@@ -88,8 +113,8 @@ class PanelEquipo extends React.Component {
 
 	render() {
 	  return (
-		<div className="col-md-8">
-			<div className="col-md-6 center">
+		<div className="col-md-10">
+			<div className="col-md-5 center">
 				<Formulario id="form_equipo" titulo="Creación equipo" submit={this._addElemento.bind(this)}>
 					<SelectChosen
 						label       = "Servicios"
@@ -109,6 +134,15 @@ class PanelEquipo extends React.Component {
 							clases    = "col-md-8"
 							validator = {this.state.validator.descripcion}
 							cambiar   = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{descripcion:p1})})}
+						/>
+					</div>
+					<div className="row">
+						<Input2
+							label     = "Observación"
+							valor     = {input => this._observacion = input}
+							clases    = "col-md-12"
+							validator = {this.state.validator.observacion}
+							cambiar   = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{observacion:p1})})}
 						/>
 					</div>
 					<div className="row">
