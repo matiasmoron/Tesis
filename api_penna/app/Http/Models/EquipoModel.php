@@ -94,6 +94,21 @@ class EquipoModel extends Model {
         return $this->execute_simple_query("update",$query,$params);
     }
 
+    public function reactivar_equipo($request){
+        $params= array();
+        $query='UPDATE equipo
+                SET
+                       estado = ?
+                WHERE  id_equipo=?';
+
+
+        array_push($params,ALTA);
+        array_push($params,$request->id_bien);
+        
+
+        return $this->execute_simple_query("update",$query,$params);
+    }
+
 
     /**
     *Devuelve los equipos con hijos de los pasados por parámetro

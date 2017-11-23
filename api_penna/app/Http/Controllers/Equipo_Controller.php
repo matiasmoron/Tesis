@@ -36,8 +36,8 @@ class Equipo_Controller extends Controller{
         $this->validar($request->all(),$reglas);
 
         $existe_cod_patrimonial= $this->existe_cod_patrimonial($request);
-        if (count($existe_cod_patrimonial['result'])>0){
-            return array("success"=>FALSE,"msg"=>"Ya existe el código patrimonial ingresado","result"=>"");
+        if (count($existe_cod_patrimonial['result'])>0){//Ya existe el código patrimonial ingresado
+            return array("success"=>TRUE,"msg"=>"","result"=>$existe_cod_patrimonial['result']);
 
         }
         else{
@@ -76,6 +76,16 @@ class Equipo_Controller extends Controller{
         $this->validar($request->all(),$reglas);
 
         return $this-> equipo ->update_equipo($request);
+    }
+
+    public function reactivar_equipo(Request $request){
+        $reglas=[
+                    'id_bien'         => 'required|numeric'
+                ];
+
+        $this->validar($request->all(),$reglas);
+
+        return $this-> equipo ->reactivar_equipo($request);
     }
 
     public function get_padres(Request $request){
