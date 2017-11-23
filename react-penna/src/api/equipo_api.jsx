@@ -44,6 +44,15 @@ export function updateEquipo(data) {
    return DbCall.DbCall(args);
 }
 
+export function reactivarEquipo(data) {
+   var args={
+             metodo  : 'put',
+             url     : 'equipos/reactivar',
+             params  : data
+          };
+   return DbCall.DbCall(args);
+}
+
 
 export function deleteEquipo(data) {
    var args={

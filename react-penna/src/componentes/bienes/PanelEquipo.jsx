@@ -5,6 +5,7 @@ import * as ApiServicio from '../../api/servicio_api';
 import {connect} from 'react-redux';
 import store from '../../store';
 import {Input2,PopOver,Formulario,habilitarSubmit,resetForm} from '../genericos/FormElements';
+import {GenericModal} from '../genericos/GenericModal';
 import TableEquipo from './TableEquipo';
 import SelectChosen from '../genericos/SelectChosen';
 import {showMsg} from '../../api/msg_alert_api';
@@ -12,7 +13,11 @@ import {showMsg} from '../../api/msg_alert_api';
 class PanelEquipo extends React.Component {
 	constructor() {
       super();
-	  this.state = {validator :this.initValidator()};
+	  this.state = {validator :this.initValidator(),
+	  				showGenericModal :{
+						isVisible :false,
+						id_equipo: ""}
+					};
     }
 
 	initValidator(){
@@ -73,10 +78,21 @@ class PanelEquipo extends React.Component {
 					});
 
 		promesa.then( valor => {
-			Api.getEquipos({id_servicio:this._id_servicio.value});
-			resetForm("form_equipo");
-			this.setState({validator:this.resetValidator()});
-			showMsg("El equipo fué creado correctamente","ok");
+			if (valor['result'].length>=0) {
+				console.log("FALLO ", valor['result']);
+				if (valor['result'][0].estado=="alta"){
+					showMsg("El código patrimonial ingresado ya existe","error");
+				}
+				else{
+					this.setState({showGenericModal:{isVisible:true, id_equipo: valor['result'][0].id_equipo}});
+				}
+			}
+			else{
+				Api.getEquipos({id_servicio:this._id_servicio.value});
+				resetForm("form_equipo");
+				this.setState({validator:this.resetValidator()});
+				showMsg("El equipo fué creado correctamente","ok");
+			}
 		});
 	}
 
@@ -97,7 +113,8 @@ class PanelEquipo extends React.Component {
 		var promesa = Api.updateEquipo({
 							id_bien        :equipo['id_bien'],
 							cod_patrimonial:equipo['cod_patrimonial'],
-							descripcion    :equipo['descripcion']
+							descripcion    :equipo['descripcion'],
+							observacion    :equipo['observacion'],
 					});
 
 		promesa.then( valor => {
@@ -110,68 +127,88 @@ class PanelEquipo extends React.Component {
 		Api.getEquipos({id_servicio:this._id_servicio.value});
 	}
 
+	_reactivarEquipo(){
+		let equipo= {
+			id_bien: this.state.showGenericModal.id_equipo
+
+		}
+		let promesa = Api.reactivarEquipo(equipo);
+		promesa.then( valor => {
+			showMsg("El equipo fué dado de alta nuevamente","ok");
+			Api.getEquipos({id_servicio:this._id_servicio.value});
+			this.setState({showGenericModal : {isVisible: false, id_equipo: ""}});
+		});
+
+	}
+
 
 	render() {
 	  return (
-		<div className="col-md-10">
-			<div className="col-md-5 center">
-				<Formulario id="form_equipo" titulo="Creación equipo" submit={this._addElemento.bind(this)}>
-					<SelectChosen
-						label       = "Servicios"
-						llave       = "id_servicio"
-						descripcion = "nombre"
-						onChange    = {this.changeSelect.bind(this)}
-						data        = {this.props.servicios}
-						valor       = {input => this._id_servicio = input}
-						clearable ={false}
-						validator   = {this.state.validator.id_servicio}
-						cambiar     = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{id_servicio:p1})})}
-					/>
-					<div className="row">
-						<Input2
-							label     = "Descripción"
-							valor     = {input => this._descripcion = input}
-							clases    = "col-md-8"
-							validator = {this.state.validator.descripcion}
-							cambiar   = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{descripcion:p1})})}
+			<div className="col-md-10">
+				<GenericModal
+					show={this.state.showGenericModal.isVisible}
+					onHide={()=> {this.setState({showGenericModal : {isVisible: false, id_equipo: ""}})}}
+					body ="El código patrimonial pertenece a un equipo dado de baja. ¿Desea darlo de alta?"
+					accion={this._reactivarEquipo.bind(this) }
+				/>
+				<div className="col-md-5 center">
+					<Formulario id="form_equipo" titulo="Creación equipo" submit={this._addElemento.bind(this)}>
+						<SelectChosen
+							label       = "Servicios"
+							llave       = "id_servicio"
+							descripcion = "nombre"
+							onChange    = {this.changeSelect.bind(this)}
+							data        = {this.props.servicios}
+							valor       = {input => this._id_servicio = input}
+							clearable ={false}
+							validator   = {this.state.validator.id_servicio}
+							cambiar     = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{id_servicio:p1})})}
 						/>
-					</div>
-					<div className="row">
-						<Input2
-							label     = "Observación"
-							valor     = {input => this._observacion = input}
-							clases    = "col-md-12"
-							validator = {this.state.validator.observacion}
-							cambiar   = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{observacion:p1})})}
+						<div className="row">
+							<Input2
+								label     = "Descripción"
+								valor     = {input => this._descripcion = input}
+								clases    = "col-md-8"
+								validator = {this.state.validator.descripcion}
+								cambiar   = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{descripcion:p1})})}
+							/>
+						</div>
+						<div className="row">
+							<Input2
+								label     = "Observación"
+								valor     = {input => this._observacion = input}
+								clases    = "col-md-12"
+								validator = {this.state.validator.observacion}
+								cambiar   = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{observacion:p1})})}
+							/>
+						</div>
+						<div className="row">
+							<Input2
+								label     = "Código patrimonial"
+								valor     = {input => this._cod_patrimonial = input}
+								clases    = "col-md-8"
+								validator = {this.state.validator.cod_patrimonial}
+								cambiar   = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{cod_patrimonial:p1})})}
+							/>
+						</div>
+						<SelectChosen
+							label       = "Equipo Contenedor"
+							llave       = "id_bien"
+							valor       = {input => this._id_equipo_padre = input}
+							descripcion = "cod_desc"
+							data        = {this.props.equipos}
+							validator   = {this.state.validator.id_equipo_padre}
+							cambiar     = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{id_equipo_padre:p1})})}
 						/>
-					</div>
-					<div className="row">
-						<Input2
-							label     = "Código patrimonial"
-							valor     = {input => this._cod_patrimonial = input}
-							clases    = "col-md-8"
-							validator = {this.state.validator.cod_patrimonial}
-							cambiar   = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{cod_patrimonial:p1})})}
-						/>
-					</div>
-					<SelectChosen
-						label       = "Equipo Contenedor"
-						llave       = "id_bien"
-						valor       = {input => this._id_equipo_padre = input}
-						descripcion = "cod_desc"
-						data        = {this.props.equipos}
-						validator   = {this.state.validator.id_equipo_padre}
-						cambiar     = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{id_equipo_padre:p1})})}
-					/>
-					<div className="btn-form">
-						<button type="submit" className="btn btn-success">Agregar equipo</button>
-					</div>
-				</Formulario>
+						<div className="btn-form">
+							<button type="submit" className="btn btn-success">Agregar equipo</button>
+						</div>
+					</Formulario>
+				</div>
+				<div className="col-md-12">
+					<TableEquipo datos_elemento={this.props.equipos} updateElemento={this._updateElemento.bind(this)} deleteElemento={this._deleteElemento.bind(this)}/>
+				</div>
 			</div>
-			<div className="col-md-12">
-				<TableEquipo datos_elemento={this.props.equipos} updateElemento={this._updateElemento.bind(this)} deleteElemento={this._deleteElemento.bind(this)}/>
-			</div>
-		</div>
       );
     }
 }
