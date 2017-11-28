@@ -4,7 +4,7 @@ import * as Api from '../../api/equipo_api';
 import * as ApiServicio from '../../api/servicio_api';
 import {connect} from 'react-redux';
 import store from '../../store';
-import {Input2,PopOver,Formulario,habilitarSubmit,resetForm} from '../genericos/FormElements';
+import {Input2,PopOver,Formulario,habilitarSubmit,resetForm,Boton} from '../genericos/FormElements';
 import {GenericModal} from '../genericos/GenericModal';
 import TableEquipo from './TableEquipo';
 import SelectChosen from '../genericos/SelectChosen';
@@ -201,7 +201,11 @@ class PanelEquipo extends React.Component {
 							cambiar     = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{id_equipo_padre:p1})})}
 						/>
 						<div className="btn-form">
-							<button type="submit" className="btn btn-success">Agregar equipo</button>
+							<Boton
+								label  = "Agregar equipo"
+								icon   = "fa fa-plus-square fa-lg"
+								clases = "btn-success"
+							/>
 						</div>
 					</Formulario>
 				</div>

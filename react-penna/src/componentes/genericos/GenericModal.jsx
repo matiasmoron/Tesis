@@ -10,12 +10,12 @@ export const GenericModal = (props) => {
                     <div className="row">
                         {props.body}
                     </div>
-                    <div className="d-inline">
+                    <div className="botonera">
                         <div className="btn-form">
-                            <Boton onClick={props.onHide} clases="btn-primary" label="Cerrar"/>
+                            <Boton onClick={props.onHide} clases="btn-danger" label="sdasd"/>
                         </div>
                         <div className="btn-form">
-                            <Boton onClick={props.accion} clases="btn-primary" label="Aceptar"/>
+                            <Boton onClick={props.accion} clases="btn-success" label="Aceptar"/>
                         </div>
                     </div>
                 </div>

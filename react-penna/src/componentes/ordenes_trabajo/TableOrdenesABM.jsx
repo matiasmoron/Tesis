@@ -17,9 +17,9 @@ class TableOrdenes extends React.Component {
 	 constructor() {
        super();
 	   this.state = {
-		   			showModalVer:false,
-		   			showModalCrear:false,
-					datosOrden:[],
+		   			showModalVer       :false,
+		   			showModalCrear     :false,
+					datosOrden         :[],
 					validatorCrearOrden: this.initValidatorCrearOrden()
 				};
      }
@@ -119,27 +119,34 @@ class TableOrdenes extends React.Component {
 		 return (
 				<div>
 					{/* Modal ver más */}
-					<VerMasModal datosOrden={this.state.datosOrden} show={this.state.showModalVer} onHide={this.modalVerMas.bind(this)}></VerMasModal>
+					<VerMasModal
+						datosOrden = {this.state.datosOrden}
+						show       = {this.state.showModalVer}
+						onHide     = {this.modalVerMas.bind(this)}>
+					</VerMasModal>
 
 					{/* Modal crear orden */}
-					<ModalBs show={this.state.showModalCrear} onHide={this.cerrarCrear.bind(this)} titulo="Solicitar">
+					<ModalBs
+						show   = {this.state.showModalCrear}
+						onHide = {this.cerrarCrear.bind(this)}
+						titulo = "Solicitar">
 						<div>
 							<TextArea
-								cols="50"
-								rows="3"
-								valor={input => this._observacion_creacion = input}
-								validator   = {this.state.validatorCrearOrden.observacion_creacion}
-								cambiar     = {p1    => this.setState({validatorCrearOrden :Object.assign({}, this.state.validatorCrearOrden,{observacion_creacion:p1})})}
+								cols      = "50"
+								rows      = "3"
+								valor     = {input => this._observacion_creacion = input}
+								validator = {this.state.validatorCrearOrden.observacion_creacion}
+								cambiar   = {p1 => this.setState({validatorCrearOrden :Object.assign({}, this.state.validatorCrearOrden,{observacion_creacion:p1})})}
 							/>
 							<SelectChosen
-								data={this.props.entidades}
-								llave="id_entidad"
-								descripcion="nombre"
-								label="Entidad Destino"
-								clearable= {false}
-								valor={input => this._id_entidad = input}
+								data        = {this.props.entidades}
+								llave       = "id_entidad"
+								descripcion = "nombre"
+								label       = "Entidad Destino"
+								clearable   = {false}
+								valor       = {input => this._id_entidad = input}
 								validator   = {this.state.validatorCrearOrden.entidad_destino}
-								cambiar     = {p1    => this.setState({validatorCrearOrden :Object.assign({}, this.state.validatorCrearOrden,{entidad_destino:p1})})}
+								cambiar     = {p1 => this.setState({validatorCrearOrden :Object.assign({}, this.state.validatorCrearOrden,{entidad_destino:p1})})}
 							/>
 							<div className="btn-form">
 								<Boton
@@ -162,12 +169,33 @@ class TableOrdenes extends React.Component {
 						hover
 						striped
 						pagination>
-						<TableHeaderColumn isKey dataField='id_bien' hidden={true}>ID</TableHeaderColumn>
-						<TableHeaderColumn  dataField='cod_patrimonial' hidden={this.props.hideCodPatrimonial}>Cod Patrimonial</TableHeaderColumn>
-						<TableHeaderColumn dataField='descripcion' dataSort>Descripción</TableHeaderColumn>
-						<TableHeaderColumn dataField='servicio_nombre' dataSort>Servicio</TableHeaderColumn>
-						<TableHeaderColumn dataField='estado' dataFormat={this.colEstado} dataSort>Estado</TableHeaderColumn>
-						<TableHeaderColumn dataField='id_orden_trabajo' dataFormat={this.colAccion.bind(this)} dataAlign="center" width="10%">Acción</TableHeaderColumn>
+						<TableHeaderColumn
+							isKey
+							dataField='id_bien'
+							hidden={true}>ID
+						</TableHeaderColumn>
+						<TableHeaderColumn
+							dataField = 'cod_patrimonial'
+							hidden    = {this.props.hideCodPatrimonial}>Cod Patrimonial
+						</TableHeaderColumn>
+						<TableHeaderColumn
+							dataField='descripcion'
+							dataSort>Descripción
+						</TableHeaderColumn>
+						<TableHeaderColumn
+							dataField='servicio_nombre'
+							dataSort>Servicio
+						</TableHeaderColumn>
+						<TableHeaderColumn
+							dataField  = 'estado'
+							dataFormat = {this.colEstado} dataSort>Estado
+						</TableHeaderColumn>
+						<TableHeaderColumn
+							dataField  = 'id_orden_trabajo'
+							dataFormat = {this.colAccion.bind(this)}
+							dataAlign  = "center"
+							width      = "10%">Acción
+						</TableHeaderColumn>
 					</BootstrapTable>
 				</div>
 		 );

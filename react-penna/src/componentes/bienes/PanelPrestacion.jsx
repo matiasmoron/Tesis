@@ -4,7 +4,7 @@ import * as Api from '../../api/prestacion_api';
 import * as ApiServicio from '../../api/servicio_api';
 import { connect } from 'react-redux';
 import store from '../../store';
-import {Input2,PopOver,Formulario,habilitarSubmit,resetForm} from '../genericos/FormElements';
+import {Input2,PopOver,Formulario,habilitarSubmit,resetForm,Boton} from '../genericos/FormElements';
 import TablePrestacion from './TablePrestacion';
 import {showMsg} from '../../api/msg_alert_api';
 import SelectChosen from '../genericos/SelectChosen';
@@ -111,7 +111,13 @@ class PanelPrestacion extends React.Component {
 						/>
 					</div>
 					<div className="btn-form">
-						<button type="submit" className="btn btn-success">Agregar prestación</button>
+						<div className="btn-form">
+							<Boton
+								label  = "Agregar prestación"
+								icon   = "fa fa-plus-square fa-lg"
+								clases = "btn-success"
+							/>
+						</div>
 					</div>
 				</Formulario>
 			</div>

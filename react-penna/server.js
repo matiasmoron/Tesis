@@ -27,7 +27,7 @@ app.use(require('webpack-hot-middleware')(compiler));
 
 
 const server = app.listen(3000, function() {
-  const host = server.address().address;
-  const port = server.address().port;
-  console.log('Example app listening at http://%s:%s', host, port);
+    const host = server.address().address;
+    const port = server.address().port;
+    console.log('[DESARROLLO] SisPenna escuchando en http://%s:%s', host, port);
 });

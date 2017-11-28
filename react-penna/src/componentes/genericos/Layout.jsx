@@ -1,5 +1,5 @@
 var React = require('react');
-require("../../styles/backoffice.scss");
+// require("../../styles/backoffice.scss");
 import Header from './Header';
 import Footer from './Footer';
 

@@ -18,7 +18,7 @@ class TablePrestacion extends React.Component {
     updateElemento(row, cellName, cellValue) {
         this.props.updateElemento(row);
     }
-    
+
     customConfirm(next, dropRowKeys) {
         const dropRowKeysStr = dropRowKeys.join(',');
         if (confirm(`Está seguro que desea eliminar las fila seleccionada ${dropRowKeysStr}?`)) {
@@ -55,10 +55,31 @@ class TablePrestacion extends React.Component {
                 options   = {opciones}
                 hover
                 striped>
-                <TableHeaderColumn isKey dataField='id_bien' hidden>ID</TableHeaderColumn>
-                <TableHeaderColumn dataField='descripcion' dataSort editable={ { validator: BsTable.columnRequired } } invalidEditColumnClassName={ BsTable.invalidClass }>Descripción</TableHeaderColumn>
-                <TableHeaderColumn dataField='observacion' dataSort editable={ { validator: BsTable.columnRequired } } invalidEditColumnClassName={ BsTable.invalidClass }>Observación</TableHeaderColumn>
-                <TableHeaderColumn editable={false} dataField='servicio_nombre' dataSort>Servicio</TableHeaderColumn>
+                <TableHeaderColumn
+                    isKey
+                    dataField='id_bien'
+                    hidden>ID
+                </TableHeaderColumn>
+                <TableHeaderColumn
+                    dataField='descripcion'
+                    dataSort
+                    columnTitle
+                    editable={ { validator: BsTable.columnRequired } }
+                    invalidEditColumnClassName={ BsTable.invalidClass }>Descripción
+                </TableHeaderColumn>
+                <TableHeaderColumn
+                    dataField='observacion'
+                    dataSort
+                    columnTitle
+                    editable={ { validator: BsTable.columnRequired } }
+                    invalidEditColumnClassName={ BsTable.invalidClass }>Observación
+                </TableHeaderColumn>
+                <TableHeaderColumn
+                    editable={false}
+                    columnTitle
+                    dataField='servicio_nombre'
+                    dataSort>Servicio
+                </TableHeaderColumn>
             </BootstrapTable>
         );
     }
