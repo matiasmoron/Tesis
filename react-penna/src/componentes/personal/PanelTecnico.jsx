@@ -5,7 +5,7 @@ import * as apiPersonal from '../../api/personal_api';
 import { connect } from 'react-redux';
 import store from '../../store';
 import TableTecnicos from './TableTecnicos';
-import {Formulario,habilitarSubmit,resetForm} from '../genericos/FormElements';
+import {Formulario,habilitarSubmit,resetForm,Boton} from '../genericos/FormElements';
 import SelectChosen from '../genericos/SelectChosen';
 import {showMsg} from '../../api/msg_alert_api';
 
@@ -109,7 +109,11 @@ class PanelTecnico extends React.Component {
 						cambiar     = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{entidad:p1})})}
 					/>
 					<div className="btn-form">
-						<button type="submit" className="btn btn-success">Agregar técnico</button>
+						<Boton
+							label  = "Agregar técnico"
+							icon   = "fa fa-wrench fa-lg"
+							clases = "btn-success"
+						/>
 					</div>
 				</div>
 			</Formulario>

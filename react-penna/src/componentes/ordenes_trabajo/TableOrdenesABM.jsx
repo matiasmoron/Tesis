@@ -150,10 +150,10 @@ class TableOrdenes extends React.Component {
 							/>
 							<div className="btn-form">
 								<Boton
-									onClick={this.crearOrden.bind(this)}
-									clases="btn-success"
-									icon="fa fa-check"
-									label="Crear orden"
+									label   = "Crear orden"
+									onClick = {this.crearOrden.bind(this)}
+									clases  = "btn-success"
+									icon    = "fa fa-check"
 								/>
 							</div>
 						</div>

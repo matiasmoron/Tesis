@@ -47,10 +47,26 @@ class TableTecnicos extends React.Component {
 				hover
 				striped
 				pagination>
-				<TableHeaderColumn isKey dataField='tecnico_key' hidden>key</TableHeaderColumn>
-				<TableHeaderColumn dataField='legajo' editable={ { validator: BsTable.columnNumeric } } invalidEditColumnClassName={ BsTable.invalidClass }>Legajo</TableHeaderColumn>
-				<TableHeaderColumn dataField='nombre_apellido' editable={ { validator: BsTable.columnRequired } } invalidEditColumnClassName={ BsTable.invalidClass }>Nombre</TableHeaderColumn>
-				<TableHeaderColumn dataField='entidad' editable={ { validator: BsTable.columnRequired } } invalidEditColumnClassName={ BsTable.invalidClass }>Entidad</TableHeaderColumn>
+				<TableHeaderColumn
+					isKey
+					dataField='tecnico_key'
+					hidden>key
+				</TableHeaderColumn>
+				<TableHeaderColumn
+					dataField='legajo'
+					editable={ { validator: BsTable.columnNumeric } }
+					invalidEditColumnClassName={ BsTable.invalidClass }>Legajo
+				</TableHeaderColumn>
+				<TableHeaderColumn
+					dataField='nombre_apellido'
+					editable={ { validator: BsTable.columnRequired } }
+					invalidEditColumnClassName={ BsTable.invalidClass }>Nombre
+				</TableHeaderColumn>
+				<TableHeaderColumn
+					dataField='entidad'
+					editable={ { validator: BsTable.columnRequired } }
+					invalidEditColumnClassName={ BsTable.invalidClass }>Entidad
+				</TableHeaderColumn>
 
 			</BootstrapTable>
 		 );

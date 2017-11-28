@@ -5,7 +5,7 @@ import * as ApiServicio from '../../api/servicio_api';
 import * as entidadApi from '../../api/entidad_api';
 import { connect } from 'react-redux';
 import store from '../../store';
-import {Input2,Formulario,habilitarSubmit,resetForm} from '../genericos/FormElements';
+import {Input2,Formulario,habilitarSubmit,resetForm,Boton} from '../genericos/FormElements';
 import TableOrdenesABM from './TableOrdenesABM';
 import {tipoBien,bienTipo} from '../commons/Utils';
 import SelectChosen from '../genericos/SelectChosen';
@@ -161,7 +161,11 @@ class PanelOrdenes extends React.Component {
 							 />
 						</div>
 						<div className="btn-form">
-							<button type="submit" className="btn btn-primary">Buscar</button>
+							<Boton
+								label  = "Buscar"
+								icon   = "fa fa-search fa-lg"
+								clases = "btn-primary"
+							/>
 						</div>
 					</Formulario>
 				</div>

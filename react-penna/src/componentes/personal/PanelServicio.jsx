@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import store from '../../store';
 import TableServicio from './TableServicio';
 import {showMsg} from '../../api/msg_alert_api';
-import {Input2,Formulario,habilitarSubmit,resetForm} from '../genericos/FormElements';
+import {Input2,Formulario,habilitarSubmit,resetForm,Boton} from '../genericos/FormElements';
 
 class PanelServicio extends React.Component {
 	constructor() {
@@ -62,7 +62,11 @@ class PanelServicio extends React.Component {
 				<div className="row">
 					<Input2 clases="form-group col-md-6"  name="nombre" validator={this.state.validator.nombre}  label="Nombre" valor={input => this._nombre = input} cambiar={p1 =>this.setState({validator :Object.assign({}, this.state.validator,{nombre:p1})})}  />
 					<div className="btn-form">
-						<button type="submit" className="btn btn-success">Agregar servicio</button>
+						<Boton
+							label  = "Agregar servicio"
+							icon   = "fa fa-medkit fa-lg"
+							clases = "btn-success"
+						/>
 					</div>
 				</div>
 			</Formulario>

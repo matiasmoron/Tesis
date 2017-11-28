@@ -149,9 +149,10 @@ class TableOrdenesVer extends React.Component {
 								/>
 								<div className="btn-form">
 									<Boton
-										onClick={this.finalizarOrden.bind(this)}
-										clases="btn-success"
-										label="Cerrar orden"
+										onClick = {this.finalizarOrden.bind(this)}
+										clases  = "btn-success"
+										label   = "Cerrar orden"
+										icon    = "fa fa-check"
 									/>
 								</div>
 							</div>

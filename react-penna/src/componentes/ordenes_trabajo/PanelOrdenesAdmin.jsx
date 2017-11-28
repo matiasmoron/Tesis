@@ -244,7 +244,11 @@ class PanelOrdenesAdmin extends React.Component {
 							/>
 						</div>
 						<div className="btn-form">
-							<Boton clases="btn btn-primary" label="Buscar"/>
+							<Boton
+								label  = "Buscar"
+								icon   = "fa fa-search fa-lg"
+								clases = "btn-primary"
+							/>
 						</div>
 					</Formulario>
 				</div>

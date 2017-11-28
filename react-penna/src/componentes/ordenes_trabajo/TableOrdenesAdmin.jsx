@@ -379,19 +379,22 @@ class TableOrdenesAdmin extends React.Component {
 							</div>
 							<div className="btn-form">
 								<Boton
+									label   = "Cancelar"
+									onClick = {this.modalActualizarOrden.bind(this)}
+									clases  = "btn-danger"
+									icon    = "fa fa-times"
+								/>
+								<Boton
 									label   = "Actualizar"
 									onClick = {this.actualizarOrden.bind(this)}
 									clases  = "btn-warning"
+									icon    = "fa fa-check"
 								/>
 								<Boton
 									label   = "Guardar y finalizar"
 									onClick = {this.finalizarOrden.bind(this)}
 									clases  = "btn-success"
-								/>
-								<Boton
-									label   = "Cancelar"
-									onClick = {this.modalActualizarOrden.bind(this)}
-									clases  = "btn-danger"
+									icon    = "fa fa-check"
 								/>
 							</div>
 						</div>

@@ -203,14 +203,18 @@ class PanelEquipo extends React.Component {
 						<div className="btn-form">
 							<Boton
 								label  = "Agregar equipo"
-								icon   = "fa fa-plus-square fa-lg"
+								icon   = "fa fa-desktop fa-lg"
 								clases = "btn-success"
 							/>
 						</div>
 					</Formulario>
 				</div>
 				<div className="col-md-12">
-					<TableEquipo datos_elemento={this.props.equipos} updateElemento={this._updateElemento.bind(this)} deleteElemento={this._deleteElemento.bind(this)}/>
+					<TableEquipo
+						datos_elemento={this.props.equipos}
+						updateElemento={this._updateElemento.bind(this)}
+						deleteElemento={this._deleteElemento.bind(this)}
+					/>
 				</div>
 			</div>
       );

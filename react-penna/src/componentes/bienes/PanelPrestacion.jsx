@@ -114,7 +114,7 @@ class PanelPrestacion extends React.Component {
 						<div className="btn-form">
 							<Boton
 								label  = "Agregar prestación"
-								icon   = "fa fa-plus-square fa-lg"
+								icon   = "fa fa-lightbulb-o fa-lg"
 								clases = "btn-success"
 							/>
 						</div>

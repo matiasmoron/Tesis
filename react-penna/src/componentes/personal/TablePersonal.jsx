@@ -7,6 +7,8 @@ import {ModalBs} from '../genericos/ModalBs';
 import {showMsg} from '../../api/msg_alert_api';
 import * as BsTable from '../commons/BsTable';
 import * as ApiConfiguracion from '../../api/configuracion_api';
+import {GenericModal} from '../genericos/GenericModal';
+
 
 class TablePersonal extends React.Component {
 	 constructor() {
@@ -67,20 +69,17 @@ class TablePersonal extends React.Component {
 			clearSearchBtn        : BsTable.btnClear,
 			noDataText            : 'No se encontraron resultados'
 		}
+		 const bodyModal = this.state.datosPersonal.usuario;
 
 		 return (
 			<div>
-				<ModalBs show={this.state.showResetPass} onHide={this.modalResetPass.bind(this)} titulo="Resetear Contraseña">
-					<div className="modal-body">
-						<div>
-							¿Desea resetear la contraseña  de {this.state.datosPersonal.usuario}?
-						</div>
-						<div className="text-center">
-							<Boton onClick={this.resetPassword.bind(this)} clases="btn-info" label="Aceptar"/>
-							<Boton onClick={this.modalResetPass.bind(this)} clases="btn-info" label="Cancelar"/>
-						</div>
-					</div>
-				</ModalBs>
+				<GenericModal
+					show={this.state.showResetPass}
+					onHide={this.modalResetPass.bind(this)}
+					body   = {"¿ Desea resetear la contraseña  de "+bodyModal+" ?"}
+					accion = {this.resetPassword.bind(this)}
+				/>
+
 				<BootstrapTable
 					height    = 'auto'
 					search    = {true}
@@ -93,14 +92,45 @@ class TablePersonal extends React.Component {
 					hover
 					striped
 					pagination>
-					<TableHeaderColumn isKey dataField='legajo' editable={ { validator: BsTable.columnNumeric } } invalidEditColumnClassName={ BsTable.invalidClass }>Legajo</TableHeaderColumn>
-					<TableHeaderColumn dataField='usuario' editable={ { validator: BsTable.columnRequired } } invalidEditColumnClassName={ BsTable.invalidClass }>Usuario</TableHeaderColumn>
-					<TableHeaderColumn dataField='dni' editable={ { validator: BsTable.columnNumeric } } invalidEditColumnClassName={ BsTable.invalidClass }>DNI</TableHeaderColumn>
-					<TableHeaderColumn dataField='nombre' editable={ { validator: BsTable.columnRequired } } invalidEditColumnClassName={ BsTable.invalidClass }>Nombre</TableHeaderColumn>
-					<TableHeaderColumn dataField='apellido' editable={ { validator: BsTable.columnRequired } } invalidEditColumnClassName={ BsTable.invalidClass }>Apellido</TableHeaderColumn>
-	                <TableHeaderColumn  editable={false}  dataField='servicio_nombre'>Servicio</TableHeaderColumn>
-					<TableHeaderColumn dataField='fecha_ingreso' editable={ { validator: BsTable.columnDate } } invalidEditColumnClassName={ BsTable.invalidClass }>Fecha ingreso</TableHeaderColumn>
-					<TableHeaderColumn dataField="reset_pass" dataFormat={this.colResetPassword.bind(this)}>Reset Password</TableHeaderColumn>
+					<TableHeaderColumn
+						isKey
+						dataField='legajo'
+						editable={ { validator: BsTable.columnNumeric } }
+						invalidEditColumnClassName={ BsTable.invalidClass }>Legajo
+					</TableHeaderColumn>
+					<TableHeaderColumn
+						dataField='usuario'
+						editable={ { validator: BsTable.columnRequired } }
+						invalidEditColumnClassName={ BsTable.invalidClass }>Usuario
+					</TableHeaderColumn>
+					<TableHeaderColumn
+						dataField='dni'
+						editable={ { validator: BsTable.columnNumeric } }
+						invalidEditColumnClassName={ BsTable.invalidClass }>DNI
+					</TableHeaderColumn>
+					<TableHeaderColumn
+						dataField='nombre'
+						editable={ { validator: BsTable.columnRequired } }
+						invalidEditColumnClassName={ BsTable.invalidClass }>Nombre
+					</TableHeaderColumn>
+					<TableHeaderColumn
+						dataField='apellido'
+						editable={ { validator: BsTable.columnRequired } }
+						invalidEditColumnClassName={ BsTable.invalidClass }>Apellido
+					</TableHeaderColumn>
+	                <TableHeaderColumn
+						 editable={false}
+						 dataField='servicio_nombre'>Servicio
+					</TableHeaderColumn>
+					<TableHeaderColumn
+						dataField='fecha_ingreso'
+						editable={ { validator: BsTable.columnDate } }
+						invalidEditColumnClassName={ BsTable.invalidClass }>Fecha ingreso
+					</TableHeaderColumn>
+					<TableHeaderColumn
+						dataField="reset_pass"
+						dataFormat={this.colResetPassword.bind(this)}>Reset Password
+					</TableHeaderColumn>
 				</BootstrapTable>
 			</div>
 		 );

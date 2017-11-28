@@ -98,8 +98,8 @@ export const habilitarSubmit = (validator,callback) => {
 }
 
 export const Boton = (props) => {
-    const iconStyle= (props.label) ? {marginRight:"5px"} :{};
-    const icono = (props.icon) ? <i style={iconStyle} className={props.icon} aria-hidden="true"></i> :"";
+    const iconStyle = (props.label) ? {marginRight:"5px"} :{};
+    const icono     = (props.icon) ? <i style={iconStyle} className={props.icon} aria-hidden="true"></i> :"";
 	return (
 			<button onClick={props.onClick} title={props.titulo} className={"btn " +props.clases}>
                 {icono}
@@ -139,7 +139,7 @@ export const Label = (props) => {
 }
 
 export const TextArea = (props) => {
-    let isValid = (props.validator.isValid == undefined) ? false : props.validator.isValid;
+    let isValid      = (props.validator.isValid == undefined) ? false : props.validator.isValid;
     const styleLabel =  (isValid) ?  'hidden' :  '';
     const styleInput =  (isValid || props.validator.msg == undefined) ?  '' :  'invalid';
     const type       =  (props.type==undefined)? "text" : props.type;

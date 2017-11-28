@@ -55,8 +55,15 @@ class TableServicio extends React.Component {
 				hover
 				striped
 				pagination>
-				<TableHeaderColumn isKey dataField='id_servicio'>ID</TableHeaderColumn>
-				<TableHeaderColumn dataField='nombre' editable={ { validator: BsTable.columnRequired } } invalidEditColumnClassName={ BsTable.invalidClass }>Nombre</TableHeaderColumn>
+				<TableHeaderColumn
+					isKey
+					dataField='id_servicio'>ID
+				</TableHeaderColumn>
+				<TableHeaderColumn
+					dataField='nombre'
+					editable={ { validator: BsTable.columnRequired } }
+					invalidEditColumnClassName={ BsTable.invalidClass }>Nombre
+				</TableHeaderColumn>
 			</BootstrapTable>
 		 );
    }

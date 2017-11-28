@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import store from '../../store';
 import DatePicker from '../genericos/DatePicker';
 import SelectChosen from '../genericos/SelectChosen';
-import {Input2,Formulario,habilitarSubmit,resetForm} from '../genericos/FormElements';
+import {Input2,Formulario,habilitarSubmit,resetForm,Boton} from '../genericos/FormElements';
 import {showMsg} from '../../api/msg_alert_api';
 import TablePersonal from './TablePersonal';
 
@@ -193,9 +193,13 @@ class PanelPersonal extends React.Component {
 							validator   = {this.state.validator.id_servicio}
 							cambiar     = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{id_servicio:p1})})}
 						/>
-						<div className="btn-form">
-							<button type="submit" className="btn btn-success">Agregar personal</button>
-						</div>
+					</div>
+					<div className="btn-form">
+						<Boton
+							label  = "Agregar personal"
+							icon   = "fa fa-user-md fa-lg"
+							clases = "btn-success"
+						/>
 					</div>
 				</Formulario>
 			</div>

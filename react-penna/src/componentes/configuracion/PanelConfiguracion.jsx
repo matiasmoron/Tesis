@@ -2,7 +2,7 @@ var React = require('react');
 
 import * as configuracionApi from '../../api/configuracion_api';
 import {showMsg} from '../../api/msg_alert_api';
-import {Input2,Formulario,habilitarSubmit,resetForm} from '../genericos/FormElements';
+import {Input2,Formulario,habilitarSubmit,resetForm,Boton} from '../genericos/FormElements';
 
 class PanelConfiguracion extends React.Component {
     constructor() {
@@ -86,7 +86,11 @@ class PanelConfiguracion extends React.Component {
 					/>
                 </div>
                 <div className="btn-form">
-                    <button type="submit" className="btn btn-success">Cambiar contraseña</button>
+                    <Boton
+                        label  = "Cambiar contraseña"
+                        icon   = "fa fa-gears fa-lg"
+                        clases = "btn-success"
+                    />
                 </div>
             </Formulario>
         </div>

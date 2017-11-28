@@ -4,7 +4,7 @@ import * as entidadApi from '../../api/entidad_api';
 import { connect } from 'react-redux';
 import store from '../../store';
 import TableEntidad from './TableEntidad';
-import {Input2,Formulario,habilitarSubmit,resetForm} from '../genericos/FormElements';
+import {Input2,Formulario,habilitarSubmit,resetForm,Boton} from '../genericos/FormElements';
 import {showMsg} from '../../api/msg_alert_api';
 import SelectChosen from '../genericos/SelectChosen';
 import {tipoEntidad} from '../commons/Utils';
@@ -102,7 +102,11 @@ class PanelEntidad extends React.Component {
 							/>
 						</div>
 						<div className="btn-form">
-							<button type="submit" className="btn btn-success">Agregar entidad</button>
+							<Boton
+		                        label  = "Agregar entidad"
+		                        icon   = "fa fa-map-pin fa-lg"
+		                        clases = "btn-success"
+		                    />
 						</div>
 					</Formulario>
 				</div>
