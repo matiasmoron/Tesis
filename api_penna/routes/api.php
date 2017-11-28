@@ -43,6 +43,7 @@ Route::middleware('jwt.auth')->post('/tecnicos', 'Tecnico_Controller@add_tecnico
 Route::middleware('jwt.auth')->delete('/tecnicos', 'Tecnico_Controller@remove_tecnico');
 Route::middleware('jwt.auth')->post('/tecnico_entidad', 'Tecnico_Controller@get_entidades_no_asignadas');
 Route::middleware('jwt.auth')->get('/tecnico_entidad', 'Tecnico_Controller@get_tecnicos_entidad');
+Route::middleware('jwt.auth')->get('/entidades_tecnico', 'Tecnico_Controller@get_entidades_tecnico');
 
 //Personal
 Route::middleware('jwt.auth')->get('/personal/{legajo?}', 'Personal_Controller@get_personal');

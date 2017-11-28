@@ -37,6 +37,14 @@ class Tecnico_Controller extends Controller{
     }
 
     /**
+    *Obtiene las entidades que tiene asignada el técnico conectado
+    */
+    public function get_entidades_tecnico(){
+        $legajo= $this->getAuthenticatedLegajo();
+        return $this-> tecnico -> get_entidades_tecnico($legajo);
+    }
+
+    /**
     *Obtiene los distintos técnicos
     *@param id_entidad entidad a la que pertenecen los tecnicos
     */

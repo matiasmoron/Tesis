@@ -105,6 +105,31 @@ class TecnicoModel extends Model {
         return $this->execute_simple_query("select",$query,$params);
     }
 
+    /**
+    *Obtiene las entidades que tiene asignada un técnico
+    *@param int $legajo número de legajo del técnico
+    */
+    public function get_entidades_tecnico($legajo){
+        $params= array();
+        $query="SELECT
+                    e.id_entidad,e.nombre,e.tipo_entidad
+                FROM 
+                    tecnico t
+                INNER JOIN
+                    entidad e USING(id_entidad)
+                WHERE 
+                    e.estado=?
+                    AND 
+                    t.legajo=?
+                ORDER BY 
+                    tipo_entidad,nombre asc";
+
+        array_push($params,ALTA);
+        array_push($params,$legajo);
+
+        return $this->execute_simple_query("select",$query,$params);
+    }
+
     public function add_tecnico($request){
         $params=array();
         $query=array();

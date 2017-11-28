@@ -8,6 +8,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Validator;
 use JWTAuth;
+use App\Http\Models\PersonalModel;
 
 class Controller extends BaseController
 {
@@ -53,6 +54,16 @@ class Controller extends BaseController
 
         // El token es correcto y devuelve los datos del usuario
         return $user['original'];
+    }
+
+    //Obtiene el legajo del usuario conectado
+    public function getAuthenticatedLegajo(){
+        $usuario_creacion =$this->getAuthenticatedUser()['usuario'];
+        $personal = new PersonalModel();
+        $datos_usuario = $personal -> get_personal((object) array("usuario" => $usuario_creacion));
+        $legajo= $datos_usuario['result'][0]->legajo;
+
+        return $legajo;
     }
 
 
