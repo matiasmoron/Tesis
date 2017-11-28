@@ -9,7 +9,6 @@ class SelectChosen extends React.Component {
 	  	if (props.defaultVal){
 			this.state = {value:props.defaultVal};
 			props.valor({value:props.defaultVal});
-			props.cambiar(Object.assign({}, props.validator, {isValid : true, msg : ""}));
 		}
 		else {
 			if(props.data.length>0){
@@ -17,7 +16,6 @@ class SelectChosen extends React.Component {
 				if(props.clearable != undefined  && !props.clearable && props.defaultVal == undefined){
 					this.state = {value:props.data[0][props.llave]};
 					props.valor({value:props.data[0][props.llave]});
-					props.cambiar(Object.assign({}, props.validator, {isValid : true, msg : ""}));
 
 				}
 				else{

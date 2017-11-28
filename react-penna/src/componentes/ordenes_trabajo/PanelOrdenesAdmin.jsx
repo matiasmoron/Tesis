@@ -26,10 +26,9 @@ class PanelOrdenesAdmin extends React.Component {
 
 	//@todo cargar por defecto el servicio de login y todos los bienes que corresponden a servicio
 	componentDidMount(){
-		//id_servicio seria el del login
 		ApiServicio.getServicios();
 		Api.getBienes({id_tipo_bien:this.state.id_tbien_def});
-		ApiEntidad.getEntidades();
+		ApiTecnico.getEntidadesTecnico();
 		ApiTecnico.getTecnicoEntidadForm();
 		Api.getOrdenes({id_tipo_bien:this.state.id_tbien_def});
 	}
@@ -43,7 +42,8 @@ class PanelOrdenesAdmin extends React.Component {
 				required : false
 			},
 			id_tipo_bien:{
-				required : false
+				required : false,
+				isValid : true
 			},
 			id_bien:{
 				required : false
@@ -164,7 +164,7 @@ class PanelOrdenesAdmin extends React.Component {
 								descripcion = "nombre"
 								clases      = "col-md-6"
 								onChange    = {this.changeSelectEntidad.bind(this)}
-								data        = {this.props.entidades}
+								data        = {this.props.entidades_tecnico}
 								valor       = {input => this._id_entidad = input}
 								validator   = {this.state.validator.id_entidad}
 								cambiar     = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{id_entidad:p1})})}
@@ -262,7 +262,7 @@ const mapStateToProps = function(store) {
 	  bienes 	            : store.ordenesState.bienes,
 	  ordenes_tabla         : store.ordenesState.datos_tabla,
 	  servicios             : store.servicioState.servicios,
-	  entidades             : store.entidadState.entidades,
+	  entidades_tecnico     : store.tecnicoState.entidades_tecnico,
 	  tecnicos_entidad_form : store.tecnicoState.tecnicos_entidad_form
   };
 };

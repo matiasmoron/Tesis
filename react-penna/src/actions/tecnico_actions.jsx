@@ -21,6 +21,13 @@ export function getTecnicoNoEntidadSuccess(elementos) {
   };
 }
 
+export function getEntidadesTecnicoSuccess(elementos) {
+  return {
+    type: types.GET_ENTIDADES_TECNICO_SUCCESS,
+    elementos
+  };
+}
+
 export function getTecnicoEntidadFormSuccess(elementos) {
   return {
     type: types.GET_TECNICO_ENTIDAD_FORM,
@@ -48,11 +55,3 @@ export function deleteSuccess(tecnico) {
     tecnico
   };
 }
-
-
-// export function updateSuccess(elem) {
-//   return {
-//     type: types.UPDATE_TECNICO_SUCCESS,
-//     elem
-//   };
-// }

@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import store from '../../store';
 import * as Api from '../../api/ordenes_api';
 import * as ApiTecnico from '../../api/tecnico_api';
+import * as ApiEntidad from '../../api/entidad_api';
 import * as BsTable from '../commons/BsTable';
 import {estadoOrden,tipoBien,conformidad,prioridad} from '../commons/Utils';
 import {Boton,TextArea,Label,Input2,habilitarSubmit} from '../genericos/FormElements';
@@ -28,6 +29,11 @@ class TableOrdenesAdmin extends React.Component {
 						validatorAsignar    : this.initValidatorAsignar()
 					};
 	 }
+
+	 componentDidMount(){
+ 		ApiEntidad.getEntidades();
+ 	}
+
 
 	initValidatorDerivar(){
 		 return {

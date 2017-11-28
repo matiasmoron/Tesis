@@ -6,7 +6,8 @@ const initialState = {
  tecnico_personal: [], //Son los datos del tecnico seleccionado
  tecnicos_entidades: [],
  tecnicos_entidad_table: [], //Utilizado para el table de Admin
- tecnicos_entidad_form: [] //Utilizado para el form de Admin
+ tecnicos_entidad_form: [], //Utilizado para el form de Admin
+ entidades_tecnico : [] //Las entidades que tiene asignada el técnico conectado
 };
 
 const tecnicoReducer = function(state = initialState, action) {
@@ -30,6 +31,8 @@ const tecnicoReducer = function(state = initialState, action) {
     case types.GET_TECNICO_ENTIDAD_TABLE:
           return Object.assign({}, state, { tecnicos_entidad_table: action.elementos });
 
+    case types.GET_ENTIDADES_TECNICO_SUCCESS:
+          return Object.assign({}, state, { entidades_tecnico: action.elementos });
 
 
     case types.ADD_TECNICO_SUCCESS:
