@@ -10,6 +10,11 @@ class Permiso_Controller extends Controller{
        $this-> permiso = new PermisoModel();
     }
 
+
+    public function crear_administrador(Request $request){
+          return $this-> permiso -> agregar_cuenta($request,PERFIL_ADMINISTRADOR);
+    }
+
     public function actualizar_password(Request $request){
         $reglas=[
                     'password_anterior'  => 'required|max:20',

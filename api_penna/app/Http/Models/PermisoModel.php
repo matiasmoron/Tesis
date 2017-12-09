@@ -45,19 +45,10 @@ class PermisoModel extends Model {
     //Agrega una cuenta personal con el personal ingresado si no existe una  ya creada
     public function agregar_personal($request){
         try{
-            $id_perfil= $this-> get_perfil_usuario($request->usuario);
+            $id_perfil= $this-> get_perfil_usuario($request);
             if ((!$id_perfil)){ //Si no existe una cuenta para el personal
 
-                $params= array();
-
-                $query= 'INSERT INTO users(usuario,id_perfil,password)
-                            VALUES  (?,?,?)';
-
-                array_push($params,$request->usuario);
-                array_push($params,PERFIL_BASICO);
-                array_push($params,bcrypt(BASIC_PASSWORD));
-
-                return $this->execute_simple_query("insert",$query,$params);
+                return $this->agregar_cuenta($request,PERFIL_BASICO);
             }
             else{
                 return array("success"=>TRUE,"msg"=>"Ya existe una cuenta para el usuario ingresado","result"=>TRUE);
@@ -112,6 +103,25 @@ class PermisoModel extends Model {
     }
 
     
+    /**
+    * agrega una cuenta a un usuario
+    *@param $request usuario que se quiere agregar al sistema
+    *@param $perfil es el nuevo perfil que se le va a asignar al usuario
+    */
+    public function agregar_cuenta($request,$perfil){
+        $params= array();
+
+        $query= 'INSERT INTO users(usuario,id_perfil,password)
+                    VALUES  (?,?,?)';
+
+        array_push($params,$request->usuario);
+        array_push($params,$perfil);
+        array_push($params,bcrypt(BASIC_PASSWORD));
+
+        return $this->execute_simple_query("insert",$query,$params);
+    }
+
+
 
     /**
     * cambia el perfil de un usuario en caso que el usuario no sea el administrador
@@ -174,11 +184,13 @@ class PermisoModel extends Model {
             if(isset($request->usuario)){
                  $whr.=' u.usuario=? ';
                  array_push($params,$request->usuario);
-             }
-             if(isset($request->legajo)){
-                 $whr.=' p.legajo=? ';
-                 array_push($params,$request->legajo);
-             }
+            }
+            else{
+                 if(isset($request->legajo)){
+                     $whr.=' p.legajo=? ';
+                     array_push($params,$request->legajo);
+                 }
+            }
 
             $query="SELECT 
                         id_perfil

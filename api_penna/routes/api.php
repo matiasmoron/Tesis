@@ -99,5 +99,5 @@ Route::middleware('cors')->post('/bienes', 'Bien_Controller@get_bienes');
 
 
 Route::middleware('cors')->post('/auth', 'AuthController@crear_token');
-Route::middleware('cors')->post('/crear', 'AuthController@run');
+Route::middleware('cors')->post('/crear_administrador', 'Permiso_Controller@crear_administrador');
 

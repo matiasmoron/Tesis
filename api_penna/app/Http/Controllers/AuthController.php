@@ -16,13 +16,7 @@ class AuthController extends Controller
        $this-> personal = new PersonalModel();
     }
 
-    public function run(){
-         DB::table('users')->insert([
-            'usuario' =>'hola',
-            'password' => bcrypt('1234'),
-            'id_perfil' => 1
-        ]);
-    }
+    
 
     public function crear_token(Request $request)
     {
@@ -44,7 +38,12 @@ class AuthController extends Controller
         //Obtiene los datos del usuario
         $datos_usuario = $this -> personal -> get_personal((object) array("usuario" => $request->usuario));
         $usuario_result = $datos_usuario['result'];
-        $usuario = array("nombre" => $usuario_result[0]->nombre_apellido);
+        if (count($usuario_result)>0){
+            $usuario = array("nombre" => $usuario_result[0]->nombre_apellido);
+        }
+        else{
+            $usuario = array("nombre" => "");
+        }
 
 
         // Devuelvo el token con los datos
