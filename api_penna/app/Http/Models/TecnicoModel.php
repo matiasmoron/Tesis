@@ -1,8 +1,16 @@
 <?php
 namespace App\Http\Models;
 use App\Http\Models\Model;
+use App\Http\Models\PermisoModel;
+use Illuminate\Support\Facades\DB;
 
 class TecnicoModel extends Model {
+
+    function __construct(){ 
+        parent::__construct();
+       $this->permiso= new PermisoModel();
+    } 
+
 
     //obtiene los técnicos con su respectiva entidad (puede haber mas de una entidad asiganada a un técnico)
     public function get_tecnicos($request){
@@ -131,31 +139,62 @@ class TecnicoModel extends Model {
     }
 
     public function add_tecnico($request){
-        $params=array();
-        $query=array();
+        try{
+            DB::beginTransaction();
+            if (!$this->es_tecnico($request)){
+                $this->permiso -> agregar_tecnico($request);
+            }
 
-        $query='INSERT INTO tecnico (legajo,id_entidad)
-                VALUES(?,?)';
+            $params=array();
+            $query=array();
 
-        array_push($params,$request->legajo);
-        array_push($params,$request->id_entidad);
+            $query='INSERT INTO tecnico (legajo,id_entidad)
+                    VALUES(?,?)';
+
+            array_push($params,$request->legajo);
+            array_push($params,$request->id_entidad);
 
 
-        return $this->execute_simple_query("insert",$query,$params);
+            $resultado= $this->execute_simple_query("insert",$query,$params);
+
+            DB::commit();
+
+            return $resultado;
+        }
+        catch (\Exception $e) {
+            DB::rollback();
+            die(json_encode(array("success"=>FALSE,"msg"=> $e->getMessage(),"result"=>FALSE)));
+        }
     }
 
     public function remove_tecnico($request){
-        $params= array();
-        $query='DELETE
-                FROM   tecnico
-                WHERE  legajo=?
-                       AND id_entidad=?';
+        try{
+            DB::beginTransaction();
+            $params= array();
+            $query='DELETE
+                    FROM   tecnico
+                    WHERE  legajo=?
+                           AND id_entidad=?';
 
-        array_push($params,$request->legajo);
-        array_push($params,$request->id_entidad);
+            array_push($params,$request->legajo);
+            array_push($params,$request->id_entidad);
 
 
-        return $this->execute_simple_query("delete",$query,$params);
+            $resultado= $this->execute_simple_query("delete",$query,$params);
+
+            if (!$this->es_tecnico($request)){
+                $this->permiso -> quitar_tecnico($request);
+            }
+
+            DB::commit();
+
+            return $resultado;
+
+        }
+        catch (\Exception $e) {
+            DB::rollback();
+            die(json_encode(array("success"=>FALSE,"msg"=> $e->getMessage(),"result"=>FALSE)));
+        }
     }
 
 }

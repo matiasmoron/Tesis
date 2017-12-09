@@ -21,12 +21,18 @@
         ],
         "psr-4": {
             "App\\": "app/"
-        }
+        },
+       "files": [
+           "app/constants.php"
+       ]
     },
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"
-        }
+        },
+       "files": [
+           "app/constants.php"
+       ]
     },
     "scripts": {
         "post-root-package-install": [

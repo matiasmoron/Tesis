@@ -3,10 +3,6 @@ namespace App\Http\Models;
 use App\Http\Models\Model;
 use Illuminate\Support\Facades\Hash;
 
-define("BASIC_PASSWORD",1234);
-define("ADMINISTRADOR",1);
-define("TECNICO",2);
-define("BASICO",3);
 
 class PermisoModel extends Model {
 
@@ -46,77 +42,167 @@ class PermisoModel extends Model {
         return $this->execute_simple_query("select",$query,$params);
 	}
 
-    //Agrega una cuenta personal con el personal ingresado
+    //Agrega una cuenta personal con el personal ingresado si no existe una  ya creada
     public function agregar_personal($request){
-        $params= array();
+        try{
+            $id_perfil= $this-> get_perfil_usuario($request->usuario);
+            if ((!$id_perfil)){ //Si no existe una cuenta para el personal
 
-        $query= 'INSERT INTO users(usuario,id_perfil,password)
-                    VALUES  (?,?,?)';
+                $params= array();
 
-        array_push($params,$request->usuario);
-        array_push($params,BASICO);
-        array_push($params,bcrypt('1234'));
+                $query= 'INSERT INTO users(usuario,id_perfil,password)
+                            VALUES  (?,?,?)';
 
-        return $this->execute_simple_query("insert",$query,$params);
-    }
+                array_push($params,$request->usuario);
+                array_push($params,PERFIL_BASICO);
+                array_push($params,bcrypt(BASIC_PASSWORD));
 
-    //Le agrega el perfil tecnico a la cuenta del personal
-    public function agregar_tecnico($request){
-        $params= array();
-
-        $query= 'UPDATE 
-                    users u
-                 INNER JOIN
-                    personal p USING(usuario)
-                SET
-                    u.id_perfil=?
-                WHERE
-                    p.legajo=?
-
-                    ';
-
-        array_push($params,TECNICO);
-        array_push($params,$request->legajo);
-
-        return $this->execute_simple_query("update",$query,$params);
-    }
-
-    public function quitar_tecnico($request){
-        $params= array();
-
-        $query= 'UPDATE 
-                    users u
-                 INNER JOIN
-                    personal p USING(usuario)
-                SET
-                    u.id_perfil=?
-                WHERE
-                    p.legajo=?
-
-                    ';
-
-        array_push($params,BASICO);
-        array_push($params,$request->legajo);
-
-        return $this->execute_simple_query("update",$query,$params);
+                return $this->execute_simple_query("insert",$query,$params);
+            }
+            else{
+                return array("success"=>TRUE,"msg"=>"Ya existe una cuenta para el usuario ingresado","result"=>TRUE);
+            }
+        }
+        catch (\Exception $e) {
+            throw $e;
+        }
     }
 
     //Borra la cuenta de un personal
     public function quitar_personal($request){
-        $params= array();
+        try{
+            $params= array();
 
-        $query='DELETE
-                    users
-                FROM
-                    users
-                JOIN
-                    personal USING (usuario)
-                WHERE
-                    legajo=?';
+            $query='DELETE
+                        users
+                    FROM
+                        users
+                    JOIN
+                        personal USING (usuario)
+                    WHERE
+                        legajo=?';
 
-        array_push($params,$request->legajo);
+            array_push($params,$request->legajo);
 
-        return $this->execute_simple_query("delete",$query,$params);
+            return $this->execute_simple_query("delete",$query,$params);
+        }
+        catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    //Le agrega el perfil tecnico a la cuenta del personal
+    public function agregar_tecnico($request){
+        try{
+            return $this->cambiar_perfil($request,PERFIL_TECNICO);
+        }
+        catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    //Le quita el perfil tecnico a la cuenta del personal
+    public function quitar_tecnico($request){
+        try{
+            return $this->cambiar_perfil($request,PERFIL_BASICO);
+        }
+        catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    
+
+    /**
+    * cambia el perfil de un usuario en caso que el usuario no sea el administrador
+    *@param $request usuario o legajo del personal que se quieren modificar el perfil
+    *@param $nuevo_perfil es el nuevo perfil que se le va a asignar al usuario
+    */
+    private function cambiar_perfil($request,$nuevo_perfil){
+        try {
+            $id_perfil= $this-> get_perfil_usuario($request);
+            if ($id_perfil){
+                if ($id_perfil!= PERFIL_ADMINISTRADOR){
+                    $params= array();
+                    array_push($params,$nuevo_perfil);
+
+
+                    $whr="";
+                    if(isset($request->usuario)){
+                         $whr.=' u.usuario=? ';
+                         array_push($params,$request->usuario);
+                     }
+                     if(isset($request->legajo)){
+                         $whr.=' p.legajo=? ';
+                         array_push($params,$request->legajo);
+                     }
+
+                    $query= 'UPDATE 
+                                users u 
+                            INNER JOIN
+                                personal p  USING(usuario) 
+                            SET
+                                id_perfil=?
+                            WHERE
+                                '.$whr.'';
+
+
+                    return $this->execute_simple_query("update",$query,$params);
+                }
+                else{
+                    return array("success"=>TRUE,"msg"=>"Tiene una cuenta con un perfil superior","result"=>TRUE); 
+                }
+            }
+            else{
+                return array("success"=>TRUE,"msg"=>"No existe una cuenta para el usuario","result"=>FALSE);
+            }
+        }
+        catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+    * Obtiene el perfil del usuario ingresado
+    *@param $request es el usuario o el legajo del personal
+    *@return false si no tiene ningun perfil y sino el id del perfil del usuario
+    */
+    private function get_perfil_usuario($request){
+        try{
+            $params=array();
+            $whr="";
+            if(isset($request->usuario)){
+                 $whr.=' u.usuario=? ';
+                 array_push($params,$request->usuario);
+             }
+             if(isset($request->legajo)){
+                 $whr.=' p.legajo=? ';
+                 array_push($params,$request->legajo);
+             }
+
+            $query="SELECT 
+                        id_perfil
+                    FROM
+                        users u
+                    INNER JOIN
+                        personal p USING(usuario)
+                    WHERE
+                        ".$whr."";
+
+
+            $perfil=$this->execute_simple_query("select",$query,$params);
+
+            if ($perfil['success'] && (count($perfil['result'])>0)){
+                return $perfil['result'][0]->id_perfil;
+            }
+            else {
+                return false;
+            }
+        }
+        catch (\Exception $e) {
+            throw $e;
+        }
+
     }
 
     //Verifica que la contraseña sea igual a la almacenada 

@@ -66,14 +66,7 @@ class Tecnico_Controller extends Controller{
         $this->validar($request->all(),$reglas);
 
 
-        if ($this->tecnico->es_tecnico($request)){
-            return $this-> tecnico -> add_tecnico($request);
-        }
-        else{
-            $resultado=$this-> tecnico -> add_tecnico($request);
-            $this-> permiso -> agregar_tecnico($request);
-            return $resultado;
-        }
+        return $this-> tecnico -> add_tecnico($request);
 
     }
 
@@ -84,13 +77,9 @@ class Tecnico_Controller extends Controller{
                 ];
 
         $this->validar($request->all(),$reglas);
-        $resultado= $this-> tecnico -> remove_tecnico($request);
+        
+        return $this-> tecnico -> remove_tecnico($request);
 
-        //Le quita el perfil de técnico 
-        if (!$this->tecnico->es_tecnico($request)){
-            $this-> permiso -> quitar_tecnico($request);
-        }
-        return $resultado;
 
     }
 

@@ -100,3 +100,4 @@ Route::middleware('cors')->post('/bienes', 'Bien_Controller@get_bienes');
 
 Route::middleware('cors')->post('/auth', 'AuthController@crear_token');
 Route::middleware('cors')->post('/crear', 'AuthController@run');
+

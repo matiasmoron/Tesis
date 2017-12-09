@@ -38,6 +38,7 @@ class Permiso_Controller extends Controller{
     }
 
 
+
     ///////////////////////
     //////VALIDACIONES/////
     /////////////////////// 

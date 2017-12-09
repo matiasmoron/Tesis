@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-// use App\Personal;
 use App\Http\Models\PersonalModel;
 use App\Http\Controllers\Tecnico_Controller;
 

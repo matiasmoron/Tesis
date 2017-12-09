@@ -109,24 +109,24 @@ class PersonalModel extends Model {
 
 
     //Da de alta un personal creando nuevamente la cuenta
-    public function dar_alta($request){
-        try{
-            DB::beginTransaction();
+    // public function dar_alta($request){
+    //     try{
+    //         DB::beginTransaction();
 
-            $request->estado=ALTA;
-            $this->update_personal($request);
-            $this->permiso->agregar_personal($request);
+    //         $request->estado=ALTA;
+    //         $this->update_personal($request);
+    //         $this->permiso->agregar_personal($request);
 
-            DB::commit();
+    //         DB::commit();
 
-            return array("success"=>TRUE,"msg"=>"","result"=>TRUE);
-        }
-        catch (\Exception $e) {
-            DB::rollback();
-            die(json_encode(array("success"=>FALSE,"msg"=> $e->getMessage(),"result"=>FALSE)));
-        }
+    //         return array("success"=>TRUE,"msg"=>"","result"=>TRUE);
+    //     }
+    //     catch (\Exception $e) {
+    //         DB::rollback();
+    //         die(json_encode(array("success"=>FALSE,"msg"=> $e->getMessage(),"result"=>FALSE)));
+    //     }
 
-    }
+    // }
 
 	//Da de baja a un personal quitandolo de users
     public function remove_personal($request){

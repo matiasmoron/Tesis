@@ -6,8 +6,6 @@ use Illuminate\Support\Facades\DB;
 const ALTA=1;
 const BAJA=0;
 
-const EQUIPO=1;
-const PRESTACION=2;
 
 class Model
 {
