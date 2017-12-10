@@ -83,7 +83,12 @@ class PanelEquipo extends React.Component {
 					showMsg("El código patrimonial ingresado ya existe","error");
 				}
 				else{
-					this.setState({showGenericModal:{isVisible:true, id_equipo: valor['result'][0].id_equipo}});
+					this.setState({showGenericModal:{isVisible:true,
+													id_equipo: valor['result'][0].id_equipo,
+													cod_patrimonial: valor['result'][0].cod_patrimonial,
+													descripcion: valor['result'][0].descripcion,
+												}
+								});
 				}
 			}
 			else{
@@ -148,7 +153,7 @@ class PanelEquipo extends React.Component {
 				<GenericModal
 					show={this.state.showGenericModal.isVisible}
 					onHide={()=> {this.setState({showGenericModal : {isVisible: false, id_equipo: ""}})}}
-					body ="El código patrimonial pertenece a un equipo dado de baja. ¿Desea darlo de alta?"
+					body ={`El código patrimonial ${this.state.showGenericModal.cod_patrimonial} pertenece al equipo ${this.state.showGenericModal.descripcion} dado de baja. ¿Desea darlo de alta?`}
 					accion={this._reactivarEquipo.bind(this) }
 				/>
 				<div className="col-md-5 center">

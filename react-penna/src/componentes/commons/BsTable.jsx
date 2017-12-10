@@ -82,15 +82,16 @@ export const selectEditFormat = (options,key,value,cell,row) => {
  * @param {[type]} description descripcion de las opciones
  */
 export const addEditOption = (options,id,description) => {
+    let new_options= options.slice();
     if (options.length>0 && options[0][id]!=""){
         let new_object= {};
         new_object[id]= "";
         new_object[description]= Text_Vacio;
-        options.unshift(new_object);
-        return options;
+        new_options.unshift(new_object);
+        return new_options;
     }
     else{
-        return options;
+        return new_options;
     }
 }
 
