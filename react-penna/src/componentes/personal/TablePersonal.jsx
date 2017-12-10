@@ -22,7 +22,6 @@ class TablePersonal extends React.Component {
 
 	}
    updateElemento(row, cellName, cellValue) {
-		  console.log("update",row);
 		   this.props.updateElemento(row);
    }
    customConfirm(next, dropRowKeys) {
@@ -119,9 +118,15 @@ class TablePersonal extends React.Component {
 						invalidEditColumnClassName={ BsTable.invalidClass }>Apellido
 					</TableHeaderColumn>
 	                <TableHeaderColumn
-						 editable={false}
-						 dataField='servicio_nombre'>Servicio
-					</TableHeaderColumn>
+	                    editable={{
+	                        type: 'select',
+	                        options: { values: this.props.servicios, textKey: 'nombre', valueKey: 'id_servicio' }
+	                          }}
+	                    dataFormat={BsTable.selectEditFormat.bind(this,this.props.servicios,"id_servicio","nombre")}
+	                    columnTitle
+	                    dataField='id_servicio'
+	                    dataSort>Servicio
+	                </TableHeaderColumn>
 					<TableHeaderColumn
 						dataField='fecha_ingreso'
 						editable={ { validator: BsTable.columnDate } }

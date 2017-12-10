@@ -37,8 +37,6 @@ class PanelEntidad extends React.Component {
 		event.preventDefault();
 
 		let obj = this.state.validator;
-		console.log("validator",this.state.validator);
-		console.log("value",this._tipo_entidad);
 		habilitarSubmit(obj,this.callbackSubmit.bind(this));
     }
 
@@ -48,7 +46,6 @@ class PanelEntidad extends React.Component {
 		promesa.then( valor => {
 			entidadApi.getEntidades();
 			resetForm("form_entidad");
-			console.log("tipo",this._tipo_entidad.value);
 			this.setState({validator:this.initValidator()});
 			showMsg("Se creo correctamente la entidad","ok");
 		});

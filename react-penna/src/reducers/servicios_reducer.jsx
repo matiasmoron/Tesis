@@ -20,8 +20,6 @@ const servicioReducer = function(state = initialState, action) {
 
     case types.DELETE_SERVICIO_SUCCESS:
       const newServicios = _.filter(state.servicios, servicio => servicio.id_servicio != action.id_servicio);
-      console.log("actionDelete",action);
-      console.log("stateDelete",state);
       return Object.assign({}, state, { servicios: newServicios });
   }
 

@@ -133,7 +133,6 @@ class TableOrdenesAdmin extends React.Component {
 
 	//Muestra/Oculta el modal de actualizar orden guardando los datos de la fila segun corresponda
 	modalActualizarOrden(row=null){
-		console.log(row);
 		this.setState({showModalActualizar : !this.state.showModalActualizar});
 		 if (row!=null)
 			 this.setState({datosOrden : row});
@@ -175,8 +174,6 @@ class TableOrdenesAdmin extends React.Component {
 			this.modalDerivarOrden();
 			this.props.getOrdenes();
 			showMsg("La orden de trabajo fué derivada correctamente a "+this._entidad_destino.label,"ok");
-			console.log("destino",this._entidad_destino.value);
-			console.log("destino",this._entidad_destino);
 
 		});
 	}

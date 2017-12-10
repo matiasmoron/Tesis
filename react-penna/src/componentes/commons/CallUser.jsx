@@ -12,7 +12,6 @@ export function CallUser(args) {
 
         axios({method: args.metodo,url:base_url+args.url,params: args.params,headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
         .then(response => {
-                console.log("response",response);
                 if (response.data.success){
                   // If login was successful, set the token in local storage
 		          localStorage.setItem('id_token', response.data.result.token);
@@ -39,7 +38,6 @@ export function CallUser(args) {
                if(error.response.statusText=="Unauthorized"){
                    reject("Nombre de usuario y/o contraseña incorrecta");
                }
-               console.log("PASE");
                reject(error.response.data.error);
              })
     });

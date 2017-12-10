@@ -45,7 +45,6 @@ class PanelConfiguracion extends React.Component {
 
     _updatePassword(event){
         event.preventDefault();
-        console.log();
 
         let obj = this.state.validator;
         habilitarSubmit(obj,this.callbackSubmit.bind(this));

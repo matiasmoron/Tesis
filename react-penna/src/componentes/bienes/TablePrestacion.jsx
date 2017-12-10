@@ -75,9 +75,13 @@ class TablePrestacion extends React.Component {
                     invalidEditColumnClassName={ BsTable.invalidClass }>Observación
                 </TableHeaderColumn>
                 <TableHeaderColumn
-                    editable={false}
+                    editable={{
+                        type: 'select',
+                        options: { values: BsTable.addEditOption(this.props.servicios,"id_servicio","nombre"), textKey: 'nombre', valueKey: 'id_servicio' }
+                          }}
+                    dataFormat={BsTable.selectEditFormat.bind(this,this.props.servicios,"id_servicio","nombre")}
                     columnTitle
-                    dataField='servicio_nombre'
+                    dataField='id_servicio'
                     dataSort>Servicio
                 </TableHeaderColumn>
             </BootstrapTable>

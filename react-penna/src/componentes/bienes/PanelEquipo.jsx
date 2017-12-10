@@ -79,7 +79,6 @@ class PanelEquipo extends React.Component {
 
 		promesa.then( valor => {
 			if (valor['result'].length>=0) {
-				console.log("FALLO ", valor['result']);
 				if (valor['result'][0].estado=="alta"){
 					showMsg("El código patrimonial ingresado ya existe","error");
 				}
@@ -100,7 +99,6 @@ class PanelEquipo extends React.Component {
 	_addElemento(event){
 		event.preventDefault();
 		let obj = this.state.validator;
-		console.log(obj);
 		habilitarSubmit(obj,this.callbackSubmit.bind(this));
     }
 
@@ -111,10 +109,12 @@ class PanelEquipo extends React.Component {
 
 	_updateElemento(equipo){
 		var promesa = Api.updateEquipo({
-							id_bien        :equipo['id_bien'],
-							cod_patrimonial:equipo['cod_patrimonial'],
-							descripcion    :equipo['descripcion'],
-							observacion    :equipo['observacion'],
+							id_bien         :equipo['id_bien'],
+							cod_patrimonial :equipo['cod_patrimonial'],
+							descripcion     :equipo['descripcion'],
+							observacion     :equipo['observacion'],
+							id_servicio     :equipo['id_servicio'],
+							id_equipo_padre :equipo['id_equipo_padre']
 					});
 
 		promesa.then( valor => {
@@ -214,6 +214,7 @@ class PanelEquipo extends React.Component {
 						datos_elemento={this.props.equipos}
 						updateElemento={this._updateElemento.bind(this)}
 						deleteElemento={this._deleteElemento.bind(this)}
+						servicios ={this.props.servicios}
 					/>
 				</div>
 			</div>

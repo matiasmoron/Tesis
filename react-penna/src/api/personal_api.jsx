@@ -15,7 +15,6 @@ export function getPersonal() {
 }
 
 export function addPersonal(personal) {
-    console.log("entro a personal_api",personal);
    var args={metodo:'post',
              url:'personal',
              params:personal,

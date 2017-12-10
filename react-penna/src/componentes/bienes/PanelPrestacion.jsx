@@ -64,7 +64,8 @@ class PanelPrestacion extends React.Component {
 		Api.updatePrestacion({
 							id_bien        :prestacion['id_bien'],
 							descripcion    :prestacion['descripcion'],
-							observacion    :prestacion['observacion']
+							observacion    :prestacion['observacion'],
+							id_servicio    :prestacion['id_servicio']
 					});
 
 		showMsg("La prestación fué modificada correctamente","ok");
@@ -122,7 +123,11 @@ class PanelPrestacion extends React.Component {
 				</Formulario>
 			</div>
 			<div className="col-md-12">
-				<TablePrestacion datos_elemento={this.props.prestaciones} updateElemento={this._updateElemento.bind(this)} deleteElemento={this._deleteElemento.bind(this)}/>
+				<TablePrestacion
+					servicios={this.props.servicios}
+					datos_elemento={this.props.prestaciones}
+					updateElemento={this._updateElemento.bind(this)}
+					deleteElemento={this._deleteElemento.bind(this)}/>
 			</div>
 		</div>
       );
@@ -131,7 +136,6 @@ class PanelPrestacion extends React.Component {
 
 
 const mapStateToProps = function(store) {
-console.log("store equipo", store);
   return {
     prestaciones: store.prestacionState.prestaciones,
 	servicios: store.servicioState.servicios

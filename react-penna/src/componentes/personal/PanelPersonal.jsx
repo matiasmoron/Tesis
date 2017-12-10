@@ -204,7 +204,12 @@ class PanelPersonal extends React.Component {
 				</Formulario>
 			</div>
 			<div className="col-md-12">
-        		<TablePersonal datos_elemento={this.props.personal}  getPersonal={ApiPersonal.getPersonal} updateElemento={this._updateElemento.bind(this)} deleteElemento={this._deleteElemento.bind(this)}/>
+        		<TablePersonal
+					datos_elemento={this.props.personal}
+					servicios={this.props.servicios}
+					getPersonal={ApiPersonal.getPersonal} 
+					updateElemento={this._updateElemento.bind(this)}
+					deleteElemento={this._deleteElemento.bind(this)}/>
 			</div>
 		</div>
       );

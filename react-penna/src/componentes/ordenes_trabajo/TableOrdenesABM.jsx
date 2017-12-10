@@ -73,7 +73,6 @@ class TableOrdenes extends React.Component {
 
 	   //Funciones del Modal "Ver más"
 	  modalVerMas(row){
-		  	console.log("ROW ABM",row);
 			this.setState({showModalVer :!this.state.showModalVer});
 			if (row!=null)
 				this.setState({datosOrden : row});

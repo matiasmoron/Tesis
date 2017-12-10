@@ -16,7 +16,6 @@ const tecnicoReducer = function(state = initialState, action) {
         return Object.assign({}, state, { tecnicos: action.elementos });
 
     case types.GET_PERSONALTECNICO_SUCCESS:
-        console.log("tecnico_personal", action.elementos );
         return Object.assign({}, state, { tecnico_personal: action.elementos[0] });
 
     //Obtiene todas las entidades a las que no pertenece el empleado con el legajo ingresado

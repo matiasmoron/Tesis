@@ -16,7 +16,6 @@ let Submenu ={
 
 var cargar_submenu = (opc_habilitados) => {
     let habilitados = [];
-    console.log(typeof opc_habilitados);
     opc_habilitados.map(function(opcion){
         if (menu==opcion.id_menu && opcion.id_opcion!=0)
 		    habilitados.push(Submenu[opcion.id_opcion]);

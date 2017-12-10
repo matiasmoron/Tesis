@@ -5,11 +5,8 @@ var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
 import {ModalBs} from '../genericos/ModalBs';
 import {Boton} from '../genericos/FormElements';
 
+const Text_Vacio="Ninguno";
 
-
-// export function onAfterDeleteRow(rowKeys){
-// 	console.log("asdasdas");
-// }
 
 export const btnEliminar = (onClick) => {
    return (
@@ -53,6 +50,50 @@ export const selectFila={
 	mode: 'checkbox'
 };
 
+/**
+ * Carga el select para poder editar en la tabla
+ * @param  {[type]} options    optiones que muestra el select
+ * @param  {[type]} key        llave que tiene las opciones
+ * @param  {[type]} value      valor que tiene las opciones
+ * @param  {[type]} cell       valor actual de la celda
+ * @param  {[type]} row        fila completa
+ * @return [type]
+ */
+export const selectEditFormat = (options,key,value,cell,row) => {
+    let option;
+    let found=false;
+    options.forEach((item, index) => {
+        if (item[key]==cell){
+            option= item[value];
+            found=true;
+        }
+    });
+    if (found)
+        return option;
+    else {
+        return Text_Vacio;
+    }
+}
+
+/**
+ * Agrega la opción vacia al conjunto de opciones
+ * @param {[type]} options      optiones que muestra el select
+ * @param {[type]} id          valor que tiene las opciones
+ * @param {[type]} description descripcion de las opciones
+ */
+export const addEditOption = (options,id,description) => {
+    if (options.length>0 && options[0][id]!=""){
+        let new_object= {};
+        new_object[id]= "";
+        new_object[description]= Text_Vacio;
+        options.unshift(new_object);
+        return options;
+    }
+    else{
+        return options;
+    }
+}
+
 
 ////////////////
 //VALIDACIONES //
@@ -85,7 +126,6 @@ export const columnNumeric = (valor) => {
 }
 
 export const columnDate = (valor) => {
-    console.log("ENTRE");
     const response = columnRequired(valor);
     if(response.isValid){
         var t = valor.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);

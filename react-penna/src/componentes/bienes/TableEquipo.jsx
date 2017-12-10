@@ -40,6 +40,11 @@ class TableEquipo extends React.Component {
         });
     }
 
+    // agregarOption(opciones,key,value){
+    //     opciones.unshift({id_servicio: null ,nombre: "Ninguno"});
+    //     return opciones;
+    // }
+
     render() {
         const editar = {
             mode         : 'dbclick',
@@ -99,16 +104,24 @@ class TableEquipo extends React.Component {
                     invalidEditColumnClassName={ BsTable.invalidClass }>Cód. patrimonial
                 </TableHeaderColumn>
                 <TableHeaderColumn
-                    editable={false}
-                    dataField='servicio_nombre'
+                    editable={{
+                        type: 'select',
+                        options: { values: this.props.servicios, textKey: 'nombre', valueKey: 'id_servicio' }
+                          }}
+                    dataFormat={BsTable.selectEditFormat.bind(this,this.props.servicios,"id_servicio","nombre")}
                     columnTitle
-                    dataSort >Servicio
+                    dataField='id_servicio'
+                    dataSort>Servicio
                 </TableHeaderColumn>
                 <TableHeaderColumn
-                    editable={false}
-                    dataField='padre_desc'
+                    editable={{
+                        type: 'select',
+                        options: { values: BsTable.addEditOption(this.props.datos_elemento,"id_bien","cod_desc"), textKey: 'cod_desc', valueKey: 'id_bien' }
+                          }}
+                    dataFormat={BsTable.selectEditFormat.bind(this,this.props.datos_elemento,"id_bien","cod_desc")}
                     columnTitle
-                    dataSort >Equipo contenedor
+                    dataField='id_equipo_padre'
+                    dataSort>Equipo contenedor
                 </TableHeaderColumn>
             </BootstrapTable>
         );

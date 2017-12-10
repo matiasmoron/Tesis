@@ -25,7 +25,6 @@ class MessageAlert extends React.Component {
 				typeMsg="success";
 			break;
 		}
-		console.log("typeMsg",typeMsg);
 		if (this.props.msgAlert.display_msg){
 			setTimeout(function(){
 				Api.hideMsg();

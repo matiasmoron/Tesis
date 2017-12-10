@@ -85,7 +85,6 @@ class PanelOrdenes extends React.Component {
 	}
 
 	changeSelect(event){
-		console.log("entreee");
 		// Habilita/Desabilita el input de cod_patrimonial
 		this.setState({ disabled_cod_patrimonial: (this._id_tipo_bien.value == 2) ? true : false});
 

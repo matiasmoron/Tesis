@@ -11,7 +11,6 @@ class TableEntidad extends React.Component {
      }
 
 	onAfterDeleteRow(rowKeys){
-		console.log("asdfasd");
 		for (var i = 0; i < rowKeys.length; i++)
 			this.props.deleteEntidad(rowKeys[i]);
 
