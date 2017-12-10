@@ -48,7 +48,8 @@ class Prestacion_Controller extends Controller{
         $reglas=[
                     'descripcion'     => 'required|max:64',
                     'id_bien'         => 'required|numeric',
-                    'observacion'     => 'max:128'
+                    'observacion'     => 'max:128',
+                    'id_servicio'     => 'numeric'
                 ];
 
         $this->validar($request->all(),$reglas);

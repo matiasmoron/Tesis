@@ -70,7 +70,9 @@ class Personal_Controller extends Controller
                     'usuario'       => 'required|max:20',
                     'nombre'        => 'required|max:20',
                     'apellido'      => 'required|max:20',
-                    'fecha_ingreso' => 'date_format:d/m/Y'
+                    'fecha_ingreso' => 'date_format:d/m/Y',
+                    'id_servicio'   => 'numeric',
+                    
                 ];
 
         $this->validar($request->all(),$reglas);

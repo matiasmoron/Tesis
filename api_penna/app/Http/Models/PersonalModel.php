@@ -167,6 +167,11 @@ class PersonalModel extends Model {
              array_push($params,$request->estado);
          }
 
+         if(isset($request->id_servicio)){
+             $set.=' id_servicio=?, ';
+             array_push($params,$request->id_servicio);
+         }
+
         $query='UPDATE personal
                 SET    '.$set.'
                        dni=?,

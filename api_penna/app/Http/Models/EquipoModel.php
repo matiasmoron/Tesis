@@ -79,15 +79,18 @@ class EquipoModel extends Model {
                        cod_patrimonial=?,
                        descripcion=?,
                        observacion=?,
-                       estado = ?
+                       id_servicio=?,
+                       id_equipo_padre=?
                 WHERE  id_equipo=?';
 
         $observacion= ($request ->observacion) ? $request->observacion : '';
+        $id_equipo_padre= ($request ->id_equipo_padre) ? $request->id_equipo_padre : null;
 
         array_push($params,$request->cod_patrimonial);
         array_push($params,$request->descripcion);
         array_push($params,$request->observacion);
-        array_push($params,$request->estado);
+        array_push($params,$request->id_servicio);
+        array_push($params,$request->id_equipo_padre);
         array_push($params,$request->id_bien);
         
 

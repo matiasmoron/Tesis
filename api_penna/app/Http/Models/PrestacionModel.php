@@ -74,13 +74,17 @@ class PrestacionModel extends Model {
         $query='UPDATE prestacion
                 SET
                        observacion=?,
-                       descripcion=?
+                       descripcion=?,
+                       id_servicio=?
                 WHERE  id_prestacion=?';
 
         $observacion= ($request ->observacion) ? $request->observacion : '';
+        $id_servicio= ($request ->id_servicio) ? $request->id_servicio : NULL;
+
 
         array_push($params,$observacion);
         array_push($params,$request->descripcion);
+        array_push($params,$id_servicio);
         array_push($params,$request->id_bien);
 
 
