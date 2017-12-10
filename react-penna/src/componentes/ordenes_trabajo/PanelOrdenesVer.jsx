@@ -38,7 +38,8 @@ class PanelOrdenes extends React.Component {
 				required : false
 			},
 			id_tipo_bien:{
-				required : true
+				required : true,
+				isValid : true
 			},
 			id_bien:{
 				required : false

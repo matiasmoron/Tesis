@@ -114,8 +114,8 @@ class TableOrdenesVer extends React.Component {
 
 	//Valida los data y finaliza la orden
 	finalizarOrden(){
-		let obj = this.state.validator;
-		habilitarSubmit(obj,this.callbackSubmit.bind(this));
+		let obj = this.state.validatorFinalizar;
+		habilitarSubmit(obj,this.callbackFinalizarOrden.bind(this));
 	}
 
 
@@ -138,14 +138,13 @@ class TableOrdenesVer extends React.Component {
 						<div className="modal-body">
 							<div className="form-group row">
 								<SelectChosen
-									clases="d-inline"
 									data={dataConformidad}
 									llave="conformidad"
 									descripcion="descripcion"
 									label="Conformidad"
 									valor={input => this._conformidad = input}
 									validator   = {this.state.validatorFinalizar.conformidad}
-									cambiar     = {p1    => this.setState({validator :Object.assign({}, this.state.validatorFinalizar,{conformidad:p1})})}
+									cambiar     = {p1    => this.setState({validatorFinalizar :Object.assign({}, this.state.validatorFinalizar,{conformidad:p1})})}
 								/>
 								<div className="btn-form">
 									<Boton
