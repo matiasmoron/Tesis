@@ -143,7 +143,9 @@ class EquipoModel extends Model {
         $params= array();
         $query = "SELECT 
                     IF (estado=".BAJA.",'baja','alta') as estado,
-                    id_equipo
+                    id_equipo,
+                    cod_patrimonial,
+                    descripcion
                 FROM
                     equipo
                 WHERE
