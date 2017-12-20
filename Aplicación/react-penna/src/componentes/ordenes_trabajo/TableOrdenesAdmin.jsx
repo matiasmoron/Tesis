@@ -85,7 +85,7 @@ class TableOrdenesAdmin extends React.Component {
 				 clase='t-ok';
 				 break;
 		 }
-		return '<span class='+clase+'><b>'+estadoOrden[estado]+'</b></span>';
+		return '<span class='+clase+' title="'+estadoOrden[estado]+'"><b>'+estadoOrden[estado]+'</b></span>';
 	  }
 
 	colTipoBien(tBien,row){
@@ -98,7 +98,7 @@ class TableOrdenesAdmin extends React.Component {
 			case "2"://En curso
 					acciones.push(<Boton onClick={this.modalActualizarOrden.bind(this,row)} clases="btn-warning" titulo="Modificar los datos de la orden de trabajo" icon="fa fa-pencil"></Boton>);
 			case "1"://Pendiente
-					acciones.push(<Boton onClick={this.modalDerivarOrden.bind(this,row)}     clases="btn-info"      titulo="Derivar orden de trabajo" icon="fa fa-reply"></Boton>)
+					acciones.push(<Boton onClick={this.modalDerivarOrden.bind(this,row)}     clases="btn-info"    titulo="Derivar orden de trabajo" icon="fa fa-reply"></Boton>)
 					acciones.push(<Boton onClick={this.modalAsignarOrden.bind(this,row)}     clases="btn-success" titulo="Asignar la orden a otro técnico" icon="fa fa-plus"></Boton>)
 			case "3"://Resuelta
 			case "4"://Finalizada
@@ -404,12 +404,36 @@ class TableOrdenesAdmin extends React.Component {
 						deleteRow = {false}
 						options   = {opciones}
 						hover>
-						<TableHeaderColumn isKey dataField='id_orden_trabajo' hidden>ID</TableHeaderColumn>
-						<TableHeaderColumn dataField='id_tipo_bien' dataFormat={this.colTipoBien} dataSort>Tipo Bien</TableHeaderColumn>
-						<TableHeaderColumn dataField='descripcion'>Descripción</TableHeaderColumn>
-						<TableHeaderColumn dataField='servicio_nombre' dataSort>Servicio</TableHeaderColumn>
-						<TableHeaderColumn dataField='estado' dataFormat={this.colEstado} dataSort>Estado</TableHeaderColumn>
-						<TableHeaderColumn dataField='id_orden_trabajo' dataFormat={this.colAccion.bind(this)} dataAlign="center">Acción</TableHeaderColumn>
+						<TableHeaderColumn isKey
+							dataField='id_orden_trabajo'
+							hidden>ID
+						</TableHeaderColumn>
+						<TableHeaderColumn
+							dataField='id_tipo_bien'
+							dataFormat={this.colTipoBien}
+							dataSort
+							columnTitle>Tipo Bien
+						</TableHeaderColumn>
+						<TableHeaderColumn
+							dataField='descripcion'
+							columnTitle>Descripción
+						</TableHeaderColumn>
+						<TableHeaderColumn
+							dataField='servicio_nombre'
+							dataSort
+							columnTitle>Servicio
+						</TableHeaderColumn>
+						<TableHeaderColumn
+							dataField='estado'
+							dataFormat={this.colEstado}
+							dataSort
+							columnTitle>Estado
+						</TableHeaderColumn>
+						<TableHeaderColumn
+							dataField  = 'id_orden_trabajo'
+							dataFormat = {this.colAccion.bind(this)}
+							dataAlign  = "center">Acción
+						</TableHeaderColumn>
 					</BootstrapTable>
 				</div>
 		 );

@@ -52,7 +52,7 @@ class TableOrdenes extends React.Component {
 	   				 clase='t-ok';
 	   				 break;
    		 	}
-   			return '<span class='+clase+'><b>'+estadoOrden[estado]+'</b></span>';
+   			return '<span class='+clase+' title="'+estadoOrden[estado]+'"><b>'+estadoOrden[estado]+'</b></span>';
    		}
 
 	   colAccion(estado,row){
@@ -93,7 +93,7 @@ class TableOrdenes extends React.Component {
 			promesa.then(valor => {
 				Api.getBienesTablas({id_tipo_bien:this.state.row.id_tipo_bien,id_bien:this.state.row.id_bien});
 				this.cerrarCrear();
-				showMsg("Se creó la orden","ok");
+				showMsg("La orden de trabajo fué creada correctamente","ok");
 				this.setState({validatorCrearOrden:this.initValidatorCrearOrden()});
 			});
 		}
@@ -128,9 +128,10 @@ class TableOrdenes extends React.Component {
 					<ModalBs
 						show   = {this.state.showModalCrear}
 						onHide = {this.cerrarCrear.bind(this)}
-						titulo = "Solicitar">
+						titulo = "Nueva orden">
 						<div>
 							<TextArea
+								label     = "Observación"
 								cols      = "50"
 								rows      = "3"
 								valor     = {input => this._observacion_creacion = input}
@@ -142,7 +143,6 @@ class TableOrdenes extends React.Component {
 								llave       = "id_entidad"
 								descripcion = "nombre"
 								label       = "Entidad Destino"
-								clearable   = {false}
 								valor       = {input => this._id_entidad = input}
 								validator   = {this.state.validatorCrearOrden.entidad_destino}
 								cambiar     = {p1 => this.setState({validatorCrearOrden :Object.assign({}, this.state.validatorCrearOrden,{entidad_destino:p1})})}
@@ -175,19 +175,24 @@ class TableOrdenes extends React.Component {
 						</TableHeaderColumn>
 						<TableHeaderColumn
 							dataField = 'cod_patrimonial'
-							hidden    = {this.props.hideCodPatrimonial}>Cod Patrimonial
+							hidden    = {this.props.hideCodPatrimonial}
+							columnTitle>Cod Patrimonial
 						</TableHeaderColumn>
 						<TableHeaderColumn
 							dataField='descripcion'
-							dataSort>Descripción
+							dataSort
+							columnTitle>Descripción
 						</TableHeaderColumn>
 						<TableHeaderColumn
 							dataField='servicio_nombre'
-							dataSort>Servicio
+							dataSort
+							columnTitle>Servicio
 						</TableHeaderColumn>
 						<TableHeaderColumn
 							dataField  = 'estado'
-							dataFormat = {this.colEstado} dataSort>Estado
+							dataFormat = {this.colEstado}
+							dataSort
+							columnTitle>Estado
 						</TableHeaderColumn>
 						<TableHeaderColumn
 							dataField  = 'id_orden_trabajo'

@@ -64,10 +64,14 @@ div.botonera{
 }
 .alert-penna{
 	position: sticky;
-    z-index : 100;
+    z-index : 1051;// para que quede arriba del modal(1050)
     width   : 100%;
     top     : 0px;
 	font-weight: bold;
+}
+
+div.modal{
+	top:25px  !important;
 }
 
 td.invalid input{
@@ -77,10 +81,9 @@ input.invalid{
 	border: 1px solid $error;
 }
 input.invalid:focus{
-	// box-shadow: 1px 1px 1px 1px $error;
 	border-color: $error;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(210, 58, 55, 0.58);
-  outline: 0 none;
+  	box-shadow    : 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(210, 58, 55, 0.58);
+  	outline       : 0 none;
 }
 #toast-container{
 	.toast-title{

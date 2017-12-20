@@ -5,7 +5,6 @@ import * as ApiAutenticacion from '../api/autenticacion_api';
 require("../styles/inicio.scss");
 require("../styles/font-awesome-4.7.0/scss/font-awesome.scss");
 import logo from '../img/fotor_penna2.png';
-import Background from '../img/1.jpg';
 
 
 class Inicio extends React.Component {
@@ -27,12 +26,9 @@ class Inicio extends React.Component {
 	}
 
 	render(){
-		const sectionStyle = {
-		  width: "100%",
-		  backgroundImage: `url(${Background})`
-		}
+		const randomClass = "img_" + Math.floor((Math.random() * 3) + 1);
 		return (
-				<div className="inicio-penna" style={sectionStyle}>
+				<div className={"inicio-penna " +randomClass}>
 		            <div className="inner-bg">
 		                <div className="container">
 		                    <div className="row">
