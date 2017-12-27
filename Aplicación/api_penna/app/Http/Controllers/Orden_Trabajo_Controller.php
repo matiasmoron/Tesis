@@ -171,9 +171,9 @@ class Orden_Trabajo_Controller extends Controller{
 
     public function actualizar_orden(Request $request){
         $reglas=[
-            'obs_devolucion'   => 'required|max:45',
+            'obs_devolucion'   => 'required|max:100',
             'id_orden_trabajo' => 'required|numeric',
-            'hs_insumidas'     => 'numeric',
+            'hs_insumidas'     => 'regex:/^(?:([0-9]*\d)(:([0-5]?\d))?)$/',
             'prioridad'        => 'required|numeric'
         ];
         $this->validar($request->all(),$reglas);
@@ -194,6 +194,21 @@ class Orden_Trabajo_Controller extends Controller{
         $this->validar($request->all(),$reglas);
 
         return $this -> OrdenTrabajo ->actualizar_estado($request);
+    }
+
+    /**
+    * Rechaza una determinada orden por parte del técnico agregando una descripción
+    *@param id_orden_trabajo
+    *@param obs_devolucion
+    */
+    public function rechazar_orden(Request $request){
+        $reglas=[
+            'id_orden_trabajo' => 'required|numeric',
+            'obs_devolucion'   => 'required|max:100'
+        ];
+        $this->validar($request->all(),$reglas);
+
+        return $this -> OrdenTrabajo ->rechazar_orden($request);
     }
 
 }

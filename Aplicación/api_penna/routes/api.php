@@ -86,6 +86,7 @@ Route::middleware('jwt.auth')->put('/ver_ordenes', 'Orden_Trabajo_Controller@dar
 //Admin Orden Trabajo
 Route::middleware('jwt.auth')->put('/ordenes/derivar', 'Orden_Trabajo_Controller@derivar_orden');
 Route::middleware('jwt.auth')->put('/ordenes/asignar', 'Orden_Trabajo_Controller@asignar_orden');
+Route::middleware('jwt.auth')->put('/ordenes/rechazar', 'Orden_Trabajo_Controller@rechazar_orden');
 Route::middleware('jwt.auth')->put('/ordenes/actualizar', 'Orden_Trabajo_Controller@actualizar_orden');
 Route::middleware('jwt.auth')->put('/ordenes/actualizar_estado', 'Orden_Trabajo_Controller@actualizar_estado');
 

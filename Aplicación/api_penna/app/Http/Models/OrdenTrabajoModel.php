@@ -201,14 +201,14 @@ class OrdenTrabajoModel extends Model {
 					ot.leg_recepcion                              as leg_recepcion,
 					date_format(ot.fecha_creacion,'%d/%m/%Y')     as fecha_creacion,
 					ot.obs_creacion                               as obs_creacion,
-					IFNULL(ot.obs_devolucion,'-')                 as obs_devolucion,
+					IFNULL(ot.obs_devolucion,'')                  as obs_devolucion,
 					IFNULL(ot.estado,0)                           as estado,
 					date_format(otd.fecha_ini,'%d/%m/%Y')         as fecha_inicio,
 					date_format(otd.fecha_fin,'%d/%m/%Y')         as fecha_fin,
 					ent.nombre                                    as entidad_destino,
 					ent.id_entidad                                as id_entidad_destino,
 					otd.hs_insumidas                              as hs_insumidas,
-					IFNULL(otd.conformidad,'-')                   as conformidad,
+					IFNULL(otd.conformidad,'')                    as conformidad,
 					IFNULL(otd.prioridad,'')                      as prioridad
 				FROM
 					orden_trabajo ot
@@ -421,6 +421,23 @@ class OrdenTrabajoModel extends Model {
 					id_orden_trabajo=? ";
 
 		array_push($params,$request->estado);
+		array_push($params,$request->id_orden_trabajo);
+
+		return $this->execute_simple_query("update",$query,$params);
+	}
+
+	public function rechazar_orden($request){
+		$params=array();
+		$query="UPDATE
+					orden_trabajo
+				SET
+					estado=?,
+					obs_devolucion=?
+				WHERE
+					id_orden_trabajo=? ";
+
+		array_push($params,ESTADO_ORDEN_RECHAZADA);
+		array_push($params,$request->obs_devolucion);
 		array_push($params,$request->id_orden_trabajo);
 
 		return $this->execute_simple_query("update",$query,$params);
