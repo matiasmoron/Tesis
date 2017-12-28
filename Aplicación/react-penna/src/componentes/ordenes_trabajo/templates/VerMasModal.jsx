@@ -4,28 +4,71 @@ import {Boton,Label} from '../../genericos/FormElements';
 import {conformidad} from '../../commons/Utils';
 
 
+const _hsFloat = (hs_insumidas) =>{
+	let hsFloat = hs_insumidas;
+	let hs      = Math.trunc(hsFloat);
+	let min     = Math.trunc(((hsFloat - Math.floor(hsFloat))*60));
+	return hs +":"+min;
+}
+
 export const VerMasModal = (props) => {
+
   return (
           <div>
 			<ModalBs show={props.show} onHide={props.onHide} titulo="Detalles orden de trabajo">
 				<div className="modal-body">
 					<div className="row">
-						<Label clases="col-md-6" label="Autor-orden" value={props.datosOrden.p_creacion}/>
-						<Label clases="col-md-6" label="Fecha Creación" value={props.datosOrden.fecha_creacion}/>
+						<Label
+                            label  = "Autor-orden"
+                            clases = "col-md-6"
+                            value  = {props.datosOrden.p_creacion}
+                        />
+						<Label
+                            label="Fecha Creación"
+                            clases="col-md-6"
+                            value={props.datosOrden.fecha_creacion}
+                        />
 					</div>
 					<div className="row">
-						<Label clases="col-md-6" label="Entidad destino" value={props.datosOrden.entidad_destino}/>
-						<Label clases="col-md-6" label="Tomado por" value={props.datosOrden.p_recepcion}/>
+						<Label
+                            label  = "Entidad destino"
+                            clases = "col-md-6"
+                            value  = {props.datosOrden.entidad_destino}
+                        />
+						<Label
+                            label  = "Tomado por"
+                            clases = "col-md-6"
+                            value  = {props.datosOrden.p_recepcion}
+                        />
 					</div>
 					<div className="row">
-						<Label label="Observación creación" value={props.datosOrden.obs_creacion}/>
-						<Label label="Observación devolución" value={props.datosOrden.obs_devolucion}/>
+						<Label
+                            label = "Observación creación"
+                            value = {props.datosOrden.obs_creacion}
+                        />
+						<Label
+                            label = "Observación devolución"
+                            value = {props.datosOrden.obs_devolucion}
+                        />
 					</div>
 					<div className="row">
-						<Label label="Conformidad" value={conformidad[props.datosOrden.conformidad]}/>
+                        <Label
+                            label = "Hs insumidas"
+                            clases = "col-md-4"
+                            value = {_hsFloat(props.datosOrden.hs_insumidas)}
+                        />
+						<Label
+                            label = "Conformidad"
+                            clases = "col-md-6"
+                            value = {conformidad[props.datosOrden.conformidad]}
+                        />
 					</div>
 					<div className="btn-form">
-						<Boton onClick={props.onHide} clases="btn-primary" label="Cerrar"/>
+						<Boton
+                            label   = "Cerrar"
+                            onClick = {props.onHide}
+                            clases  = "btn-primary"
+                        />
 					</div>
 				</div>
 			</ModalBs>

@@ -49,12 +49,13 @@ class TableOrdenesAdmin extends React.Component {
 	}
 	initValidatorActualizar(){
 		return {
-			leg_recepcion:{
-			   required : true
+			prioridad:{
+			   required : true,
+			   isValid  : true
 		   },
 		   hs_insumidas:{
-			   required:true,
-			   numeric:true
+			   required:false,
+			   numeric :true
 		   },
 		   obs_devolucion:{
 			   required:false
@@ -63,11 +64,12 @@ class TableOrdenesAdmin extends React.Component {
 	}
 	initValidatorFinalizar(){
 		return {
-			leg_recepcion:{
-			   required : true
+			prioridad:{
+			   required : true,
+			   isValid  : true
 		   },
 		   hs_insumidas:{
-			   required:true,
+			   required:false,
 			   numeric:true
 		   },
 		   obs_devolucion:{
@@ -189,6 +191,7 @@ class TableOrdenesAdmin extends React.Component {
 		this.setState({showModalActualizar : !this.state.showModalActualizar});
 		 if (row!=null)
 			 this.setState({datosOrden : row});
+
 	}
 
 	//Muestra/Oculta el modal de tomar orden guardando los datos de la fila segun corresponda
@@ -342,6 +345,13 @@ class TableOrdenesAdmin extends React.Component {
 		return resultado;
 	}
 
+	_hsFloat(){
+		let hsFloat = this.state.datosOrden.hs_insumidas;
+		let hs      = Math.trunc(hsFloat);
+		let min     = Math.trunc(((hsFloat - Math.floor(hsFloat))*60));
+		return hs +":"+min;
+	}
+
    render() {
 
 		const opciones = {
@@ -352,7 +362,8 @@ class TableOrdenesAdmin extends React.Component {
 			noDataText            : 'No se encontraron resultados'
 		};
 
-		var data_prioridades = this._dataPrioridades();
+		let data_prioridades = this._dataPrioridades();
+		// let horas = this._hsFloat(); // paso las hs en formato float a formato válido de hs
 		return (
 				<div>
 
@@ -423,25 +434,27 @@ class TableOrdenesAdmin extends React.Component {
 									clases      = "col-md-6"
 									clearable   = {false}
 									defaultVal  = {this.state.datosOrden.prioridad}
-									data        = {data_prioridades} llave  = "prioridad"
+									data        = {data_prioridades}
+									llave       = "prioridad"
 									descripcion = "descripcion"
 									valor       = {input => this._prioridad = input}
-									validator   = {this.state.validatorActualizar.leg_recepcion}
-									cambiar     = {p1    => this.setState({validatorActualizar :Object.assign({}, this.state.validatorActualizar,{leg_recepcion:p1})})}
+									validator   = {this.state.validatorActualizar.prioridad}
+									cambiar     = {p1    => this.setState({validatorActualizar :Object.assign({}, this.state.validatorActualizar,{prioridad:p1})})}
 								/>
 							</div>
 							<div className="row">
 								<Input2
-									label     = "Tiempo dedicado"
-									clases    = "col-md-4"
-									valor     = {input => this._hs_insumidas = input}
-									validator = {this.state.validatorActualizar.hs_insumidas}
-									cambiar   = {p1    => this.setState({validatorActualizar :Object.assign({}, this.state.validatorActualizar,{hs_insumidas:p1})})}
+									label       = "Tiempo dedicado"
+									clases      = "col-md-4"
+									placeholder = "HH:mm"
+									valor       = {input => this._hs_insumidas = input}
+									validator   = {this.state.validatorActualizar.hs_insumidas}
+									cambiar     = {p1 => this.setState({validatorActualizar :Object.assign({}, this.state.validatorActualizar,{hs_insumidas:p1})})}
 								/>
 								<Label
 									label  = "Total hs"
 									clases = "col-md-4"
-									value  = {this.state.datosOrden.hs_insumidas}
+									value  = {this._hsFloat()}
 								/>
 							</div>
 							<div className="row">

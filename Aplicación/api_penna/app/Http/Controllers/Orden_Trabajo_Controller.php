@@ -83,7 +83,6 @@ class Orden_Trabajo_Controller extends Controller{
         $this->validar($request->all(),$reglas);
 
         return $this -> OrdenTrabajo ->get_ordenes($request);
-
     }
 
 
@@ -99,8 +98,8 @@ class Orden_Trabajo_Controller extends Controller{
         $this->validar($request->all(),$reglas);
         $this->personal= new PersonalModel();
 
-        $usuario_creacion =$this->getAuthenticatedUser()['usuario'];
-        $datos_usuario = $this -> personal -> get_personal((object) array("usuario" => $usuario_creacion));
+        $usuario_creacion = $this->getAuthenticatedUser()['usuario'];
+        $datos_usuario    = $this -> personal -> get_personal((object) array("usuario" => $usuario_creacion));
         $request->leg_creacion= $datos_usuario['result'][0]->legajo;
 
         return $this -> OrdenTrabajo ->add_orden($request);

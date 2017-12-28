@@ -13,7 +13,7 @@ class SelectChosen extends React.Component {
 		else {
 			if(props.data.length>0){
 				//Si es la primera opción y quiero dejar seteado el primero por defecto sin poder dejar el select vacío
-				if(props.clearable != undefined  && !props.clearable && props.defaultVal == undefined){
+				if(props.clearable != undefined  && !props.clearable && (props.defaultVal == undefined || props.defaultVal == "") ){
 					this.state = {value:props.data[0][props.llave]};
 					props.valor({value:props.data[0][props.llave]});
 

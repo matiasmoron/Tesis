@@ -39,7 +39,7 @@ class PanelOrdenesAdmin extends React.Component {
 				required : false
 			},
 			id_entidad:{
-				required : false
+				required : true
 			},
 			id_tipo_bien:{
 				required : false,
@@ -159,10 +159,11 @@ class PanelOrdenesAdmin extends React.Component {
 								cambiar     = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{id_servicio:p1})})}
 							/>
 							<SelectChosen
-								label       = "Entidad destino"
+								label       = "Entidad destino (*)"
 								llave       = "id_entidad"
 								descripcion = "nombre"
 								clases      = "col-md-6"
+								clearable   = {false}
 								onChange    = {this.changeSelectEntidad.bind(this)}
 								data        = {this.props.entidades_tecnico}
 								valor       = {input => this._id_entidad = input}
@@ -172,7 +173,7 @@ class PanelOrdenesAdmin extends React.Component {
 						</div>
 						<div className="row">
 							<SelectChosen
-								label       = "Tipo Bien"
+								label       = "Tipo bien (*)"
 								llave       = "tipo_bien"
 								descripcion = "descripcion"
 								clearable   = {false}
