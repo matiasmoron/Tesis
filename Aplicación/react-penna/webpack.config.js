@@ -38,7 +38,12 @@ var config = {
 					"css-loader",
 					"sass-loader"
 				]
-			}
+			},
+            {
+                test: /\.css$/,
+                include: /node_modules/,
+                loader: 'style-loader!css-loader'
+            }
 		]
 	},
 	resolve:{

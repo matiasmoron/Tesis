@@ -72,7 +72,7 @@ class OrdenTrabajoModel extends Model {
 		$params= array();
 		$query="SELECT
 					p.id_prestacion                                         as id_bien,
-					ot.id_orden_trabajo										as id_orden_trabajo,				
+					ot.id_orden_trabajo										as id_orden_trabajo,
 					{$id_tipo_bien}                                         as id_tipo_bien,
 					IFNULL(ot.obs_creacion,'-')                             as obs_creacion,
 					IFNULL(ot.estado,0)                                     as estado,
@@ -382,7 +382,12 @@ class OrdenTrabajoModel extends Model {
 		array_push($metodo, "update");
 
 		$set_hs="";
-		if(isset($request->hs_insumidas)){
+		$hsInsumidasFloat=0;
+		if(isset($request->hs_insumidas)){//Paso de horas:minutos a float
+			$hsInsumidas=explode(':',$request->hs_insumidas);
+			$horas = (int) $hsInsumidas[0];
+			$minutos = (float) round($hsInsumidas[1] / 60, 2); // paso los minutos a float
+			$hsInsumidasFloat = $horas + $minutos;
 			$set_hs =', hs_insumidas = ot.hs_insumidas + ?';
 		}
 
@@ -397,7 +402,7 @@ class OrdenTrabajoModel extends Model {
 		$params=array();
 		array_push($params,$request->prioridad);
 		if(isset($request->hs_insumidas)){
-			array_push($params,$request->hs_insumidas);
+			array_push($params,$hsInsumidasFloat);
 		}
 		array_push($params,$request->id_orden_trabajo);
 		array_push($array_params,$params);

@@ -1,5 +1,19 @@
 @import "_variables";
 
+table{
+
+	white-space: normal !important;
+	button{
+		margin-top: 5px;
+	}
+}
+.react-bs-table table{
+	overflow-x: auto !important;
+}
+.react-bs-table table td{
+	white-space: normal !important;
+}
+
 .t-ok,.t-success{
 	color:$ok !important;
 }

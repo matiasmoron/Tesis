@@ -95,9 +95,6 @@ export function derivarOrden(orden) {
 
 /**
  * Actualiza la orden de trabajo
- * @param   orden array(
- *                     id_orden_trabajo : id de la orden de trabajo
- *                     )
  */
 export function actualizarOrden(orden) {
     var args={metodo  : 'put',
@@ -108,8 +105,37 @@ export function actualizarOrden(orden) {
     return DbCall.DbCall(args);
 }
 
+/**
+ * Finaliza la orden de trabajo
+ */
+export function finalizarOrden(orden) {
+    var args={
+              metodo  : 'put',
+              url     : 'ordenes/finalizar',
+              params  : orden
+           };
+    return DbCall.DbCall(args);
+}
+
+/**
+ * Actualiza la orden de trabajo
+ */
+export function rechazarOrden(orden) {
+    var args={
+              metodo : 'put',
+              url    : 'ordenes/rechazar',
+              params : orden
+           };
+    return DbCall.DbCall(args);
+}
+
+/**
+ * Actualiza el estado de la orden de trabajo
+ * @param array(id_orden_trabajo,estado)
+ */
 export function actualizarEstadoOrden(orden){
-    var args={metodo  : 'put',
+    var args={
+              metodo  : 'put',
               url     : 'ordenes/actualizar_estado',
               params  : orden,
               callback: actualizarOrdenSuccess

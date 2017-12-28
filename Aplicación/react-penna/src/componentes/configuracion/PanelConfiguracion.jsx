@@ -56,7 +56,7 @@ class PanelConfiguracion extends React.Component {
             <Formulario titulo="Configuración" id="form_configuracion" submit={this._updatePassword.bind(this)}>
                 <div className="row">
                     <Input2
-                        label="Contraseña anterior"
+                        label="Contraseña anterior (*)"
 						clases="form-group col-md-12"
 						validator={this.state.validator.passAnterior}
                         type="password"
@@ -66,7 +66,7 @@ class PanelConfiguracion extends React.Component {
 				</div>
 				<div className="row">
                     <Input2
-                        label="Contraseña nueva"
+                        label="Contraseña nueva (*)"
 						clases="form-group col-md-12"
 						validator={this.state.validator.passNueva}
                         type="password"
@@ -76,7 +76,7 @@ class PanelConfiguracion extends React.Component {
                 </div>
                 <div className="row">
                     <Input2
-                        label="Repetir contraseña"
+                        label="Repetir nueva contraseña (*)"
 						clases="form-group  col-md-12"
 						validator={this.state.validator.passNuevaCheck}
                         type="password"

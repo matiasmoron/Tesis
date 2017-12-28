@@ -12,6 +12,7 @@ import {estadoOrden,tipoBien,conformidad,prioridad} from '../commons/Utils';
 import {Boton,TextArea,Label,Input2,habilitarSubmit} from '../genericos/FormElements';
 import SelectChosen from '../genericos/SelectChosen';
 import {ModalBs} from '../genericos/ModalBs';
+import {GenericModal} from '../genericos/GenericModal';
 import {VerMasModal} from './templates/VerMasModal';
 import {showMsg} from '../../api/msg_alert_api'
 
@@ -23,10 +24,14 @@ class TableOrdenesAdmin extends React.Component {
 						showModalDerivar    : false,
 						showModalAsignar    : false,
 						showModalActualizar : false,
+						showModalRechazar   : false,
 						datosOrden          : [],
 						validatorDerivar    : this.initValidatorDerivar(),
 						validatorActualizar : this.initValidatorActualizar(),
-						validatorAsignar    : this.initValidatorAsignar()
+						validatorFinalizar  : this.initValidatorFinalizar(),
+						validatorAsignar    : this.initValidatorAsignar(),
+						validatorRechazar   : this.initValidatorRechazar()
+
 					};
 	 }
 
@@ -52,14 +57,37 @@ class TableOrdenesAdmin extends React.Component {
 			   numeric:true
 		   },
 		   obs_devolucion:{
+			   required:false
+		   }
+	   }
+	}
+	initValidatorFinalizar(){
+		return {
+			leg_recepcion:{
+			   required : true
+		   },
+		   hs_insumidas:{
+			   required:true,
+			   numeric:true
+		   },
+		   obs_devolucion:{
 			   required:true
 		   }
 	   }
 	}
+
 	initValidatorAsignar(){
 	   return {
 		   leg_recepcion:{
 			   required : true
+		   }
+	   }
+	}
+
+	initValidatorRechazar(){
+		return {
+		   obs_devolucion:{
+			   required:true
 		   }
 	   }
 	}
@@ -72,7 +100,7 @@ class TableOrdenesAdmin extends React.Component {
 	}
 
 	colEstado(estado,row){
-		let clase="";
+		let clase=' ';
 
 		 switch (String(row.estado)) {
 			 case "1":
@@ -85,8 +113,30 @@ class TableOrdenesAdmin extends React.Component {
 				 clase='t-ok';
 				 break;
 		 }
-		return '<span class='+clase+' title="'+estadoOrden[estado]+'"><b>'+estadoOrden[estado]+'</b></span>';
+		return '<span class="'+clase+'" title="'+estadoOrden[estado]+'"><b>'+estadoOrden[estado]+'</b></span>';
 	  }
+
+	colPrioridad(estado,row){
+		let clase="";
+
+		 switch (String(estado)) {
+			 case "1":
+			 	 clase='t-ok';
+				 break;
+			 case "2":
+				 clase='t-orange';
+				 break;
+			 case "3":
+			 	 clase='t-error';
+				 break;
+			 case "4":
+			 	 clase='text-danger';
+				 break;
+
+		 }
+		let textPrioridad = (prioridad[estado] == undefined) ? " " : prioridad[estado];
+		return '<span class='+clase+' title="'+textPrioridad+'"><b>'+textPrioridad+'</b></span>';
+	}
 
 	colTipoBien(tBien,row){
 	   return '<span class="">'+tipoBien[tBien]+'</span>';
@@ -94,17 +144,20 @@ class TableOrdenesAdmin extends React.Component {
 
 	colAccion(estado,row){
 		let acciones=[];
+		acciones.push(<Boton onClick={this.modalVerMas.bind(this,row)} clases="btn-primary" titulo="Ver datos adicionales de la orden de trabajo" icon="fa fa-search"></Boton>)
 		switch (String(row.estado)) {
 			case "2"://En curso
 					acciones.push(<Boton onClick={this.modalActualizarOrden.bind(this,row)} clases="btn-warning" titulo="Modificar los datos de la orden de trabajo" icon="fa fa-pencil"></Boton>);
 			case "1"://Pendiente
 					acciones.push(<Boton onClick={this.modalDerivarOrden.bind(this,row)}     clases="btn-info"    titulo="Derivar orden de trabajo" icon="fa fa-reply"></Boton>)
-					acciones.push(<Boton onClick={this.modalAsignarOrden.bind(this,row)}     clases="btn-success" titulo="Asignar la orden a otro técnico" icon="fa fa-plus"></Boton>)
+					acciones.push(<Boton onClick={this.modalAsignarOrden.bind(this,row)}     clases="btn-success" titulo="Asignar la orden a un técnico" icon="fa fa-plus"></Boton>)
+					acciones.push(<Boton onClick={this.modalRechazarOrden.bind(this,row)}     clases="btn-danger" titulo="Rechazar orden de trabajo" icon="fa fa-times"></Boton>)
+				break;
 			case "3"://Resuelta
 			case "4"://Finalizada
 			case "5"://Cancelada por usuario
 			case "6"://Cancelada por técnico
-					acciones.push(<Boton onClick={this.modalVerMas.bind(this,row)} clases="btn-primary" titulo="Ver datos adicionales de la orden de trabajo" icon="fa fa-search"></Boton>)
+
 
 		}
 		return (
@@ -158,6 +211,13 @@ class TableOrdenesAdmin extends React.Component {
 		}
 	}
 
+	//Funciones del modal rechazar orden
+   modalRechazarOrden(row){
+     this.setState({showModalRechazar :!this.state.showModalRechazar});
+     if (row!=null)
+         this.setState({datosOrden : row});
+   }
+
 	//Action generada al presionar el boton "derivar" en el modal
 	derivarOrden(){
 		let obj = this.state.validatorDerivar;
@@ -201,7 +261,7 @@ class TableOrdenesAdmin extends React.Component {
 
 	//Valida los campos y llama para finalizar la orden
 	finalizarOrden(){
-		let obj = this.state.validatorActualizar;
+		let obj = this.state.validatorFinalizar;
 		habilitarSubmit(obj,this.callbackFinalizarOrden.bind(this));
 	}
 	//Actualiza la orden de trabajo con los datos ingresados y cambiandole el estado a finalizado
@@ -213,6 +273,13 @@ class TableOrdenesAdmin extends React.Component {
   								obs_devolucion  : this._obs_devolucion.value
 
   							});
+		// const promesa=Api.finalizarOrden({
+  		// 						id_orden_trabajo: this.state.datosOrden.id_orden_trabajo,
+  		// 						hs_insumidas    : this._hs_insumidas.value,
+  		// 						prioridad       : this._prioridad.value,
+  		// 						obs_devolucion  : this._obs_devolucion.value
+        //
+  		// 					});
   		promesa.then(valor => {
   			const promesa2 = Api.actualizarEstadoOrden({
   				id_orden_trabajo:this.state.datosOrden.id_orden_trabajo,
@@ -222,7 +289,7 @@ class TableOrdenesAdmin extends React.Component {
   				this.props.getOrdenes();
   				this.modalActualizarOrden();
 				showMsg("Se dio por finalizada la orden de trabajo","ok");
-				this.setState({validatorActualizar:this.initValidatorActualizar()});
+				this.setState({validatorActualizar:this.initValidatorFinalizar()});
   			});
   		 });
 	}
@@ -247,6 +314,20 @@ class TableOrdenesAdmin extends React.Component {
 			this.setState({validatorActualizar:this.initValidatorActualizar()});
 		});
 	}
+
+	//Rechazar la orden de trabajo
+    rechazarOrden(){
+        var promesa = Api.rechazarOrden({//Orden cancelada por el técnico
+											id_orden_trabajo:this.state.datosOrden.id_orden_trabajo,
+											obs_devolucion  :this._obs_devolucion.value
+										});
+
+        promesa.then(valor => {
+            this.props.getOrdenes();
+            this.modalRechazarOrden();
+            showMsg("La orden de trabajo fue rechazada correctamente","ok");
+        });
+    }
 
 	_dataPrioridades(){
 		var resultado = {};
@@ -324,7 +405,7 @@ class TableOrdenesAdmin extends React.Component {
 								/>
 								<div className="btn-form">
 									<Boton
-										label   = "Asignar A"
+										label   = "Asignar"
 										onClick = {this.asignarOrden.bind(this)}
 										clases  = "btn-success"
 									/>
@@ -376,12 +457,6 @@ class TableOrdenesAdmin extends React.Component {
 							</div>
 							<div className="btn-form">
 								<Boton
-									label   = "Cancelar"
-									onClick = {this.modalActualizarOrden.bind(this)}
-									clases  = "btn-danger"
-									icon    = "fa fa-times"
-								/>
-								<Boton
 									label   = "Actualizar"
 									onClick = {this.actualizarOrden.bind(this)}
 									clases  = "btn-warning"
@@ -390,6 +465,31 @@ class TableOrdenesAdmin extends React.Component {
 								<Boton
 									label   = "Guardar y finalizar"
 									onClick = {this.finalizarOrden.bind(this)}
+									clases  = "btn-success"
+									icon    = "fa fa-check"
+								/>
+							</div>
+						</div>
+					</ModalBs>
+
+					{/* Modal rechazar orden */}
+					<ModalBs show={this.state.showModalRechazar} onHide={this.modalRechazarOrden.bind(this)} titulo="Rechazar orden de trabajo">
+						<div className="modal-body">
+							<div className="row">
+								<TextArea
+									label     = "Obs devolución"
+									rows      = "3"
+									clases    = "col-md-12"
+									value     = {this.state.datosOrden.obs_devolucion}
+									valor     = {input => this._obs_devolucion = input}
+									validator = {this.state.validatorRechazar.obs_devolucion}
+									cambiar   = {p1    => this.setState({validatorRechazar :Object.assign({}, this.state.validatorActualizar,{obs_devolucion:p1})})}
+								/>
+							</div>
+							<div className="btn-form">
+								<Boton
+									label   = "Rechazar orden"
+									onClick = {this.rechazarOrden.bind(this)}
 									clases  = "btn-success"
 									icon    = "fa fa-check"
 								/>
@@ -409,8 +509,8 @@ class TableOrdenesAdmin extends React.Component {
 							hidden>ID
 						</TableHeaderColumn>
 						<TableHeaderColumn
-							dataField='id_tipo_bien'
-							dataFormat={this.colTipoBien}
+							dataField  = 'id_tipo_bien'
+							dataFormat = {this.colTipoBien}
 							dataSort
 							columnTitle>Tipo Bien
 						</TableHeaderColumn>
@@ -424,8 +524,14 @@ class TableOrdenesAdmin extends React.Component {
 							columnTitle>Servicio
 						</TableHeaderColumn>
 						<TableHeaderColumn
-							dataField='estado'
-							dataFormat={this.colEstado}
+							dataField  = 'prioridad'
+							dataFormat = {this.colPrioridad}
+							dataSort
+							columnTitle>Prioridad
+						</TableHeaderColumn>
+						<TableHeaderColumn
+							dataField  = 'estado'
+							dataFormat = {this.colEstado}
 							dataSort
 							columnTitle>Estado
 						</TableHeaderColumn>

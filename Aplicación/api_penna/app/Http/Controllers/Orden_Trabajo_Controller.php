@@ -86,7 +86,7 @@ class Orden_Trabajo_Controller extends Controller{
 
     }
 
-  
+
     public function add_orden(Request $request){
         $reglas=[
             'id_tipo_bien'    => 'numeric',
@@ -170,6 +170,18 @@ class Orden_Trabajo_Controller extends Controller{
     }
 
     public function actualizar_orden(Request $request){
+        $reglas=[
+            'obs_devolucion'   => 'max:100',
+            'id_orden_trabajo' => 'required|numeric',
+            'hs_insumidas'     => 'regex:/^(?:([0-9]*\d)(:([0-5]?\d))?)$/',
+            'prioridad'        => 'required|numeric'
+        ];
+        $this->validar($request->all(),$reglas);
+
+        return $this -> OrdenTrabajo ->actualizar_orden($request);
+    }
+
+    public function finalizar_orden(Request $request){
         $reglas=[
             'obs_devolucion'   => 'required|max:100',
             'id_orden_trabajo' => 'required|numeric',

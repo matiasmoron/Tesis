@@ -141,10 +141,10 @@ class PanelOrdenesAdmin extends React.Component {
 
 	render() {
 		var data_tipo_bienes = this._dataTipoBienes();
-		var data_estados = this._dataEstados();
+		var data_estados     = this._dataEstados();
 	  	return (
-			<div className="col-md-10">
-				<div className="col-md-8 center">
+			<div className="col-md-12">
+				<div className="col-md-7 center">
 					<Formulario titulo="Administración de órdenes de trabajo" submit={(event)=>{ event.preventDefault();this.getOrdenesTabla()}}>
 						<div className="row">
 							<SelectChosen
