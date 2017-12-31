@@ -369,46 +369,39 @@ class OrdenTrabajoModel extends Model {
 		return $this->execute_multiple_query($metodo,$queries,$array_params,true);
 	}
 
+
 	public function actualizar_orden($request){
+		$set="";
 		$params=array();
-		$queries=array();
-		$array_params= array();
-		$metodo=array();
-		$queries[count($queries)]="UPDATE
-										orden_trabajo
-									SET
-										obs_devolucion=?
-									WHERE
-										id_orden_trabajo=? ";
+		
+		array_push($params, $request->prioridad);
 
-		array_push($params,$request->obs_devolucion);
-		array_push($params,$request->id_orden_trabajo);
-		array_push($array_params,$params);
-		array_push($metodo, "update");
-
-		$set_hs="";
-		if(isset($request->hs_insumidas)){
-			$set_hs =', hs_insumidas = ot.hs_insumidas + ?';
+		if (isset($request->obs_devolucion)){
+			$set.=", ot.obs_devolucion=? ";
+			array_push($params,$request->obs_devolucion);
 		}
-
-		//Ya está creada en está instancia
-		$queries[count($queries)]="UPDATE
-										orden_trabajo_detalle ot
-									SET
-										prioridad    = ?
-										{$set_hs}
-									WHERE
-										id_orden_trabajo=? ";
-		$params=array();
-		array_push($params,$request->prioridad);
-		if(isset($request->hs_insumidas)){
+		if (isset($request->hs_insumidas)){
+			$set.=', otd.hs_insumidas = otd.hs_insumidas + ? ';
 			array_push($params,$this->formatTime($request->hs_insumidas));
 		}
-		array_push($params,$request->id_orden_trabajo);
-		array_push($array_params,$params);
-		array_push($metodo, "update");
+		if (isset($request->estado)){
+			$set.=', ot.estado = ? ';
+			array_push($params,$request->estado);
+		}
 
-		return $this->execute_multiple_query($metodo,$queries,$array_params,true);
+		array_push($params, $request->id_orden_trabajo);
+
+		$query="UPDATE 
+					orden_trabajo ot
+				 LEFT JOIN
+				 	orden_trabajo_detalle  otd USING(id_orden_trabajo)
+				 SET 
+				 	otd.prioridad=?
+				 	".$set."
+				  WHERE
+				  	ot.id_orden_trabajo=?";
+
+		return $this->execute_simple_query("update",$query,$params);
 	}
 
 	//Paso de horas:minutos a float

@@ -168,6 +168,7 @@ class Orden_Trabajo_Controller extends Controller{
         return $this -> OrdenTrabajo ->asignar_orden($request);
     }
 
+    //Actualiza datos de la orden de trabajo
     public function actualizar_orden(Request $request){
         $reglas=[
             'obs_devolucion'   => 'max:100',
@@ -180,14 +181,17 @@ class Orden_Trabajo_Controller extends Controller{
         return $this -> OrdenTrabajo ->actualizar_orden($request);
     }
 
+    //Da por finalizada la orden actualizando algunos datos 
     public function finalizar_orden(Request $request){
         $reglas=[
-            'obs_devolucion'   => 'required|max:100',
+            'obs_devolucion'   => 'max:100',
             'id_orden_trabajo' => 'required|numeric',
             'hs_insumidas'     => 'regex:/^(?:([0-9]*\d)?(:([0-5]?\d))?)$/',
             'prioridad'        => 'required|numeric'
         ];
         $this->validar($request->all(),$reglas);
+
+        $request->estado= ESTADO_ORDEN_RESUELTA;
 
         return $this -> OrdenTrabajo ->actualizar_orden($request);
     }
