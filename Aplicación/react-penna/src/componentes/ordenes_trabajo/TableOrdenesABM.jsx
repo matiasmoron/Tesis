@@ -3,7 +3,6 @@ var ReactBsTable      = require('react-bootstrap-table');
 var BootstrapTable    = ReactBsTable.BootstrapTable;
 var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
 import { connect } from 'react-redux';
-// var Modal=require("react-bootstrap/lib/Modal");
 import * as Api from '../../api/ordenes_api';
 import * as BsTable from '../commons/BsTable';
 import {estadoOrden,tipoBien} from '../commons/Utils';

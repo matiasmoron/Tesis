@@ -28,7 +28,6 @@ class TableOrdenesAdmin extends React.Component {
 						datosOrden          : [],
 						validatorDerivar    : this.initValidatorDerivar(),
 						validatorActualizar : this.initValidatorActualizar(),
-						validatorFinalizar  : this.initValidatorFinalizar(),
 						validatorAsignar    : this.initValidatorAsignar(),
 						validatorRechazar   : this.initValidatorRechazar()
 
@@ -53,7 +52,7 @@ class TableOrdenesAdmin extends React.Component {
 			   required : true
 		   },
 		   hs_insumidas:{
-			   required:false,
+			   required:true,
 			   type :"time"
 		   },
 		   obs_devolucion:{
@@ -61,20 +60,7 @@ class TableOrdenesAdmin extends React.Component {
 		   }
 	   }
 	}
-	initValidatorFinalizar(){
-		return {
-			prioridad:{
-			   required : true
-		   },
-		   hs_insumidas:{
-			   required:false,
-			   numeric:true
-		   },
-		   obs_devolucion:{
-			   required:true
-		   }
-	   }
-	}
+
 
 	initValidatorAsignar(){
 	   return {
@@ -262,36 +248,24 @@ class TableOrdenesAdmin extends React.Component {
 
 	//Valida los campos y llama para finalizar la orden
 	finalizarOrden(){
-		let obj = this.state.validatorFinalizar;
+		let obj = this.state.validatorActualizar;
 		habilitarSubmit(obj,this.callbackFinalizarOrden.bind(this));
 	}
 	//Actualiza la orden de trabajo con los datos ingresados y cambiandole el estado a finalizado
 	callbackFinalizarOrden(){
-		const promesa=Api.actualizarOrden({
+		const promesa=Api.finalizarOrden({
   								id_orden_trabajo: this.state.datosOrden.id_orden_trabajo,
   								hs_insumidas    : this._hs_insumidas.value,
   								prioridad       : this._prioridad.value,
   								obs_devolucion  : this._obs_devolucion.value
 
   							});
-		// const promesa=Api.finalizarOrden({
-  		// 						id_orden_trabajo: this.state.datosOrden.id_orden_trabajo,
-  		// 						hs_insumidas    : this._hs_insumidas.value,
-  		// 						prioridad       : this._prioridad.value,
-  		// 						obs_devolucion  : this._obs_devolucion.value
-        //
-  		// 					});
   		promesa.then(valor => {
-  			const promesa2 = Api.actualizarEstadoOrden({
-  				id_orden_trabajo:this.state.datosOrden.id_orden_trabajo,
-  				estado          : 3
-  			});
-  			promesa2.then(valor => {
-  				this.props.getOrdenes();
-  				this.modalActualizarOrden();
+				console.log("ENTRO PROMESA");
+  				this.props.getOrdenes();//Vuelvo a cargar la tabla
+  				this.modalActualizarOrden();//Oculto el model
 				showMsg("Se dio por finalizada la orden de trabajo","ok");
-				this.setState({validatorActualizar:this.initValidatorFinalizar()});
-  			});
+				this.setState({validatorActualizar:this.initValidatorActualizar()});
   		 });
 	}
 
