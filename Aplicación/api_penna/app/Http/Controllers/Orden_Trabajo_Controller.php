@@ -172,7 +172,7 @@ class Orden_Trabajo_Controller extends Controller{
         $reglas=[
             'obs_devolucion'   => 'max:100',
             'id_orden_trabajo' => 'required|numeric',
-            'hs_insumidas'     => 'regex:/^(?:([0-9]*\d)(:([0-5]?\d))?)$/',
+            'hs_insumidas'     => 'regex:/^(?:([0-9]*\d)?(:([0-5]?\d))?)$/',
             'prioridad'        => 'required|numeric'
         ];
         $this->validar($request->all(),$reglas);
@@ -184,7 +184,7 @@ class Orden_Trabajo_Controller extends Controller{
         $reglas=[
             'obs_devolucion'   => 'required|max:100',
             'id_orden_trabajo' => 'required|numeric',
-            'hs_insumidas'     => 'regex:/^(?:([0-9]*\d)(:([0-5]?\d))?)$/',
+            'hs_insumidas'     => 'regex:/^(?:([0-9]*\d)?(:([0-5]?\d))?)$/',
             'prioridad'        => 'required|numeric'
         ];
         $this->validar($request->all(),$reglas);

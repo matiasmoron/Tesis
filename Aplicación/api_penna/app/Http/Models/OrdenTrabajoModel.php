@@ -26,7 +26,7 @@ class OrdenTrabajoModel extends Model {
 					IFNULL(date_format(otd.fecha_fin,'%d/%m/%Y'),'-')       as fecha_fin,
 					IFNULL(ent.nombre,'-')                                  as entidad_destino,
 					IFNULL(ent.id_entidad,'-')                              as id_entidad_destino,
-					IFNULL(otd.hs_insumidas,'-')                            as hs_insumidas,
+					otd.hs_insumidas         			                    as hs_insumidas,
 					IFNULL(otd.conformidad,'-')                             as conformidad,
 					IFNULL(otd.prioridad,'')                                as prioridad
 				FROM  equipo e
@@ -89,7 +89,7 @@ class OrdenTrabajoModel extends Model {
 					IFNULL(date_format(otd.fecha_fin,'%d/%m/%Y'),'-')       as fecha_fin,
 					IFNULL(ent.nombre,'-')                                  as entidad_destino,
 					IFNULL(ent.id_entidad,'-')                              as id_entidad_destino,
-					IFNULL(otd.hs_insumidas,'-')                            as hs_insumidas,
+					otd.hs_insumidas			                            as hs_insumidas,
 					IFNULL(otd.conformidad,'-')                             as conformidad,
 					IFNULL(otd.prioridad,'')                                as prioridad
 				FROM  prestacion p
@@ -242,11 +242,16 @@ class OrdenTrabajoModel extends Model {
 
 		$query='INSERT INTO orden_trabajo(id_tipo_bien,id_bien,fecha_creacion,tipo_entidad,entidad_destino,
 									obs_creacion,leg_creacion,estado)
-				VALUES(?,?,NOW(),?,?,?,?,1)';
+				VALUES(?,?,NOW(),?,?,?,?,'.ESTADO_ALTA.')';
 
 		array_push($params,$request->id_tipo_bien);
 		array_push($params,$request->id_bien);
-		array_push($params,$request->tipo_entidad);
+		if (isset($request->tipo_entidad)){//Si no esta definida el tipo entidad se pone interna
+			array_push($params,$request->tipo_entidad);
+		}
+		else{
+			array_push($params,ENTIDAD_INTERNA);
+		}
 		array_push($params,$request->entidad_destino);
 		array_push($params,$request->obs_creacion);
 		array_push($params,$request->leg_creacion);
@@ -382,12 +387,7 @@ class OrdenTrabajoModel extends Model {
 		array_push($metodo, "update");
 
 		$set_hs="";
-		$hsInsumidasFloat=0;
-		if(isset($request->hs_insumidas)){//Paso de horas:minutos a float
-			$hsInsumidas=explode(':',$request->hs_insumidas);
-			$horas = (int) $hsInsumidas[0];
-			$minutos = (float) round($hsInsumidas[1] / 60, 2); // paso los minutos a float
-			$hsInsumidasFloat = $horas + $minutos;
+		if(isset($request->hs_insumidas)){
 			$set_hs =', hs_insumidas = ot.hs_insumidas + ?';
 		}
 
@@ -402,13 +402,29 @@ class OrdenTrabajoModel extends Model {
 		$params=array();
 		array_push($params,$request->prioridad);
 		if(isset($request->hs_insumidas)){
-			array_push($params,$hsInsumidasFloat);
+			array_push($params,$this->formatTime($request->hs_insumidas));
 		}
 		array_push($params,$request->id_orden_trabajo);
 		array_push($array_params,$params);
 		array_push($metodo, "update");
 
 		return $this->execute_multiple_query($metodo,$queries,$array_params,true);
+	}
+
+	//Paso de horas:minutos a float
+	private function formatTime($tiempo){
+		$hsInsumidas=explode(':',$tiempo);
+		$horas = (int) $hsInsumidas[0];
+		$minutos=0;
+		// $minutos= (isset($hsInsumidas[1])) ?  (float) round($hsInsumidas[1] / 60, 2) : 0;
+		if (isset($hsInsumidas[1])){
+			$min_str= $hsInsumidas[1];
+			$minutos= (strlen($min_str)==1) ? (float)	($min_str."0") / 60 : (float) $min_str /60;
+			// $minutos= (isset($hsInsumidas[1])) ?  (float) $hsInsumidas[1] / 60 : 0;
+
+		}
+		return  $horas + $minutos;
+
 	}
 
 	/**
