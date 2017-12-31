@@ -104,7 +104,7 @@ class PanelPersonal extends React.Component {
 				promesa.then( valor => {
 					ApiPersonal.getPersonal();
 					resetForm("form_personal");
-					this.setState({validator:this.initValidator()});
+					this.setState({validator:this.resetValidator()});
 					showMsg("Se creo el personal correctamente","ok");
 				});
 			}
@@ -207,7 +207,7 @@ class PanelPersonal extends React.Component {
         		<TablePersonal
 					datos_elemento={this.props.personal}
 					servicios={this.props.servicios}
-					getPersonal={ApiPersonal.getPersonal} 
+					getPersonal={ApiPersonal.getPersonal}
 					updateElemento={this._updateElemento.bind(this)}
 					deleteElemento={this._deleteElemento.bind(this)}/>
 			</div>

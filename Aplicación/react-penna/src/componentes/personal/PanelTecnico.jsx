@@ -47,7 +47,6 @@ class PanelTecnico extends React.Component {
 	componentDidMount(){
 		api.getTecnicos();
 		apiPersonal.getPersonal();
-		// api.getTecnicoNoEntidad();
 	}
 
 	//Al cambiar el personal seleccionado busca las entidades que le faltan
@@ -74,7 +73,6 @@ class PanelTecnico extends React.Component {
 		event.preventDefault();
 
 		let obj = this.state.validator;
-		console.log(obj);
 		habilitarSubmit(obj,this.callbackSubmit.bind(this));
     }
 
@@ -86,7 +84,7 @@ class PanelTecnico extends React.Component {
 			<Formulario titulo="Creación Técnico" id="form_tecnico" submit={this._addElemento.bind(this)}>
 				<div className="row">
 					<SelectChosen
-						label       = "Personal"
+						label       = "Personal (*)"
 						llave       = "legajo"
 						valor       = {input => this._legajo = input}
 						clearable   = {false}
@@ -98,7 +96,7 @@ class PanelTecnico extends React.Component {
 						cambiar     = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{personal:p1})})}
 					/>
 					<SelectChosen
-						label       = "Entidad"
+						label       = "Entidad (*)"
 						llave       = "id_entidad"
 						valor       = {input => this._entidad = input}
 						clearable   = {false}

@@ -60,7 +60,14 @@ class PanelServicio extends React.Component {
 		<div className="col-md-5">
 			<Formulario titulo="Creación servicio" id="form_servicio" submit={this._addElemento.bind(this)}>
 				<div className="row">
-					<Input2 clases="form-group col-md-6"  name="nombre" validator={this.state.validator.nombre}  label="Nombre" valor={input => this._nombre = input} cambiar={p1 =>this.setState({validator :Object.assign({}, this.state.validator,{nombre:p1})})}  />
+					<Input2
+						clases="form-group col-md-6"
+						name="nombre"
+						validator={this.state.validator.nombre}
+						label="Nombre (*)" 
+						valor={input => this._nombre = input}
+						cambiar={p1 =>this.setState({validator :Object.assign({}, this.state.validator,{nombre:p1})})}
+					/>
 					<div className="btn-form">
 						<Boton
 							label  = "Agregar servicio"

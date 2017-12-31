@@ -4,18 +4,17 @@ require("../../styles/select.scss");
 
 class SelectChosen extends React.Component {
 	constructor(props) {
-      super();
+      super(props);
 
 	  	if (props.defaultVal){
-			this.state = {value:props.defaultVal};
-			props.valor({value:props.defaultVal});
+			this.setValor(props.defaultVal);
 		}
 		else {
 			if(props.data.length>0){
 				//Si es la primera opción y quiero dejar seteado el primero por defecto sin poder dejar el select vacío
 				if(props.clearable != undefined  && !props.clearable && (props.defaultVal == undefined || props.defaultVal == "") ){
-					this.state = {value:props.data[0][props.llave]};
-					props.valor({value:props.data[0][props.llave]});
+					let valor=props.data[0][props.llave];
+					this.setValor(valor);
 
 				}
 				else{
@@ -24,7 +23,10 @@ class SelectChosen extends React.Component {
 				}
 			}
 			else{
-	  			this.state = {value:''};
+				if (props.clearable!=undefined)//en caso que el arreglo de datos este vacio y se necesite cargar un valor
+					this.state = {value:'',inicializado:false};
+				else
+					this.state = {value:''};
 				props.valor({value:''});
 			}
 		}
@@ -32,6 +34,7 @@ class SelectChosen extends React.Component {
 
 	//Al actualizar las opciones verifica si el estado esta en dicha opciones
 	componentWillReceiveProps(props){
+		this.inicializarEstado(props);//Se inicializa el esta en caso que no  lo esté
 		let state= this.state;
 		let esta=true;
 		if ( this.state.value!="" && this.state.value.value!=undefined){
@@ -48,6 +51,28 @@ class SelectChosen extends React.Component {
 			props.valor({value:''});
 		}
 
+		// this.validate(this.props.validator,this.state.value);
+
+	}
+
+	/**
+	 * Setea el valor del chosen enviandolo al componente que lo utiliza con la funcion valor y realiza la validación
+	 * @param {[type]} valor [description]
+	 */
+	setValor(valor){
+		this.state = {value:valor};
+		this.props.valor({value:valor});
+		this.validate(this.props.validator,valor);
+	}
+
+	//Inicializa el estado en caso de que todavia no lo esté
+	inicializarEstado(props){
+		if (this.state.inicializado==false && props.data.length>0){
+			let valor= props.data[0][props.llave]
+			this.state = {value:valor, inicializado:true};
+			props.valor({value:valor});
+			this.validate(this.props.validator,valor);
+		}
 	}
 
 	armarOptions(data,llave,descripcion){
@@ -71,10 +96,8 @@ class SelectChosen extends React.Component {
     }
 
 	onChange(val) {
-		val= (val==null)? "" : val;
-		this.validate(this.props.validator,val);
-		this.setState({ value:val });
-		this.props.valor(val);
+		val= (val==null)? {value:''} : val;
+		this.setValor(val.value);
 		if(this.props.onChange)
 			this.props.onChange(val);
 	}

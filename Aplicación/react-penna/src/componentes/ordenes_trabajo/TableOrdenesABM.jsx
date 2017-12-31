@@ -131,7 +131,7 @@ class TableOrdenes extends React.Component {
 						titulo = "Nueva orden">
 						<div>
 							<TextArea
-								label     = "Observación"
+								label     = "Observación (*)"
 								cols      = "50"
 								rows      = "3"
 								valor     = {input => this._observacion_creacion = input}
@@ -142,7 +142,7 @@ class TableOrdenes extends React.Component {
 								data        = {this.props.entidades}
 								llave       = "id_entidad"
 								descripcion = "nombre"
-								label       = "Entidad Destino"
+								label       = "Entidad Destino (*)"
 								valor       = {input => this._id_entidad = input}
 								validator   = {this.state.validatorCrearOrden.entidad_destino}
 								cambiar     = {p1 => this.setState({validatorCrearOrden :Object.assign({}, this.state.validatorCrearOrden,{entidad_destino:p1})})}

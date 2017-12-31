@@ -17,18 +17,17 @@ class PanelOrdenes extends React.Component {
 	  this.state = {
 		  			validator                : this.initValidator(),
 		  			disabled_cod_patrimonial : false,
-					id_tipo_bien             : "1",
-					id_serv_def              : "1",
+					id_tipo_bien             : bienTipo.EQUIPO,
 					hideCodPatrimonial       :false
-				}; //@TODO después el id_servicio es el del usuario
+				};
     }
 
 	//@todo cargar por defecto el servicio de login y todos los bienes que corresponden a servicio
 	componentDidMount(){
 		//id_servicio seria el del login
 		ApiServicio.getServicios();
-		Api.getBienes({id_tipo_bien:this.state.id_tipo_bien,id_servicio:this.state.id_serv_def});
 		Api.resetTabla();
+		Api.getBienes({id_tipo_bien:this.state.id_tipo_bien,id_servicio:this._id_servicio.value});
 		entidadApi.getEntidades();
 	}
 
@@ -38,8 +37,7 @@ class PanelOrdenes extends React.Component {
 				required : false
 			},
 			id_tipo_bien:{
-				required : true,
-				isValid:true
+				required : true
 			},
 			id_bien:{
 				required : false
@@ -114,7 +112,6 @@ class PanelOrdenes extends React.Component {
 								label       = "Servicios"
 								llave       = "id_servicio"
 								descripcion = "nombre"
-								clearable   = {true}
 								clases      = "col-md-6"
 								onChange    = {this.changeSelect.bind(this)}
 								data        = {this.props.servicios}

@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import store from '../../store';
 import {Input2,PopOver,Formulario,habilitarSubmit,resetForm,Boton} from '../genericos/FormElements';
 import TableOrdenesAdmin from './TableOrdenesAdmin';
-import {tipoBien,estadoOrden} from '../commons/Utils';
+import {tipoBien,bienTipo,estadoOrden} from '../commons/Utils';
 import SelectChosen from '../genericos/SelectChosen';
 import DatePicker from '../genericos/DatePicker';
 
@@ -17,7 +17,7 @@ class PanelOrdenesAdmin extends React.Component {
       super();
 	  this.state = {
 		  			disabled_cod_patrimonial : false,
-					id_tbien_def             : "1",
+					id_tbien_def             : bienTipo.EQUIPO,
 					validator                : this.initValidator()
 				};
     }
@@ -26,11 +26,15 @@ class PanelOrdenesAdmin extends React.Component {
 
 	//@todo cargar por defecto el servicio de login y todos los bienes que corresponden a servicio
 	componentDidMount(){
+		let promesa_entidades=ApiTecnico.getEntidadesTecnico();
 		ApiServicio.getServicios();
-		Api.getBienes({id_tipo_bien:this.state.id_tbien_def});
-		ApiTecnico.getEntidadesTecnico();
-		ApiTecnico.getTecnicoEntidadForm();
-		Api.getOrdenes({id_tipo_bien:this.state.id_tbien_def});
+		let promesa_bienes=Api.getBienes({id_tipo_bien:this.state.id_tbien_def});
+		let promesa_tecnicos=ApiTecnico.getTecnicoEntidadForm();
+
+		//Al buscarse todos los datos para el form se realiza la búsqueda de órdenes
+		Promise.all([promesa_entidades,promesa_bienes,promesa_tecnicos]).then(valor => {
+			Api.getOrdenes({id_tipo_bien:this._id_tipo_bien.value,id_entidad:this._id_entidad.value});
+  		});
 	}
 
 	initValidator(){
@@ -42,8 +46,7 @@ class PanelOrdenesAdmin extends React.Component {
 				required : true
 			},
 			id_tipo_bien:{
-				required : false,
-				isValid : true
+				required : true,
 			},
 			id_bien:{
 				required : false
@@ -92,6 +95,7 @@ class PanelOrdenesAdmin extends React.Component {
 
 	getOrdenesTabla(){
 		let obj = this.state.validator;
+		console.log("validator",obj);
 		habilitarSubmit(obj,this.callbackSubmit.bind(this));
 	}
 

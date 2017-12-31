@@ -84,7 +84,7 @@ class PanelPrestacion extends React.Component {
 			<div className="col-md-6 col-md-offset-3">
 				<Formulario id="form_prestacion" titulo="Creación prestación" submit={this._addElemento.bind(this)}>
 					<SelectChosen
-						label       = "Servicios"
+						label       = "Servicio"
 						llave       = "id_servicio"
 						valor       = {input => this._id_servicio = input}
 						descripcion = "nombre"
@@ -95,7 +95,7 @@ class PanelPrestacion extends React.Component {
 					/>
 					<div className="row">
 						<Input2
-							label     = "Descripción"
+							label     = "Descripción (*)"
 							clases    = "col-md-8"
 							valor     = {input => this._descripcion = input}
 							validator = {this.state.validator.descripcion}

@@ -159,19 +159,18 @@ class PanelEquipo extends React.Component {
 				<div className="col-md-5 center">
 					<Formulario id="form_equipo" titulo="Creación equipo" submit={this._addElemento.bind(this)}>
 						<SelectChosen
-							label       = "Servicios"
+							label       = "Servicio (*)"
 							llave       = "id_servicio"
 							descripcion = "nombre"
 							onChange    = {this.changeSelect.bind(this)}
 							data        = {this.props.servicios}
 							valor       = {input => this._id_servicio = input}
-							clearable ={false}
 							validator   = {this.state.validator.id_servicio}
 							cambiar     = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{id_servicio:p1})})}
 						/>
 						<div className="row">
 							<Input2
-								label     = "Descripción"
+								label     = "Descripción (*)"
 								valor     = {input => this._descripcion = input}
 								clases    = "col-md-8"
 								validator = {this.state.validator.descripcion}
@@ -189,7 +188,7 @@ class PanelEquipo extends React.Component {
 						</div>
 						<div className="row">
 							<Input2
-								label     = "Código patrimonial"
+								label     = "Código patrimonial (*)"
 								valor     = {input => this._cod_patrimonial = input}
 								clases    = "col-md-8"
 								validator = {this.state.validator.cod_patrimonial}

@@ -50,12 +50,11 @@ class TableOrdenesAdmin extends React.Component {
 	initValidatorActualizar(){
 		return {
 			prioridad:{
-			   required : true,
-			   isValid  : true
+			   required : true
 		   },
 		   hs_insumidas:{
 			   required:false,
-			   numeric :true
+			   type :"time"
 		   },
 		   obs_devolucion:{
 			   required:false
@@ -65,8 +64,7 @@ class TableOrdenesAdmin extends React.Component {
 	initValidatorFinalizar(){
 		return {
 			prioridad:{
-			   required : true,
-			   isValid  : true
+			   required : true
 		   },
 		   hs_insumidas:{
 			   required:false,
@@ -255,8 +253,8 @@ class TableOrdenesAdmin extends React.Component {
 									});
 
 		promesa.then(valor => {
-			this.props.getOrdenes();
-			this.modalAsignarOrden();
+			this.props.getOrdenes();//Vuelvo a cargar la tabla
+			this.modalAsignarOrden();//Oculto el model
 			showMsg("La orden de trabajo fué asignada correctamente al legajo: "+this._leg_recepcion.value,"ok");
 			this.setState({validatorAsignar:this.initValidatorAsignar()});
 		});
@@ -348,7 +346,9 @@ class TableOrdenesAdmin extends React.Component {
 	_hsFloat(){
 		let hsFloat = this.state.datosOrden.hs_insumidas;
 		let hs      = Math.trunc(hsFloat);
-		let min     = Math.trunc(((hsFloat - Math.floor(hsFloat))*60));
+		let min     = Math.round(((hsFloat - Math.floor(hsFloat))*60));
+		if (min.toString().length==1)
+			min="0"+min;
 		return hs +":"+min;
 	}
 

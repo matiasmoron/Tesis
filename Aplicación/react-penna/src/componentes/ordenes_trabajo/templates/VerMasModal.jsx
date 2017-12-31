@@ -5,10 +5,17 @@ import {conformidad} from '../../commons/Utils';
 
 
 const _hsFloat = (hs_insumidas) =>{
-	let hsFloat = hs_insumidas;
-	let hs      = Math.trunc(hsFloat);
-	let min     = Math.trunc(((hsFloat - Math.floor(hsFloat))*60));
-	return hs +":"+min;
+	if (hs_insumidas==undefined || hs_insumidas==""){
+		return "00:00";
+	}
+	else{
+		let hsFloat = hs_insumidas;
+		let hs      = Math.trunc(hsFloat);
+		let min     = Math.round(((hsFloat - Math.floor(hsFloat))*60));
+		if (min.toString().length==1)
+			min="0"+min;
+		return hs +":"+min;
+	}
 }
 
 export const VerMasModal = (props) => {

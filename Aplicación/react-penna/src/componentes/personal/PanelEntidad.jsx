@@ -80,14 +80,14 @@ class PanelEntidad extends React.Component {
 					<Formulario titulo="Creación entidad" id="form_entidad" submit={this._addElemento.bind(this)}>
 						<div className="row">
 							<Input2
-								label     = "Nombre"
+								label     = "Nombre (*)"
 								clases    = "col-md-6"
 								valor     = {input => this._nombre = input}
 								validator = {this.state.validator.nombre}
 								cambiar   = {p1    => this.setState({validator :Object.assign({}, this.state.validator,{nombre:p1})})}
 							/>
 							<SelectChosen
-								label       = "Tipo"
+								label       = "Tipo (*)"
 								valor       = {input => this._tipo_entidad = input}
 								clearable   = {false}
 								clases      = "col-md-6"

@@ -52,13 +52,21 @@ const validator = (event,props) => {
     }
 
     if(props.validator.type != undefined){
+
         switch (props.validator.type) {
             case "numeric":
                 if(isNaN(event.target.value)){
                     props.cambiar(Object.assign({}, props.validator, {isValid : false, msg : "El campo debe ser un entero"}));
                     return;
                 }
-            break;
+                break;
+            case "time":
+                var regex= new RegExp(/^(?:([0-9]*\d)?(:([0-5]?\d))?)$/); //Tiene la forma h:m o h donde h es un entero
+                if (!regex.test(event.target.value)){
+                    props.cambiar(Object.assign({}, props.validator, {isValid : false, msg : "Tiene formato tiene que ser hh:mm o hh"}));
+                    return;
+                }
+                break;
         }
     }
     props.cambiar(Object.assign({}, props.validator, {isValid : true, msg : ""}));
